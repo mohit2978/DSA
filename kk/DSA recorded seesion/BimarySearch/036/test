@@ -1,0 +1,175 @@
+https://drive.google.com/file/d/1YhP93MJQmSy-2VDYHYrg4z2Wsxykatlu/view
+
+Link -> Google OA | Software Engineering Intern | July 21 | 2023  | Kumar K | Set - 51 - Desi QnA 
+https://www.desiqna.in/15367/google-oa-software-engineering-intern-july-21-2023-kumar-set
+
+
+Understanding :-> We are given 3 arrays; A B C of size “N”;
+
+For each index   ; A[i] >= B[i] 
+
+You have to do some operations such that you select (i,j) ; you do 
+A[i] = A[i] + 1 and A[j] = A[j] - 1 
+
+-> Keep on doing such operations as you like; 
+
+Whatever is the final array
+
+-> Whatever is its minimum number should be as maximum as possible!
+
+
+Observation:-> (i,j) => A[i] = A[i] + 1 ; 
+A[j] = A[j] - 1 
+
+-> Total sum of the array will still remain the same. 
+
+Sumit Verma’s Law :-> total sum of array remain same independent of the number of operation
+
+-> We have to make a new array such that its minimum is as big as possible.
+
+When can you say that the minimum of an array is at least “x” ? 
+
+Each element of the array should be >=x 
+
+
+We can try to see if we can reach min = 1 for our array ? 
+If  yes ; then answer = 1 
+
+Then we can try if we can reach min = 2 for our array ? 
+Answer = 2
+
+-> Now try min = 3 if yes.
+
+-> try min = 4 ; now when u try min = 4 ; u fail ; it is not becoming possible. 
+-> try min = 5 -> NO (Common Sense.)
+
+-> try min = 6 -> NO(Common Sense.)
+
+-> try min = 7 . …..8…..9…..infinity = NO 
+
+
+Hence the biggest maximum is 3. 
+
+
+
+The last time he said you yes is the biggest minimum number 
+
+
+
+
+What is the process to reach min = x(for any particular x) in the problem by doing the operations? 
+
+Algorithm to check if min>=x can be achieved or not for the array -> 
+
+We first make a list of numbers which we need to fix. 
+
+Then calculate the total effort required to make each element of the array>=x     
+
+Let's call the total effort as k1 
+
+Now we calculate the total amount of sacrifice. (the people who can reduce and give their 1 to poor guys.)
+
+We will be successful only if (sacrifice>=effort) ; yes you can achieve min>=x. 
+
+What if sacrifice < effort ? -> then no it is not possible to min>=x 
+
+Let's check the code. Which returns true if min>=x possible for an array 
+else return false;
+
+
+ll check(ll g){
+ 
+ll k1 = 0 ;
+ll k5 = 0 ;
+ll i = 1 ;
+while(i<=n){
+ 
+if(a[i]<g){
+k1+=(g-a[i]);
+}
+else{
+k5+=(a[i]-max(g,b[i]));//RRRRR
+}
+ 
+i++;
+}
+ 
+if(k5>=k1){
+return true;
+}
+return false;
+}
+Brute force solution:-> First try for min>=1 if it return true; 
+Try for min>=2
+If it returns true ; try for min>=3;
+If it return true; try for min>=4
+But min>=4 gives false;
+
+
+Next Task is to calculate the cost of making min>=x ; where x has been found. 
+
+How many number of operations it will take.-> It will take effort number of operations,
+
+
+C++ -> https://ideone.com/A0iy3h 
+Java -> https://ideone.com/2aMeBD 
+Py -> https://ideone.com/ucc1L3 
+
+
+TC :-> O(N*limit + N log N) = 10^9*10^5 = 10^14-> bad.
+SC :-> O(2*N) -> O(N).
+
+
+Efficient -> 
+
+min>=1  —------------> T
+min>=2 —------------> T
+min>=3 —------------> T
+min>=4 —------------> F
+min>=5 —------------> F
+min>=6 —------------> F
+min>=7 —------------> F
+.
+.
+.
+.
+..
+Final answer array looks like this:->
+
+TTTTTTTTTTTTTTTTTT FFFFFFFFFFFFFFFFFFFFFFFFFFFF.
+
+Our task was just to find the last occurrence of “T” 
+
+This is a standard Binary Search problem! 
+
+
+Low = 1 
+High = limit
+
+Mid = (low+high)/2;
+
+
+if(check(mid)==false;){
+Low = 1 
+High = mid - 1 
+
+
+}
+Else{
+ Low = mid + 1 
+Exceptional case:-> 
+if(mid==true and mid+1==fa;se;)
+Answer = mid;
+}
+
+
+C++ -> https://ideone.com/56mL9Q 
+TC O(loglimit*N + N(logN) => O(log(10^9)*10^5) = O(30*10^5) = O(3*10^6)<=10^8(1s.)
+Java -> 
+Py -> 
+
+
+
+
+
+

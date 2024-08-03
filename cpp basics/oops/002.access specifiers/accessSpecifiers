@@ -1,0 +1,14 @@
+Access Modifiers or Access Specifiers in a class are used to assign the accessibility to the class members, i.e., they set some
+ restrictions on the class members so that they can’t be directly accessed by the outside functions.
+There are 3 types of access modifiers available in C++: 
+
+1.Public-->seen in classes
+2.Private
+3.Protected
+Note: If we do not specify any access modifiers for the members inside the class, then by default the access modifier for the members will be Private.
+In java it is default
+
+Default Copying
+MyClass c2=c1; all the attributes of c1 will be copied to c2
+  or
+MyClass c2{c1} ; 
