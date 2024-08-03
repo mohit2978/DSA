@@ -1,0 +1,48 @@
+Static data members are class members that are declared using static keywords. 
+A static member has certain special characteristics which are as follows:
+
+Only one copy of that member is created for the entire class and is shared by all the objects of that class, no matter how many objects are created.
+It is initialized before any object of this class is created, even before the main starts outside the class itself.
+It is visible can be controlled with the class access specifiers.
+Its lifetime is the entire program.
+Syntax
+className {
+     static data_type data_member_name;
+     .....
+}
+e.g. staticVariable1.cpp
+
+
+Inline Definition of Static Data Member since C++ 17
+The C++ 17 introduced the inline definition of the static data members of type integral or enumeration which was not allowed in the previous standards. This simplifies the definition of the static data members.
+
+Syntax
+
+// inside class definition
+...
+static inline data_type var_name = value/expression;
+....
+Accessing a Static Member
+We can access the static data member without creating the instance of the class. Just remember that we need to initialize it beforehand. There are 2 ways of accessing static data members:
+
+1. Accessing static data member using Class Name and Scope Resolution Operator
+The class name and the scope resolution operator can be used to access the static data member even when there are no instances/objects of the class present in the scope.
+
+Syntax
+
+Class_Name :: var_name
+Example
+
+A::x
+2. Accessing static data member through Objects
+We can also access the static data member using the objects of the class using dot operator.
+
+Syntax
+
+object_name . var_name
+Example
+
+obj.x
+Note: The access to the static data member can be controlled by the class access modifiers.
+
+e.g. staticVariable2

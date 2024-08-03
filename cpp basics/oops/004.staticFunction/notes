@@ -1,0 +1,9 @@
+Static Member Functions are similar to the static data-members implying that they too have class-scope. 
+In addition to that, they are allowed to access only other static fields (data & member).
+ However, they can be called using object instances. (i.e. obj.static_method() is valid). Some important points regarding static member functions are given below:
+ 
+Static member-functions can't access non-static data-members.
+Static member-functions can't access other non-static member-functions.
+Static member-functions have no *this pointer, as it is not associated with any particular instance.
+There is no concept of a static constructor.
+Static member-functions are useful for accessing static data-members which are not declared public.
