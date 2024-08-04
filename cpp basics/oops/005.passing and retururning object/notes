@@ -25,3 +25,5 @@ Return by Value: Returns a copy, can be optimized by move semantics.
 Return by Reference: Returns a reference to the original object, but be careful not to return references to local variables.
 Return by Pointer: Returns a pointer, often used for dynamically allocated memory.
 Understanding these concepts is key to effectively managing object lifetimes and ensuring efficient memory usage in your C++ programs.
+
+15-19 not done
