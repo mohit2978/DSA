@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-
+//scanline algorithm
 #define ff              first
 #define ss              second
 #define lo             long long

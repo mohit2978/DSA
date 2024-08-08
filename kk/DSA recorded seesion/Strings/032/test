@@ -13,11 +13,12 @@ When there is no condition for an index; you write “A” to make the whole str
 S = “bcb”
 T = “TFTF”
 
-=>”bcbcba”
+=>”bcbcba”  
 
 Organic brute force:- For each index where “T” is coming just check if it is valid to replace all the part from index “i” with string s1; if yes keep doing else return -1 ; when there is a block with no constraint 
 
 TC :- O(S1*S2)
+
 SC :- O(S1+S2)
 
 —---------------------------------------------------------------

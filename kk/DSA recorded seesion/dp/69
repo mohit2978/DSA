@@ -1,0 +1,52 @@
+https://www.desiqna.in/11238/aesthetic-permutation-triology-codenation-dynamic-programming 69
+
+https://www.desiqna.in/7959/google-oa-ronnie-and-donnie-set-28-iit-2022 68
+
+java for 68
+import java.util.*;
+import java.io.*;
+class GFG {
+    public static int helper(int[]a,int s,int e,int[][]dp)
+    {
+        if(s>e)
+        {
+            return 0;
+        }
+        if(dp[s][e]!=-1) return dp[s][e];
+        int op1=0;
+        int op2=0;
+        int maxo=Math.max(a[s+1],a[e]);
+        if(maxo==a[s+1])
+        {
+            op1=a[s]-maxo+helper(a,s+2,e,dp);
+        }
+        else if(maxo==a[e])
+        {
+            op1=a[s]-maxo+helper(a,s+1,e-1,dp);
+        }
+        int maxn=Math.max(a[s],a[e-1]);
+        if(maxn==a[e-1])
+        {
+            op2=a[e]-maxn+helper(a,s,e-2,dp);
+        }
+        else if(maxn==a[s])
+        {
+            op2=a[e]-maxn+helper(a,s+1,e-1,dp);
+        }
+        int ans=Math.max(op1,op2);
+        return dp[s][e]=ans;
+    }
+	public static void main (String[] args) {
+	    Scanner scn=new Scanner(System.in);
+	    int n=scn.nextInt();
+	    int[]a=new int[n];
+	    for(int i=0;i<n;i++)
+	    {
+	        a[i]=scn.nextInt();
+	    }
+	    int[][]dp=new int[a.length+1][a.length+1];
+	    for(int[]d:dp) Arrays.fill(d,-1);
+	    int ans=helper(a,0,n-1,dp);
+	    System.out.println(ans);
+	}
+}

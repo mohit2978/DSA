@@ -1,0 +1,103 @@
+Link -> https://www.desiqna.in/16166/google-oa-sde1-ctc-60-lpa-hardest-in-2023 
+
+
+
+
+LIS:-> dp[i] = longest increasing subset till index “i” where you have to include b[i] for sure. 
+
+https://ideone.com/uE7EYz.  
+
+
+
+
+Understanding :-> Find the smallest size subset in array whose sum>=K and numbers are in increasing(non-decreasing) order
+
+-> If there is even a single number in array which is >=K; then answer will be 1
+
+dp[i] = best answer to the question till index “i”
+        = smallest size subset whose sum>=K and numbers are in increasing order till index “i” and include the ith element as well
+
+-> smallest size; sum>=K 
+; numbers in increasing order 
+
+dp[i][j] = > best answer to the question till index “i” if the subset is sorted and its sum is at least>=j. 
+
+According to Sachin’s Law:-> 
+1 2 2 3 1 1 1 1
+dp[4][6]=best ans till index;  4 including 4 and subsequence sum is >=6;  -> (1 2 2 3) Or (2 2 3) -> (2 2 3) wins because its size is small -> 3. 
+
+
+for(i=1;i<=n;i++){
+
+Sum = 1 ; 
+while(sum<=k){
+
+Dp[i][sum] = ; 
+
+
+
+}
+
+
+
+}
+
+-> min(dp[1][k],.......................................,dp[n][k])
+
+if(b[l]<=b[i]) {
+Dp[i][k] = 1 + dp[l][k-b[i]] 
+}
+-> do this for all l from 1—>i-1 
+
+
+—---------------------------------------------------------------------
+
+dp[i][j] = minimum length subset  you can get by including the ith element in your subset and sum>=j 
+
+c = b[i] 
+
+u + c >=j 
+u >= j - c 
+—---------> dp[l][j-c] + 1 if b[l] <= b[u] 
+
+C++ https://ideone.com/jfV9JQ. 
+Java. https://ideone.com/o63DZn.
+Py https://ideone.com/ePlrme.  
+
+-> TC : O(N*N*K) 
+Space. O(N*K) 
+—---------------------------------------------------------------------
+
+-> Change the whole definition of dp when further optimization is not possible. 
+
+-> We cannot use K as the parameter as its value is too large; and it is running our time complexity 
+
+-> It organically means solution should just be dependent on “N”
+-> O(N) or O(N*N) or O(N^3).
+
+dp[i][j] = select  subsequence till index “i” but size of that subsequence should be j -> their sum should be as large as possible. 
+
+According to Krishna’s Law:-> dp[i][j] = b[i] + dp[l][j-1] 
+
+-> https://ideone.com/s4NKUB 
+
+
+
+dp[i][j] = maximum sum you can get till index “i” of length “j” but you have to include element “i” for sure. 
+
+c = b[i]
+
+—----------------> dp[l][j-1] 
+
+C++
+Java. 
+Py 
+
+—---------------------------------------------------------------------
+
+
+
+
+
+
+
