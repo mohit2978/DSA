@@ -33,3 +33,5 @@ Statically Typed
     Type casting is required when using container objects.   
 
 ![alt text](image-1.png)
+
+[view Example 1](./001conditions.py)
