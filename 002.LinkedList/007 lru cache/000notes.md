@@ -361,6 +361,7 @@ class LRUCache {
 
 # LFU cache
 
+![alt text](image-10.png)
 
 ### LRU vs LFU — The Core Difference
 
@@ -854,13 +855,16 @@ Now let's step through a dry run. Capacity = 2, operations: `put(1,10)`, `put(2,
 
 ![alt text](image-1.png)
 
+
 ![alt text](image-2.png)
 
 ![alt text](image-3.png)
 
+
 ![alt text](image-4.png)
 
 ![alt text](image-5.png)
+
 
 ### LRU vs LFU — Complete Comparison
 
@@ -980,7 +984,7 @@ put(k,v)          → always insert/overwrite
 putIfAbsent(k,v)  → insert ONLY if key missing, skip if exists
 ```
 
-Yes! Very commonly asked. Here's the honest picture:
+
 
 ---
 
