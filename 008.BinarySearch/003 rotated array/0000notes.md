@@ -135,41 +135,7 @@ public:
 ```
 ![alt text](image-4.png)
 
-![alt text](<003rotated array_240105_131613(11).jpg>) ![alt text](<003rotated array_240105_131613(12).jpg>)
-
-### The Logic: "Maybe" vs. "Definitely Not"
-
-When we look at `nums[mid]`, we compare it to `nums[high]` (the end of the range) to determine which side holds the minimum.
-
----
-
-### Case A: `nums[mid] > nums[high]`
-* **Meaning:** The left side is "high up" on the cliff, and the right side is "down low." The drop (and thus the minimum) **MUST** be to the right of `mid`.
-* **Action:** Since `nums[mid]` is larger than `nums[high]`, `mid` itself cannot be the minimum. We can safely discard it.
-* **Code:** `lo = mid + 1` (Standard Template 2 logic).
-
----
-
-### Case B: `nums[mid] < nums[high]` (or equal, if no duplicates)
-* **Meaning:** The slope from `mid` to `high` is normal (increasing). The cliff is not on the right side.
-* **Crucial Insight:** Since the right side is normal, the minimum must be at `mid` **OR** somewhere to the left of `mid`.
-* **Action:** `mid` could potentially be the minimum (e.g., `[4, 5, 1, 2, 3]`, where `mid` is `1`). We cannot discard it.
-* **Code:** `hi = mid` (We keep `mid` in the search space).
-
----
-
-### Summary Table
-
-| Comparison | Location of Min | Decision | Update |
-| :--- | :--- | :--- | :--- |
-| `mid > high` | To the Right | `mid` is **definitely not** min | `lo = mid + 1` |
-| `mid < high` | At `mid` or Left | `mid` **could be** the min | `hi = mid` |
-
-Would you like me to show you how this logic handles the edge case where the array is **not rotated at all** (e.g., `[1, 2, 3, 4, 5]`)?
-
- ![alt text](<003rotated array_240105_131613(13).jpg>)
-
-## Q Find min in sorted array
+## Q Find min in rotated sorted array
 
 Given an integer array nums of size N, sorted in ascending order with distinct values, and then rotated an unknown number of times (between 1 and N), find the minimum element in the array.
 
@@ -211,6 +177,45 @@ n == nums.length
 
  All the integers of nums are unique.
  nums is sorted and rotated between 1 and n times.
+
+![alt text](image-5.png)
+
+![alt text](image-6.png)
+![alt text](<003rotated array_240105_131613(12).jpg>)
+
+### The Logic: "Maybe" vs. "Definitely Not"
+
+When we look at `nums[mid]`, we compare it to `nums[high]` (the end of the range) to determine which side holds the minimum.
+
+---
+
+### Case A: `nums[mid] > nums[high]`
+* **Meaning:** The left side is "high up" on the cliff, and the right side is "down low." The drop (and thus the minimum) **MUST** be to the right of `mid`.
+* **Action:** Since `nums[mid]` is larger than `nums[high]`, `mid` itself cannot be the minimum. We can safely discard it.
+* **Code:** `lo = mid + 1` (Standard Template 2 logic).
+
+---
+
+### Case B: `nums[mid] < nums[high]` (or equal, if no duplicates)
+* **Meaning:** The slope from `mid` to `high` is normal (increasing). The cliff is not on the right side.
+* **Crucial Insight:** Since the right side is normal, the minimum must be at `mid` **OR** somewhere to the left of `mid`.
+* **Action:** `mid` could potentially be the minimum (e.g., `[4, 5, 1, 2, 3]`, where `mid` is `1`). We cannot discard it.
+* **Code:** `hi = mid` (We keep `mid` in the search space).
+
+---
+
+### Summary Table
+
+| Comparison | Location of Min | Decision | Update |
+| :--- | :--- | :--- | :--- |
+| `mid > high` | To the Right | `mid` is **definitely not** min | `lo = mid + 1` |
+| `mid < high` | At `mid` or Left | `mid` **could be** the min | `hi = mid` |
+
+
+
+
+
+
 
 ```cpp
 class Solution {
@@ -349,8 +354,13 @@ This property is why this template is so powerful for finding **Insert Positions
 Because the pointers "cross" by exactly one unit, you have a perfect snapshot of the boundary where the target would belong. 
 
 
- ![alt text](<003rotated array_240105_131613(14).jpg>) ![alt text](<003rotated array_240105_131613(15).jpg>) ![alt text](<003rotated array_240105_131613(16).jpg>)
+ ![alt text](<003rotated array_240105_131613(14).jpg>) ![alt text](<003rotated array_240105_131613(15).jpg>) 
  
+ ![alt text](<003rotated array_240105_131613(16).jpg>)
+
+ ![alt text](image-7.png)
+ 
+ ![alt text](image-8.png)
  ```cpp
  class Solution {
 public:
