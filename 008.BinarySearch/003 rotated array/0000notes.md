@@ -180,36 +180,32 @@ n == nums.length
 
 ![alt text](image-5.png)
 
+```cpp
+class Solution {
+    private int findPivot(int[] arr){
+        int lo=0;
+        int hi=arr.length-1;
+        while(lo<hi){
+            int mid=(lo+hi)/2;
+            if(arr[mid]<=arr[hi] ){
+                hi=mid;
+            }
+            else lo=mid+1;
+        }
+        return arr[lo];
+    }
+    public int findMin(int[] nums) {
+          return findPivot(nums);
+    }
+}
+```
+
 ![alt text](image-6.png)
+
+![alt text](image-9.png)
+
 ![alt text](<003rotated array_240105_131613(12).jpg>)
-
-### The Logic: "Maybe" vs. "Definitely Not"
-
-When we look at `nums[mid]`, we compare it to `nums[high]` (the end of the range) to determine which side holds the minimum.
-
----
-
-### Case A: `nums[mid] > nums[high]`
-* **Meaning:** The left side is "high up" on the cliff, and the right side is "down low." The drop (and thus the minimum) **MUST** be to the right of `mid`.
-* **Action:** Since `nums[mid]` is larger than `nums[high]`, `mid` itself cannot be the minimum. We can safely discard it.
-* **Code:** `lo = mid + 1` (Standard Template 2 logic).
-
----
-
-### Case B: `nums[mid] < nums[high]` (or equal, if no duplicates)
-* **Meaning:** The slope from `mid` to `high` is normal (increasing). The cliff is not on the right side.
-* **Crucial Insight:** Since the right side is normal, the minimum must be at `mid` **OR** somewhere to the left of `mid`.
-* **Action:** `mid` could potentially be the minimum (e.g., `[4, 5, 1, 2, 3]`, where `mid` is `1`). We cannot discard it.
-* **Code:** `hi = mid` (We keep `mid` in the search space).
-
----
-
-### Summary Table
-
-| Comparison | Location of Min | Decision | Update |
-| :--- | :--- | :--- | :--- |
-| `mid > high` | To the Right | `mid` is **definitely not** min | `lo = mid + 1` |
-| `mid < high` | At `mid` or Left | `mid` **could be** the min | `hi = mid` |
+|
 
 
 
@@ -311,7 +307,7 @@ Most interviewers will accept that answer immediately because it shows **enginee
 | **Memory** | $O(1)$ | $O(1)$ |
 | **Performance** | Identical | Identical |
 
-Would you like to see how the **Classical (Converge)** version looks in code just so you can recognize it if an interviewer brings it up?
+
 
 When using `while(lo <= hi)`, the loop always terminates with:
 $$lo = hi + 1$$
@@ -457,12 +453,12 @@ Time Complexity:O(logN), N is size of the given array. As binary search is being
 Space Complexity: As no additional space is used, so the Space Complexity is O(1).
 
  ![alt text](<003rotated array_240105_131613(20).jpg>) 
-![alt text](<003rotated array_240105_131613(21).jpg>)
 
 
 
 
-## QFind how many time array is rotated
+
+## Find how many time array is rotated
 
 Given an integer array nums of size n, sorted in ascending order with distinct values. The array has been right rotated an unknown number of times, between 0 and n-1 (including). Determine the number of rotations performed on the array.
 
