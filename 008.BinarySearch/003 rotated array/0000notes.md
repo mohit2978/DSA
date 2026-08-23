@@ -1,11 +1,3 @@
-# Notes
-
-
-
-![alt text](<003rotated array_240105_131613.jpg>)
- ![alt text](<003rotated array_240105_131613(1).jpg>) ![alt text](<003rotated array_240105_131613(2).jpg>) ![alt text](<003rotated array_240105_131613(3).jpg>) ![alt text](<003rotated array_240105_131613(4).jpg>) ![alt text](<003rotated array_240105_131613(5).jpg>) 
- 
- 
  ## Q Search in Rotated Sorted Array I
 
 Given an integer array `nums`, sorted in ascending order (with distinct values) and a target value `k`. The array is rotated at some pivot point that is unknown.
@@ -33,6 +25,10 @@ Find the index at which `k` is present, and if `k` is not present, return `-1`.
 * `-10^4 <= k <= 10^4`
 
 ***
+
+![alt text](<003rotated array_240105_131613(1).jpg>) ![alt text](<003rotated array_240105_131613(2).jpg>) ![alt text](<003rotated array_240105_131613(3).jpg>) ![alt text](<003rotated array_240105_131613(4).jpg>) ![alt text](<003rotated array_240105_131613(5).jpg>) 
+ 
+ 
 
 
 ```cpp
@@ -83,64 +79,16 @@ seee
                
         }
         }
-```        
-we know array is rotated 
+``` 
 
-part 1 sorted ,part 2 sorted
-
-mid in part1  and lo in part 1 then offcourse condition 1 met
-
-mid in part 2 and low in part2 then also condition met 
+![alt text](image.png)
 
 
-If the array has distinct numbers (no duplicates), then the condition `nums[low] <= nums[mid]`guarantees that the range from low to mid is perfectly sorted.
+![alt text](image-1.png)
 
-mid in part 2 and low in part1 then in condition 2
+![alt text](image-2.png)
 
-condition 2 means from low to some j is sorted increasing and j to mid is increasing and we dont consider lo to mid we are seeing in that mid to high part
-
-You have hit the nail on the head. That is exactly what the `else` part represents. When `nums[low] > nums[mid]`, the left side is **"Broken."**
-
----
-
-### 1. Your Analysis of the Broken Left Side
-You described it perfectly: *"from low to some j is sorted increasing and j to mid is increasing."*
-
-This is exactly right. The Left side contains the **Cliff**.
-* **Part 1 (low to j):** Climbs up to the peak (Maximum).
-* **The Drop:** Falls from $j$ to $j+1$.
-* **Part 2 (j+1 to mid):** Climbs up from the bottom (Minimum).
-
-**Visual:** `[7, 8, 0, 1]` ($low=7, mid=1$)
-* $7 \to 8$ is your first increasing part.
-* $0 \to 1$ is your second increasing part.
-* But $7 \to 1$ overall is **Unsorted**.
-
----
-
-### 2. Why we focus on "mid to high"
-Because the Left side is "messy" (it has two separate sorted chunks), it is hard to check if our `target` is there with a single `if` statement.
-
-However, since the Cliff is on the Left, the **Right Side** (mid to high) **MUST** be clean. It is a single, continuous, sorted line. It is very easy to check:
-> `if (nums[mid] < target && target <= nums[high])`
-
----
-
-### 3. The Logic Flow
-The thought process inside the `else` block is:
-1.  **Analyze Right Side:** "I know mid to high is perfectly sorted."
-2.  **Check Right Side:** "Is my target in this nice, sorted range?"
-3.  **Decision:**
-    * **Yes:** "Great, go Right (`low = mid + 1`)."
-    * **No:** "If it's not in the sorted Right side, it must be in the messy Left side. I have no choice but to go back into the mess (`high = mid - 1`)."
-
----
-
-### Summary
-* **IF Block:** Left is Clean, Right is Messy. $\to$ **Check Left.**
-* **ELSE Block:** Left is Messy (Broken), Right is Clean. $\to$ **Check Right.**
-
-
+![alt text](image-3.png)
  
  ![alt text](<003rotated array_240105_131613(6).jpg>) ![alt text](<003rotated array_240105_131613(7).jpg>) ![alt text](<003rotated array_240105_131613(8).jpg>)
 
@@ -185,7 +133,7 @@ public:
     }
 };
 ```
-
+![alt text](image-4.png)
 
 ![alt text](<003rotated array_240105_131613(11).jpg>) ![alt text](<003rotated array_240105_131613(12).jpg>)
 
