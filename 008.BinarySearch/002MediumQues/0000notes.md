@@ -112,3 +112,54 @@ Output:
 The single element is: 4
 */
 ```
+
+## My wrong solution
+
+```java
+class Solution {
+    int bs(vector<int> &a, int si, int ei, int n) {
+        while (si <= ei) {
+            int mid = si + (ei - si) / 2;
+
+            if (mid % 2 == 0) {
+                if (mid < n - 1 && a[mid] == a[mid + 1])
+                    si = mid + 1;
+                else if (mid > 0 && a[mid] == a[mid - 1])
+                    ei = mid - 1;
+            }
+
+            else {
+                if (a[mid] == a[mid - 1])
+                    si = mid + 1;
+                else if (mid < n && a[mid] == a[mid + 1])
+                    ei = mid - 1;
+            }
+        }
+
+        return si;
+    }
+
+   public:
+    int singleNonDuplicate(vector<int> &nums) {
+        int n = nums.size();
+        if (n == 1) return nums[0];
+        if (nums[0] != nums[1]) return nums[0];
+        if (nums[n - 1] != nums[n - 2]) return nums[n - 1];
+
+        return bs(nums, 0, n - 1, n);
+    }
+};
+```
+
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+odd size array always as one element not repeating so always odd sized array.so 2-sized array not in any case
+
+![alt text](image-2.png)
+
+## Why not right=mid-1?
+
+
+![alt text](image-3.png)
