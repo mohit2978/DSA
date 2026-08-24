@@ -1,5 +1,3 @@
-# Notes
-
 ## Q1 median of two sorted arrays
 
 ![alt text](<006 youtube median of sorted arrays_231231_184214.jpg>)

@@ -1,5 +1,3 @@
-# Notes
-
 # Q1 Add a node to BST
 
 ![alt text](Scanned_20260208-1843-03.jpg)
