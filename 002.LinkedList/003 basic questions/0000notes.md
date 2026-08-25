@@ -1,8 +1,9 @@
-# Notes
+### Mid of ll
+
 ![alt text](<001 basics_231123_174231 (1).jpg>) ![alt text](<001 basics_231123_174231 (1)(1).jpg>) ![alt text](<001 basics_231123_174231 (1)(2).jpg>) ![alt text](<001 basics_231123_174231 (1)(3).jpg>) 
 
 
-### Mid of ll
+
 
 Given the head of a singly Linked List, return the middle node of the Linked List.
 

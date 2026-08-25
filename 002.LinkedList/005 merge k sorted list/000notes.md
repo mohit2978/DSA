@@ -1,4 +1,4 @@
-# Notes
+
 ![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1).jpg>)
 
 ![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(1).jpg>) 
