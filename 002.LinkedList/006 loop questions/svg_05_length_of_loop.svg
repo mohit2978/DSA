@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 22px; font-weight: bold; fill: #58a6ff; }
+      .subtitle { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; fill: #8b949e; }
+      .section-title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #f0883e; }
+      .node-box { fill: #161b22; stroke: #30363d; stroke-width: 2px; rx: 8px; }
+      .node-box-meet { fill: #0d2818; stroke: #3fb950; stroke-width: 2.5px; rx: 8px; }
+      .node-box-count { fill: #1f242c; stroke: #58a6ff; stroke-width: 2px; rx: 8px; }
+      .node-text { font-family: 'Segoe UI', monospace; font-size: 15px; font-weight: bold; fill: #c9d1d9; text-anchor: middle; }
+      .node-text-meet { font-family: 'Segoe UI', monospace; font-size: 15px; font-weight: bold; fill: #56d364; text-anchor: middle; }
+      .label-text { font-family: 'Segoe UI', system-ui; font-size: 13px; font-weight: bold; fill: #79c0ff; text-anchor: middle; }
+      .arrow { stroke: #58a6ff; stroke-width: 2px; fill: none; marker-end: url(#arrow-head); }
+      .arrow-count { stroke: #3fb950; stroke-width: 2.5px; fill: none; marker-end: url(#arrow-green); }
+      .step-desc { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13.5px; fill: #c9d1d9; }
+      .box-panel { fill: #161b22; stroke: #30363d; stroke-width: 1.5px; rx: 8px; }
+    </style>
+    <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="600" class="bg" rx="12"/>
+
+  <!-- Header -->
+  <text x="50" y="45" class="title">Find Length of Loop in Linked List</text>
+  <text x="50" y="70" class="subtitle">Traversal Mechanism: Lock Meeting Node and Count Steps in Cycle (O(N) Time, O(1) Space)</text>
+
+  <!-- Visual Circle & Counting Trace -->
+  <text x="50" y="115" class="section-title">Step-by-Step Counting Trace</text>
+
+  <g transform="translate(80, 150)">
+    <!-- Meeting Point Node -->
+    <g transform="translate(0, 40)">
+      <rect width="80" height="42" class="node-box-meet"/>
+      <text x="40" y="26" class="node-text-meet">Meeting (M)</text>
+      <text x="40" y="-10" class="label-text" fill="#3fb950">Anchor Pointer</text>
+    </g>
+    <path d="M 80 61 L 130 61" class="arrow-count"/>
+
+    <!-- Node Count 1 -->
+    <g transform="translate(135, 40)">
+      <rect width="60" height="42" class="node-box-count"/>
+      <text x="30" y="26" class="node-text">N1</text>
+      <text x="30" y="65" class="label-text" fill="#79c0ff">count = 1</text>
+    </g>
+    <path d="M 195 61 L 245 61" class="arrow-count"/>
+
+    <!-- Node Count 2 -->
+    <g transform="translate(250, 40)">
+      <rect width="60" height="42" class="node-box-count"/>
+      <text x="30" y="26" class="node-text">N2</text>
+      <text x="30" y="65" class="label-text" fill="#79c0ff">count = 2</text>
+    </g>
+    <path d="M 310 61 L 360 61" class="arrow-count"/>
+
+    <!-- Node Count 3 -->
+    <g transform="translate(365, 40)">
+      <rect width="60" height="42" class="node-box-count"/>
+      <text x="30" y="26" class="node-text">N3</text>
+      <text x="30" y="65" class="label-text" fill="#79c0ff">count = 3</text>
+    </g>
+    <path d="M 425 61 L 475 61" class="arrow-count"/>
+
+    <!-- Node Count 4 -->
+    <g transform="translate(480, 40)">
+      <rect width="60" height="42" class="node-box-count"/>
+      <text x="30" y="26" class="node-text">N4</text>
+      <text x="30" y="65" class="label-text" fill="#79c0ff">count = 4 (Loop End)</text>
+    </g>
+
+    <!-- Loop Back to Anchor -->
+    <path d="M 510 82 C 510 160, 40 160, 40 85" class="arrow-count"/>
+    <text x="275" y="145" class="label-text" fill="#3fb950">Loop back to Meeting (M) completes cycle → Return count (4)</text>
+  </g>
+
+  <!-- Section 2: Pseudocode & Complexity -->
+  <line x1="50" y1="360" x2="950" y2="360" stroke="#30363d" stroke-width="1"/>
+
+  <g transform="translate(50, 390)">
+    <rect width="420" height="180" class="box-panel"/>
+    <text x="20" y="30" class="section-title" fill="#58a6ff">Algorithm Steps</text>
+    <text x="20" y="60" class="step-desc">1. Run Floyd's to get meeting node <tspan font-family="monospace" fill="#3fb950">ptr</tspan>.</text>
+    <text x="20" y="85" class="step-desc">2. If <tspan font-family="monospace" fill="#8b949e">ptr == null</tspan> → no cycle, return <tspan fill="#79c0ff" font-weight="bold">0</tspan>.</text>
+    <text x="20" y="110" class="step-desc">3. Start runner: <tspan font-family="monospace" fill="#79c0ff">curr = ptr.next; int len = 1;</tspan></text>
+    <text x="20" y="135" class="step-desc">4. Iterate <tspan font-family="monospace" fill="#79c0ff">while (curr != ptr) { curr = curr.next; len++; }</tspan></text>
+    <text x="20" y="160" class="step-desc">5. Return <tspan font-weight="bold" fill="#3fb950">len</tspan>.</text>
+  </g>
+
+  <g transform="translate(500, 390)">
+    <rect width="450" height="180" class="box-panel" stroke="#3fb950"/>
+    <text x="20" y="30" class="section-title" fill="#3fb950">Complexity &amp; Invariants</text>
+    <text x="20" y="65" class="step-desc">• <tspan font-weight="bold" fill="#79c0ff">Time Complexity:</tspan> <tspan fill="#3fb950" font-weight="bold">O(N)</tspan></text>
+    <text x="35" y="90" class="step-desc">Phase 1 (Cycle Detection): at most N steps.</text>
+    <text x="35" y="115" class="step-desc">Phase 2 (Cycle Length Count): exactly C steps (C ≤ N).</text>
+    <text x="20" y="145" class="step-desc">• <tspan font-weight="bold" fill="#79c0ff">Space Complexity:</tspan> <tspan fill="#3fb950" font-weight="bold">O(1)</tspan> auxiliary memory.</text>
+  </g>
+</svg>

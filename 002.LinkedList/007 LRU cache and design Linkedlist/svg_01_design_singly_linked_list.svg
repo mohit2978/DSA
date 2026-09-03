@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 860" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .card { fill: #161b22; stroke: #30363d; stroke-width: 1.5; rx: 10; }
+      .header-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 20px; font-weight: 700; fill: #58a6ff; }
+      .step-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; font-weight: 700; fill: #f0883e; }
+      .sub-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 600; fill: #8b949e; }
+      .node-box { fill: #1f6feb; stroke: #58a6ff; stroke-width: 1.5; rx: 6; }
+      .node-val { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+      .node-next { fill: #111d2e; stroke: #388bfd; stroke-width: 1; }
+      .new-node { fill: #238636; stroke: #3fb950; stroke-width: 1.5; rx: 6; }
+      .del-node { fill: #da3633; stroke: #f85149; stroke-width: 1.5; stroke-dasharray: 4,4; rx: 6; opacity: 0.7; }
+      .ptr-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; text-anchor: middle; }
+      .ptr-head { fill: #79c0ff; }
+      .ptr-tail { fill: #d2a8ff; }
+      .ptr-curr { fill: #ffa657; }
+      .desc-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; fill: #c9d1d9; }
+      .code-snippet { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: #7ee787; }
+      .warn-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; fill: #ff7b72; font-weight: 600; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3fb950" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f85149" />
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f0883e" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="860" class="bg" />
+
+  <!-- Main Header -->
+  <g transform="translate(30, 30)">
+    <text x="0" y="0" class="header-title">LeetCode 707: Design Singly Linked List — Operations &amp; Step-by-Step Dry Run</text>
+    <text x="0" y="24" class="sub-title">Tracking head, tail, and size (llSize) to ensure O(1) head/tail operations and safe boundary checks</text>
+  </g>
+
+  <!-- Panel 1: Step-by-Step Dry Run of User Test Case -->
+  <g transform="translate(30, 75)">
+    <rect width="660" height="570" class="card" />
+    <text x="20" y="30" class="step-title">1. Visual Step-by-Step Trace of Test Case</text>
+    
+    <!-- Step A: addAtHead(1) -->
+    <g transform="translate(20, 50)">
+      <text x="0" y="15" class="code-snippet">Step 1: addAtHead(1)  → size: 0 → 1</text>
+      <!-- Node 1 -->
+      <g transform="translate(220, 0)">
+        <rect width="45" height="30" class="new-node"/>
+        <text x="22.5" y="20" class="node-val">1</text>
+        <rect x="45" width="20" height="30" class="node-next"/>
+        <circle cx="55" cy="15" r="3" fill="#8b949e"/>
+        <line x1="65" y1="15" x2="95" y2="15" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <text x="110" y="20" class="desc-text" fill="#8b949e">null</text>
+        <text x="22.5" y="-6" class="ptr-text ptr-head">head</text>
+        <text x="22.5" y="44" class="ptr-text ptr-tail">tail</text>
+      </g>
+    </g>
+
+    <!-- Step B: addAtTail(3) -->
+    <g transform="translate(20, 125)">
+      <text x="0" y="15" class="code-snippet">Step 2: addAtTail(3)  → size: 1 → 2</text>
+      <!-- Node 1 -->
+      <g transform="translate(220, 0)">
+        <rect width="45" height="30" class="node-box"/>
+        <text x="22.5" y="20" class="node-val">1</text>
+        <rect x="45" width="20" height="30" class="node-next"/>
+        <circle cx="55" cy="15" r="3" fill="#8b949e"/>
+        <line x1="65" y1="15" x2="105" y2="15" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <text x="22.5" y="-6" class="ptr-text ptr-head">head</text>
+      </g>
+      <!-- Node 3 -->
+      <g transform="translate(330, 0)">
+        <rect width="45" height="30" class="new-node"/>
+        <text x="22.5" y="20" class="node-val">3</text>
+        <rect x="45" width="20" height="30" class="node-next"/>
+        <circle cx="55" cy="15" r="3" fill="#8b949e"/>
+        <line x1="65" y1="15" x2="95" y2="15" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <text x="110" y="20" class="desc-text" fill="#8b949e">null</text>
+        <text x="22.5" y="44" class="ptr-text ptr-tail">tail</text>
+      </g>
+    </g>
+
+    <!-- Step C: addAtIndex(1, 2) -->
+    <g transform="translate(20, 205)">
+      <text x="0" y="15" class="code-snippet">Step 3: addAtIndex(1, 2) → size: 2 → 3</text>
+      <!-- Node 1 -->
+      <g transform="translate(220, 0)">
+        <rect width="45" height="30" class="node-box"/>
+        <text x="22.5" y="20" class="node-val">1</text>
+        <rect x="45" width="20" height="30" class="node-next"/>
+        <circle cx="55" cy="15" r="3" fill="#8b949e"/>
+        <path d="M 65 15 Q 85 15 105 15" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+        <text x="22.5" y="-6" class="ptr-text ptr-head">head (idx 0)</text>
+      </g>
+      <!-- Node 2 (Inserted) -->
+      <g transform="translate(330, 0)">
+        <rect width="45" height="30" class="new-node"/>
+        <text x="22.5" y="20" class="node-val">2</text>
+        <rect x="45" width="20" height="30" class="node-next"/>
+        <circle cx="55" cy="15" r="3" fill="#8b949e"/>
+        <line x1="65" y1="15" x2="105" y2="15" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+        <text x="22.5" y="44" class="ptr-text ptr-curr">inserted (idx 1)</text>
+      </g>
+      <!-- Node 3 -->
+      <g transform="translate(440, 0)">
+        <rect width="45" height="30" class="node-box"/>
+        <text x="22.5" y="20" class="node-val">3</text>
+        <rect x="45" width="20" height="30" class="node-next"/>
+        <circle cx="55" cy="15" r="3" fill="#8b949e"/>
+        <line x1="65" y1="15" x2="95" y2="15" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <text x="110" y="20" class="desc-text" fill="#8b949e">null</text>
+        <text x="22.5" y="-6" class="ptr-text ptr-tail">tail (idx 2)</text>
+      </g>
+    </g>
+
+    <!-- Step D: get(1) -->
+    <g transform="translate(20, 295)">
+      <text x="0" y="15" class="code-snippet">Step 4: get(1)  → Returns 2 ✅</text>
+      <text x="0" y="32" class="desc-text">Traverses curr from head to index 1: <tspan fill="#3fb950">curr.val = 2</tspan></text>
+    </g>
+
+    <!-- Step E: deleteAtIndex(0) -->
+    <g transform="translate(20, 350)">
+      <text x="0" y="15" class="code-snippet">Step 5: deleteAtIndex(0) (delete head) → size: 3 → 2</text>
+      <!-- Node 1 (Deleted) -->
+      <g transform="translate(220, 0)">
+        <rect width="45" height="30" class="del-node"/>
+        <text x="22.5" y="20" class="node-val" fill="#f85149">1</text>
+        <rect x="45" width="20" height="30" class="node-next" opacity="0.5"/>
+        <text x="22.5" y="-6" class="warn-text">Deleted</text>
+      </g>
+      <!-- New Head Node 2 -->
+      <g transform="translate(330, 0)">
+        <rect width="45" height="30" class="node-box"/>
+        <text x="22.5" y="20" class="node-val">2</text>
+        <rect x="45" width="20" height="30" class="node-next"/>
+        <circle cx="55" cy="15" r="3" fill="#8b949e"/>
+        <line x1="65" y1="15" x2="105" y2="15" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <text x="22.5" y="-6" class="ptr-text ptr-head">NEW head (idx 0)</text>
+      </g>
+      <!-- Node 3 -->
+      <g transform="translate(440, 0)">
+        <rect width="45" height="30" class="node-box"/>
+        <text x="22.5" y="20" class="node-val">3</text>
+        <rect x="45" width="20" height="30" class="node-next"/>
+        <circle cx="55" cy="15" r="3" fill="#8b949e"/>
+        <line x1="65" y1="15" x2="95" y2="15" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <text x="110" y="20" class="desc-text" fill="#8b949e">null</text>
+        <text x="22.5" y="44" class="ptr-text ptr-tail">tail (idx 1)</text>
+      </g>
+    </g>
+
+    <!-- Step F: get(0) -->
+    <g transform="translate(20, 460)">
+      <text x="0" y="15" class="code-snippet">Step 6: get(0)  → Returns 2 ✅ (head node value)</text>
+      <text x="0" y="35" class="desc-text">List now has 2 nodes: [2 (head)] ➔ [3 (tail)]. Index 0 correctly returns 2.</text>
+    </g>
+  </g>
+
+  <!-- Panel 2: Critical Edge Cases & Boundary Handling -->
+  <g transform="translate(710, 75)">
+    <rect width="360" height="570" class="card" />
+    <text x="20" y="30" class="step-title">2. Edge Cases &amp; Pitfalls</text>
+
+    <!-- Pitfall 1 -->
+    <g transform="translate(20, 55)">
+      <text x="0" y="15" class="warn-text">⚠️ 1. addAtIndex(index, val)</text>
+      <text x="0" y="35" class="desc-text">• If <tspan fill="#f85149" font-family="monospace">index &gt; size</tspan>: Invalid, do nothing.</text>
+      <text x="0" y="55" class="desc-text">• If <tspan fill="#79c0ff" font-family="monospace">index == 0</tspan>: Call <tspan fill="#79c0ff">addAtHead(val)</tspan>.</text>
+      <text x="0" y="75" class="desc-text">• If <tspan fill="#d2a8ff" font-family="monospace">index == size</tspan>: Call <tspan fill="#d2a8ff">addAtTail(val)</tspan>.</text>
+      <text x="0" y="95" class="desc-text">• Else: Walk to <tspan fill="#ffa657" font-family="monospace">index - 1</tspan> and insert.</text>
+    </g>
+
+    <!-- Pitfall 2 -->
+    <g transform="translate(20, 185)">
+      <text x="0" y="15" class="warn-text">⚠️ 2. deleteAtIndex(index)</text>
+      <text x="0" y="35" class="desc-text">• If <tspan fill="#f85149" font-family="monospace">index &lt; 0 || index &gt;= size</tspan>: Return.</text>
+      <text x="0" y="55" class="desc-text">• If <tspan fill="#f0883e" font-family="monospace">size == 1</tspan>: <tspan fill="#c9d1d9">head = tail = null; size = 0</tspan>.</text>
+      <text x="0" y="75" class="desc-text">• If <tspan fill="#79c0ff" font-family="monospace">index == 0</tspan>: Delete head node.</text>
+      <text x="0" y="95" class="desc-text">• If <tspan fill="#d2a8ff" font-family="monospace">index == size - 1</tspan>: Delete tail (walk to <tspan fill="#ffa657">size-2</tspan> to update tail pointer in SLL!).</text>
+    </g>
+
+    <!-- Pitfall 3 -->
+    <g transform="translate(20, 320)">
+      <text x="0" y="15" class="warn-text">⚠️ 3. get(index)</text>
+      <text x="0" y="35" class="desc-text">• If <tspan fill="#f85149" font-family="monospace">index &lt; 0 || index &gt;= size</tspan>: Return -1.</text>
+      <text x="0" y="55" class="desc-text">• If <tspan fill="#79c0ff" font-family="monospace">index == 0</tspan>: Return <tspan fill="#79c0ff">head.val</tspan>.</text>
+      <text x="0" y="75" class="desc-text">• If <tspan fill="#d2a8ff" font-family="monospace">index == size - 1</tspan>: Return <tspan fill="#d2a8ff">tail.val</tspan>.</text>
+      <text x="0" y="95" class="desc-text">• Else: Loop <tspan fill="#ffa657">curr = curr.next</tspan> (index times).</text>
+    </g>
+
+    <!-- Pitfall 4 -->
+    <g transform="translate(20, 450)">
+      <text x="0" y="15" class="warn-text">💡 Best Practice: 'this' Keyword</text>
+      <text x="0" y="35" class="desc-text">In node constructor: <tspan fill="#7ee787" font-family="monospace">this.val = val;</tspan></text>
+      <text x="0" y="55" class="desc-text">Avoids shadowing and makes code unambiguous.</text>
+    </g>
+  </g>
+
+  <!-- Panel 3: Complexity Bar -->
+  <g transform="translate(30, 665)">
+    <rect width="1040" height="165" class="card" />
+    <g transform="translate(25, 20)">
+      <text x="0" y="15" class="header-title" fill="#f59e0b">⚡ Time &amp; Space Complexity Summary</text>
+      <text x="0" y="45" class="desc-text">• <tspan fill="#79c0ff" font-weight="700">get(index):</tspan> O(index) Time (worst case O(N) when traversing to middle), O(1) Auxiliary Space.</text>
+      <text x="0" y="70" class="desc-text">• <tspan fill="#3fb950" font-weight="700">addAtHead(val) / addAtTail(val):</tspan> O(1) Time with direct head/tail pointers, O(1) Space.</text>
+      <text x="0" y="95" class="desc-text">• <tspan fill="#ffa657" font-weight="700">addAtIndex(index, val):</tspan> O(index) Time to reach insertion point (O(1) at boundaries), O(1) Space.</text>
+      <text x="0" y="120" class="desc-text">• <tspan fill="#f85149" font-weight="700">deleteAtIndex(index):</tspan> O(index) Time (in Singly LL tail deletion is O(N) since we must find node before tail), O(1) Space.</text>
+    </g>
+  </g>
+</svg>

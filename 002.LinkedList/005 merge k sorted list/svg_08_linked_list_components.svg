@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad8" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cardGrad8" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="blueGrad8" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad8" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="amberGrad8" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="shadow8" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arrow8" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <rect width="950" height="540" rx="16" fill="url(#bgGrad8)"/>
+
+  <!-- Title -->
+  <rect x="30" y="20" width="890" height="60" rx="12" fill="url(#cardGrad8)" filter="url(#shadow8)" stroke="#475569" stroke-width="1"/>
+  <text x="50" y="57" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#f8fafc">Question 9: Linked List Components (HashSet Traversal)</text>
+  <rect x="760" y="35" width="140" height="30" rx="15" fill="#38bdf8" fill-opacity="0.15" stroke="#38bdf8" stroke-width="1"/>
+  <text x="830" y="55" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#38bdf8" text-anchor="middle">LeetCode 817 [Medium]</text>
+
+  <!-- Problem Setup -->
+  <g transform="translate(30, 95)">
+    <rect width="890" height="130" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fbbf24">Input Configuration</text>
+    
+    <g transform="translate(30, 45)">
+      <rect x="0" y="0" width="260" height="65" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+      <text x="15" y="25" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#38bdf8">Subset Array nums = [0, 1, 3]</text>
+      <text x="15" y="48" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">Store in HashSet for O(1) lookup</text>
+
+      <!-- Linked List Visual -->
+      <g transform="translate(300, 15)">
+        <!-- Node 0 -->
+        <rect x="0" y="0" width="45" height="38" rx="8" fill="url(#emeraldGrad8)"/>
+        <text x="22" y="24" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">0</text>
+        <line x1="50" y1="19" x2="80" y2="19" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow8)"/>
+
+        <!-- Node 1 -->
+        <rect x="90" y="0" width="45" height="38" rx="8" fill="url(#emeraldGrad8)"/>
+        <text x="112" y="24" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+        <line x1="140" y1="19" x2="170" y2="19" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow8)"/>
+
+        <!-- Node 2 (not in set) -->
+        <rect x="180" y="0" width="45" height="38" rx="8" fill="#475569"/>
+        <text x="202" y="24" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#94a3b8" text-anchor="middle">2</text>
+        <line x1="230" y1="19" x2="260" y2="19" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow8)"/>
+
+        <!-- Node 3 -->
+        <rect x="270" y="0" width="45" height="38" rx="8" fill="url(#emeraldGrad8)"/>
+        <text x="292" y="24" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+        <line x1="320" y1="19" x2="350" y2="19" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow8)"/>
+
+        <!-- Node 4 (not in set) -->
+        <rect x="360" y="0" width="45" height="38" rx="8" fill="#475569"/>
+        <text x="382" y="24" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#94a3b8" text-anchor="middle">4</text>
+        <line x1="410" y1="19" x2="440" y2="19" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow8)"/>
+
+        <!-- NULL -->
+        <rect x="450" y="0" width="55" height="38" rx="8" fill="#334155"/>
+        <text x="477" y="24" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#94a3b8" text-anchor="middle">NULL</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Component Detection Walkthrough -->
+  <g transform="translate(30, 240)">
+    <rect width="890" height="145" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#38bdf8">Component Boundary Detection Rule</text>
+
+    <!-- Component 1 Box -->
+    <g transform="translate(40, 50)">
+      <rect x="0" y="0" width="220" height="75" rx="8" fill="#0f172a" stroke="#34d399" stroke-width="1.5"/>
+      <text x="15" y="25" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#34d399">Component 1: [0, 1]</text>
+      <text x="15" y="45" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">0 in set, 1 in set</text>
+      <text x="15" y="62" font-family="system-ui, sans-serif" font-size="11" fill="#fbbf24">1.next (2) not in set -&gt; Count++</text>
+    </g>
+
+    <!-- Separator -->
+    <text x="320" y="90" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#94a3b8">+</text>
+
+    <!-- Component 2 Box -->
+    <g transform="translate(390, 50)">
+      <rect x="0" y="0" width="220" height="75" rx="8" fill="#0f172a" stroke="#34d399" stroke-width="1.5"/>
+      <text x="15" y="25" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#34d399">Component 2: [3]</text>
+      <text x="15" y="45" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">3 in set</text>
+      <text x="15" y="62" font-family="system-ui, sans-serif" font-size="11" fill="#fbbf24">3.next (4) not in set -&gt; Count++</text>
+    </g>
+
+    <!-- Total Box -->
+    <g transform="translate(660, 50)">
+      <rect x="0" y="0" width="190" height="75" rx="8" fill="url(#emeraldGrad8)"/>
+      <text x="95" y="32" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">Total Components</text>
+      <text x="95" y="62" font-family="system-ui, sans-serif" font-size="24" font-weight="800" fill="#fff" text-anchor="middle">2</text>
+    </g>
+  </g>
+
+  <!-- Code Invariant -->
+  <g transform="translate(30, 400)">
+    <rect width="890" height="115" rx="12" fill="#0f172a" stroke="#059669" stroke-width="1.5"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#34d399">Optimal Invariant Condition:</text>
+    <text x="20" y="52" font-family="Consolas, monospace" font-size="12" fill="#fbbf24">if (set.contains(curr.val) &amp;&amp; (curr.next == null || !set.contains(curr.next.val))) count++;</text>
+    <text x="20" y="80" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">Complexity: Single Pass O(N + M) Time | O(M) Space (where M = nums.length)</text>
+  </g>
+</svg>

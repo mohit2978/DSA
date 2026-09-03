@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 22px; font-weight: bold; fill: #58a6ff; }
+      .subtitle { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; fill: #8b949e; }
+      .section-title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #f0883e; }
+      .node-box { fill: #161b22; stroke: #30363d; stroke-width: 2px; rx: 8px; }
+      .node-box-dummy { fill: #21262d; stroke: #8b949e; stroke-dasharray: 4; stroke-width: 2px; rx: 8px; }
+      .node-box-dup { fill: #3b1219; stroke: #f85149; stroke-width: 2px; rx: 8px; }
+      .node-box-keep { fill: #0d2818; stroke: #3fb950; stroke-width: 2px; rx: 8px; }
+      .node-text { font-family: 'Segoe UI', monospace; font-size: 16px; font-weight: bold; fill: #c9d1d9; text-anchor: middle; }
+      .node-text-dup { font-family: 'Segoe UI', monospace; font-size: 16px; font-weight: bold; fill: #ff7b72; text-anchor: middle; }
+      .node-text-keep { font-family: 'Segoe UI', monospace; font-size: 16px; font-weight: bold; fill: #56d364; text-anchor: middle; }
+      .ptr-text { font-family: 'Segoe UI', system-ui; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .arrow { stroke: #58a6ff; stroke-width: 2.5px; fill: none; marker-end: url(#arrow-head); }
+      .arrow-bypass { stroke: #3fb950; stroke-width: 3px; stroke-dasharray: 6; fill: none; marker-end: url(#arrow-green); }
+      .step-desc { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13.5px; fill: #c9d1d9; }
+      .box-panel { fill: #161b22; stroke: #30363d; stroke-width: 1.5px; rx: 8px; }
+    </style>
+    <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="700" class="bg" rx="12"/>
+
+  <!-- Header -->
+  <text x="50" y="45" class="title">LeetCode 82: Remove Duplicates from Sorted List II (Medium)</text>
+  <text x="50" y="70" class="subtitle">Delete ALL occurrences of duplicated elements (e.g., [1, 2, 3, 3, 4, 4, 5] → [1, 2, 5])</text>
+
+  <!-- Section 1: Visual Trace -->
+  <text x="50" y="115" class="section-title">Step 1: Detecting Duplicates Streak &amp; Dummy Node Sentinel</text>
+  <text x="50" y="138" class="step-desc">Maintain <tspan fill="#d29922">prev</tspan> at last confirmed unique node. Fast forward <tspan fill="#58a6ff">curr</tspan> across entire duplicate run.</text>
+
+  <!-- Dummy Node -->
+  <g transform="translate(60, 160)">
+    <rect width="50" height="42" class="node-box-dummy"/>
+    <text x="25" y="26" class="node-text" fill="#8b949e">-1</text>
+    <text x="25" y="60" class="ptr-text" fill="#d29922">dummy</text>
+  </g>
+  <path d="M 110 181 L 140 181" class="arrow"/>
+
+  <!-- Node 1 -->
+  <g transform="translate(145, 160)">
+    <rect width="50" height="42" class="node-box-keep"/>
+    <text x="25" y="26" class="node-text-keep">1</text>
+  </g>
+  <path d="M 195 181 L 225 181" class="arrow"/>
+
+  <!-- Node 2 (prev sits here before 3s) -->
+  <g transform="translate(230, 160)">
+    <rect width="50" height="42" class="node-box-keep" stroke="#3fb950" stroke-width="2.5"/>
+    <text x="25" y="26" class="node-text-keep">2</text>
+    <text x="25" y="60" class="ptr-text" fill="#3fb950">prev</text>
+  </g>
+  <path d="M 280 181 L 310 181" class="arrow"/>
+
+  <!-- Node 3 (dup) -->
+  <g transform="translate(315, 160)">
+    <rect width="50" height="42" class="node-box-dup"/>
+    <text x="25" y="26" class="node-text-dup">3</text>
+  </g>
+  <path d="M 365 181 L 395 181" class="arrow"/>
+
+  <!-- Node 3 (dup end) -->
+  <g transform="translate(400, 160)">
+    <rect width="50" height="42" class="node-box-dup" stroke="#f85149" stroke-width="2.5"/>
+    <text x="25" y="26" class="node-text-dup">3</text>
+    <text x="25" y="-10" class="ptr-text" fill="#58a6ff">curr (end of 3s)</text>
+  </g>
+  <path d="M 450 181 L 480 181" class="arrow"/>
+
+  <!-- Node 4 (next potential node) -->
+  <g transform="translate(485, 160)">
+    <rect width="50" height="42" class="node-box-dup"/>
+    <text x="25" y="26" class="node-text-dup">4</text>
+    <text x="25" y="60" class="ptr-text" fill="#79c0ff">curr.next</text>
+  </g>
+  <path d="M 535 181 L 565 181" class="arrow"/>
+
+  <!-- Node 4 (dup end) -->
+  <g transform="translate(570, 160)">
+    <rect width="50" height="42" class="node-box-dup"/>
+    <text x="25" y="26" class="node-text-dup">4</text>
+  </g>
+  <path d="M 620 181 L 650 181" class="arrow"/>
+
+  <!-- Node 5 (final unique node) -->
+  <g transform="translate(655, 160)">
+    <rect width="50" height="42" class="node-box-keep"/>
+    <text x="25" y="26" class="node-text-keep">5</text>
+  </g>
+  <path d="M 705 181 L 735 181" class="arrow"/>
+  <text x="750" y="186" class="node-text" fill="#8b949e">null</text>
+
+  <!-- Bypass Arc from Node 2 to Node 4 (skipping both 3s) -->
+  <path d="M 280 170 Q 380 110 480 170" class="arrow-bypass"/>
+
+  <!-- Section 2: Final Result Flow -->
+  <line x1="50" y1="250" x2="950" y2="250" stroke="#30363d" stroke-width="1"/>
+  <text x="50" y="285" class="section-title">Final Clean Result</text>
+
+  <g transform="translate(60, 310)">
+    <!-- Dummy Node -->
+    <g transform="translate(0, 0)">
+      <rect width="50" height="42" class="node-box-dummy"/>
+      <text x="25" y="26" class="node-text" fill="#8b949e">-1</text>
+    </g>
+    <path d="M 50 21 L 95 21" class="arrow-bypass"/>
+
+    <!-- Node 1 -->
+    <g transform="translate(100, 0)">
+      <rect width="50" height="42" class="node-box-keep"/>
+      <text x="25" y="26" class="node-text-keep">1</text>
+    </g>
+    <path d="M 150 21 L 195 21" class="arrow-bypass"/>
+
+    <!-- Node 2 -->
+    <g transform="translate(200, 0)">
+      <rect width="50" height="42" class="node-box-keep"/>
+      <text x="25" y="26" class="node-text-keep">2</text>
+    </g>
+    <path d="M 250 21 L 295 21" class="arrow-bypass"/>
+
+    <!-- Node 5 -->
+    <g transform="translate(300, 0)">
+      <rect width="50" height="42" class="node-box-keep"/>
+      <text x="25" y="26" class="node-text-keep">5</text>
+    </g>
+    <path d="M 350 21 L 395 21" class="arrow"/>
+    <text x="410" y="26" class="node-text" fill="#8b949e">null</text>
+  </g>
+
+  <!-- Section 3: Intuition and Comparison cards -->
+  <line x1="50" y1="390" x2="950" y2="390" stroke="#30363d" stroke-width="1"/>
+
+  <!-- Left Card: LC 83 vs LC 82 -->
+  <g transform="translate(50, 420)">
+    <rect width="420" height="240" class="box-panel"/>
+    <text x="20" y="30" class="section-title" fill="#58a6ff">LC 83 (I) vs LC 82 (II)</text>
+    
+    <text x="20" y="65" class="step-desc" font-weight="bold" fill="#3fb950">LeetCode 83 (Easy):</text>
+    <text x="20" y="90" class="step-desc">• Keep <tspan fill="#3fb950" font-weight="bold">ONE</tspan> copy of duplicate elements.</text>
+    <text x="20" y="115" class="step-desc">• [1, 1, 2] → [1, 2]</text>
+
+    <line x1="20" y1="135" x2="400" y2="135" stroke="#30363d"/>
+
+    <text x="20" y="165" class="step-desc" font-weight="bold" fill="#f85149">LeetCode 82 (Medium):</text>
+    <text x="20" y="190" class="step-desc">• Remove <tspan fill="#f85149" font-weight="bold">ALL</tspan> occurrences of duplicate elements.</text>
+    <text x="20" y="215" class="step-desc">• [1, 1, 2] → [2] (Dummy node required!)</text>
+  </g>
+
+  <!-- Right Card: Golden Rules from Notes -->
+  <g transform="translate(500, 420)">
+    <rect width="450" height="240" class="box-panel" stroke="#d29922"/>
+    <text x="20" y="30" class="section-title" fill="#d29922">💡 Golden Rules for Pointer Problems</text>
+
+    <text x="20" y="65" class="step-desc" font-weight="bold" fill="#f0883e">1. "Code mai jab bhi faso, Do Dry Run!!"</text>
+    <text x="35" y="90" class="step-desc">Trace pointer movements on edge cases (e.g. all duplicates</text>
+    <text x="35" y="110" class="step-desc">[1, 1, 1] or duplicates at the very start/end).</text>
+
+    <text x="20" y="145" class="step-desc" font-weight="bold" fill="#f0883e">2. "Jab bhi prev, curr use karne ho → Dummy Node!"</text>
+    <text x="35" y="170" class="step-desc">A dummy sentinel eliminates edge cases where the</text>
+    <text x="35" y="190" class="step-desc"><tspan fill="#f85149">head itself gets deleted</tspan>.</text>
+
+    <text x="20" y="225" class="step-desc" font-size="12">Time: <tspan fill="#3fb950" font-weight="bold">O(N)</tspan> | Space: <tspan fill="#3fb950" font-weight="bold">O(1)</tspan></text>
+  </g>
+</svg>

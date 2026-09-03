@@ -1,0 +1,230 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 22px; font-weight: bold; fill: #58a6ff; }
+      .subtitle { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; fill: #8b949e; }
+      .section-title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #f0883e; }
+      .node-box { fill: #161b22; stroke: #30363d; stroke-width: 2px; rx: 8px; }
+      .node-box-dummy { fill: #21262d; stroke: #8b949e; stroke-dasharray: 4; stroke-width: 2px; rx: 8px; }
+      .node-box-del { fill: #3b1219; stroke: #f85149; stroke-width: 2.5px; rx: 8px; }
+      .node-text { font-family: 'Segoe UI', monospace; font-size: 16px; font-weight: bold; fill: #c9d1d9; text-anchor: middle; }
+      .node-text-del { font-family: 'Segoe UI', monospace; font-size: 16px; font-weight: bold; fill: #ff7b72; text-anchor: middle; }
+      .node-idx { font-family: 'Segoe UI', monospace; font-size: 11px; fill: #8b949e; text-anchor: middle; }
+      .ptr-text-fast { font-family: 'Segoe UI', system-ui; font-size: 13px; font-weight: bold; fill: #58a6ff; text-anchor: middle; }
+      .ptr-text-slow { font-family: 'Segoe UI', system-ui; font-size: 13px; font-weight: bold; fill: #3fb950; text-anchor: middle; }
+      .ptr-text-dummy { font-family: 'Segoe UI', system-ui; font-size: 13px; font-weight: bold; fill: #d29922; text-anchor: middle; }
+      .arrow { stroke: #58a6ff; stroke-width: 2.5px; fill: none; marker-end: url(#arrow-head); }
+      .arrow-bypass { stroke: #3fb950; stroke-width: 3px; stroke-dasharray: 6; fill: none; marker-end: url(#arrow-green); }
+      .arrow-sever { stroke: #f85149; stroke-width: 2px; stroke-dasharray: 3; fill: none; }
+      .step-desc { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13.5px; fill: #c9d1d9; }
+      .badge { font-family: 'Segoe UI', monospace; font-size: 12px; fill: #79c0ff; font-weight: bold; }
+    </style>
+    <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3fb950"/>
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#d29922"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="700" class="bg" rx="12"/>
+
+  <!-- Title Header -->
+  <text x="50" y="45" class="title">LeetCode 19: Remove Nth Node From End of List</text>
+  <text x="50" y="70" class="subtitle">Two-Pointer Gap Method (One Pass O(N) Time, O(1) Space) + Sentinel Dummy Node</text>
+
+  <!-- Section 1: Phase 1 - Advance Fast pointer by N steps -->
+  <text x="50" y="115" class="section-title">Step 1: Create Gap of N Steps (Example: n = 2, List: 1 -> 2 -> 3 -> 4 -> 5)</text>
+  <text x="50" y="138" class="step-desc">Initialize <tspan fill="#d29922">dummy -> head</tspan>. Advance <tspan fill="#58a6ff">fast</tspan> pointer <tspan font-weight="bold">n=2 steps</tspan> ahead of head.</text>
+
+  <!-- Dummy Node -->
+  <g transform="translate(60, 160)">
+    <rect width="60" height="45" class="node-box-dummy"/>
+    <text x="30" y="28" class="node-text" fill="#8b949e">-1</text>
+    <text x="30" y="60" class="ptr-text-dummy">dummy / slow</text>
+  </g>
+  <path d="M 120 182 L 155 182" class="arrow"/>
+
+  <!-- Node 1 -->
+  <g transform="translate(160, 160)">
+    <rect width="60" height="45" class="node-box"/>
+    <text x="30" y="28" class="node-text">1</text>
+    <text x="30" y="-10" class="node-idx">head</text>
+  </g>
+  <path d="M 220 182 L 255 182" class="arrow"/>
+
+  <!-- Node 2 -->
+  <g transform="translate(260, 160)">
+    <rect width="60" height="45" class="node-box"/>
+    <text x="30" y="28" class="node-text">2</text>
+    <text x="30" y="-10" class="ptr-text-fast" fill="#79c0ff">step 1</text>
+  </g>
+  <path d="M 320 182 L 355 182" class="arrow"/>
+
+  <!-- Node 3 (Fast is here) -->
+  <g transform="translate(360, 160)">
+    <rect width="60" height="45" class="node-box" stroke="#58a6ff" stroke-width="2.5"/>
+    <text x="30" y="28" class="node-text" fill="#58a6ff">3</text>
+    <text x="30" y="-10" class="ptr-text-fast">fast (n=2 steps)</text>
+  </g>
+  <path d="M 420 182 L 455 182" class="arrow"/>
+
+  <!-- Node 4 -->
+  <g transform="translate(460, 160)">
+    <rect width="60" height="45" class="node-box"/>
+    <text x="30" y="28" class="node-text">4</text>
+  </g>
+  <path d="M 520 182 L 555 182" class="arrow"/>
+
+  <!-- Node 5 -->
+  <g transform="translate(560, 160)">
+    <rect width="60" height="45" class="node-box"/>
+    <text x="30" y="28" class="node-text">5</text>
+  </g>
+  <path d="M 620 182 L 655 182" class="arrow"/>
+  <text x="670" y="187" class="node-text" fill="#8b949e">null</text>
+
+  <line x1="50" y1="245" x2="950" y2="245" stroke="#30363d" stroke-width="1"/>
+
+  <!-- Section 2: Phase 2 - Move both until fast reaches null (or fast->next is null) -->
+  <text x="50" y="280" class="section-title">Step 2: Move Both Simultaneously Until fast reaches the End</text>
+  <text x="50" y="303" class="step-desc">Maintain constant distance. When <tspan fill="#58a6ff">fast reaches null</tspan>, <tspan fill="#3fb950">slow</tspan> sits precisely at the node <tspan font-weight="bold">before</tspan> the target node!</text>
+
+  <!-- Dummy Node -->
+  <g transform="translate(60, 335)">
+    <rect width="60" height="45" class="node-box-dummy"/>
+    <text x="30" y="28" class="node-text" fill="#8b949e">-1</text>
+    <text x="30" y="60" class="ptr-text-dummy">dummy</text>
+  </g>
+  <path d="M 120 357 L 155 357" class="arrow"/>
+
+  <!-- Node 1 -->
+  <g transform="translate(160, 335)">
+    <rect width="60" height="45" class="node-box"/>
+    <text x="30" y="28" class="node-text">1</text>
+  </g>
+  <path d="M 220 357 L 255 357" class="arrow"/>
+
+  <!-- Node 2 -->
+  <g transform="translate(260, 335)">
+    <rect width="60" height="45" class="node-box"/>
+    <text x="30" y="28" class="node-text">2</text>
+  </g>
+  <path d="M 320 357 L 355 357" class="arrow"/>
+
+  <!-- Node 3 (Slow is here) -->
+  <g transform="translate(360, 335)">
+    <rect width="60" height="45" class="node-box" stroke="#3fb950" stroke-width="2.5"/>
+    <text x="30" y="28" class="node-text" fill="#3fb950">3</text>
+    <text x="30" y="60" class="ptr-text-slow">slow (prev node)</text>
+  </g>
+  <path d="M 420 357 L 455 357" class="arrow"/>
+
+  <!-- Node 4 (Target to Delete) -->
+  <g transform="translate(460, 335)">
+    <rect width="60" height="45" class="node-box-del"/>
+    <text x="30" y="28" class="node-text-del">4</text>
+    <text x="30" y="-10" class="ptr-text-fast" fill="#f85149">TARGET (2nd from end)</text>
+  </g>
+  <path d="M 520 357 L 555 357" class="arrow"/>
+
+  <!-- Node 5 -->
+  <g transform="translate(560, 335)">
+    <rect width="60" height="45" class="node-box"/>
+    <text x="30" y="28" class="node-text">5</text>
+  </g>
+  <path d="M 620 357 L 655 357" class="arrow"/>
+
+  <!-- Fast at null -->
+  <g transform="translate(665, 335)">
+    <rect width="60" height="45" class="node-box" stroke="#58a6ff" stroke-width="2"/>
+    <text x="30" y="28" class="node-text" fill="#58a6ff">null</text>
+    <text x="30" y="-10" class="ptr-text-fast">fast</text>
+  </g>
+
+  <line x1="50" y1="425" x2="950" y2="425" stroke="#30363d" stroke-width="1"/>
+
+  <!-- Section 3: Deletion & Pointer Bypass -->
+  <text x="50" y="460" class="section-title">Step 3: Bypass Target Node &amp; Free Memory</text>
+  <text x="50" y="483" class="step-desc">Execute: <tspan font-family="monospace" fill="#3fb950">slow.next = slow.next.next;</tspan> and <tspan font-family="monospace" fill="#f85149">delete(target);</tspan> Return <tspan font-family="monospace" fill="#d29922">dummy.next</tspan>.</text>
+
+  <!-- Dummy Node -->
+  <g transform="translate(60, 515)">
+    <rect width="60" height="45" class="node-box-dummy"/>
+    <text x="30" y="28" class="node-text" fill="#8b949e">-1</text>
+  </g>
+  <path d="M 120 537 L 155 537" class="arrow"/>
+
+  <!-- Node 1 -->
+  <g transform="translate(160, 515)">
+    <rect width="60" height="45" class="node-box"/>
+    <text x="30" y="28" class="node-text">1</text>
+  </g>
+  <path d="M 220 537 L 255 537" class="arrow"/>
+
+  <!-- Node 2 -->
+  <g transform="translate(260, 515)">
+    <rect width="60" height="45" class="node-box"/>
+    <text x="30" y="28" class="node-text">2</text>
+  </g>
+  <path d="M 320 537 L 355 537" class="arrow"/>
+
+  <!-- Node 3 -->
+  <g transform="translate(360, 515)">
+    <rect width="60" height="45" class="node-box" stroke="#3fb950" stroke-width="2"/>
+    <text x="30" y="28" class="node-text">3</text>
+  </g>
+
+  <!-- Bypass Curve Arrow from Node 3 directly to Node 5 -->
+  <path d="M 420 530 Q 490 470 555 530" class="arrow-bypass"/>
+
+  <!-- Node 4 (Deleted) -->
+  <g transform="translate(460, 525)" opacity="0.4">
+    <rect width="60" height="45" class="node-box-del"/>
+    <text x="30" y="28" class="node-text-del">4</text>
+    <line x1="10" y1="10" x2="50" y2="35" stroke="#f85149" stroke-width="3"/>
+    <line x1="50" y1="10" x2="10" y2="35" stroke="#f85149" stroke-width="3"/>
+    <text x="30" y="60" class="ptr-text-fast" fill="#f85149">DELETED</text>
+  </g>
+
+  <!-- Node 5 -->
+  <g transform="translate(560, 515)">
+    <rect width="60" height="45" class="node-box"/>
+    <text x="30" y="28" class="node-text">5</text>
+  </g>
+  <path d="M 620 537 L 655 537" class="arrow"/>
+  <text x="670" y="542" class="node-text" fill="#8b949e">null</text>
+
+  <!-- Key Insight Callout Box -->
+  <g transform="translate(730, 140)">
+    <rect width="230" height="480" fill="#161b22" stroke="#30363d" stroke-width="1.5" rx="8"/>
+    <text x="20" y="35" class="badge" fill="#58a6ff">💡 KEY INSIGHTS</text>
+    
+    <text x="20" y="70" class="step-desc" font-weight="bold" fill="#f0883e">Why Dummy Node?</text>
+    <text x="20" y="95" class="step-desc" font-size="12">If n = list length, the</text>
+    <text x="20" y="115" class="step-desc" font-size="12"><tspan fill="#f85149">head node</tspan> must be</text>
+    <text x="20" y="135" class="step-desc" font-size="12">removed.</text>
+    <text x="20" y="160" class="step-desc" font-size="12">Dummy node handles this</text>
+    <text x="20" y="180" class="step-desc" font-size="12">seamlessly without</text>
+    <text x="20" y="200" class="step-desc" font-size="12">special <tspan fill="#79c0ff">if(head==null)</tspan> checks!</text>
+
+    <line x1="20" y1="225" x2="210" y2="225" stroke="#30363d"/>
+
+    <text x="20" y="255" class="step-desc" font-weight="bold" fill="#3fb950">Complexity</text>
+    <text x="20" y="280" class="step-desc" font-size="12">• Time: <tspan fill="#79c0ff" font-weight="bold">O(N)</tspan> (1-pass)</text>
+    <text x="20" y="305" class="step-desc" font-size="12">• Space: <tspan fill="#79c0ff" font-weight="bold">O(1)</tspan> (pointers)</text>
+
+    <line x1="20" y1="330" x2="210" y2="330" stroke="#30363d"/>
+
+    <text x="20" y="360" class="step-desc" font-weight="bold" fill="#d29922">Pointer Gap Rule</text>
+    <text x="20" y="385" class="step-desc" font-size="12">Distance between slow</text>
+    <text x="20" y="405" class="step-desc" font-size="12">and fast is always</text>
+    <text x="20" y="425" class="step-desc" font-size="12"><tspan fill="#79c0ff" font-weight="bold">n + 1</tspan> nodes so slow</text>
+    <text x="20" y="445" class="step-desc" font-size="12">stops at (target - 1).</text>
+  </g>
+</svg>

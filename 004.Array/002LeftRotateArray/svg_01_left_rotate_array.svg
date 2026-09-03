@@ -1,0 +1,205 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 640" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#9333ea"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#fbbf24"/>
+    </marker>
+  </defs>
+
+  <rect width="950" height="640" rx="16" fill="url(#bgGrad)"/>
+
+  <!-- Title -->
+  <rect x="30" y="20" width="890" height="60" rx="12" fill="url(#cardGrad)" filter="url(#shadow)" stroke="#475569" stroke-width="1"/>
+  <text x="50" y="57" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#f8fafc">Left Rotate Array by K Places (Brute Force vs Optimal 3-Reversal)</text>
+  <rect x="750" y="35" width="150" height="30" rx="15" fill="#38bdf8" fill-opacity="0.15" stroke="#38bdf8" stroke-width="1"/>
+  <text x="825" y="55" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#38bdf8" text-anchor="middle">GFG / LeetCode</text>
+
+  <!-- Section 1: Approach 1 - Brute Force (Temp Array) -->
+  <g transform="translate(30, 95)">
+    <rect width="890" height="175" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fbbf24">Approach 1: Brute Force (Auxiliary Temp Array of Size K)</text>
+    <text x="20" y="48" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">Example: Array = [1, 2, 3, 4, 5, 6], k = 2. Store first 2 items in temp, shift remaining left, copy temp to back.</text>
+
+    <!-- Visual Steps -->
+    <g transform="translate(30, 65)">
+      <!-- Step 1: Copy to temp -->
+      <text x="0" y="20" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#cbd5e1">1. temp = [nums[0..k-1]]</text>
+      <rect x="150" y="0" width="35" height="30" rx="6" fill="url(#amberGrad)"/>
+      <text x="167" y="20" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+      <rect x="190" y="0" width="35" height="30" rx="6" fill="url(#amberGrad)"/>
+      <text x="207" y="20" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+
+      <!-- Step 2: Shift left -->
+      <g transform="translate(0, 40)">
+        <text x="0" y="20" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#cbd5e1">2. Shift left (nums[i-k]=nums[i]):</text>
+        <rect x="190" y="0" width="32" height="30" rx="5" fill="url(#blueGrad)"/>
+        <text x="206" y="20" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+        <rect x="225" y="0" width="32" height="30" rx="5" fill="url(#blueGrad)"/>
+        <text x="241" y="20" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">4</text>
+        <rect x="260" y="0" width="32" height="30" rx="5" fill="url(#blueGrad)"/>
+        <text x="276" y="20" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">5</text>
+        <rect x="295" y="0" width="32" height="30" rx="5" fill="url(#blueGrad)"/>
+        <text x="311" y="20" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">6</text>
+      </g>
+
+      <!-- Step 3: Copy back -->
+      <g transform="translate(0, 78)">
+        <text x="0" y="20" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#cbd5e1">3. Result Array:</text>
+        <rect x="120" y="0" width="32" height="30" rx="5" fill="url(#blueGrad)"/>
+        <text x="136" y="20" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+        <rect x="155" y="0" width="32" height="30" rx="5" fill="url(#blueGrad)"/>
+        <text x="171" y="20" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">4</text>
+        <rect x="190" y="0" width="32" height="30" rx="5" fill="url(#blueGrad)"/>
+        <text x="206" y="20" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">5</text>
+        <rect x="225" y="0" width="32" height="30" rx="5" fill="url(#blueGrad)"/>
+        <text x="241" y="20" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">6</text>
+        <rect x="260" y="0" width="32" height="30" rx="5" fill="url(#amberGrad)"/>
+        <text x="276" y="20" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+        <rect x="295" y="0" width="32" height="30" rx="5" fill="url(#amberGrad)"/>
+        <text x="311" y="20" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+      </g>
+    </g>
+
+    <!-- Side card for complexity -->
+    <rect x="580" y="45" width="285" height="115" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="595" y="70" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fbbf24">Brute Force Complexity:</text>
+    <text x="595" y="90" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">Time: O(k) + O(n-k) + O(k) = O(n)</text>
+    <text x="595" y="110" font-family="system-ui, sans-serif" font-size="11" fill="#f87171">Space: O(k) Auxiliary Vector / Array</text>
+    <text x="595" y="130" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8">Drawback: Allocates extra heap memory</text>
+  </g>
+
+  <!-- Section 2: Approach 2 - Optimal 3-Reversal In-Place -->
+  <g transform="translate(30, 285)">
+    <rect width="890" height="215" rx="12" fill="#1e293b" stroke="#059669" stroke-width="1.5"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#34d399">Approach 2: Optimal In-Place 3-Reversal Algorithm (O(1) Space)</text>
+    <text x="20" y="48" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">3 In-place reversals transform the array without allocating any auxiliary memory!</text>
+
+    <!-- 3 Steps Visual -->
+    <g transform="translate(30, 65)">
+      <!-- Initial State -->
+      <text x="0" y="20" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">Initial Array:</text>
+      <g transform="translate(180, 0)">
+        <rect x="0" y="0" width="30" height="28" rx="5" fill="url(#blueGrad)"/>
+        <text x="15" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+        <rect x="33" y="0" width="30" height="28" rx="5" fill="url(#blueGrad)"/>
+        <text x="48" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+        <rect x="66" y="0" width="30" height="28" rx="5" fill="url(#purpleGrad)"/>
+        <text x="81" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+        <rect x="99" y="0" width="30" height="28" rx="5" fill="url(#purpleGrad)"/>
+        <text x="114" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">4</text>
+        <rect x="132" y="0" width="30" height="28" rx="5" fill="url(#purpleGrad)"/>
+        <text x="147" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">5</text>
+        <rect x="165" y="0" width="30" height="28" rx="5" fill="url(#purpleGrad)"/>
+        <text x="180" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">6</text>
+      </g>
+
+      <!-- Step 1: reverse(0, k-1) -->
+      <g transform="translate(0, 36)">
+        <text x="0" y="20" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8">1. Reverse first k elements [0..k-1]:</text>
+        <g transform="translate(240, 0)">
+          <rect x="0" y="0" width="30" height="28" rx="5" fill="url(#amberGrad)"/>
+          <text x="15" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+          <rect x="33" y="0" width="30" height="28" rx="5" fill="url(#amberGrad)"/>
+          <text x="48" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+          <text x="80" y="19" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8">| 3  4  5  6 (untouched)</text>
+        </g>
+      </g>
+
+      <!-- Step 2: reverse(k, n-1) -->
+      <g transform="translate(0, 72)">
+        <text x="0" y="20" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#c084fc">2. Reverse last n-k elements [k..n-1]:</text>
+        <g transform="translate(240, 0)">
+          <text x="0" y="19" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8">2  1 |</text>
+          <rect x="40" y="0" width="30" height="28" rx="5" fill="url(#purpleGrad)"/>
+          <text x="55" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">6</text>
+          <rect x="73" y="0" width="30" height="28" rx="5" fill="url(#purpleGrad)"/>
+          <text x="88" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">5</text>
+          <rect x="106" y="0" width="30" height="28" rx="5" fill="url(#purpleGrad)"/>
+          <text x="121" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">4</text>
+          <rect x="139" y="0" width="30" height="28" rx="5" fill="url(#purpleGrad)"/>
+          <text x="154" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+        </g>
+      </g>
+
+      <!-- Step 3: reverse(0, n-1) -->
+      <g transform="translate(0, 108)">
+        <text x="0" y="20" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">3. Reverse entire array [0..n-1]:</text>
+        <g transform="translate(240, 0)">
+          <rect x="0" y="0" width="30" height="28" rx="5" fill="url(#emeraldGrad)"/>
+          <text x="15" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+          <rect x="33" y="0" width="30" height="28" rx="5" fill="url(#emeraldGrad)"/>
+          <text x="48" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">4</text>
+          <rect x="66" y="0" width="30" height="28" rx="5" fill="url(#emeraldGrad)"/>
+          <text x="81" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">5</text>
+          <rect x="99" y="0" width="30" height="28" rx="5" fill="url(#emeraldGrad)"/>
+          <text x="114" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">6</text>
+          <rect x="132" y="0" width="30" height="28" rx="5" fill="url(#emeraldGrad)"/>
+          <text x="147" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+          <rect x="165" y="0" width="30" height="28" rx="5" fill="url(#emeraldGrad)"/>
+          <text x="180" y="19" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+
+          <text x="210" y="19" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">FINAL ANSWER!</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- Section 3: Summary Comparison Box -->
+  <g transform="translate(30, 515)">
+    <rect width="890" height="105" rx="12" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <text x="20" y="25" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">Comparison Table</text>
+
+    <g transform="translate(20, 35)">
+      <text x="10" y="18" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">Approach</text>
+      <text x="200" y="18" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">Time Complexity</text>
+      <text x="380" y="18" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">Auxiliary Space</text>
+      <text x="540" y="18" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">In-Place?</text>
+
+      <line x1="0" y1="26" x2="850" y2="26" stroke="#334155" stroke-width="1"/>
+
+      <!-- Row 1 -->
+      <text x="10" y="46" font-family="system-ui, sans-serif" font-size="11" fill="#fbbf24">1. Brute Force (Temp Array)</text>
+      <text x="200" y="46" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">O(N)</text>
+      <text x="380" y="46" font-family="system-ui, sans-serif" font-size="11" fill="#f87171">O(K)</text>
+      <text x="540" y="46" font-family="system-ui, sans-serif" font-size="11" fill="#f87171">No (Extra buffer)</text>
+
+      <!-- Row 2 -->
+      <text x="10" y="66" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">2. Optimal 3-Reversals</text>
+      <text x="200" y="66" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">O(N)</text>
+      <text x="380" y="66" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">O(1)</text>
+      <text x="540" y="66" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">Yes (Optimal)</text>
+    </g>
+  </g>
+</svg>

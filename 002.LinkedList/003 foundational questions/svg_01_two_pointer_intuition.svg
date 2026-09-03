@@ -1,0 +1,90 @@
+<svg viewBox="0 0 840 400" xmlns="http://www.w3.org/2000/svg" width="100%" height="400" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <linearGradient id="fastGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+    <linearGradient id="slowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="mathBoxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <marker id="arrFast" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#ef4444" />
+    </marker>
+    <marker id="arrSlow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#38bdf8" />
+    </marker>
+    <filter id="boxShadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" rx="12" fill="#090d16"/>
+
+  <!-- Header -->
+  <text x="25" y="32" fill="#38bdf8" font-size="16" font-weight="bold">Middle of Linked List — 2-Pointer Intuition (Tortoise &amp; Hare)</text>
+  <text x="25" y="52" fill="#94a3b8" font-size="12">Mathematical derivation of why 2x speed finds the exact midpoint</text>
+
+  <!-- Left Column: Physics / Math Derivation -->
+  <g transform="translate(25, 70)" filter="url(#boxShadow)">
+    <rect width="370" height="300" rx="10" fill="url(#mathBoxGrad)" stroke="#334155" stroke-width="1.5"/>
+    <rect x="0" y="0" width="370" height="32" rx="10" fill="#1e293b"/>
+    <text x="15" y="21" fill="#f8fafc" font-size="13" font-weight="bold">📐 Distance, Speed &amp; Time Derivation</text>
+
+    <!-- Formula Lines -->
+    <text x="20" y="60" fill="#cbd5e1" font-size="13">Two runners <tspan fill="#ef4444" font-weight="bold">A (Fast)</tspan> and <tspan fill="#38bdf8" font-weight="bold">B (Slow)</tspan>:</text>
+    <text x="20" y="85" fill="#94a3b8" font-size="12">• When A covers distance <tspan fill="#f8fafc" font-weight="bold">X</tspan>, B must cover <tspan fill="#f8fafc" font-weight="bold">X / 2</tspan></text>
+    <text x="20" y="105" fill="#94a3b8" font-size="12">• Both run for the exact same time <tspan fill="#f8fafc" font-weight="bold">T (T_A = T_B)</tspan></text>
+
+    <!-- Formula Box -->
+    <rect x="20" y="120" width="330" height="95" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="35" y="145" fill="#fbbf24" font-size="12" font-family="monospace">Distance = Speed × Time  ⟹  D = S × T</text>
+    <text x="35" y="170" fill="#f8fafc" font-size="12" font-family="monospace">D_A / D_B = S_A / S_B   [since T_A = T_B]</text>
+    <text x="35" y="195" fill="#34d399" font-size="13" font-weight="bold" font-family="monospace">X / (X / 2) = 2  ⟹  Speed_A = 2 × Speed_B</text>
+
+    <!-- Key Takeaway Box -->
+    <rect x="20" y="230" width="330" height="55" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+    <text x="35" y="252" fill="#a7f3d0" font-size="12" font-weight="bold">🎯 Conclusion:</text>
+    <text x="35" y="272" fill="#ffffff" font-size="12"><tspan fill="#ef4444" font-weight="bold">Fast</tspan> moves <tspan font-weight="bold">2 nodes/step</tspan> while <tspan fill="#38bdf8" font-weight="bold">Slow</tspan> moves <tspan font-weight="bold">1 node/step</tspan>.</text>
+  </g>
+
+  <!-- Right Column: Visual Race Track on LL -->
+  <g transform="translate(425, 70)" filter="url(#boxShadow)">
+    <rect width="390" height="300" rx="10" fill="url(#mathBoxGrad)" stroke="#334155" stroke-width="1.5"/>
+    <rect x="0" y="0" width="390" height="32" rx="10" fill="#1e293b"/>
+    <text x="15" y="21" fill="#f8fafc" font-size="13" font-weight="bold">🏃‍♂️ Pointer Race Simulation</text>
+
+    <!-- Linked List Track -->
+    <text x="20" y="60" fill="#cbd5e1" font-size="12">Total Distance = <tspan fill="#f8fafc" font-weight="bold">X nodes</tspan></text>
+
+    <!-- Track Line -->
+    <line x1="30" y1="95" x2="360" y2="95" stroke="#475569" stroke-width="6" stroke-linecap="round"/>
+    
+    <!-- Mid Point Marker -->
+    <line x1="195" y1="80" x2="195" y2="110" stroke="#fbbf24" stroke-width="3"/>
+    <text x="195" y="70" fill="#fbbf24" font-size="11" font-weight="bold" text-anchor="middle">MIDPOINT (X/2)</text>
+
+    <!-- End Point Marker -->
+    <line x1="360" y1="80" x2="360" y2="110" stroke="#ef4444" stroke-width="3"/>
+    <text x="360" y="70" fill="#ef4444" font-size="11" font-weight="bold" text-anchor="middle">END (X)</text>
+
+    <!-- Slow Pointer Progress -->
+    <path d="M 30 130 L 190 130" stroke="#38bdf8" stroke-width="3" marker-end="url(#arrSlow)"/>
+    <rect x="110" y="145" width="85" height="26" rx="5" fill="url(#slowGrad)"/>
+    <text x="152" y="162" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">SLOW (1x)</text>
+
+    <!-- Fast Pointer Progress -->
+    <path d="M 30 200 L 355 200" stroke="#ef4444" stroke-width="3" marker-end="url(#arrFast)"/>
+    <rect x="270" y="215" width="85" height="26" rx="5" fill="url(#fastGrad)"/>
+    <text x="312" y="232" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">FAST (2x)</text>
+
+    <!-- Explanatory note -->
+    <rect x="20" y="252" width="350" height="35" rx="6" fill="#0f172a"/>
+    <text x="195" y="274" fill="#94a3b8" font-size="11" text-anchor="middle">When Fast reaches the End, Slow lands precisely on the Mid!</text>
+  </g>
+</svg>

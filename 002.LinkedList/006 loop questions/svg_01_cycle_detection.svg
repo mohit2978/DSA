@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 650" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 22px; font-weight: bold; fill: #58a6ff; }
+      .subtitle { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; fill: #8b949e; }
+      .section-title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #f0883e; }
+      .node-box { fill: #161b22; stroke: #30363d; stroke-width: 2px; rx: 8px; }
+      .node-box-cycle { fill: #1f242c; stroke: #58a6ff; stroke-width: 2px; rx: 8px; }
+      .node-box-meet { fill: #0d2818; stroke: #3fb950; stroke-width: 2.5px; rx: 8px; }
+      .node-text { font-family: 'Segoe UI', monospace; font-size: 16px; font-weight: bold; fill: #c9d1d9; text-anchor: middle; }
+      .node-text-meet { font-family: 'Segoe UI', monospace; font-size: 16px; font-weight: bold; fill: #56d364; text-anchor: middle; }
+      .ptr-slow { font-family: 'Segoe UI', system-ui; font-size: 13px; font-weight: bold; fill: #3fb950; text-anchor: middle; }
+      .ptr-fast { font-family: 'Segoe UI', system-ui; font-size: 13px; font-weight: bold; fill: #f0883e; text-anchor: middle; }
+      .arrow { stroke: #58a6ff; stroke-width: 2.5px; fill: none; marker-end: url(#arrow-head); }
+      .arrow-cycle { stroke: #d29922; stroke-width: 2.5px; fill: none; marker-end: url(#arrow-amber); }
+      .step-desc { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13.5px; fill: #c9d1d9; }
+      .box-panel { fill: #161b22; stroke: #30363d; stroke-width: 1.5px; rx: 8px; }
+    </style>
+    <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#d29922"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="650" class="bg" rx="12"/>
+
+  <!-- Title Header -->
+  <text x="50" y="45" class="title">LeetCode 141: Linked List Cycle Detection</text>
+  <text x="50" y="70" class="subtitle">Floyd's Cycle-Finding Algorithm (Tortoise &amp; Hare) — O(N) Time, O(1) Space</text>
+
+  <!-- Section 1: Visual Cycle Diagram -->
+  <text x="50" y="115" class="section-title">Tortoise (Slow: 1 step) &amp; Hare (Fast: 2 steps) Pointer Movement</text>
+
+  <!-- Linear part: Node 3 -> Node 2 -->
+  <g transform="translate(60, 160)">
+    <rect width="55" height="42" class="node-box"/>
+    <text x="27.5" y="26" class="node-text">3</text>
+    <text x="27.5" y="-10" class="ptr-slow" fill="#79c0ff">head</text>
+  </g>
+  <path d="M 115 181 L 155 181" class="arrow"/>
+
+  <g transform="translate(160, 160)">
+    <rect width="55" height="42" class="node-box-cycle"/>
+    <text x="27.5" y="26" class="node-text" fill="#58a6ff">2</text>
+    <text x="27.5" y="-10" class="ptr-slow" fill="#d29922">Loop Start</text>
+  </g>
+  <path d="M 215 181 L 265 181" class="arrow"/>
+
+  <!-- Cycle Loop (Nodes: 2 -> 0 -> -4 -> 5 -> 2) -->
+  <g transform="translate(270, 160)">
+    <rect width="55" height="42" class="node-box-cycle"/>
+    <text x="27.5" y="26" class="node-text">0</text>
+  </g>
+  <path d="M 325 181 L 375 181" class="arrow"/>
+
+  <g transform="translate(380, 160)">
+    <rect width="65" height="42" class="node-box-meet"/>
+    <text x="32.5" y="26" class="node-text-meet">-4</text>
+    <text x="32.5" y="-10" class="ptr-slow" fill="#3fb950">Meeting Point (slow == fast)</text>
+  </g>
+  <path d="M 445 181 L 495 181" class="arrow"/>
+
+  <g transform="translate(500, 160)">
+    <rect width="55" height="42" class="node-box-cycle"/>
+    <text x="27.5" y="26" class="node-text">5</text>
+  </g>
+
+  <!-- Cycle Back Arrow from Node 5 back to Node 2 -->
+  <path d="M 527 202 C 527 280, 187 280, 187 205" class="arrow-cycle"/>
+  <text x="350" y="265" class="ptr-fast" fill="#d29922">Cycle back link (5 → 2)</text>
+
+  <!-- Section 2: Step-by-Step Table & Analysis -->
+  <line x1="50" y1="310" x2="950" y2="310" stroke="#30363d" stroke-width="1"/>
+  <text x="50" y="345" class="section-title">Why Tortoise and Hare Always Meet</text>
+
+  <!-- Left Card: Relative Speed Mechanism -->
+  <g transform="translate(50, 370)">
+    <rect width="420" height="240" class="box-panel"/>
+    <text x="20" y="30" class="section-title" fill="#58a6ff">1. Relative Speed Principle</text>
+    <text x="20" y="65" class="step-desc">• <tspan fill="#3fb950" font-weight="bold">Slow pointer</tspan> speed: 1 node / iteration.</text>
+    <text x="20" y="95" class="step-desc">• <tspan fill="#f0883e" font-weight="bold">Fast pointer</tspan> speed: 2 nodes / iteration.</text>
+    <text x="20" y="125" class="step-desc">• Relative speed: 2 - 1 = <tspan fill="#79c0ff" font-weight="bold">1 node / step</tspan>.</text>
+    <text x="20" y="155" class="step-desc">• Every iteration, the gap between Fast and Slow</text>
+    <text x="20" y="175" class="step-desc">  <tspan fill="#79c0ff" font-weight="bold">reduces by exactly 1 unit</tspan>.</text>
+    <text x="20" y="205" class="step-desc">• Gap sequence: d, d-1, d-2, ... , 1, <tspan fill="#3fb950" font-weight="bold">0 (Collision!)</tspan>.</text>
+  </g>
+
+  <!-- Right Card: Termination & Edge Cases -->
+  <g transform="translate(500, 370)">
+    <rect width="450" height="240" class="box-panel"/>
+    <text x="20" y="30" class="section-title" fill="#d29922">2. Termination &amp; Constraints</text>
+    <text x="20" y="65" class="step-desc" font-weight="bold" fill="#f0883e">Case A: No Cycle (Linear List)</text>
+    <text x="20" y="90" class="step-desc">fast or fast.next reaches <tspan fill="#8b949e">null</tspan> → return <tspan fill="#f85149" font-weight="bold">false</tspan>.</text>
+
+    <line x1="20" y1="115" x2="430" y2="115" stroke="#30363d"/>
+
+    <text x="20" y="145" class="step-desc" font-weight="bold" fill="#3fb950">Case B: Cycle Exists</text>
+    <text x="20" y="170" class="step-desc">slow == fast occurs in at most N steps → return <tspan fill="#3fb950" font-weight="bold">true</tspan>.</text>
+    <text x="20" y="200" class="step-desc">• Time: <tspan fill="#3fb950" font-weight="bold">O(N)</tspan> | Space: <tspan fill="#3fb950" font-weight="bold">O(1)</tspan> (No extra memory!)</text>
+  </g>
+
+  <!-- Top Right Callout -->
+  <g transform="translate(630, 110)">
+    <rect width="320" height="175" class="box-panel" stroke="#3fb950"/>
+    <text x="15" y="30" class="section-title" fill="#3fb950">⚡ Unified Loop Rule</text>
+    <text x="15" y="60" class="step-desc" font-family="monospace" fill="#79c0ff">while(fast &amp;&amp; fast-&gt;next) {</text>
+    <text x="30" y="85" class="step-desc" font-family="monospace" fill="#79c0ff">  slow = slow-&gt;next;</text>
+    <text x="30" y="110" class="step-desc" font-family="monospace" fill="#79c0ff">  fast = fast-&gt;next-&gt;next;</text>
+    <text x="30" y="135" class="step-desc" font-family="monospace" fill="#3fb950">  if(slow == fast) return true;</text>
+    <text x="15" y="160" class="step-desc" font-family="monospace" fill="#79c0ff">}</text>
+  </g>
+</svg>

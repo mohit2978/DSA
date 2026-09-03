@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 22px; font-weight: bold; fill: #58a6ff; }
+      .subtitle { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; fill: #8b949e; }
+      .section-title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #f0883e; }
+      .node-box { fill: #161b22; stroke: #30363d; stroke-width: 2px; rx: 8px; }
+      .node-box-dup { fill: #3b1219; stroke: #f85149; stroke-width: 2px; rx: 8px; }
+      .node-box-keep { fill: #0d2818; stroke: #3fb950; stroke-width: 2px; rx: 8px; }
+      .node-text { font-family: 'Segoe UI', monospace; font-size: 16px; font-weight: bold; fill: #c9d1d9; text-anchor: middle; }
+      .node-text-dup { font-family: 'Segoe UI', monospace; font-size: 16px; font-weight: bold; fill: #ff7b72; text-anchor: middle; }
+      .node-text-keep { font-family: 'Segoe UI', monospace; font-size: 16px; font-weight: bold; fill: #56d364; text-anchor: middle; }
+      .ptr-text { font-family: 'Segoe UI', system-ui; font-size: 13px; font-weight: bold; fill: #58a6ff; text-anchor: middle; }
+      .arrow { stroke: #58a6ff; stroke-width: 2.5px; fill: none; marker-end: url(#arrow-head); }
+      .arrow-bypass { stroke: #3fb950; stroke-width: 3px; stroke-dasharray: 6; fill: none; marker-end: url(#arrow-green); }
+      .step-desc { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13.5px; fill: #c9d1d9; }
+      .box-panel { fill: #161b22; stroke: #30363d; stroke-width: 1.5px; rx: 8px; }
+    </style>
+    <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="600" class="bg" rx="12"/>
+
+  <!-- Header -->
+  <text x="50" y="45" class="title">LeetCode 83: Remove Duplicates from Sorted List (Easy)</text>
+  <text x="50" y="70" class="subtitle">Goal: Retain exactly one occurrence of each element (e.g., [1, 1, 2, 3, 3] → [1, 2, 3])</text>
+
+  <!-- Section 1: Visual Trace -->
+  <text x="50" y="115" class="section-title">Step-by-Step Pointer Traversal &amp; In-Place Bypass</text>
+  <text x="50" y="138" class="step-desc">Condition: If <tspan font-family="monospace" fill="#58a6ff">curr.val == curr.next.val</tspan> → <tspan font-family="monospace" fill="#3fb950">curr.next = curr.next.next</tspan> (do NOT advance curr yet). Else <tspan font-family="monospace" fill="#79c0ff">curr = curr.next</tspan>.</text>
+
+  <!-- Row 1: Initial list with duplicate match -->
+  <g transform="translate(60, 160)">
+    <!-- Node 1 (curr) -->
+    <g transform="translate(0, 0)">
+      <rect width="60" height="45" class="node-box-keep"/>
+      <text x="30" y="28" class="node-text-keep">1</text>
+      <text x="30" y="65" class="ptr-text">curr</text>
+    </g>
+    <path d="M 60 22 L 95 22" class="arrow"/>
+
+    <!-- Duplicate Node 1 (curr.next) -->
+    <g transform="translate(100, 0)">
+      <rect width="60" height="45" class="node-box-dup"/>
+      <text x="30" y="28" class="node-text-dup">1</text>
+      <text x="30" y="-10" class="ptr-text" fill="#f85149">curr.next (Duplicate!)</text>
+    </g>
+    <path d="M 160 22 L 195 22" class="arrow"/>
+
+    <!-- Node 2 -->
+    <g transform="translate(200, 0)">
+      <rect width="60" height="45" class="node-box"/>
+      <text x="30" y="28" class="node-text">2</text>
+    </g>
+    <path d="M 260 22 L 295 22" class="arrow"/>
+
+    <!-- Node 3 -->
+    <g transform="translate(300, 0)">
+      <rect width="60" height="45" class="node-box"/>
+      <text x="30" y="28" class="node-text">3</text>
+    </g>
+    <path d="M 360 22 L 395 22" class="arrow"/>
+
+    <!-- Duplicate Node 3 -->
+    <g transform="translate(400, 0)">
+      <rect width="60" height="45" class="node-box-dup"/>
+      <text x="30" y="28" class="node-text-dup">3</text>
+    </g>
+    <path d="M 460 22 L 495 22" class="arrow"/>
+    <text x="510" y="28" class="node-text" fill="#8b949e">null</text>
+
+    <!-- Bypass Arc from Node 1 to Node 2 -->
+    <path d="M 60 15 Q 130 -30 195 15" class="arrow-bypass"/>
+  </g>
+
+  <!-- Row 2: Resulting list -->
+  <text x="50" y="300" class="section-title">Resulting Clean Linked List</text>
+  <g transform="translate(60, 320)">
+    <!-- Node 1 -->
+    <g transform="translate(0, 0)">
+      <rect width="60" height="45" class="node-box-keep"/>
+      <text x="30" y="28" class="node-text-keep">1</text>
+    </g>
+    <path d="M 60 22 L 115 22" class="arrow-bypass"/>
+
+    <!-- Node 2 -->
+    <g transform="translate(120, 0)">
+      <rect width="60" height="45" class="node-box-keep"/>
+      <text x="30" y="28" class="node-text-keep">2</text>
+    </g>
+    <path d="M 180 22 L 235 22" class="arrow-bypass"/>
+
+    <!-- Node 3 -->
+    <g transform="translate(240, 0)">
+      <rect width="60" height="45" class="node-box-keep"/>
+      <text x="30" y="28" class="node-text-keep">3</text>
+    </g>
+    <path d="M 300 22 L 335 22" class="arrow"/>
+    <text x="350" y="28" class="node-text" fill="#8b949e">null</text>
+  </g>
+
+  <!-- Code Snippet & Notes Panel -->
+  <g transform="translate(560, 110)">
+    <rect width="390" height="440" class="box-panel"/>
+    <text x="20" y="35" class="section-title" fill="#58a6ff">⚡ Core Logic &amp; Nuance</text>
+
+    <text x="20" y="70" class="step-desc" font-weight="bold" fill="#f0883e">Common Pitfall Avoided:</text>
+    <text x="20" y="95" class="step-desc">Never advance <tspan font-family="monospace" fill="#79c0ff">curr = curr.next</tspan> when deleting!</text>
+    <text x="20" y="120" class="step-desc">There could be 3 or more consecutive duplicates</text>
+    <text x="20" y="145" class="step-desc">(e.g., 1 -> 1 -> 1). Only advance <tspan font-family="monospace" fill="#79c0ff">curr</tspan> on mismatch.</text>
+
+    <line x1="20" y1="175" x2="370" y2="175" stroke="#30363d"/>
+
+    <text x="20" y="205" class="step-desc" font-weight="bold" fill="#3fb950">Pseudocode:</text>
+    <text x="20" y="235" class="step-desc" font-family="monospace" fill="#79c0ff">while (curr != null &amp;&amp; curr.next != null) {</text>
+    <text x="20" y="260" class="step-desc" font-family="monospace" fill="#79c0ff">  if (curr.val == curr.next.val) {</text>
+    <text x="20" y="285" class="step-desc" font-family="monospace" fill="#f85149">    curr.next = curr.next.next; // delete</text>
+    <text x="20" y="310" class="step-desc" font-family="monospace" fill="#79c0ff">  } else {</text>
+    <text x="20" y="335" class="step-desc" font-family="monospace" fill="#3fb950">    curr = curr.next; // advance</text>
+    <text x="20" y="360" class="step-desc" font-family="monospace" fill="#79c0ff">  }</text>
+    <text x="20" y="385" class="step-desc" font-family="monospace" fill="#79c0ff">}</text>
+
+    <line x1="20" y1="405" x2="370" y2="405" stroke="#30363d"/>
+    <text x="20" y="425" class="step-desc" font-size="12">Time: <tspan fill="#3fb950" font-weight="bold">O(N)</tspan> | Space: <tspan fill="#3fb950" font-weight="bold">O(1)</tspan> (In-place)</text>
+  </g>
+</svg>

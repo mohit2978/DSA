@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 860" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .card { fill: #161b22; stroke: #30363d; stroke-width: 1.5; rx: 10; }
+      .header-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 20px; font-weight: 700; fill: #58a6ff; }
+      .step-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; font-weight: 700; fill: #f0883e; }
+      .sub-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 600; fill: #8b949e; }
+      .node-box { fill: #1f6feb; stroke: #58a6ff; stroke-width: 1.5; rx: 6; }
+      .node-loop { fill: #6e40c9; stroke: #a371f7; stroke-width: 1.5; rx: 6; }
+      .node-val { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+      .desc-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; fill: #c9d1d9; }
+      .code-snippet { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: #7ee787; }
+      .ptr-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 700; text-anchor: middle; }
+      .warn-box { fill: #3b1219; stroke: #f85149; stroke-width: 1.5; rx: 8; }
+    </style>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff" />
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a371f7" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f85149" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="860" class="bg" />
+
+  <!-- Header -->
+  <g transform="translate(30, 30)">
+    <text x="0" y="0" class="header-title">Detect and Remove Loop in Linked List (Floyd's Algorithm + Safe Unlinking)</text>
+    <text x="0" y="24" class="sub-title">Handling Standard Cycle Entry vs. Full Circular Loop Edge Case (where Meeting Point == Head)</text>
+  </g>
+
+  <!-- Case 1: Standard Loop -->
+  <g transform="translate(30, 75)">
+    <rect width="1040" height="360" class="card" />
+    <text x="25" y="30" class="step-title">Case 1: Standard Loop (Loop Starts at Intermediate Node)</text>
+
+    <!-- Linear Part -->
+    <g transform="translate(35, 60)">
+      <!-- Head 1 -->
+      <g transform="translate(0, 0)">
+        <rect width="45" height="30" class="node-box"/><text x="22.5" y="20" class="node-val">1</text>
+        <text x="22.5" y="-6" class="ptr-text" fill="#58a6ff">slow = head</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+      </g>
+      <!-- Node 2 -->
+      <g transform="translate(90, 0)">
+        <rect width="45" height="30" class="node-box"/><text x="22.5" y="20" class="node-val">2</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+      </g>
+      <!-- Loop Start Node 3 -->
+      <g transform="translate(180, 0)">
+        <rect width="45" height="30" class="node-loop" stroke="#34d399"/><text x="22.5" y="20" class="node-val">3</text>
+        <text x="22.5" y="-6" class="ptr-text" fill="#34d399">Loop Start</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#a371f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+      </g>
+      <!-- Node 4 -->
+      <g transform="translate(270, 0)">
+        <rect width="45" height="30" class="node-loop"/><text x="22.5" y="20" class="node-val">4</text>
+        <text x="22.5" y="44" class="ptr-text" fill="#a371f7">MeetingPoint</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#a371f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+      </g>
+      <!-- Node 5 (Last Node in Loop) -->
+      <g transform="translate(360, 0)">
+        <rect width="45" height="30" class="node-loop" stroke="#f85149"/><text x="22.5" y="20" class="node-val">5</text>
+        <text x="22.5" y="-6" class="ptr-text" fill="#f85149">tail (5.next = null)</text>
+      </g>
+
+      <!-- Return Arc (5 -> 3) -->
+      <path d="M 382 30 C 382 90, 202 90, 202 30" fill="none" stroke="#f85149" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arrow-red)"/>
+      <text x="292" y="80" class="ptr-text" fill="#f85149">Break this link ➔ 5.next = null</text>
+    </g>
+
+    <g transform="translate(560, 50)">
+      <rect width="450" height="175" fill="#0d1117" stroke="#30363d" rx="8"/>
+      <text x="20" y="25" class="step-title" fill="#7ee787">✓ Standard Break Condition</text>
+      <text x="20" y="55" class="code-snippet">Node slow = head;</text>
+      <text x="20" y="78" class="code-snippet">while (meetingPoint.next != slow.next) {</text>
+      <text x="40" y="100" class="code-snippet">meetingPoint = meetingPoint.next;</text>
+      <text x="40" y="122" class="code-snippet">slow = slow.next;</text>
+      <text x="20" y="145" class="code-snippet">}</text>
+      <text x="20" y="168" class="code-snippet">meetingPoint.next = null; // Unlink loop tail!</text>
+    </g>
+
+    <text x="25" y="255" class="desc-text">• Why check <tspan fill="#7ee787" font-family="monospace">meetingPoint.next != slow.next</tspan>?</text>
+    <text x="35" y="280" class="desc-text">We stop <tspan fill="#38bdf8" font-weight="700">one node before</tspan> the loop start node. That way, <tspan font-family="monospace">meetingPoint</tspan> lands exactly on the tail node (Node 5), allowing direct <tspan font-family="monospace">meetingPoint.next = null</tspan> without losing our reference!</text>
+  </g>
+
+  <!-- Case 2: Full Circular Loop Edge Case -->
+  <g transform="translate(30, 455)">
+    <rect width="1040" height="375" class="card" />
+    <text x="25" y="30" class="step-title" fill="#f85149">Case 2: The Critical Edge Case (meetingPoint == head, Entire List is Circular)</text>
+
+    <g transform="translate(30, 50)">
+      <rect width="470" height="295" class="warn-box"/>
+      <text x="20" y="30" class="step-title" fill="#ffa198">⚠️ Pitfall in Handwritten Notes (Image 3):</text>
+      <text x="20" y="60" class="desc-text">If the whole list is a loop, <tspan fill="#ffa198" font-family="monospace">meetingPoint == head</tspan>.</text>
+      <text x="20" y="85" class="desc-text">If we run <tspan font-family="monospace">meetingPoint.next != slow.next</tspan>, both are already equal</text>
+      <text x="20" y="105" class="desc-text">at the start, immediately breaking <tspan fill="#ffa198">head.next = null</tspan> and destroying the list!</text>
+      
+      <text x="20" y="140" class="step-title" fill="#7ee787">✓ Solution from Notes:</text>
+      <text x="20" y="170" class="code-snippet">if (meetingPoint == head) {</text>
+      <text x="40" y="195" class="code-snippet">Node curr = head;</text>
+      <text x="40" y="220" class="code-snippet">while (curr.next != head) {</text>
+      <text x="60" y="245" class="code-snippet">curr = curr.next; // walk to tail</text>
+      <text x="40" y="270" class="code-snippet">}</text>
+      <text x="40" y="295" class="code-snippet">curr.next = null; // safely unlink</text>
+      <text x="20" y="320" class="code-snippet">}</text>
+    </g>
+
+    <g transform="translate(525, 50)">
+      <text x="0" y="20" class="header-title" fill="#38bdf8" font-size="15">⚡ Visual Execution of Circular Head Edge Case:</text>
+      
+      <g transform="translate(10, 45)">
+        <g transform="translate(0, 0)">
+          <rect width="50" height="32" class="node-loop"/><text x="25" y="21" class="node-val">1</text>
+          <text x="25" y="-8" class="ptr-text" fill="#58a6ff">head = MP</text>
+          <line x1="50" y1="16" x2="85" y2="16" stroke="#a371f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+        </g>
+        <g transform="translate(90, 0)">
+          <rect width="50" height="32" class="node-loop"/><text x="25" y="21" class="node-val">2</text>
+          <line x1="50" y1="16" x2="85" y2="16" stroke="#a371f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+        </g>
+        <g transform="translate(180, 0)">
+          <rect width="50" height="32" class="node-loop"/><text x="25" y="21" class="node-val">3</text>
+          <line x1="50" y1="16" x2="85" y2="16" stroke="#a371f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+        </g>
+        <g transform="translate(270, 0)">
+          <rect width="50" height="32" class="node-loop" stroke="#f85149"/><text x="25" y="21" class="node-val">4</text>
+          <text x="25" y="-8" class="ptr-text" fill="#f85149">curr (curr.next==head)</text>
+        </g>
+
+        <!-- Circular Arc -->
+        <path d="M 295 32 C 295 85, 25 85, 25 32" fill="none" stroke="#f85149" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow-red)"/>
+      </g>
+
+      <g transform="translate(0, 180)">
+        <text x="0" y="20" class="desc-text">• Traversal stops at Node 4 because <tspan font-family="monospace">curr.next == head</tspan>.</text>
+        <text x="0" y="45" class="desc-text">• Setting <tspan fill="#34d399" font-family="monospace">curr.next = null</tspan> restores the list as clean linear: <tspan fill="#7ee787">1 ➔ 2 ➔ 3 ➔ 4 ➔ null</tspan>.</text>
+        <text x="0" y="70" class="desc-text">• Time: <tspan fill="#38bdf8" font-weight="700">O(N)</tspan>, Space: <tspan fill="#38bdf8" font-weight="700">O(1)</tspan>.</text>
+      </g>
+    </g>
+  </g>
+</svg>

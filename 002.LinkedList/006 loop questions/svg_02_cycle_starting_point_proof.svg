@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 22px; font-weight: bold; fill: #58a6ff; }
+      .subtitle { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; fill: #8b949e; }
+      .section-title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #f0883e; }
+      .node-box { fill: #161b22; stroke: #30363d; stroke-width: 2px; rx: 8px; }
+      .node-box-start { fill: #2d1d07; stroke: #d29922; stroke-width: 2.5px; rx: 8px; }
+      .node-box-meet { fill: #0d2818; stroke: #3fb950; stroke-width: 2.5px; rx: 8px; }
+      .node-text { font-family: 'Segoe UI', monospace; font-size: 15px; font-weight: bold; fill: #c9d1d9; text-anchor: middle; }
+      .label-text { font-family: 'Segoe UI', system-ui; font-size: 13px; font-weight: bold; fill: #79c0ff; text-anchor: middle; }
+      .math-text { font-family: 'Segoe UI', monospace; font-size: 15px; fill: #79c0ff; }
+      .arrow { stroke: #58a6ff; stroke-width: 2px; fill: none; marker-end: url(#arrow-head); }
+      .arrow-orange { stroke: #f0883e; stroke-width: 2.5px; fill: none; marker-end: url(#arrow-amber); }
+      .arrow-green { stroke: #3fb950; stroke-width: 2.5px; fill: none; marker-end: url(#arrow-green-id); }
+      .step-desc { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13.5px; fill: #c9d1d9; }
+      .box-panel { fill: #161b22; stroke: #30363d; stroke-width: 1.5px; rx: 8px; }
+    </style>
+    <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f0883e"/>
+    </marker>
+    <marker id="arrow-green-id" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="700" class="bg" rx="12"/>
+
+  <!-- Header -->
+  <text x="50" y="45" class="title">LeetCode 142: Find Starting Point of Loop</text>
+  <text x="50" y="70" class="subtitle">Complete Mathematical &amp; Geometric Proof of Floyd's Cycle Algorithm</text>
+
+  <!-- Visual Geometry Diagram -->
+  <text x="50" y="115" class="section-title">Geometric Breakdown: Distance L, Cycle Length C, Meeting Distance d</text>
+
+  <!-- Head Node -->
+  <g transform="translate(60, 160)">
+    <rect width="50" height="40" class="node-box"/>
+    <text x="25" y="25" class="node-text">Head</text>
+  </g>
+
+  <!-- Linear segment (Length L) -->
+  <line x1="110" y1="180" x2="310" y2="180" stroke="#58a6ff" stroke-width="2.5" marker-end="url(#arrow-head)"/>
+  <text x="210" y="165" class="label-text" fill="#58a6ff">Distance L (Head to Loop Start)</text>
+
+  <!-- Loop Start Node -->
+  <g transform="translate(320, 160)">
+    <rect width="90" height="40" class="node-box-start"/>
+    <text x="45" y="25" class="node-text" fill="#d29922">Loop Start</text>
+  </g>
+
+  <!-- Arc from Loop Start to Meeting Point (Distance d) -->
+  <path d="M 410 170 C 520 100, 600 130, 620 190" class="arrow-orange"/>
+  <text x="520" y="130" class="label-text" fill="#f0883e">Distance d (Entry to Meeting)</text>
+
+  <!-- Meeting Point Node -->
+  <g transform="translate(620, 180)">
+    <rect width="110" height="40" class="node-box-meet"/>
+    <text x="55" y="25" class="node-text" fill="#3fb950">Meeting (M)</text>
+  </g>
+
+  <!-- Arc from Meeting Point back to Loop Start (Remaining Distance C - d) -->
+  <path d="M 640 220 C 580 310, 420 300, 365 205" class="arrow-green"/>
+  <text x="500" y="295" class="label-text" fill="#3fb950">Remaining Distance: (C - d)</text>
+
+  <!-- Cycle circumference annotation -->
+  <text x="510" y="210" class="label-text" fill="#8b949e">Total Cycle Length = C</text>
+
+  <!-- Section 2: Mathematical Proof Columns -->
+  <line x1="50" y1="330" x2="950" y2="330" stroke="#30363d" stroke-width="1"/>
+  <text x="50" y="360" class="section-title">The Algebraic Derivation: Why L = (n - 1)C + (C - d)</text>
+
+  <!-- Left Card: Step-by-Step Math -->
+  <g transform="translate(50, 380)">
+    <rect width="430" height="290" class="box-panel"/>
+    <text x="20" y="30" class="label-text" fill="#58a6ff" text-anchor="start">1. Distance Equations at Meeting Point</text>
+    
+    <text x="20" y="65" class="step-desc">• Distance traveled by Slow: <tspan class="math-text" fill="#3fb950">T = L + d</tspan></text>
+    <text x="20" y="95" class="step-desc">• Distance traveled by Fast: <tspan class="math-text" fill="#f0883e">H = L + nC + d</tspan></text>
+    <text x="35" y="115" class="step-desc" font-size="12">(n ≥ 1 is the number of full laps Fast completed)</text>
+    
+    <text x="20" y="145" class="step-desc">• Since Fast runs at double speed: <tspan class="math-text" fill="#79c0ff">H = 2T</tspan></text>
+    
+    <text x="20" y="175" class="step-desc" font-family="monospace" fill="#79c0ff">  L + nC + d = 2(L + d)</text>
+    <text x="20" y="200" class="step-desc" font-family="monospace" fill="#79c0ff">  L + nC + d = 2L + 2d</text>
+    <text x="20" y="225" class="step-desc" font-family="monospace" fill="#79c0ff">  L = nC - d</text>
+    
+    <text x="20" y="260" class="step-desc" font-weight="bold" fill="#f0883e">  L = (n - 1)C + (C - d)  🎯</text>
+  </g>
+
+  <!-- Right Card: Algorithm Actionable Step -->
+  <g transform="translate(510, 380)">
+    <rect width="440" height="290" class="box-panel"/>
+    <text x="20" y="30" class="label-text" fill="#3fb950" text-anchor="start">2. Practical Algorithm Execution</text>
+    
+    <text x="20" y="65" class="step-desc" font-weight="bold" fill="#f0883e">Phase 1: Detect Intersection (Meeting point M)</text>
+    <text x="20" y="90" class="step-desc">Run standard Floyd's loop until <tspan fill="#3fb950">slow == fast</tspan>.</text>
+
+    <line x1="20" y1="110" x2="420" y2="110" stroke="#30363d"/>
+
+    <text x="20" y="135" class="step-desc" font-weight="bold" fill="#3fb950">Phase 2: Find Start of Loop</text>
+    <text x="20" y="160" class="step-desc">1. Reset <tspan font-family="monospace" fill="#58a6ff">slow = head</tspan>.</text>
+    <text x="20" y="185" class="step-desc">2. Keep <tspan font-family="monospace" fill="#f0883e">fast at meeting point M</tspan>.</text>
+    <text x="20" y="210" class="step-desc">3. Move both pointers at <tspan font-weight="bold" fill="#79c0ff">1 step at a time</tspan>.</text>
+    <text x="20" y="235" class="step-desc">4. Pointer from head traverses L, while pointer from</text>
+    <text x="35" y="255" class="step-desc">meeting traverses (n - 1)C + (C - d).</text>
+    <text x="20" y="280" class="step-desc" fill="#3fb950" font-weight="bold">👉 They collide precisely at Loop Start!</text>
+  </g>
+</svg>

@@ -1,0 +1,38 @@
+<svg viewBox="0 0 760 160" xmlns="http://www.w3.org/2000/svg" width="100%" height="160" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <marker id="arrB" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><polygon points="0 0, 7 3.5, 0 7" fill="#38bdf8"/></marker>
+    <marker id="arrP" markerWidth="7" markerHeight="7" refX="2" refY="3.5" orient="auto"><polygon points="7 0, 0 3.5, 7 7" fill="#f472b6"/></marker>
+  </defs>
+  <rect width="100%" height="100%" rx="10" fill="#0f172a"/>
+  <text x="20" y="24" fill="#38bdf8" font-size="13" font-weight="bold">Array to DLL Iteration Flow</text>
+
+  <!-- Head -->
+  <g transform="translate(60, 45)">
+    <rect width="110" height="60" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="55" y="25" fill="#10b981" font-size="11" font-weight="bold" text-anchor="middle">head (idx 0)</text>
+    <text x="55" y="47" fill="#f8fafc" font-size="16" font-weight="bold" text-anchor="middle">val: 1</text>
+  </g>
+
+  <!-- Arrows 1 -> 2 -->
+  <path d="M 175 65 L 265 65" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrB)"/>
+  <path d="M 265 85 L 180 85" stroke="#f472b6" stroke-width="2" marker-end="url(#arrP)"/>
+
+  <!-- Node 2 -->
+  <g transform="translate(270, 45)">
+    <rect width="110" height="60" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="55" y="25" fill="#38bdf8" font-size="11" text-anchor="middle">temp (idx 1)</text>
+    <text x="55" y="47" fill="#f8fafc" font-size="16" font-weight="bold" text-anchor="middle">val: 2</text>
+  </g>
+
+  <!-- Arrows 2 -> 3 -->
+  <path d="M 385 65 L 475 65" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrB)"/>
+  <path d="M 475 85 L 390 85" stroke="#f472b6" stroke-width="2" marker-end="url(#arrP)"/>
+
+  <!-- Node 3 -->
+  <g transform="translate(480, 45)">
+    <rect width="110" height="60" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="55" y="25" fill="#38bdf8" font-size="11" text-anchor="middle">temp (idx 2)</text>
+    <text x="55" y="47" fill="#f8fafc" font-size="16" font-weight="bold" text-anchor="middle">val: 3</text>
+  </g>
+  <text x="380" y="135" fill="#94a3b8" font-size="11" text-anchor="middle">Time: O(N) | Space: O(1) auxiliary (creates N nodes).</text>
+</svg>

@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 560" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#9333ea"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#fbbf24"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="950" height="560" rx="16" fill="url(#bgGrad)"/>
+
+  <!-- Title Section -->
+  <rect x="30" y="25" width="890" height="60" rx="12" fill="url(#cardGrad)" filter="url(#shadow)" stroke="#475569" stroke-width="1"/>
+  <text x="50" y="62" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#f8fafc">Question 1: Merge Sort on Singly Linked List (Divide &amp; Conquer)</text>
+  <rect x="740" y="40" width="160" height="30" rx="15" fill="#0284c7" fill-opacity="0.25" stroke="#38bdf8" stroke-width="1"/>
+  <text x="820" y="60" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#38bdf8" text-anchor="middle">O(N log N) Time | O(log N) Space</text>
+
+  <!-- Step 1: Original List & Mid Split -->
+  <g transform="translate(40, 110)">
+    <rect width="870" height="110" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="30" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fbbf24">Step 1: Find Mid via Slow &amp; Fast Pointers, then Break Link (middle.next = null)</text>
+    
+    <!-- Nodes 4 -> 2 -> 1 -> 3 -->
+    <!-- Node 4 -->
+    <rect x="50" y="50" width="45" height="40" rx="8" fill="url(#blueGrad)"/>
+    <text x="72" y="75" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+    <text x="72" y="102" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">head</text>
+    <line x1="95" y1="70" x2="135" y2="70" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <!-- Node 2 (Mid) -->
+    <rect x="145" y="50" width="45" height="40" rx="8" fill="url(#amberGrad)"/>
+    <text x="167" y="75" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+    <text x="167" y="102" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#fbbf24" text-anchor="middle">slow (mid)</text>
+    
+    <!-- Cut link -->
+    <line x1="190" y1="70" x2="225" y2="70" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
+    <text x="210" y="60" font-family="system-ui, sans-serif" font-size="16" font-weight="800" fill="#ef4444" text-anchor="middle">X</text>
+
+    <!-- Node 1 -->
+    <rect x="240" y="50" width="45" height="40" rx="8" fill="url(#purpleGrad)"/>
+    <text x="262" y="75" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+    <text x="262" y="102" font-family="system-ui, sans-serif" font-size="11" fill="#c084fc" text-anchor="middle">l2 head</text>
+    <line x1="285" y1="70" x2="325" y2="70" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <!-- Node 3 -->
+    <rect x="335" y="50" width="45" height="40" rx="8" fill="url(#purpleGrad)"/>
+    <text x="357" y="75" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+    <text x="357" y="102" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">fast</text>
+
+    <!-- Mid rule callout -->
+    <rect x="430" y="45" width="415" height="52" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="445" y="68" font-family="system-ui, sans-serif" font-size="12" fill="#e2e8f0"><tspan fill="#38bdf8" font-weight="700">Condition:</tspan> fast.next != null &amp;&amp; fast.next.next != null</text>
+    <text x="445" y="87" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">Stops at first-middle for even length to split list cleanly.</text>
+  </g>
+
+  <!-- Step 2: Divide & Sort Recursively -->
+  <g transform="translate(40, 240)">
+    <rect width="420" height="130" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#38bdf8">Step 2: Recursive Sort (Sub-lists)</text>
+    
+    <!-- Left sorted -->
+    <text x="30" y="58" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">Left Half Sorted (l1):</text>
+    <rect x="30" y="70" width="35" height="35" rx="6" fill="url(#amberGrad)"/>
+    <text x="47" y="93" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+    <line x1="65" y1="87" x2="95" y2="87" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="105" y="70" width="35" height="35" rx="6" fill="url(#blueGrad)"/>
+    <text x="122" y="93" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">4</text>
+
+    <!-- Right sorted -->
+    <text x="230" y="58" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">Right Half Sorted (l2):</text>
+    <rect x="230" y="70" width="35" height="35" rx="6" fill="url(#purpleGrad)"/>
+    <text x="247" y="93" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+    <line x1="265" y1="87" x2="295" y2="87" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="305" y="70" width="35" height="35" rx="6" fill="url(#purpleGrad)"/>
+    <text x="322" y="93" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+  </g>
+
+  <!-- Step 3: Merge Two Sorted Lists (Conquer) -->
+  <g transform="translate(480, 240)">
+    <rect width="430" height="130" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#34d399">Step 3: Two-Pointer Merge</text>
+    
+    <text x="20" y="55" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">Iterate &amp; Compare nodes from l1 and l2:</text>
+    <rect x="20" y="68" width="390" height="48" rx="8" fill="#0f172a" stroke="#059669" stroke-width="1"/>
+    <text x="35" y="97" font-family="Consolas, monospace" font-size="12" fill="#34d399">if(itr1.val &lt; itr2.val) curr.next = itr1; else curr.next = itr2;</text>
+  </g>
+
+  <!-- Final Result -->
+  <g transform="translate(40, 390)">
+    <rect width="870" height="140" rx="12" fill="#1e293b" stroke="#059669" stroke-width="2"/>
+    <text x="25" y="32" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#34d399">Final Merged &amp; Sorted Singly Linked List</text>
+    
+    <!-- Node 1 -->
+    <rect x="50" y="55" width="50" height="45" rx="8" fill="url(#emeraldGrad)"/>
+    <text x="75" y="83" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+    <line x1="100" y1="77" x2="150" y2="77" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+
+    <!-- Node 2 -->
+    <rect x="160" y="55" width="50" height="45" rx="8" fill="url(#emeraldGrad)"/>
+    <text x="185" y="83" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+    <line x1="210" y1="77" x2="260" y2="77" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+
+    <!-- Node 3 -->
+    <rect x="270" y="55" width="50" height="45" rx="8" fill="url(#emeraldGrad)"/>
+    <text x="295" y="83" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+    <line x1="320" y1="77" x2="370" y2="77" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+
+    <!-- Node 4 -->
+    <rect x="380" y="55" width="50" height="45" rx="8" fill="url(#emeraldGrad)"/>
+    <text x="405" y="83" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+    <line x1="430" y1="77" x2="480" y2="77" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+
+    <!-- NULL -->
+    <rect x="490" y="55" width="70" height="45" rx="8" fill="#334155"/>
+    <text x="525" y="83" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#94a3b8" text-anchor="middle">NULL</text>
+
+    <!-- Key Takeaway -->
+    <rect x="590" y="50" width="255" height="60" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="605" y="74" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#38bdf8">Key Advantage:</text>
+    <text x="605" y="94" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">O(1) extra space for merge (no extra node copies), O(log N) stack frames.</text>
+  </g>
+</svg>

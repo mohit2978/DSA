@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 560" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cardGrad6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="blueGrad6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#9333ea"/>
+    </linearGradient>
+    <linearGradient id="amberGrad6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="shadow6" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arrow6" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrowGreen6" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrowAmber6" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#fbbf24"/>
+    </marker>
+  </defs>
+
+  <rect width="950" height="560" rx="16" fill="url(#bgGrad6)"/>
+
+  <!-- Title -->
+  <rect x="30" y="20" width="890" height="60" rx="12" fill="url(#cardGrad6)" filter="url(#shadow6)" stroke="#475569" stroke-width="1"/>
+  <text x="50" y="57" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#f8fafc">Question 6: Rotate List by K Places</text>
+  <rect x="760" y="35" width="140" height="30" rx="15" fill="#38bdf8" fill-opacity="0.15" stroke="#38bdf8" stroke-width="1"/>
+  <text x="830" y="55" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#38bdf8" text-anchor="middle">LeetCode 61 [Medium]</text>
+
+  <!-- Section 1: Calculate Length & Effective K -->
+  <g transform="translate(30, 95)">
+    <rect width="890" height="130" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fbbf24">Step 1: Compute List Length &amp; Find Break Point (len - k)</text>
+    
+    <g transform="translate(30, 45)">
+      <!-- Formula box -->
+      <rect x="0" y="0" width="400" height="70" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+      <text x="15" y="22" font-family="system-ui, sans-serif" font-size="12" fill="#e2e8f0"><tspan font-weight="700" fill="#38bdf8">Length (len):</tspan> 5 nodes &amp; <tspan font-weight="700" fill="#38bdf8">k:</tspan> 2</text>
+      <text x="15" y="42" font-family="system-ui, sans-serif" font-size="12" fill="#e2e8f0"><tspan font-weight="700" fill="#fbbf24">k = k % len = 2</tspan> (Handles k &gt; len, e.g. k = 2 * 10^9)</text>
+      <text x="15" y="60" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8">If k &lt; 0 (left rotation): k += len; Break position = len - k = 3</text>
+
+      <!-- Nodes preview -->
+      <g transform="translate(430, 10)">
+        <rect x="0" y="0" width="40" height="35" rx="6" fill="url(#blueGrad6)"/>
+        <text x="20" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+        <line x1="45" y1="18" x2="70" y2="18" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow6)"/>
+
+        <rect x="75" y="0" width="40" height="35" rx="6" fill="url(#blueGrad6)"/>
+        <text x="95" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+        <line x1="120" y1="18" x2="145" y2="18" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow6)"/>
+
+        <rect x="150" y="0" width="40" height="35" rx="6" fill="url(#blueGrad6)"/>
+        <text x="170" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+        <line x1="195" y1="18" x2="220" y2="18" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow6)"/>
+
+        <rect x="225" y="0" width="40" height="35" rx="6" fill="url(#purpleGrad6)"/>
+        <text x="245" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">4</text>
+        <line x1="270" y1="18" x2="295" y2="18" stroke="#c084fc" stroke-width="2" marker-end="url(#arrow6)"/>
+
+        <rect x="300" y="0" width="40" height="35" rx="6" fill="url(#purpleGrad6)"/>
+        <text x="320" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">5</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Section 2: Break Link & Reconnect Tail to Head -->
+  <g transform="translate(30, 240)">
+    <rect width="890" height="155" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#38bdf8">Step 2: Break at Node 3 (new tail) &amp; Connect Old Tail (5) to Old Head (1)</text>
+
+    <g transform="translate(40, 60)">
+      <!-- Rotated Part: 4 -> 5 -->
+      <rect x="0" y="0" width="45" height="38" rx="8" fill="url(#purpleGrad6)"/>
+      <text x="22" y="24" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">4</text>
+      <text x="22" y="52" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#c084fc" text-anchor="middle">newHead</text>
+
+      <line x1="50" y1="19" x2="90" y2="19" stroke="#c084fc" stroke-width="2" marker-end="url(#arrow6)"/>
+
+      <rect x="95" y="0" width="45" height="38" rx="8" fill="url(#purpleGrad6)"/>
+      <text x="117" y="24" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">5</text>
+      <text x="117" y="52" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#c084fc" text-anchor="middle">old tail</text>
+
+      <!-- Reconnection Line: tail.next = head (1) -->
+      <line x1="145" y1="19" x2="215" y2="19" stroke="#34d399" stroke-width="3" marker-end="url(#arrowGreen6)"/>
+      <text x="180" y="10" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">tail.next</text>
+
+      <!-- Prefix Part: 1 -> 2 -> 3 -->
+      <rect x="225" y="0" width="45" height="38" rx="8" fill="url(#blueGrad6)"/>
+      <text x="247" y="24" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+      <text x="247" y="52" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">old head</text>
+
+      <line x1="275" y1="19" x2="315" y2="19" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow6)"/>
+
+      <rect x="320" y="0" width="45" height="38" rx="8" fill="url(#blueGrad6)"/>
+      <text x="342" y="24" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+
+      <line x1="370" y1="19" x2="410" y2="19" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow6)"/>
+
+      <rect x="415" y="0" width="45" height="38" rx="8" fill="url(#blueGrad6)"/>
+      <text x="437" y="24" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+      <text x="437" y="52" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fbbf24" text-anchor="middle">new tail</text>
+
+      <!-- Break Line: 3.next = null -->
+      <line x1="465" y1="19" x2="505" y2="19" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
+      <rect x="515" y="0" width="55" height="38" rx="8" fill="#334155"/>
+      <text x="542" y="24" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#94a3b8" text-anchor="middle">NULL</text>
+    </g>
+  </g>
+
+  <!-- Section 3: Result -->
+  <g transform="translate(30, 410)">
+    <rect width="890" height="125" rx="12" fill="#0f172a" stroke="#059669" stroke-width="1.5"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#34d399">Rotated Output Linked List</text>
+    
+    <g transform="translate(40, 50)">
+      <rect x="0" y="0" width="45" height="35" rx="6" fill="url(#emeraldGrad6)"/>
+      <text x="22" y="22" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">4</text>
+      <line x1="50" y1="18" x2="85" y2="18" stroke="#34d399" stroke-width="2" marker-end="url(#arrowGreen6)"/>
+
+      <rect x="95" y="0" width="45" height="35" rx="6" fill="url(#emeraldGrad6)"/>
+      <text x="117" y="22" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">5</text>
+      <line x1="145" y1="18" x2="180" y2="18" stroke="#34d399" stroke-width="2" marker-end="url(#arrowGreen6)"/>
+
+      <rect x="190" y="0" width="45" height="35" rx="6" fill="url(#emeraldGrad6)"/>
+      <text x="212" y="22" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+      <line x1="240" y1="18" x2="275" y2="18" stroke="#34d399" stroke-width="2" marker-end="url(#arrowGreen6)"/>
+
+      <rect x="285" y="0" width="45" height="35" rx="6" fill="url(#emeraldGrad6)"/>
+      <text x="307" y="22" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+      <line x1="335" y1="18" x2="370" y2="18" stroke="#34d399" stroke-width="2" marker-end="url(#arrowGreen6)"/>
+
+      <rect x="380" y="0" width="45" height="35" rx="6" fill="url(#emeraldGrad6)"/>
+      <text x="402" y="22" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+      <line x1="430" y1="18" x2="465" y2="18" stroke="#34d399" stroke-width="2" marker-end="url(#arrowGreen6)"/>
+
+      <rect x="475" y="0" width="55" height="35" rx="6" fill="#334155"/>
+      <text x="502" y="22" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#94a3b8" text-anchor="middle">NULL</text>
+    </g>
+
+    <text x="20" y="108" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">Complexity: O(N) Time (Two traversals max) | O(1) Auxiliary Space</text>
+  </g>
+</svg>

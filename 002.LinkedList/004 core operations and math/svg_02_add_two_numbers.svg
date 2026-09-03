@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 22px; font-weight: bold; fill: #58a6ff; }
+      .subtitle { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; fill: #8b949e; }
+      .section-title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #f0883e; }
+      .node-box { fill: #161b22; stroke: #30363d; stroke-width: 2px; rx: 8px; }
+      .node-box-res { fill: #0d2818; stroke: #3fb950; stroke-width: 2px; rx: 8px; }
+      .node-box-dummy { fill: #21262d; stroke: #8b949e; stroke-dasharray: 4; stroke-width: 2px; rx: 8px; }
+      .node-text { font-family: 'Segoe UI', monospace; font-size: 16px; font-weight: bold; fill: #c9d1d9; text-anchor: middle; }
+      .node-text-res { font-family: 'Segoe UI', monospace; font-size: 16px; font-weight: bold; fill: #56d364; text-anchor: middle; }
+      .label-text { font-family: 'Segoe UI', system-ui; font-size: 13px; font-weight: bold; fill: #79c0ff; text-anchor: middle; }
+      .carry-text { font-family: 'Segoe UI', monospace; font-size: 13px; font-weight: bold; fill: #f0883e; text-anchor: middle; }
+      .op-text { font-family: 'Segoe UI', system-ui; font-size: 18px; font-weight: bold; fill: #8b949e; text-anchor: middle; }
+      .arrow { stroke: #58a6ff; stroke-width: 2px; fill: none; marker-end: url(#arrow-head); }
+      .arrow-res { stroke: #3fb950; stroke-width: 2px; fill: none; marker-end: url(#arrow-green); }
+      .step-desc { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13.5px; fill: #c9d1d9; }
+      .box-panel { fill: #161b22; stroke: #30363d; stroke-width: 1.5px; rx: 8px; }
+    </style>
+    <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="700" class="bg" rx="12"/>
+
+  <!-- Header -->
+  <text x="50" y="45" class="title">LeetCode 2: Add Two Numbers (Digit by Digit Addition)</text>
+  <text x="50" y="70" class="subtitle">Reverse Order Representation (Least Significant Digit First) + Carry Propagation</text>
+
+  <!-- Section 1: Visual Addition Flow -->
+  <text x="50" y="115" class="section-title">Example Trace: l1 = [2 -> 4 -> 3] (342) + l2 = [5 -> 6 -> 4] (465) = [7 -> 0 -> 8] (807)</text>
+
+  <!-- List 1 Row -->
+  <text x="60" y="170" class="label-text" fill="#79c0ff" text-anchor="start">List 1 (l1):</text>
+  <g transform="translate(160, 145)">
+    <rect width="55" height="40" class="node-box"/>
+    <text x="27.5" y="25" class="node-text">2</text>
+  </g>
+  <path d="M 215 165 L 255 165" class="arrow"/>
+  <g transform="translate(260, 145)">
+    <rect width="55" height="40" class="node-box"/>
+    <text x="27.5" y="25" class="node-text">4</text>
+  </g>
+  <path d="M 315 165 L 355 165" class="arrow"/>
+  <g transform="translate(360, 145)">
+    <rect width="55" height="40" class="node-box"/>
+    <text x="27.5" y="25" class="node-text">3</text>
+  </g>
+  <path d="M 415 165 L 455 165" class="arrow"/>
+  <text x="475" y="170" class="node-text" fill="#8b949e">null</text>
+
+  <!-- Operator + -->
+  <text x="110" y="235" class="op-text">+</text>
+
+  <!-- List 2 Row -->
+  <text x="60" y="235" class="label-text" fill="#79c0ff" text-anchor="start">List 2 (l2):</text>
+  <g transform="translate(160, 210)">
+    <rect width="55" height="40" class="node-box"/>
+    <text x="27.5" y="25" class="node-text">5</text>
+  </g>
+  <path d="M 215 230 L 255 230" class="arrow"/>
+  <g transform="translate(260, 210)">
+    <rect width="55" height="40" class="node-box"/>
+    <text x="27.5" y="25" class="node-text">6</text>
+  </g>
+  <path d="M 315 230 L 355 230" class="arrow"/>
+  <g transform="translate(360, 210)">
+    <rect width="55" height="40" class="node-box"/>
+    <text x="27.5" y="25" class="node-text">4</text>
+  </g>
+  <path d="M 415 230 L 455 230" class="arrow"/>
+  <text x="475" y="235" class="node-text" fill="#8b949e">null</text>
+
+  <!-- Carry Indicators -->
+  <line x1="160" y1="270" x2="420" y2="270" stroke="#30363d" stroke-width="1.5" stroke-dasharray="4"/>
+  <text x="187" y="290" class="carry-text">carry: 0</text>
+  <text x="287" y="290" class="carry-text">carry: 0</text>
+  <text x="387" y="290" class="carry-text" fill="#f85149">carry: 1</text>
+
+  <!-- Result List Row -->
+  <text x="60" y="345" class="label-text" fill="#3fb950" text-anchor="start">Result List:</text>
+  <g transform="translate(160, 320)">
+    <rect width="55" height="40" class="node-box-res"/>
+    <text x="27.5" y="25" class="node-text-res">7</text>
+    <text x="27.5" y="55" class="node-idx">(2+5)%10</text>
+  </g>
+  <path d="M 215 340 L 255 340" class="arrow-res"/>
+  <g transform="translate(260, 320)">
+    <rect width="55" height="40" class="node-box-res"/>
+    <text x="27.5" y="25" class="node-text-res">0</text>
+    <text x="27.5" y="55" class="node-idx">(4+6)%10</text>
+  </g>
+  <path d="M 315 340 L 355 340" class="arrow-res"/>
+  <g transform="translate(360, 320)">
+    <rect width="55" height="40" class="node-box-res"/>
+    <text x="27.5" y="25" class="node-text-res">8</text>
+    <text x="27.5" y="55" class="node-idx">(3+4+1)%10</text>
+  </g>
+  <path d="M 415 340 L 455 340" class="arrow-res"/>
+  <text x="475" y="345" class="node-text" fill="#8b949e">null</text>
+
+  <!-- Section 2: Universal Algorithm Structure -->
+  <line x1="50" y1="400" x2="950" y2="400" stroke="#30363d" stroke-width="1"/>
+  <text x="50" y="435" class="section-title">Key Algorithmic Flow &amp; Forward Order Variant (LeetCode 445)</text>
+
+  <!-- Left Card: The Unified While Loop -->
+  <g transform="translate(50, 455)">
+    <rect width="420" height="210" class="box-panel"/>
+    <text x="20" y="30" class="label-text" fill="#58a6ff" text-anchor="start">1. Unified Loop Condition</text>
+    <text x="20" y="60" class="step-desc" font-family="monospace" fill="#79c0ff">while(l1 != null || l2 != null || carry != 0)</text>
+    <text x="20" y="90" class="step-desc">• Extracts <tspan font-family="monospace" fill="#d29922">l1.val</tspan> (if available, else 0)</text>
+    <text x="20" y="115" class="step-desc">• Extracts <tspan font-family="monospace" fill="#d29922">l2.val</tspan> (if available, else 0)</text>
+    <text x="20" y="140" class="step-desc">• <tspan font-family="monospace" fill="#3fb950">sum = carry + v1 + v2;</tspan></text>
+    <text x="20" y="165" class="step-desc">• <tspan font-family="monospace" fill="#3fb950">carry = sum / 10; node.val = sum % 10;</tspan></text>
+    <text x="20" y="190" class="step-desc">• Handles trailing carry automatically!</text>
+  </g>
+
+  <!-- Right Card: LeetCode 445 (Forward Order) -->
+  <g transform="translate(500, 455)">
+    <rect width="450" height="210" class="box-panel"/>
+    <text x="20" y="30" class="label-text" fill="#f0883e" text-anchor="start">2. If Given in Normal (Forward) Order</text>
+    <text x="20" y="60" class="step-desc"><tspan fill="#f0883e" font-weight="bold">Step 1:</tspan> Reverse both <tspan font-family="monospace" fill="#79c0ff">l1</tspan> and <tspan font-family="monospace" fill="#79c0ff">l2</tspan> (e.g. 123 -> 321).</text>
+    <text x="20" y="95" class="step-desc"><tspan fill="#f0883e" font-weight="bold">Step 2:</tspan> Perform LC 2 addition to get reversed sum list.</text>
+    <text x="20" y="130" class="step-desc"><tspan fill="#f0883e" font-weight="bold">Step 3:</tspan> Reverse the result list to restore normal order.</text>
+    <text x="20" y="165" class="step-desc"><tspan fill="#3fb950" font-weight="bold">Step 4 (Good Practice):</tspan> Reverse <tspan font-family="monospace" fill="#79c0ff">l1, l2</tspan> back to preserve inputs!</text>
+  </g>
+
+  <!-- Callout Right top -->
+  <g transform="translate(560, 125)">
+    <rect width="390" height="250" class="box-panel" stroke="#d29922"/>
+    <text x="20" y="30" class="label-text" fill="#d29922" text-anchor="start">⚡ Edge Cases &amp; Memory Safety</text>
+    <text x="20" y="65" class="step-desc">1. <tspan font-weight="bold" fill="#79c0ff">Unequal Lengths:</tspan> e.g. 99 + 1 -> single loop cleanly</text>
+    <text x="35" y="85" class="step-desc">treats exhausted list as 0 without extra branches.</text>
+    <text x="20" y="120" class="step-desc">2. <tspan font-weight="bold" fill="#79c0ff">Final Carry Addition:</tspan> e.g. 999 + 1 = 1000.</text>
+    <text x="35" y="140" class="step-desc"><tspan font-family="monospace" fill="#f85149">carry != 0</tspan> appends new leading MSD node.</text>
+    <text x="20" y="175" class="step-desc">3. <tspan font-weight="bold" fill="#79c0ff">Complexity:</tspan></text>
+    <text x="35" y="198" class="step-desc">• Time: <tspan fill="#3fb950" font-weight="bold">O(max(N, M))</tspan></text>
+    <text x="35" y="220" class="step-desc">• Space: <tspan fill="#3fb950" font-weight="bold">O(max(N, M))</tspan> for new result list</text>
+  </g>
+</svg>

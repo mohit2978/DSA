@@ -1,4 +1,3 @@
-# Notes
 
 ## Stack using LL basic using ll class
 

@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 560" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cardGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="blueGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#9333ea"/>
+    </linearGradient>
+    <linearGradient id="amberGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="shadow4" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arrow4" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrowGreen4" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+  </defs>
+
+  <rect width="950" height="560" rx="16" fill="url(#bgGrad4)"/>
+
+  <!-- Title -->
+  <rect x="30" y="20" width="890" height="60" rx="12" fill="url(#cardGrad4)" filter="url(#shadow4)" stroke="#475569" stroke-width="1"/>
+  <text x="50" y="57" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#f8fafc">Question 4: Reverse Nodes in k-Group (The addFirst Pointer Pattern)</text>
+  <rect x="760" y="35" width="140" height="30" rx="15" fill="#38bdf8" fill-opacity="0.15" stroke="#38bdf8" stroke-width="1"/>
+  <text x="830" y="55" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#38bdf8" text-anchor="middle">LeetCode 25 [Hard]</text>
+
+  <!-- Step 1: addFirst mechanics -->
+  <g transform="translate(30, 95)">
+    <rect width="890" height="135" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fbbf24">1. addFirst(node) Reversal Primitive</text>
+    <text x="20" y="48" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">Each node from current k-group is detached and inserted at head of temp list (th, tt). Reverses k nodes in O(k).</text>
+
+    <!-- Visual of detaching 1, 2, 3 into 3 -> 2 -> 1 -->
+    <g transform="translate(40, 65)">
+      <rect x="0" y="0" width="40" height="35" rx="6" fill="url(#blueGrad4)"/>
+      <text x="20" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+
+      <line x1="45" y1="18" x2="75" y2="18" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow4)"/>
+
+      <rect x="85" y="0" width="40" height="35" rx="6" fill="url(#blueGrad4)"/>
+      <text x="105" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+
+      <line x1="130" y1="18" x2="160" y2="18" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow4)"/>
+
+      <rect x="170" y="0" width="40" height="35" rx="6" fill="url(#blueGrad4)"/>
+      <text x="190" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+
+      <!-- Arrow to reversed temp list -->
+      <line x1="230" y1="18" x2="280" y2="18" stroke="#fbbf24" stroke-width="3" marker-end="url(#arrow4)"/>
+      <text x="255" y="10" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#fbbf24" text-anchor="middle">addFirst</text>
+
+      <!-- Reversed sub-list -->
+      <rect x="300" y="0" width="40" height="35" rx="6" fill="url(#purpleGrad4)"/>
+      <text x="320" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+      <text x="320" y="48" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#c084fc" text-anchor="middle">th (temp head)</text>
+
+      <line x1="345" y1="18" x2="375" y2="18" stroke="#c084fc" stroke-width="2" marker-end="url(#arrow4)"/>
+
+      <rect x="385" y="0" width="40" height="35" rx="6" fill="url(#purpleGrad4)"/>
+      <text x="405" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+
+      <line x1="430" y1="18" x2="460" y2="18" stroke="#c084fc" stroke-width="2" marker-end="url(#arrow4)"/>
+
+      <rect x="470" y="0" width="40" height="35" rx="6" fill="url(#purpleGrad4)"/>
+      <text x="490" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+      <text x="490" y="48" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#c084fc" text-anchor="middle">tt (temp tail)</text>
+    </g>
+
+    <rect x="580" y="55" width="285" height="60" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="595" y="77" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8">Pointer Invariants:</text>
+    <text x="595" y="95" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">1st node inserted becomes temp tail (tt).</text>
+    <text x="595" y="108" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">Last node inserted becomes temp head (th).</text>
+  </g>
+
+  <!-- Step 2: Splicing into Original Chain (oh, ot / ah, at) -->
+  <g transform="translate(30, 245)">
+    <rect width="890" height="150" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#38bdf8">2. Stitching Groups with Original Head (oh) &amp; Original Tail (ot)</text>
+    <text x="20" y="48" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">If first group (oh == null): oh = th, ot = tt. Else: ot.next = th; ot = tt.</text>
+
+    <!-- Group 1 (3 -> 2 -> 1) connected to Group 2 (6 -> 5 -> 4) -->
+    <g transform="translate(40, 70)">
+      <!-- Group 1 -->
+      <rect x="0" y="0" width="38" height="35" rx="6" fill="url(#emeraldGrad4)"/>
+      <text x="19" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+      <text x="19" y="48" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">oh</text>
+
+      <line x1="42" y1="18" x2="68" y2="18" stroke="#34d399" stroke-width="2" marker-end="url(#arrowGreen4)"/>
+
+      <rect x="75" y="0" width="38" height="35" rx="6" fill="url(#emeraldGrad4)"/>
+      <text x="94" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+
+      <line x1="117" y1="18" x2="143" y2="18" stroke="#34d399" stroke-width="2" marker-end="url(#arrowGreen4)"/>
+
+      <rect x="150" y="0" width="38" height="35" rx="6" fill="url(#emeraldGrad4)"/>
+      <text x="169" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+      <text x="169" y="48" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">ot</text>
+
+      <!-- Stitch Link: ot.next = th -->
+      <line x1="192" y1="18" x2="238" y2="18" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrowGreen4)"/>
+
+      <!-- Group 2 -->
+      <rect x="245" y="0" width="38" height="35" rx="6" fill="url(#emeraldGrad4)"/>
+      <text x="264" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">6</text>
+      <text x="264" y="48" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#c084fc" text-anchor="middle">th (new)</text>
+
+      <line x1="287" y1="18" x2="313" y2="18" stroke="#34d399" stroke-width="2" marker-end="url(#arrowGreen4)"/>
+
+      <rect x="320" y="0" width="38" height="35" rx="6" fill="url(#emeraldGrad4)"/>
+      <text x="339" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">5</text>
+
+      <line x1="362" y1="18" x2="388" y2="18" stroke="#34d399" stroke-width="2" marker-end="url(#arrowGreen4)"/>
+
+      <rect x="395" y="0" width="38" height="35" rx="6" fill="url(#emeraldGrad4)"/>
+      <text x="414" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">4</text>
+      <text x="414" y="48" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#c084fc" text-anchor="middle">tt (new)</text>
+
+      <!-- Remaining nodes < k -->
+      <line x1="437" y1="18" x2="483" y2="18" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow4)"/>
+
+      <rect x="490" y="0" width="38" height="35" rx="6" fill="url(#blueGrad4)"/>
+      <text x="509" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">7</text>
+      <text x="509" y="48" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">curr</text>
+
+      <line x1="532" y1="18" x2="558" y2="18" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow4)"/>
+
+      <rect x="565" y="0" width="38" height="35" rx="6" fill="url(#blueGrad4)"/>
+      <text x="584" y="22" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">8</text>
+
+      <line x1="607" y1="18" x2="633" y2="18" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow4)"/>
+
+      <rect x="640" y="0" width="55" height="35" rx="6" fill="#334155"/>
+      <text x="667" y="22" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#94a3b8" text-anchor="middle">NULL</text>
+    </g>
+  </g>
+
+  <!-- Step 3: Summary Highlights -->
+  <g transform="translate(30, 410)">
+    <rect width="890" height="125" rx="12" fill="#0f172a" stroke="#059669" stroke-width="1.5"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#34d399">Key Guarantees of addFirst Pattern</text>
+    <text x="20" y="52" font-family="system-ui, sans-serif" font-size="12" fill="#e2e8f0">&#x2714; <tspan font-weight="700" fill="#38bdf8">No Null Pointer Exceptions:</tspan> Pointers are updated incrementally; length check avoids partial reversals.</text>
+    <text x="20" y="74" font-family="system-ui, sans-serif" font-size="12" fill="#e2e8f0">&#x2714; <tspan font-weight="700" fill="#38bdf8">Unchanged Tail Segment:</tspan> If remaining len &lt; k, simply do <tspan font-family="Consolas" fill="#fbbf24">ot.next = curr;</tspan> leaving remaining nodes untouched.</text>
+    <text x="20" y="96" font-family="system-ui, sans-serif" font-size="12" fill="#e2e8f0">&#x2714; <tspan font-weight="700" fill="#38bdf8">Memory &amp; Speed:</tspan> Time Complexity: O(N) single pass | Space Complexity: O(1) in-place without recursion.</text>
+  </g>
+</svg>

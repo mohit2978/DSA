@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 21px; font-weight: bold; fill: #58a6ff; }
+      .subtitle { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13.5px; fill: #8b949e; }
+      .section-title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 15.5px; font-weight: bold; fill: #f0883e; }
+      .node-box { fill: #161b22; stroke: #30363d; stroke-width: 2px; rx: 6px; }
+      .node-box-meet { fill: #0d2818; stroke: #3fb950; stroke-width: 2.5px; rx: 6px; }
+      .node-box-start { fill: #2d1d07; stroke: #d29922; stroke-width: 2.5px; rx: 6px; }
+      .node-text { font-family: 'Segoe UI', monospace; font-size: 13px; font-weight: bold; fill: #c9d1d9; text-anchor: middle; }
+      .label-text { font-family: 'Segoe UI', system-ui; font-size: 13px; font-weight: bold; fill: #79c0ff; text-anchor: middle; }
+      .math-text { font-family: 'Segoe UI', monospace; font-size: 14.5px; fill: #79c0ff; }
+      .arrow { stroke: #58a6ff; stroke-width: 2px; fill: none; marker-end: url(#arrow-head); }
+      .arrow-orange { stroke: #f0883e; stroke-width: 2.5px; fill: none; marker-end: url(#arrow-amber); }
+      .arrow-green { stroke: #3fb950; stroke-width: 2.5px; fill: none; marker-end: url(#arrow-green-id); }
+      .step-desc { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13px; fill: #c9d1d9; }
+      .box-panel { fill: #161b22; stroke: #30363d; stroke-width: 1.5px; rx: 8px; }
+    </style>
+    <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f0883e"/>
+    </marker>
+    <marker id="arrow-green-id" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="700" class="bg" rx="12"/>
+
+  <!-- Title Header -->
+  <text x="50" y="42" class="title">Cycle Detection: Physics &amp; Relative Velocity Derivation</text>
+  <text x="50" y="65" class="subtitle">Two Runners (A &amp; B) Moving on Track with Speeds Va &gt; Vb — Distance &amp; Time Equality</text>
+
+  <!-- Visual Diagram of Track (x, y, z) -->
+  <g transform="translate(50, 95)">
+    <rect width="900" height="210" class="box-panel"/>
+    <text x="20" y="28" class="section-title" fill="#58a6ff">Geometry of the Track: x (Straight Line) + y (Upper Arc) + z (Lower Arc)</text>
+
+    <!-- Start Node -->
+    <circle cx="50" cy="90" r="10" fill="#21262d" stroke="#58a6ff" stroke-width="2"/>
+    <text x="50" y="120" class="node-text" fill="#79c0ff">A &amp; B Start (Head)</text>
+
+    <!-- Straight line (Distance x) -->
+    <line x1="65" y1="90" x2="380" y2="90" stroke="#58a6ff" stroke-width="3" marker-end="url(#arrow-head)"/>
+    <text x="220" y="75" class="label-text" fill="#58a6ff">Straight Path: Distance x</text>
+
+    <!-- Loop Start Node -->
+    <circle cx="400" cy="90" r="12" fill="#2d1d07" stroke="#d29922" stroke-width="2.5"/>
+    <text x="400" y="125" class="node-text" fill="#d29922">Loop Entry</text>
+
+    <!-- Upper Arc (Distance y) to Meeting Point -->
+    <path d="M 405 80 C 470 20, 600 20, 665 80" class="arrow-orange"/>
+    <text x="535" y="40" class="label-text" fill="#f0883e">Distance y (Upper Arc to Meeting)</text>
+
+    <!-- Meeting Node -->
+    <circle cx="675" cy="90" r="12" fill="#0d2818" stroke="#3fb950" stroke-width="3"/>
+    <text x="675" y="125" class="node-text" fill="#3fb950">Meeting Point (M)</text>
+
+    <!-- Lower Arc (Distance z) back to Loop Start -->
+    <path d="M 665 100 C 600 160, 470 160, 405 100" class="arrow-green"/>
+    <text x="535" y="165" class="label-text" fill="#3fb950">Distance z (Lower Arc to Loop Start)</text>
+
+    <!-- Legend -->
+    <text x="730" y="80" class="step-desc" font-size="12">• Total Loop = <tspan fill="#d29922" font-weight="bold">(y + z)</tspan></text>
+    <text x="730" y="105" class="step-desc" font-size="12">• Runner A: Speed <tspan fill="#f0883e" font-weight="bold">Va</tspan> (m laps)</text>
+    <text x="730" y="130" class="step-desc" font-size="12">• Runner B: Speed <tspan fill="#3fb950" font-weight="bold">Vb</tspan> (0 laps)</text>
+  </g>
+
+  <!-- Section 2: Mathematical Derivations Side-by-Side -->
+  <g transform="translate(50, 325)">
+    <!-- Left Card: Distance & Velocity Equations -->
+    <g transform="translate(0, 0)">
+      <rect width="435" height="345" class="box-panel"/>
+      <text x="20" y="28" class="section-title" fill="#58a6ff">1. Distance &amp; Time Equations</text>
+
+      <text x="20" y="60" class="step-desc" font-weight="bold" fill="#f0883e">Distance traveled by Runner A (Fast):</text>
+      <text x="35" y="85" class="math-text" fill="#f0883e">d_a = x + (y + z)·m + y</text>
+      <text x="35" y="105" class="step-desc" font-size="12">(Traversed x straight + m full laps + y arc)</text>
+
+      <line x1="20" y1="120" x2="415" y2="120" stroke="#30363d"/>
+
+      <text x="20" y="145" class="step-desc" font-weight="bold" fill="#3fb950">Distance traveled by Runner B (Slow):</text>
+      <text x="35" y="170" class="math-text" fill="#3fb950">d_b = x + (y + z)·n + y</text>
+      <text x="35" y="190" class="step-desc" font-size="12">(Since B is caught in 1st round before full lap → n = 0)</text>
+      <text x="35" y="215" class="math-text" fill="#3fb950">d_b = x + y</text>
+
+      <line x1="20" y1="230" x2="415" y2="230" stroke="#30363d"/>
+
+      <text x="20" y="255" class="step-desc" font-weight="bold" fill="#79c0ff">Physics Relation (Time T is constant):</text>
+      <text x="35" y="280" class="math-text">Distance = Speed × Time  ⇒  T = d_a / Va = d_b / Vb</text>
+      <text x="35" y="310" class="math-text" fill="#d29922">Va / Vb = d_a / d_b</text>
+    </g>
+
+    <!-- Right Card: Algebraic Proof for Collision -->
+    <g transform="translate(465, 0)">
+      <rect width="435" height="345" class="box-panel"/>
+      <text x="20" y="28" class="section-title" fill="#d29922">2. Algebraic Proof &amp; Velocity Condition</text>
+
+      <text x="20" y="60" class="step-desc">Substitute d_a and d_b into the ratio:</text>
+      <text x="20" y="90" class="math-text" font-size="13.5">Va / (x + y + m(y + z)) = Vb / (x + y)</text>
+      
+      <text x="20" y="125" class="step-desc">Let velocity ratio <tspan fill="#79c0ff" font-weight="bold">r = Va / Vb</tspan>:</text>
+      <text x="35" y="150" class="math-text">r · (x + y) = x + y + m(y + z)</text>
+      <text x="35" y="180" class="math-text" fill="#f0883e">(r - 1) · (x + y) = m · (y + z)</text>
+
+      <line x1="20" y1="200" x2="415" y2="200" stroke="#30363d"/>
+
+      <text x="20" y="225" class="step-desc" font-weight="bold" fill="#3fb950">Why Collision is Guaranteed:</text>
+      <text x="20" y="250" class="step-desc">• (x + y) ≠ 0 and (y + z) ≠ 0 (non-empty loop).</text>
+      <text x="20" y="275" class="step-desc">• Laps m &gt; 0  ⇒  (r - 1) must be &gt; 0  ⇒  <tspan fill="#79c0ff" font-weight="bold">r &gt; 1</tspan>.</text>
+      <text x="20" y="300" class="step-desc">• <tspan fill="#3fb950" font-weight="bold">Conclusion:</tspan> Whenever <tspan fill="#f0883e" font-weight="bold">Va &gt; Vb</tspan>, a meeting</text>
+      <text x="35" y="322" class="step-desc">point M <tspan fill="#3fb950" font-weight="bold">always exists</tspan>! When r = 2 (Floyd's): <tspan fill="#79c0ff">x + y = m(y + z)</tspan>.</text>
+    </g>
+  </g>
+</svg>

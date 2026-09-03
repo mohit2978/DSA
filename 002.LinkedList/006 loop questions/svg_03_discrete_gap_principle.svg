@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 650" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 22px; font-weight: bold; fill: #58a6ff; }
+      .subtitle { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; fill: #8b949e; }
+      .section-title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #f0883e; }
+      .node-box { fill: #161b22; stroke: #30363d; stroke-width: 2px; rx: 8px; }
+      .node-box-active { fill: #0d2818; stroke: #3fb950; stroke-width: 2px; rx: 8px; }
+      .node-text { font-family: 'Segoe UI', monospace; font-size: 15px; font-weight: bold; fill: #c9d1d9; text-anchor: middle; }
+      .label-text { font-family: 'Segoe UI', system-ui; font-size: 13px; font-weight: bold; fill: #79c0ff; text-anchor: middle; }
+      .arrow { stroke: #58a6ff; stroke-width: 2px; fill: none; marker-end: url(#arrow-head); }
+      .step-desc { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13.5px; fill: #c9d1d9; }
+      .box-panel { fill: #161b22; stroke: #30363d; stroke-width: 1.5px; rx: 8px; }
+    </style>
+    <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="650" class="bg" rx="12"/>
+
+  <!-- Header -->
+  <text x="50" y="45" class="title">Mathematical Proof: The Discrete Gap Principle</text>
+  <text x="50" y="70" class="subtitle">Why Fast Pointer (2x) Can NEVER "Jump Over" Slow Pointer (1x)</text>
+
+  <!-- Section 1: Step Transition Recurrence -->
+  <text x="50" y="115" class="section-title">Step Transition Recurrence: G_{t+1} = G_t - 1</text>
+
+  <!-- Timeline Cards -->
+  <g transform="translate(50, 140)">
+    <!-- Time t -->
+    <g transform="translate(0, 0)">
+      <rect width="260" height="150" class="box-panel"/>
+      <text x="20" y="30" class="label-text" fill="#79c0ff" text-anchor="start">State at Step t</text>
+      <text x="20" y="65" class="step-desc">• Slow Position: <tspan font-family="monospace" fill="#3fb950">S_t</tspan></text>
+      <text x="20" y="95" class="step-desc">• Fast Position: <tspan font-family="monospace" fill="#f0883e">F_t</tspan></text>
+      <text x="20" y="125" class="step-desc">• Current Gap: <tspan font-family="monospace" fill="#58a6ff">G_t = (S_t - F_t) mod C</tspan></text>
+    </g>
+
+    <!-- Transition Arrow -->
+    <path d="M 280 75 L 340 75" class="arrow" stroke-width="3"/>
+    <text x="310" y="60" class="label-text" fill="#d29922">1 iteration</text>
+
+    <!-- Time t+1 -->
+    <g transform="translate(360, 0)">
+      <rect width="260" height="150" class="box-panel"/>
+      <text x="20" y="30" class="label-text" fill="#3fb950" text-anchor="start">State at Step t+1</text>
+      <text x="20" y="65" class="step-desc">• Slow moves 1: <tspan font-family="monospace" fill="#3fb950">S_{t+1} = S_t + 1</tspan></text>
+      <text x="20" y="95" class="step-desc">• Fast moves 2: <tspan font-family="monospace" fill="#f0883e">F_{t+1} = F_t + 2</tspan></text>
+      <text x="20" y="125" class="step-desc">• New Gap: <tspan font-family="monospace" fill="#3fb950">G_{t+1} = G_t - 1</tspan></text>
+    </g>
+
+    <!-- Result / Conclusion Card -->
+    <g transform="translate(640, 0)">
+      <rect width="260" height="150" class="box-panel" stroke="#3fb950"/>
+      <text x="20" y="30" class="label-text" fill="#3fb950" text-anchor="start">Conclusion</text>
+      <text x="20" y="65" class="step-desc">The gap decreases by</text>
+      <text x="20" y="90" class="step-desc" font-weight="bold" fill="#79c0ff">EXACTLY 1</text>
+      <text x="20" y="115" class="step-desc">in each discrete clock step.</text>
+      <text x="20" y="138" class="step-desc" fill="#3fb950">Zero CANNOT be skipped!</text>
+    </g>
+  </g>
+
+  <!-- Section 2: Gap Sequence & Two Guarantees -->
+  <line x1="50" y1="320" x2="950" y2="320" stroke="#30363d" stroke-width="1"/>
+  <text x="50" y="355" class="section-title">The Two Fundamental Mathematical Guarantees</text>
+
+  <!-- Card 1: The No-Jump Guarantee -->
+  <g transform="translate(50, 380)">
+    <rect width="420" height="230" class="box-panel"/>
+    <text x="20" y="30" class="section-title" fill="#58a6ff">A. The "No-Jump" Guarantee</text>
+    
+    <text x="20" y="65" class="step-desc">• The sequence of integer gaps is strictly:</text>
+    <text x="20" y="95" class="step-desc" font-family="monospace" fill="#79c0ff">  G_0 → G_0 - 1 → G_0 - 2 → ... → 2 → 1 → 0</text>
+    <text x="20" y="130" class="step-desc">• Since gap values are discrete non-negative integers</text>
+    <text x="20" y="150" class="step-desc">  and decrement by 1, it is <tspan fill="#f85149" font-weight="bold">impossible</tspan> to go from</text>
+    <text x="20" y="170" class="step-desc">  gap = 1 to gap = -1 without hitting <tspan fill="#3fb950" font-weight="bold">gap = 0</tspan>.</text>
+    <text x="20" y="205" class="step-desc" fill="#3fb950">👉 Detection is 100% mathematically guaranteed!</text>
+  </g>
+
+  <!-- Card 2: The One-Lap Guarantee -->
+  <g transform="translate(500, 380)">
+    <rect width="450" height="230" class="box-panel"/>
+    <text x="20" y="30" class="section-title" fill="#f0883e">B. The "One-Lap" Guarantee</text>
+    
+    <text x="20" y="65" class="step-desc">• Maximum initial gap when Slow enters loop is <tspan font-family="monospace" fill="#79c0ff">C - 1</tspan>.</text>
+    <text x="20" y="95" class="step-desc">• Time to reach gap 0: <tspan font-weight="bold" fill="#3fb950">at most C - 1 steps</tspan>.</text>
+    <text x="20" y="125" class="step-desc">• Distance traveled by Slow in (C - 1) steps:</text>
+    <text x="35" y="150" class="step-desc" font-family="monospace" fill="#79c0ff">Distance = 1 × (C - 1) &lt; C</text>
+    <text x="20" y="180" class="step-desc">• <tspan fill="#3fb950" font-weight="bold">Result:</tspan> Slow pointer will <tspan font-weight="bold">never</tspan> complete even a</text>
+    <text x="20" y="205" class="step-desc">  single full rotation before Fast catches it!</text>
+  </g>
+</svg>

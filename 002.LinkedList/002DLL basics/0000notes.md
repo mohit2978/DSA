@@ -1,12 +1,63 @@
+# Doubly Linked List (DLL) — Notes, Diagrams & Code Explanations
+
+A **Doubly Linked List (DLL)** is a bidirectional linked data structure where each node holds:
+- **`val`**: The data value.
+- **`prev`**: A pointer to the previous node (`nullptr` if the node is `head`).
+- **`next`**: A pointer to the next node (`nullptr` if the node is `tail`).
+
+---
+
+## 1. DLL Anatomy & Node Structure
+
+![DLL Architecture](./dll_anatomy.svg)
+
+---
+
 # DLL basic operations 1
 
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
+### Detailed Operation Explanations & Visualizations
 
-// Definition of doubly linked list
-struct ListNode
-{
+#### 1. `deleteHead(head)`
+* **Concept:** Deletes the first node and shifts the head pointer to the second node.
+* **Key Pointers:**
+  1. `newHead = head->next`
+  2. `newHead->prev = nullptr`
+  3. Disconnect and `delete head`
+
+![Delete Head](./delete_head.svg)
+
+---
+
+#### 2. `insertBeforeHead1` / `insertBeforeHead2`
+* **Concept:** Inserts a new node before `head`, updating `head->prev` and setting `node->next = head`.
+* **Complexity:** $O(1)$ Time, $O(1)$ Space.
+
+![Insert Before Head](./insert_before_head.svg)
+
+---
+
+#### 3. `deleteGivenNode(node)` & `deleteKthElement(head, k)`
+* **Concept:** Bypasses `node` by connecting `node->prev` directly to `node->next`, then frees memory.
+* **Pointers updated:**
+  1. `node->prev->next = node->next`
+  2. `node->next->prev = node->prev`
+  3. `delete node`
+
+![Delete Given Node / K-th Node](./delete_given_node.svg)
+
+---
+
+#### 4. `insertBeforeGivenNode(node, X)` & `insertBeforeTail(head, X)`
+* **Concept:** Inserting a new node before an existing given node requires rewiring 4 pointers:
+  1. `prevNode->next = newNode`
+  2. `newNode->prev = prevNode`
+  3. `newNode->next = node`
+  4. `node->prev = newNode`
+
+---
+
+```cpp
+struct ListNode {
     int val;
     ListNode *next;
     ListNode *prev;
@@ -210,7 +261,27 @@ int main() {
 }
 ```
 
+---
+
 # DLL basic operations 2
+
+### Comparative Approach Analysis
+
+#### 1. `arrayToLinkedList1` vs `arrayToLinkedList2`
+* **Approach 1 (`arrayToLinkedList1`):** Direct iterative approach. Initializes `head` at `nums[0]`, then iterates $1 \dots N-1$ linking `prev->next = temp` and `temp->prev = prev`.
+* **Approach 2 (`arrayToLinkedList2`):** Dummy Node approach (`ListNode(-1)`). Eliminates special head-initialization logic in the loop, then removes and deletes the dummy node before returning.
+
+![Array to DLL Flow](./array_to_dll.svg)
+
+---
+
+#### 2. `deleteTail1` vs `deleteTail2`
+* **Approach 1 (`deleteTail1`):** Traverses all the way to `tail` (`while (tail->next != nullptr)`). Accesses `tail->prev`, disconnects `newTail->next = nullptr`, and deletes `tail`.
+* **Approach 2 (`deleteTail2`):** Stops at the second-to-last node (`while (tmp->next->next != nullptr)`). Accesses `node = tmp->next`, disconnects `tmp->next = nullptr`, and deletes `node`.
+
+![Delete Tail](./delete_tail.svg)
+
+---
 
 ```cpp
 #include <bits/stdc++.h>
@@ -249,7 +320,6 @@ public:
 
         if (nums.empty()) return nullptr; 
         ListNode* head = new ListNode(nums[0]); 
-
         ListNode* prev = head;             
 
         for (int i=1; i < nums.size(); i++) {
@@ -352,3 +422,19 @@ int main() {
     return 0;
 }
 ```
+
+---
+
+## 3. Complexity & Operations Quick Reference
+
+| Operation | Time Complexity | Space Complexity | Critical Pointer Handling |
+| :--- | :---: | :---: | :--- |
+| **`arrayToLinkedList`** | $O(N)$ | $O(1)$ auxiliary | Link `prev->next = temp` & `temp->prev = prev` |
+| **`insertBeforeHead`** | $O(1)$ | $O(1)$ | `node->next = head`, `head->prev = node`, return `node` |
+| **`insertBeforeTail`** | $O(N)$ | $O(1)$ | Stop before tail, wire 4 pointers |
+| **`insertBeforeGivenNode`** | $O(1)$ | $O(1)$ | Access `node->prev` directly, rewire 4 pointers |
+| **`insertBeforeKthPosition`** | $O(K)$ | $O(1)$ | Loop $K-1$ steps, rewire 4 pointers |
+| **`deleteHead`** | $O(1)$ | $O(1)$ | `newHead = head->next`, `newHead->prev = nullptr`, `delete head` |
+| **`deleteTail`** | $O(N)$ | $O(1)$ | `newTail = tail->prev`, `newTail->next = nullptr`, `delete tail` |
+| **`deleteGivenNode`** | $O(1)$ | $O(1)$ | `prev->next = after`, `after->prev = prev`, `delete node` |
+| **`deleteKthElement`** | $O(K)$ | $O(1)$ | Traverse to $K$, bypass pointers and delete |

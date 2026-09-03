@@ -1,23 +1,16 @@
+# Question 1: Sort List (Merge Sort on Linked List) (LeetCode 148) [Medium]
 
-![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1).jpg>)
+### Problem Statement
+Given the `head` of a linked list, return the list after sorting it in **ascending order**.
+Follow up: Can you sort the linked list in $O(N \log N)$ time and $O(1)$ memory (i.e. constant space)?
 
-![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(1).jpg>) 
+### Visual Dry Run & Intuition
+![Merge Sort Linked List](./svg_01_merge_sort_ll.svg)
 
-### Mergesort lists
+### Mergesort lists (C++ Implementation)
 
 ```cpp
-#include <bits/stdc++.h>
-using namespace std;
 
-
-struct ListNode {
-      int val;
-      ListNode *next;
-      ListNode() : val(0), next(nullptr) {}
-      ListNode(int x) : val(x), next(nullptr) {}
-     ListNode(int x, ListNode *next) : val(x), next(next) {}
- };
- 
 class Solution {
     private :
         ListNode* mid (ListNode * node){
@@ -79,10 +72,10 @@ int main(){
 }
 
 ```
-### Merge k sorted lists
+
+### Mergesort lists (Java Implementation)
 
 ```java
-
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -94,54 +87,383 @@ int main(){
  * }
  */
 class Solution {
-    public ListNode merge(ListNode h1,ListNode h2){
-        if(h1==null) return h2;
-        if(h2==null) return h1;
-        ListNode dummy=new ListNode(-1);
-        ListNode curr=dummy;
-        while(h1!=null&&h2!=null){
-            if(h1.val<h2.val){
-                ListNode node=new ListNode(h1.val);
-                curr.next=node;
-                h1=h1.next;
-            }
-            else{
-                ListNode node=new ListNode(h2.val);
-                curr.next=node;
-                h2=h2.next;
-            }
-            curr=curr.next;
+    private ListNode getMid(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
         }
-        while(h1!=null){
-             ListNode node=new ListNode(h1.val);
-                curr.next=node;
-                h1=h1.next;
-             curr=curr.next;
-            
+        return slow;
+    }
+
+    private ListNode merge(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        ListNode dummy = new ListNode(-1);
+        ListNode curr = dummy;
+        while (l1 != null && l2 != null) {
+            if (l1.val <= l2.val) {
+                curr.next = l1;
+                l1 = l1.next;
+            } else {
+                curr.next = l2;
+                l2 = l2.next;
+            }
+            curr = curr.next;
         }
-        while(h2!=null){
-              ListNode node=new ListNode(h2.val);
-                curr.next=node;
-                h2=h2.next;
-             curr=curr.next;
+        if (l1 != null) curr.next = l1;
+        if (l2 != null) curr.next = l2;
+        return dummy.next;
+    }
+
+    public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode mid = getMid(head);
+        ListNode l1 = head;
+        ListNode l2 = mid.next;
+        mid.next = null; // Split the list
+
+        l1 = sortList(l1);
+        l2 = sortList(l2);
+        return merge(l1, l2);
+    }
+}
+```
+
+---
+
+# Question 2: Merge K Sorted Lists (LeetCode 23) [Hard]
+
+### Problem Statement
+You are given an array of `k` linked-lists `lists`, each linked-list is sorted in ascending order.
+Merge all the linked-lists into one sorted linked-list and return it.
+
+### Visual Dry Run & Complexity Tree
+![Merge K Sorted Lists](./svg_02_merge_k_sorted_lists.svg)
+
+---
+
+## Approach 1: Linear Merge / Sequential Accumulation (Brute Force)
+
+### 1. Intuition & How It Works
+We maintain an accumulator list `ans = null`. We iterate through each of the $K$ linked lists and merge them one by one into `ans`.
+
+### 2. Time Complexity Myth vs Reality (The Mathematical Proof)
+
+> **Common Misconception:** "We merge $K$ lists of length $L$, so time complexity is $O(K \cdot L)$."
+> 
+> **Why this is WRONG:** The accumulator list `ans` **grows longer** after each merge step!
+
+Let:
+- $K$ = Number of linked lists.
+- $L$ = Average number of nodes in each linked list.
+- $N = K \times L$ = Total number of nodes across all lists.
+
+Let's calculate the work done at each merge step:
+
+| Step | First List Size | Second List Size | Work Done (Comparisons) | Resulting `ans` Length |
+| :--- | :--- | :--- | :--- | :--- |
+| **Merge 1** | $0$ (`null`) | $L$ (`lists[0]`) | $0 + L = \mathbf{L}$ | $L$ |
+| **Merge 2** | $L$ (`ans`) | $L$ (`lists[1]`) | $L + L = \mathbf{2L}$ | $2L$ |
+| **Merge 3** | $2L$ (`ans`) | $L$ (`lists[2]`) | $2L + L = \mathbf{3L}$ | $3L$ |
+| **Merge 4** | $3L$ (`ans`) | $L$ (`lists[3]`) | $3L + L = \mathbf{4L}$ | $4L$ |
+| ... | ... | ... | ... | ... |
+| **Merge $K$** | $(K-1)L$ (`ans`) | $L$ (`lists[K-1]`) | $(K-1)L + L = \mathbf{KL}$ | $K \cdot L$ |
+
+#### Total Work Done:
+$$\text{Total Work} = L + 2L + 3L + 4L + \dots + KL$$
+$$\text{Total Work} = L \cdot (1 + 2 + 3 + 4 + \dots + K)$$
+
+Using the Arithmetic Progression sum formula $\frac{K(K+1)}{2}$:
+$$\text{Total Work} = L \cdot \frac{K(K+1)}{2} = \frac{L \cdot K^2 + L \cdot K}{2} = \mathbf{O(L \cdot K^2)}$$
+
+Since $N = K \cdot L$ (total nodes):
+$$\mathbf{O(L \cdot K^2) = O((K \cdot L) \cdot K) = O(N \cdot K)}$$
+
+- **LeetCode Runtime:** **~99 ms** (Extremely slow because earlier nodes are traversed repeatedly $K$ times).
+- **Space Complexity:** $O(1)$ auxiliary space.
+
+### 3. Code (Linear Merge)
+
+#### Java
+```java
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        ListNode dummy = new ListNode(-1);
+        ListNode curr = dummy;
+        while (l1 != null && l2 != null) {
+            if (l1.val <= l2.val) {
+                curr.next = l1;
+                l1 = l1.next;
+            } else {
+                curr.next = l2;
+                l2 = l2.next;
+            }
+            curr = curr.next;
+        }
+        curr.next = (l1 != null) ? l1 : l2;
+        return dummy.next;
+    }
+
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) return null;
+        ListNode ans = null;
+        for (ListNode list : lists) {
+            ans = mergeTwoLists(ans, list);
+        }
+        return ans;
+    }
+}
+```
+
+#### C++
+```cpp
+class Solution {
+    ListNode* mergeTwo(ListNode* l1, ListNode* l2) {
+        if (!l1) return l2;
+        if (!l2) return l1;
+        ListNode dummy(-1);
+        ListNode* curr = &dummy;
+        while (l1 && l2) {
+            if (l1->val <= l2->val) {
+                curr->next = l1;
+                l1 = l1->next;
+            } else {
+                curr->next = l2;
+                l2 = l2->next;
+            }
+            curr = curr->next;
+        }
+        curr->next = l1 ? l1 : l2;
+        return dummy.next;
+    }
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if (lists.empty()) return nullptr;
+        ListNode* ans = nullptr;
+        for (auto list : lists) {
+            ans = mergeTwo(ans, list);
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+## Approach 2: Divide and Conquer (Tournament Tree / Merge Sort Style)
+
+### 1. Intuition & Tree Structure
+Instead of merging sequentially, we divide the $K$ lists into pairs and merge them like a **tournament tree**:
+- **Level 0 ($K$ lists):** $K$ lists of size $L$.
+- **Level 1 ($K/2$ lists):** Merge pairs of lists $\implies K/2$ lists of size $2L$.
+- **Level 2 ($K/4$ lists):** Merge pairs of lists $\implies K/4$ lists of size $4L$.
+- ...
+- **Level $\log_2 K$ ($1$ list):** $1$ final merged list of size $K \cdot L = N$.
+
+### 2. Recurrence Relation & Complexity Breakdown
+At each level of the recursion tree:
+- **Number of lists to merge:** Halves at each level ($K \rightarrow K/2 \rightarrow K/4 \dots \rightarrow 1$).
+- **Height of recursion tree:** $\log_2(K)$ levels.
+- **Work done per level:** Every node ($N = K \cdot L$) is touched exactly once per level $\implies O(N)$ work per level.
+
+#### The Recurrence Relation:
+$$T(K) = 2 \cdot T\left(\frac{K}{2}\right) + \text{MergeWork}$$
+$$\text{MergeWork} = \left(\frac{K \cdot L}{2}\right) + \left(\frac{K \cdot L}{2}\right) = K \cdot L = N$$
+
+$$T(K) = 2 \cdot T\left(\frac{K}{2}\right) + N$$
+
+Solving using Master Theorem / Tree Method:
+$$\mathbf{\text{Total Time Complexity} = O(N \log K) = O(K \cdot L \cdot \log K)}$$
+$$\mathbf{\text{Space Complexity} = O(\log K)} \text{ (Recursion Call Stack)}$$
+
+- **LeetCode Runtime:** **~1 ms** (Optimal & blazing fast!).
+
+### 3. Step-by-Step Code Walkthrough
+
+1. **`merge(ListNode h1, ListNode h2)`**: Standard 2-pointer merge of two sorted linked lists using a `dummy` node.
+2. **`mergelist(ListNode[] lists, int si, int li)`**:
+   - **Base Case:** `if (si == li) return lists[si];` (Single list in range, already sorted).
+   - **Divide:** `int mid = (si + li) / 2;`
+   - **Conquer:**
+     - `ListNode l1 = mergelist(lists, si, mid);` (merges first half $K/2$ lists)
+     - `ListNode l2 = mergelist(lists, mid + 1, li);` (merges second half $K/2$ lists)
+   - **Combine:** `return merge(l1, l2);`
+3. **`mergeKLists(ListNode[] lists)`**: Initiates divide & conquer from index `0` to `lists.length - 1`.
+
+### 4. Code (Divide and Conquer)
+
+#### Java Implementation
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode merge(ListNode h1, ListNode h2) {
+        if (h1 == null) return h2;
+        if (h2 == null) return h1;
+        ListNode dummy = new ListNode(-1);
+        ListNode curr = dummy;
+        while (h1 != null && h2 != null) {
+            if (h1.val < h2.val) {
+                ListNode node = new ListNode(h1.val);
+                curr.next = node;
+                h1 = h1.next;
+            } else {
+                ListNode node = new ListNode(h2.val);
+                curr.next = node;
+                h2 = h2.next;
+            }
+            curr = curr.next;
+        }
+        while (h1 != null) {
+            ListNode node = new ListNode(h1.val);
+            curr.next = node;
+            h1 = h1.next;
+            curr = curr.next;
+        }
+        while (h2 != null) {
+            ListNode node = new ListNode(h2.val);
+            curr.next = node;
+            h2 = h2.next;
+            curr = curr.next;
         }
         return dummy.next;
     }
     
-    public ListNode mergelist(ListNode[] lists,int si,int li){
-        if(si==li) return lists[si];
-        int mid=(si+li)/2;
-        ListNode l1=mergelist(lists,si,mid);
-        ListNode l2=mergelist(lists,mid+1,li);
-        return merge(l1,l2);
+    public ListNode mergelist(ListNode[] lists, int si, int li) {
+        if (si == li) return lists[si];
+        int mid = (si + li) / 2;
+        ListNode l1 = mergelist(lists, si, mid);
+        ListNode l2 = mergelist(lists, mid + 1, li);
+        return merge(l1, l2);
     }
+
     public ListNode mergeKLists(ListNode[] lists) {
-        if(lists.length==0) return null;
-        return mergelist(lists,0,lists.length-1);
+        if (lists == null || lists.length == 0) return null;
+        return mergelist(lists, 0, lists.length - 1);
     }
 }
 ```
-# # Flattening of LL
+
+#### C++ Implementation
+```cpp
+class Solution {
+private:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if (!l1) return l2;
+        if (!l2) return l1;
+        ListNode dummy(-1);
+        ListNode* curr = &dummy;
+        while (l1 && l2) {
+            if (l1->val <= l2->val) {
+                curr->next = l1;
+                l1 = l1->next;
+            } else {
+                curr->next = l2;
+                l2 = l2->next;
+            }
+            curr = curr->next;
+        }
+        curr->next = l1 ? l1 : l2;
+        return dummy.next;
+    }
+
+    ListNode* mergeKListsHelper(vector<ListNode*>& lists, int start, int end) {
+        if (start == end) return lists[start];
+        int mid = start + (end - start) / 2;
+        ListNode* l1 = mergeKListsHelper(lists, start, mid);
+        ListNode* l2 = mergeKListsHelper(lists, mid + 1, end);
+        return mergeTwoLists(l1, l2);
+    }
+
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if (lists.empty()) return nullptr;
+        return mergeKListsHelper(lists, 0, lists.size() - 1);
+    }
+};
+```
+
+---
+
+## Approach 3: Priority Queue / Min-Heap
+
+### 1. Intuition & Logic
+- Push the `head` of all $K$ lists into a Min-Heap of size $K$.
+- Pop the smallest element, append it to `tail.next`, and push `minNode.next` into the heap (if not null).
+- Repeat until the heap is empty.
+- **Time Complexity:** $O(N \log K)$ (each of the $N$ nodes is pushed and popped once from a heap of size $K$).
+- **Space Complexity:** $O(K)$ (heap holds at most $K$ elements at any time).
+
+### 2. Code (Min-Heap)
+
+#### C++ Min-Heap
+```cpp
+class Solution {
+    struct compare {
+        bool operator()(const ListNode* a, const ListNode* b) {
+            return a->val > b->val; // Min-heap based on value
+        }
+    };
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue<ListNode*, vector<ListNode*>, compare> pq;
+        for (auto head : lists) {
+            if (head) pq.push(head);
+        }
+        ListNode dummy(-1);
+        ListNode* tail = &dummy;
+        while (!pq.empty()) {
+            ListNode* minNode = pq.top();
+            pq.pop();
+            tail->next = minNode;
+            tail = tail->next;
+            if (minNode->next) pq.push(minNode->next);
+        }
+        return dummy.next;
+    }
+};
+```
+
+#### Java Min-Heap
+```java
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) return null;
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((a, b) -> a.val - b.val);
+        for (ListNode node : lists) {
+            if (node != null) pq.add(node);
+        }
+        ListNode dummy = new ListNode(-1);
+        ListNode tail = dummy;
+        while (!pq.isEmpty()) {
+            ListNode minNode = pq.poll();
+            tail.next = minNode;
+            tail = tail.next;
+            if (minNode.next != null) {
+                pq.add(minNode.next);
+            }
+        }
+        return dummy.next;
+    }
+}
+```
+
+---
+
+# Question 3: Flattening a Multilevel Linked List (GFG / LeetCode 430 Variant) [Medium / Hard]
 
 ### Problem Statement
 Given a special linked list containing `n` head nodes where every node in the linked list contains two pointers:
@@ -151,6 +473,9 @@ Given a special linked list containing `n` head nodes where every node in the li
 Each of these child linked lists is in sorted order and connected by a 'child' pointer.
 
 Flatten this linked list such that all nodes appear in a single sorted layer connected by the 'child' pointer and return the head of the modified list.
+
+### Visual Dry Run
+![Flattening Linked List](./svg_03_flattening_linked_list.svg)
 
 ### Examples
 
@@ -177,31 +502,6 @@ Explanation: All the linked lists are joined together and sorted in a single lev
 ## Striver sol
 
 ```cpp
-#include <bits/stdc++.h>
-using namespace std;
-
-// Definition of special linked list
-struct ListNode {
-    int val;
-    ListNode *next;
-    ListNode *child;
-    ListNode() {
-        val = 0;
-        next = NULL;
-        child = NULL;
-    }
-    ListNode(int data1) {
-        val = data1;
-        next = NULL;
-        child = NULL;
-    }
-    ListNode(int data1, ListNode *next1, ListNode* next2) {
-        val = data1;
-        next = next1;
-        child = next1;
-    }
-};
-
 class Solution {
 private:
     /* Merge the two linked lists in a particular
@@ -259,101 +559,11 @@ public:
     }
 };
 
-// Function to print the linked list
-void printLinkedList(ListNode* head) {
-    while (head != nullptr) {
-        cout << head->val << " ";
-        head = head->child;
-    }
-    cout << endl;
-}
 
-// Function to print the linked list in a grid-like structure
-void printOriginalLinkedList(ListNode* head, int depth) {
-    while (head != nullptr) {
-        cout << head->val;
-
-        /* If child exists, recursively
-         print it with indentation */
-        if (head->child) {
-            cout << " -> ";
-            printOriginalLinkedList(head->child, depth + 1);
-        }
-
-        // Add vertical bars for each level in the grid
-        if (head->next) {
-            cout << endl;
-            for (int i = 0; i < depth; ++i) {
-                cout << "| ";
-            }
-        }
-        head = head->next;
-    }
-}
-
-int main() {
-    // Create a linked list with child pointers
-    ListNode* head = new ListNode(5);
-    head->child = new ListNode(14);
-
-    head->next = new ListNode(10);
-    head->next->child = new ListNode(4);
-
-    head->next->next = new ListNode(12);
-    head->next->next->child = new ListNode(20);
-    head->next->next->child->child = new ListNode(13);
-
-    head->next->next->next = new ListNode(7);
-    head->next->next->next->child = new ListNode(17);
-
-    // Print the original linked list structure
-    cout << "Original linked list:" << endl;
-    printOriginalLinkedList(head, 0);
-
-    // Creating an instance of Solution class
-    Solution sol;
-    
-    // Function call to flatten the linked list
-    ListNode* flattened = sol.flattenLinkedList(head);
-    
-    // Printing the flattened linked list
-    cout << "\nFlattened linked list: ";
-    printLinkedList(flattened);
-
-    return 0;
-}
 ```
 
 ## My sol
-```CPP
-/*
-Definition of special linked list:
-struct ListNode
-{
-    int val;
-    ListNode *next;
-    ListNode *child;
-    ListNode()
-    {
-        val = 0;
-        next = NULL;
-        child = NULL;
-    }
-    ListNode(int data1)
-    {
-        val = data1;
-        next = NULL;
-        child = NULL;
-    }
-    ListNode(int data1, ListNode *next1, ListNode* next2)
-    {
-        val = data1;
-        next = next1;
-        child = next1;
-    }
-};
-*/
-
+```Cpp
 class Solution {
     ListNode* merge(ListNode* h1, ListNode* h2) {
         if (h1 == nullptr) return h2;
@@ -499,7 +709,51 @@ If $K = 1000$:
 * $O(\log K)$: This is the height of the recursion tree. Even though we are merging $K$ lists, the computer only needs to remember $\log K$ function calls at any one time.
 * This is why Solution 2 is much safer against **Stack Overflow** than the linear $O(K)$ recursion of Solution 1.
 
-![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(2).jpg>) ![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(3).jpg>) ![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(4).jpg>) ![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(5).jpg>) 
+### Java Implementation of Flattening
+```java
+class Solution {
+    ListNode mergeTwoLists(ListNode a, ListNode b) {
+        ListNode temp = new ListNode(0);
+        ListNode res = temp;
+        while (a != null && b != null) {
+            if (a.data < b.data) {
+                res.bottom = a;
+                res = a;
+                a = a.bottom;
+            } else {
+                res.bottom = b;
+                res = b;
+                b = b.bottom;
+            }
+        }
+        if (a != null) res.bottom = a;
+        else res.bottom = b;
+        return temp.bottom;
+    }
+
+    ListNode flatten(ListNode root) {
+        if (root == null || root.next == null) return root;
+        // Recur for list on right
+        root.next = flatten(root.next);
+        // Merge current list with flattened right list
+        root = mergeTwoLists(root, root.next);
+        return root;
+    }
+}
+```
+
+---
+
+# Question 4: Reverse Nodes in k-Group (LeetCode 25) [Hard]
+
+### Problem Statement
+Given the `head` of a linked list, reverse the nodes of the list `k` at a time, and return the modified list.
+`k` is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of `k` then left-out nodes, in the end, should remain as it is.
+
+### Visual Dry Run & addFirst Pattern
+![Reverse in k-Group](./svg_04_reverse_k_group.svg)
+
+### C++ Implementation (Global `th, tt` Pattern)
 
 ```cpp
 // temporary head, temporary tail
@@ -578,6 +832,7 @@ ListNode *reverseKGroup(ListNode *head, int k)
 }
 ```
 
+### Java Implementation (Array `temp[2]` for `th, tt`)
 
 ```java
 
@@ -647,5 +902,622 @@ class Solution {
 
 ```
 
+---
 
-![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(6).jpg>) ![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(7).jpg>) ![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(8).jpg>) ![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(9).jpg>) ![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(10).jpg>) ![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(11).jpg>) ![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(12).jpg>) ![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(13).jpg>) ![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(14).jpg>) ![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(15).jpg>) ![alt text](<003 merge k sorted list and reverse nodes_240412_185705 (1)(16).jpg>)
+# Question 5: Reverse Linked List II (Between Left and Right) (LeetCode 92) [Medium]
+
+### Problem Statement
+Given the `head` of a singly linked list and two integers `left` and `right` where `left <= right`, reverse the nodes of the list from position `left` to position `right`, and return the reversed list.
+
+### Visual Dry Run
+![Reverse Linked List II](./svg_05_reverse_linked_list_ii.svg)
+
+### Intuition & Logic
+1. **Dummy Node**: Create a sentinel `dummy` node (`dummy.next = head`) to handle edge cases gracefully when `left = 1`.
+2. **Walk `prev`**: Advance a pointer `prev` for `left - 1` steps so that `prev` stops right before the subsegment to reverse.
+3. **Subsegment Reversal**:
+   - Extract nodes from `left` to `right` using `addFirst` into a temporary list `(th, tt)`.
+   - Alternatively, use the 3-pointer in-place swap.
+4. **Re-stitch**: Connect `prev.next = th` and `tt.next = curr`.
+5. Return `dummy.next`.
+
+### C++ Solution
+
+```cpp
+class Solution {
+    ListNode* th = nullptr;
+    ListNode* tt = nullptr;
+
+    void addFirst(ListNode* node) {
+        if (!th) {
+            th = tt = node;
+        } else {
+            node->next = th;
+            th = node;
+        }
+    }
+
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        if (!head || left == right) return head;
+
+        ListNode* dummy = new ListNode(-1);
+        dummy->next = head;
+        ListNode* prev = dummy;
+
+        for (int i = 1; i < left; ++i) {
+            prev = prev->next;
+        }
+
+        ListNode* curr = prev->next;
+        int count = right - left + 1;
+        while (count-- > 0) {
+            ListNode* forw = curr->next;
+            curr->next = nullptr;
+            addFirst(curr);
+            curr = forw;
+        }
+
+        prev->next = th;
+        tt->next = curr;
+
+        ListNode* newHead = dummy->next;
+        delete dummy;
+        return newHead;
+    }
+};
+```
+
+### Java Solution (Using `ListNode[] temp` for `th, tt`)
+
+```java
+class Solution {
+    private void addFirst(ListNode[] temp, ListNode node) {
+        if (temp[0] == null) {
+            temp[0] = temp[1] = node;
+        } else {
+            node.next = temp[0];
+            temp[0] = node;
+        }
+    }
+
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if (head == null || left == right) return head;
+
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode prev = dummy;
+
+        for (int i = 1; i < left; i++) {
+            prev = prev.next;
+        }
+
+        ListNode curr = prev.next;
+        ListNode[] temp = new ListNode[2]; // temp[0] = th, temp[1] = tt
+        int count = right - left + 1;
+
+        while (count-- > 0) {
+            ListNode forward = curr.next;
+            curr.next = null;
+            addFirst(temp, curr);
+            curr = forward;
+        }
+
+        prev.next = temp[0];
+        temp[1].next = curr;
+
+        return dummy.next;
+    }
+}
+```
+
+---
+
+# Question 6: Rotate List (LeetCode 61) [Medium]
+
+### Problem Statement
+Given the `head` of a linked list, rotate the list to the right by `k` places.
+
+### Visual Dry Run
+![Rotate List](./svg_06_rotate_list.svg)
+
+### Intuition & Logic
+1. **Find Length & Tail**: Traverse to calculate list length `len` and keep track of the `tail` node.
+2. **Modulo Optimization**:
+   - `k = k % len`.
+   - If `k < 0` (left rotation): `k = k + len`.
+   - If `k == 0`: No rotation needed, return `head`.
+3. **Break & Link**:
+   - Connect `tail.next = head` to temporarily form a circle.
+   - Walk `len - k` steps from `head` to find the new tail.
+   - `newHead = newTail.next`, and break `newTail.next = null`.
+4. Return `newHead`.
+
+### C++ Solution
+
+```cpp
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if (!head || !head->next || k == 0) return head;
+
+        int len = 1;
+        ListNode* tail = head;
+        while (tail->next) {
+            tail = tail->next;
+            len++;
+        }
+
+        k = k % len;
+        if (k < 0) k += len;
+        if (k == 0) return head;
+
+        tail->next = head; // Form a circle
+
+        int stepsToNewTail = len - k;
+        ListNode* newTail = head;
+        for (int i = 1; i < stepsToNewTail; ++i) {
+            newTail = newTail->next;
+        }
+
+        ListNode* newHead = newTail->next;
+        newTail->next = nullptr; // Break circle
+
+        return newHead;
+    }
+};
+```
+
+### Java Solution
+
+```java
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null || k == 0) return head;
+
+        int len = 1;
+        ListNode tail = head;
+        while (tail.next != null) {
+            tail = tail.next;
+            len++;
+        }
+
+        k = k % len;
+        if (k < 0) k += len;
+        if (k == 0) return head;
+
+        tail.next = head; // Make circular
+
+        int steps = len - k;
+        ListNode newTail = head;
+        for (int i = 1; i < steps; i++) {
+            newTail = newTail.next;
+        }
+
+        ListNode newHead = newTail.next;
+        newTail.next = null; // Break circular link
+
+        return newHead;
+    }
+}
+```
+
+---
+
+# Question 7: Sort Linked List Already Sorted Using Absolute Values (LeetCode 2046) [Medium]
+
+### Problem Statement
+Given the `head` of a singly linked list that is sorted in **non-decreasing order using absolute values**, sort the list in **non-decreasing order using actual values**.
+
+### Visual Dry Run & $O(N)$ In-Place Magic
+![Sort Absolute Values](./svg_07_sort_absolute_sorted_list.svg)
+
+### Intuition & Logic
+- Because the input is already sorted by absolute values:
+  - All non-negative numbers are already in proper relative sorted order: $0 \le 2 \le 5 \le 10$.
+  - For negative numbers, their absolute values increase as we traverse: $|-5| \le |-10|$.
+  - In actual value terms, $-10 < -5$. Therefore, moving each encountered negative node to the very front via `addFirst` automatically places larger negative numbers at the front!
+- **Time Complexity:** $O(N)$ single pass.
+- **Space Complexity:** $O(1)$ in-place rewiring.
+
+### C++ Solution
+
+```cpp
+class Solution {
+public:
+    ListNode* sortLinkedList(ListNode* head) {
+        if (!head || !head->next) return head;
+
+        ListNode* prev = head;
+        ListNode* curr = head->next;
+
+        while (curr) {
+            if (curr->val < 0) {
+                // Detach curr
+                prev->next = curr->next;
+                // Prepend to head
+                curr->next = head;
+                head = curr;
+                // Move curr to next node
+                curr = prev->next;
+            } else {
+                prev = curr;
+                curr = curr->next;
+            }
+        }
+        return head;
+    }
+};
+```
+
+### Java Solution
+
+```java
+class Solution {
+    public ListNode sortLinkedList(ListNode head) {
+        if (head == null || head.next == null) return head;
+
+        ListNode prev = head;
+        ListNode curr = head.next;
+
+        while (curr != null) {
+            if (curr.val < 0) {
+                // Detach curr from its current place
+                prev.next = curr.next;
+                // Move curr to front (addFirst)
+                curr.next = head;
+                head = curr;
+                // Next candidate
+                curr = prev.next;
+            } else {
+                prev = curr;
+                curr = curr.next;
+            }
+        }
+        return head;
+    }
+}
+```
+
+---
+
+# Question 8: Remove Linked List Elements (LeetCode 203) [Easy]
+
+### Problem Statement
+Given the `head` of a linked list and an integer `val`, remove all the nodes of the linked list that has `Node.val == val`, and return the new head.
+
+### Intuition & Logic
+- Use a sentinel `dummy` node (`dummy.next = head`).
+- Traverse with pointer `curr = dummy`:
+  - If `curr.next.val == val`, bypass it: `curr.next = curr.next.next`.
+  - Else advance `curr = curr.next`.
+- Return `dummy.next`.
+
+### C++ Solution
+
+```cpp
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        ListNode dummy(-1);
+        dummy.next = head;
+        ListNode* curr = &dummy;
+
+        while (curr->next) {
+            if (curr->next->val == val) {
+                ListNode* temp = curr->next;
+                curr->next = curr->next->next;
+                delete temp;
+            } else {
+                curr = curr->next;
+            }
+        }
+        return dummy.next;
+    }
+};
+```
+
+### Java Solution
+
+```java
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode curr = dummy;
+
+        while (curr.next != null) {
+            if (curr.next.val == val) {
+                curr.next = curr.next.next;
+            } else {
+                curr = curr.next;
+            }
+        }
+        return dummy.next;
+    }
+}
+```
+
+---
+
+# Question 9: Linked List Components (LeetCode 817) [Medium]
+
+### Problem Statement
+You are given the `head` of a linked list containing unique integer values and an integer array `nums` that is a subset of the linked list values.
+Return the number of connected components in `nums`, where two values are connected if they appear consecutively in the linked list.
+
+### Visual Dry Run
+![Linked List Components](./svg_08_linked_list_components.svg)
+
+### Intuition & Invariant
+1. Insert all elements of `nums` into a `HashSet` for $O(1)$ lookups.
+2. Traverse the list with `curr`:
+   - A component segment terminates whenever `curr.val` is in `set` AND (`curr.next == null` OR `curr.next.val` is NOT in `set`).
+   - When this boundary condition is met, increment `count++`.
+3. Total Time: $O(N + M)$ | Extra Space: $O(M)$ where $M = \text{nums.length}$.
+
+### C++ Solution
+
+```cpp
+class Solution {
+public:
+    int numComponents(ListNode* head, vector<int>& nums) {
+        unordered_set<int> set(nums.begin(), nums.end());
+        int count = 0;
+        ListNode* curr = head;
+
+        while (curr) {
+            if (set.count(curr->val) && (!curr->next || !set.count(curr->next->val))) {
+                count++;
+            }
+            curr = curr->next;
+        }
+        return count;
+    }
+};
+```
+
+### Java Solution
+
+```java
+class Solution {
+    public int numComponents(ListNode head, int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int x : nums) set.add(x);
+
+        int count = 0;
+        ListNode curr = head;
+        while (curr != null) {
+            if (set.contains(curr.val) && (curr.next == null || !set.contains(curr.next.val))) {
+                count++;
+            }
+            curr = curr.next;
+        }
+        return count;
+    }
+}
+```
+
+---
+
+# Question 10: Remove Zero Sum Consecutive Nodes from Linked List (LeetCode 1171) [Medium]
+
+### Problem Statement
+Given the `head` of a linked list, we repeatedly delete consecutive sequences of nodes that sum to `0` until there are no such sequences.
+After doing so, return the head of the final linked list.
+
+### Intuition & Logic
+1. If prefix sum at node $A$ equals prefix sum at node $B$, then the sum of all elements strictly between $A$ and $B$ is **zero**.
+2. **Two-Pass Algorithm**:
+   - **Pass 1**: Populate `map[prefixSum] = node` (storing the latest occurrence of each prefix sum).
+   - **Pass 2**: Reset prefix sum and traverse again: `curr.next = map[prefixSum].next` (skipping any zero-sum sequence).
+3. Return `dummy.next`.
+
+### C++ Solution
+
+```cpp
+class Solution {
+public:
+    ListNode* removeZeroSumSublists(ListNode* head) {
+        ListNode* dummy = new ListNode(0);
+        dummy->next = head;
+
+        unordered_map<int, ListNode*> prefixMap;
+        int prefixSum = 0;
+        ListNode* curr = dummy;
+
+        // Pass 1: Record latest node for each prefix sum
+        while (curr) {
+            prefixSum += curr->val;
+            prefixMap[prefixSum] = curr;
+            curr = curr->next;
+        }
+
+        // Pass 2: Connect curr to the node after the zero-sum segment
+        prefixSum = 0;
+        curr = dummy;
+        while (curr) {
+            prefixSum += curr->val;
+            curr->next = prefixMap[prefixSum]->next;
+            curr = curr->next;
+        }
+
+        ListNode* res = dummy->next;
+        delete dummy;
+        return res;
+    }
+};
+```
+
+### Java Solution
+
+```java
+class Solution {
+    public ListNode removeZeroSumSublists(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        Map<Integer, ListNode> prefixMap = new HashMap<>();
+        int prefixSum = 0;
+        ListNode curr = dummy;
+
+        // Pass 1: Map prefix sums to latest node
+        while (curr != null) {
+            prefixSum += curr.val;
+            prefixMap.put(prefixSum, curr);
+            curr = curr.next;
+        }
+
+        // Pass 2: Bypass zero-sum sublists
+        prefixSum = 0;
+        curr = dummy;
+        while (curr != null) {
+            prefixSum += curr.val;
+            curr.next = prefixMap.get(prefixSum).next;
+            curr = curr.next;
+        }
+
+        return dummy.next;
+    }
+}
+```
+
+---
+
+# Question 11: Copy List with Random Pointer (LeetCode 138) [Medium]
+
+### Problem Statement
+A linked list of length `n` is given such that each node contains an additional random pointer, which could point to any node in the list, or `null`.
+Construct a **deep copy** of the list and return the head of the copied list.
+
+### Visual Dry Run & 3-Pass $O(1)$ In-Place Algorithm
+![Copy List with Random Pointer](./svg_09_copy_list_random_pointer.svg)
+
+### Intuition & 3-Pass Method
+1. **Pass 1 (Interweave)**: Clone each node and insert it immediately after the original node: `A -> A' -> B -> B' -> C -> C'`.
+2. **Pass 2 (Random Links)**: Copy the random pointers: `curr.next.random = (curr.random != null) ? curr.random.next : null`.
+3. **Pass 3 (Separate Lists)**: Separate the cloned list from original list, restoring the original list pointers.
+
+### C++ Solution
+
+```cpp
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+    
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+*/
+
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+        if (!head) return nullptr;
+
+        // Pass 1: Interleave cloned nodes
+        Node* curr = head;
+        while (curr) {
+            Node* copy = new Node(curr->val);
+            copy->next = curr->next;
+            curr->next = copy;
+            curr = copy->next;
+        }
+
+        // Pass 2: Set random pointers
+        curr = head;
+        while (curr) {
+            if (curr->random) {
+                curr->next->random = curr->random->next;
+            }
+            curr = curr->next->next;
+        }
+
+        // Pass 3: Separate cloned list and restore original list
+        curr = head;
+        Node* dummy = new Node(0);
+        Node* copyTail = dummy;
+
+        while (curr) {
+            Node* copy = curr->next;
+            curr->next = copy->next;
+
+            copyTail->next = copy;
+            copyTail = copy;
+
+            curr = curr->next;
+        }
+
+        Node* newHead = dummy->next;
+        delete dummy;
+        return newHead;
+    }
+};
+```
+
+### Java Solution
+
+```java
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        if (head == null) return null;
+
+        // Pass 1: Interweave cloned nodes
+        Node curr = head;
+        while (curr != null) {
+            Node copy = new Node(curr.val);
+            copy.next = curr.next;
+            curr.next = copy;
+            curr = copy.next;
+        }
+
+        // Pass 2: Set random pointers
+        curr = head;
+        while (curr != null) {
+            if (curr.random != null) {
+                curr.next.random = curr.random.next;
+            }
+            curr = curr.next.next;
+        }
+
+        // Pass 3: Separate lists
+        curr = head;
+        Node dummy = new Node(0);
+        Node copyTail = dummy;
+
+        while (curr != null) {
+            Node copy = curr.next;
+            curr.next = copy.next;
+
+            copyTail.next = copy;
+            copyTail = copy;
+
+            curr = curr.next;
+        }
+
+        return dummy.next;
+    }
+}
+```

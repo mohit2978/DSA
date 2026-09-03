@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 820" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .card { fill: #161b22; stroke: #30363d; stroke-width: 1.5; rx: 10; }
+      .header-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 20px; font-weight: 700; fill: #58a6ff; }
+      .step-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; font-weight: 700; fill: #34d399; }
+      .sub-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 600; fill: #8b949e; }
+      .sentinel-box { fill: #21262d; stroke: #8b949e; stroke-width: 1.5; stroke-dasharray: 4,3; rx: 6; }
+      .node-box { fill: #1f6feb; stroke: #58a6ff; stroke-width: 1.5; rx: 6; }
+      .node-val { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+      .sentinel-val { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; fill: #8b949e; text-anchor: middle; }
+      .ptr-block { fill: #0d1117; stroke: #30363d; stroke-width: 1; }
+      .ptr-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 700; text-anchor: middle; }
+      .desc-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; fill: #c9d1d9; }
+      .code-snippet { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: #7ee787; }
+      .highlight-box { fill: #04382c; stroke: #34d399; stroke-width: 1.5; rx: 8; }
+    </style>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="820" class="bg" />
+
+  <!-- Main Header -->
+  <g transform="translate(30, 30)">
+    <text x="0" y="0" class="header-title">LeetCode 707: Design Doubly Linked List with Dummy Head &amp; Tail (Sentinel Architecture)</text>
+    <text x="0" y="24" class="sub-title">Dummy head and tail eliminate all null-pointer checks and provide pure O(1) node insertion and deletion</text>
+  </g>
+
+  <!-- Panel 1: DLL Sentinel Architecture -->
+  <g transform="translate(30, 75)">
+    <rect width="1040" height="230" class="card" />
+    <text x="25" y="30" class="step-title">1. Sentinel Architecture (Dummy Head ➔ Nodes ➔ Dummy Tail)</text>
+    
+    <g transform="translate(30, 60)">
+      <!-- Dummy Head -->
+      <g transform="translate(0, 30)">
+        <rect width="100" height="60" class="sentinel-box"/>
+        <text x="50" y="28" class="sentinel-val">DUMMY</text>
+        <text x="50" y="48" class="sentinel-val">HEAD</text>
+        <text x="50" y="-10" class="ptr-text" fill="#8b949e">head (sentinel)</text>
+      </g>
+
+      <!-- Arrow Head to Node 1 -->
+      <path d="M 100 50 L 210 50" stroke="#58a6ff" stroke-width="2" marker-end="url(#arrow-blue)"/>
+      <path d="M 210 70 L 100 70" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-green)"/>
+      <text x="155" y="42" class="ptr-text" fill="#58a6ff">next</text>
+      <text x="155" y="85" class="ptr-text" fill="#34d399">prev</text>
+
+      <!-- Node 1 (val: 10) -->
+      <g transform="translate(210, 30)">
+        <rect width="120" height="60" class="node-box"/>
+        <text x="60" y="35" class="node-val">val: 10</text>
+        <text x="60" y="-10" class="ptr-text" fill="#58a6ff">index 0</text>
+      </g>
+
+      <!-- Arrow Node 1 to Node 2 -->
+      <path d="M 330 50 L 440 50" stroke="#58a6ff" stroke-width="2" marker-end="url(#arrow-blue)"/>
+      <path d="M 440 70 L 330 70" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+      <!-- Node 2 (val: 20) -->
+      <g transform="translate(440, 30)">
+        <rect width="120" height="60" class="node-box"/>
+        <text x="60" y="35" class="node-val">val: 20</text>
+        <text x="60" y="-10" class="ptr-text" fill="#58a6ff">index 1</text>
+      </g>
+
+      <!-- Arrow Node 2 to Node 3 -->
+      <path d="M 560 50 L 670 50" stroke="#58a6ff" stroke-width="2" marker-end="url(#arrow-blue)"/>
+      <path d="M 670 70 L 560 70" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+      <!-- Node 3 (val: 30) -->
+      <g transform="translate(670, 30)">
+        <rect width="120" height="60" class="node-box"/>
+        <text x="60" y="35" class="node-val">val: 30</text>
+        <text x="60" y="-10" class="ptr-text" fill="#58a6ff">index 2</text>
+      </g>
+
+      <!-- Arrow Node 3 to Dummy Tail -->
+      <path d="M 790 50 L 900 50" stroke="#58a6ff" stroke-width="2" marker-end="url(#arrow-blue)"/>
+      <path d="M 900 70 L 790 70" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+      <!-- Dummy Tail -->
+      <g transform="translate(900, 30)">
+        <rect width="100" height="60" class="sentinel-box"/>
+        <text x="50" y="28" class="sentinel-val">DUMMY</text>
+        <text x="50" y="48" class="sentinel-val">TAIL</text>
+        <text x="50" y="-10" class="ptr-text" fill="#8b949e">tail (sentinel)</text>
+      </g>
+    </g>
+    <text x="25" y="205" class="desc-text" fill="#7ee787">✓ Initial state: <tspan font-family="monospace">head.next = tail; tail.prev = head; size = 0;</tspan> — No special cases for empty list!</text>
+  </g>
+
+  <!-- Panel 2: O(1) Node Insertion & Deletion Mechanics -->
+  <g transform="translate(30, 320)">
+    <rect width="505" height="470" class="card" />
+    <text x="20" y="30" class="step-title">2. In-Place Insertion (Between prev and succ)</text>
+    
+    <g transform="translate(20, 50)">
+      <text x="0" y="15" class="desc-text">To insert <tspan fill="#34d399" font-weight="700">newNode</tspan> between <tspan fill="#58a6ff">prev</tspan> and <tspan fill="#ffa657">succ</tspan>:</text>
+      <rect x="0" y="30" width="465" height="150" class="highlight-box"/>
+      <text x="15" y="55" class="code-snippet">newNode.prev = prev;</text>
+      <text x="15" y="80" class="code-snippet">newNode.next = succ;</text>
+      <text x="15" y="105" class="code-snippet">prev.next = newNode;</text>
+      <text x="15" y="130" class="code-snippet">succ.prev = newNode;</text>
+      <text x="15" y="155" class="code-snippet">size++;</text>
+    </g>
+
+    <g transform="translate(20, 240)">
+      <text x="0" y="15" class="step-title" fill="#f0883e">Applications in LRU Cache:</text>
+      <text x="0" y="38" class="desc-text">• <tspan fill="#79c0ff" font-weight="600">addAtHead(val):</tspan> Insert between <tspan font-family="monospace">head</tspan> and <tspan font-family="monospace">head.next</tspan>.</text>
+      <text x="0" y="60" class="desc-text">• <tspan fill="#79c0ff" font-weight="600">addAtTail(val):</tspan> Insert between <tspan font-family="monospace">tail.prev</tspan> and <tspan font-family="monospace">tail</tspan>.</text>
+      <text x="0" y="82" class="desc-text">• <tspan fill="#79c0ff" font-weight="600">addAtIndex(idx):</tspan> Traverse from head or tail (whichever is closer!), then insert.</text>
+      <text x="0" y="110" class="desc-text" fill="#8b949e">⚡ Search Optimization: If <tspan font-family="monospace">index &lt; size/2</tspan>, search from head; else search backward from tail in O(N/2) time!</text>
+    </g>
+  </g>
+
+  <!-- Panel 3: In-Place Deletion Mechanics -->
+  <g transform="translate(565, 320)">
+    <rect width="505" height="470" class="card" />
+    <text x="20" y="30" class="step-title" fill="#f85149">3. In-Place Deletion (Unlinking a Node)</text>
+    
+    <g transform="translate(20, 50)">
+      <text x="0" y="15" class="desc-text">To remove <tspan fill="#f85149" font-weight="700">targetNode</tspan> from Doubly Linked List:</text>
+      <rect x="0" y="30" width="465" height="150" fill="#3b1219" stroke="#f85149" stroke-width="1.5" rx="8"/>
+      <text x="15" y="55" class="code-snippet" fill="#ffa198">Node prev = targetNode.prev;</text>
+      <text x="15" y="80" class="code-snippet" fill="#ffa198">Node succ = targetNode.next;</text>
+      <text x="15" y="105" class="code-snippet" fill="#ffa198">prev.next = succ;</text>
+      <text x="15" y="130" class="code-snippet" fill="#ffa198">succ.prev = prev;</text>
+      <text x="15" y="155" class="code-snippet" fill="#ffa198">size--;</text>
+    </g>
+
+    <g transform="translate(20, 240)">
+      <text x="0" y="15" class="step-title" fill="#a371f7">Why This Solves LRU Cache O(1):</text>
+      <text x="0" y="38" class="desc-text">• Direct pointer to node from HashMap gives O(1) removal.</text>
+      <text x="0" y="60" class="desc-text">• No need to traverse from head to find predecessor (unlike Singly LL).</text>
+      <text x="0" y="82" class="desc-text">• Tail removal (<tspan font-family="monospace">tail.prev</tspan>) for eviction is pure O(1).</text>
+      <text x="0" y="110" class="desc-text" fill="#3fb950">✓ Direct bridge between LeetCode 707 and LeetCode 146 (LRU Cache)!</text>
+    </g>
+  </g>
+</svg>

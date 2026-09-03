@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 860" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .card { fill: #161b22; stroke: #30363d; stroke-width: 1.5; rx: 10; }
+      .header-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 20px; font-weight: 700; fill: #58a6ff; }
+      .step-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; font-weight: 700; fill: #34d399; }
+      .sub-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 600; fill: #8b949e; }
+      .node-box { fill: #1e293b; stroke: #64748b; stroke-width: 1.5; rx: 6; }
+      .node-carry { fill: #854d0e; stroke: #eab308; stroke-width: 1.5; rx: 6; }
+      .node-result { fill: #065f46; stroke: #10b981; stroke-width: 1.5; rx: 6; }
+      .node-val { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+      .desc-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; fill: #c9d1d9; }
+      .code-snippet { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: #7ee787; }
+      .ptr-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 700; text-anchor: middle; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+    </marker>
+    <marker id="arrow-yellow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#eab308" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="860" class="bg" />
+
+  <!-- Header -->
+  <g transform="translate(30, 30)">
+    <text x="0" y="0" class="header-title">Add 1 to a Number Represented as Linked List (e.g. 999 ➔ 1000)</text>
+    <text x="0" y="24" class="sub-title">Two Strategies: In-Place Reversal (O(1) Auxiliary Space) vs. Recursive Backtracking (O(N) Stack Space)</text>
+  </g>
+
+  <!-- Panel 1: Reversal Approach -->
+  <g transform="translate(30, 75)">
+    <rect width="1040" height="360" class="card" />
+    <text x="25" y="30" class="step-title">Approach 1: Iterative Reverse ➔ Carry Propagation ➔ Reverse Back (O(1) Space)</text>
+
+    <!-- Phase 1: Input -->
+    <g transform="translate(35, 55)">
+      <text x="0" y="20" class="desc-text" font-weight="700">1. Original List (9 ➔ 9 ➔ 9):</text>
+      <g transform="translate(240, 0)">
+        <rect width="45" height="30" class="node-box"/><text x="22.5" y="20" class="node-val">9</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+      </g>
+      <g transform="translate(330, 0)">
+        <rect width="45" height="30" class="node-box"/><text x="22.5" y="20" class="node-val">9</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+      </g>
+      <g transform="translate(420, 0)">
+        <rect width="45" height="30" class="node-box"/><text x="22.5" y="20" class="node-val">9</text>
+        <line x1="45" y1="15" x2="75" y2="15" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <text x="85" y="20" class="desc-text" fill="#8b949e">null</text>
+      </g>
+    </g>
+
+    <!-- Phase 2: Reverse -->
+    <g transform="translate(35, 120)">
+      <text x="0" y="20" class="desc-text" font-weight="700">2. Reversed List (LSB First):</text>
+      <g transform="translate(240, 0)">
+        <rect width="45" height="30" class="node-carry"/><text x="22.5" y="20" class="node-val">9</text>
+        <text x="22.5" y="-6" class="ptr-text" fill="#eab308">LSB</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#eab308" stroke-width="1.5" marker-end="url(#arrow-yellow)"/>
+      </g>
+      <g transform="translate(330, 0)">
+        <rect width="45" height="30" class="node-carry"/><text x="22.5" y="20" class="node-val">9</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#eab308" stroke-width="1.5" marker-end="url(#arrow-yellow)"/>
+      </g>
+      <g transform="translate(420, 0)">
+        <rect width="45" height="30" class="node-carry"/><text x="22.5" y="20" class="node-val">9</text>
+        <text x="22.5" y="-6" class="ptr-text" fill="#eab308">MSB</text>
+        <line x1="45" y1="15" x2="75" y2="15" stroke="#eab308" stroke-width="1.5" marker-end="url(#arrow-yellow)"/>
+        <text x="85" y="20" class="desc-text" fill="#8b949e">null</text>
+      </g>
+    </g>
+
+    <!-- Phase 3: Add Carry -->
+    <g transform="translate(35, 190)">
+      <text x="0" y="20" class="desc-text" font-weight="700">3. Propagate carry = 1:</text>
+      <g transform="translate(240, 0)">
+        <rect width="45" height="30" class="node-result"/><text x="22.5" y="20" class="node-val">0</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+        <text x="22.5" y="44" class="ptr-text" fill="#34d399">9+1=10 → 0, c=1</text>
+      </g>
+      <g transform="translate(330, 0)">
+        <rect width="45" height="30" class="node-result"/><text x="22.5" y="20" class="node-val">0</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+        <text x="22.5" y="44" class="ptr-text" fill="#34d399">9+1=10 → 0, c=1</text>
+      </g>
+      <g transform="translate(420, 0)">
+        <rect width="45" height="30" class="node-result"/><text x="22.5" y="20" class="node-val">0</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+        <text x="22.5" y="44" class="ptr-text" fill="#34d399">9+1=10 → 0, c=1</text>
+      </g>
+      <!-- New Overflow Node -->
+      <g transform="translate(510, 0)">
+        <rect width="45" height="30" class="node-result" stroke="#38bdf8"/><text x="22.5" y="20" class="node-val">1</text>
+        <text x="22.5" y="44" class="ptr-text" fill="#38bdf8">carry leftover</text>
+      </g>
+    </g>
+
+    <!-- Phase 4: Reverse Back -->
+    <g transform="translate(35, 275)">
+      <text x="0" y="20" class="desc-text" font-weight="700">4. Reverse Back (Final):</text>
+      <g transform="translate(240, 0)">
+        <rect width="45" height="30" class="node-result"/><text x="22.5" y="20" class="node-val">1</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      </g>
+      <g transform="translate(330, 0)">
+        <rect width="45" height="30" class="node-result"/><text x="22.5" y="20" class="node-val">0</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      </g>
+      <g transform="translate(420, 0)">
+        <rect width="45" height="30" class="node-result"/><text x="22.5" y="20" class="node-val">0</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      </g>
+      <g transform="translate(510, 0)">
+        <rect width="45" height="30" class="node-result"/><text x="22.5" y="20" class="node-val">0</text>
+        <line x1="45" y1="15" x2="75" y2="15" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+        <text x="85" y="20" class="desc-text" fill="#8b949e">null</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Panel 2: Recursive Backtracking (Without Modifying List Structure) -->
+  <g transform="translate(30, 455)">
+    <rect width="1040" height="375" class="card" />
+    <text x="25" y="30" class="step-title" fill="#a78bfa">Approach 2: Recursive Backtracking (Post-Order Traversal, O(N) Call Stack)</text>
+
+    <g transform="translate(30, 50)">
+      <rect width="470" height="295" fill="#0d1117" stroke="#30363d" rx="8"/>
+      <text x="20" y="25" class="code-snippet" fill="#a78bfa">// Recursive Helper returning carry</text>
+      <text x="20" y="50" class="code-snippet">int addHelper(ListNode* node) {</text>
+      <text x="40" y="75" class="code-snippet">if (node == nullptr) return 1; // base: +1</text>
+      <text x="40" y="100" class="code-snippet">int carry = addHelper(node->next);</text>
+      <text x="40" y="125" class="code-snippet">int sum = node->val + carry;</text>
+      <text x="40" y="150" class="code-snippet">node->val = sum % 10;</text>
+      <text x="40" y="175" class="code-snippet">return sum / 10;</text>
+      <text x="20" y="200" class="code-snippet">}</text>
+      <text x="20" y="235" class="code-snippet">// Main Function</text>
+      <text x="20" y="260" class="code-snippet">if (carry == 1) { newHead = new Node(1); ... }</text>
+    </g>
+
+    <g transform="translate(525, 50)">
+      <text x="0" y="20" class="header-title" fill="#38bdf8" font-size="15">💡 Comparison of Both Approaches:</text>
+      <text x="0" y="55" class="desc-text">• <tspan fill="#34d399" font-weight="700">Iterative Reversal:</tspan></text>
+      <text x="15" y="78" class="desc-text">Time: O(3N) = O(N) (Rev ➔ Add ➔ Rev). Space: O(1). Highly scalable for arbitrarily huge linked lists without stack overflow risks.</text>
+
+      <text x="0" y="120" class="desc-text">• <tspan fill="#a78bfa" font-weight="700">Recursive Backtracking:</tspan></text>
+      <text x="15" y="143" class="desc-text">Time: O(N) single traversal. Space: O(N) recursion stack. Super clean code without physically reversing pointer directions.</text>
+
+      <text x="0" y="185" class="desc-text">• <tspan fill="#fbbf24" font-weight="700">Edge Case (999 ➔ 1000):</tspan></text>
+      <text x="15" y="208" class="desc-text">If carry == 1 reaches the front, create a new Node(1) and attach head to its next pointer.</text>
+    </g>
+  </g>
+</svg>

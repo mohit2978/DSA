@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 22px; font-weight: bold; fill: #58a6ff; }
+      .subtitle { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; fill: #8b949e; }
+      .section-title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #f0883e; }
+      .node-box { fill: #161b22; stroke: #30363d; stroke-width: 2px; rx: 8px; }
+      .node-box-inter { fill: #0d2818; stroke: #3fb950; stroke-width: 2.5px; rx: 8px; }
+      .node-text { font-family: 'Segoe UI', monospace; font-size: 15px; font-weight: bold; fill: #c9d1d9; text-anchor: middle; }
+      .node-text-inter { font-family: 'Segoe UI', monospace; font-size: 15px; font-weight: bold; fill: #56d364; text-anchor: middle; }
+      .label-text { font-family: 'Segoe UI', system-ui; font-size: 13px; font-weight: bold; fill: #79c0ff; text-anchor: middle; }
+      .arrow { stroke: #58a6ff; stroke-width: 2px; fill: none; marker-end: url(#arrow-head); }
+      .arrow-connect { stroke: #f0883e; stroke-width: 2.5px; stroke-dasharray: 5; fill: none; marker-end: url(#arrow-amber); }
+      .step-desc { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13.5px; fill: #c9d1d9; }
+      .box-panel { fill: #161b22; stroke: #30363d; stroke-width: 1.5px; rx: 8px; }
+    </style>
+    <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f0883e"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="700" class="bg" rx="12"/>
+
+  <!-- Header -->
+  <text x="50" y="45" class="title">LeetCode 160: Intersection of Two Linked Lists</text>
+  <text x="50" y="70" class="subtitle">Method: Transforming Intersection into Cycle Starting Point Detection (tailA -> headB)</text>
+
+  <!-- Visual Diagram of Two Lists Merging -->
+  <text x="50" y="115" class="section-title">Step 1: Connect tailA to headB to Form a Cycle</text>
+
+  <!-- List A Row -->
+  <text x="50" y="165" class="label-text" fill="#79c0ff" text-anchor="start">List A (headA):</text>
+  <g transform="translate(170, 140)">
+    <rect width="45" height="38" class="node-box"/><text x="22.5" y="24" class="node-text">A1</text>
+  </g>
+  <path d="M 215 159 L 245 159" class="arrow"/>
+  <g transform="translate(250, 140)">
+    <rect width="45" height="38" class="node-box"/><text x="22.5" y="24" class="node-text">A2</text>
+  </g>
+  <path d="M 295 159 L 340 175" class="arrow"/>
+
+  <!-- List B Row -->
+  <text x="50" y="235" class="label-text" fill="#79c0ff" text-anchor="start">List B (headB):</text>
+  <g transform="translate(170, 210)">
+    <rect width="45" height="38" class="node-box"/><text x="22.5" y="24" class="node-text">B1</text>
+  </g>
+  <path d="M 215 229 L 245 229" class="arrow"/>
+  <g transform="translate(250, 210)">
+    <rect width="45" height="38" class="node-box"/><text x="22.5" y="24" class="node-text">B2</text>
+  </g>
+  <path d="M 295 229 L 340 195" class="arrow"/>
+
+  <!-- Common Intersecting Nodes -->
+  <g transform="translate(350, 175)">
+    <rect width="55" height="38" class="node-box-inter"/>
+    <text x="27.5" y="24" class="node-text-inter">C1</text>
+    <text x="27.5" y="-10" class="label-text" fill="#3fb950">Intersection Node!</text>
+  </g>
+  <path d="M 405 194 L 440 194" class="arrow"/>
+  <g transform="translate(445, 175)">
+    <rect width="45" height="38" class="node-box"/><text x="22.5" y="24" class="node-text">C2</text>
+  </g>
+  <path d="M 490 194 L 525 194" class="arrow"/>
+  <g transform="translate(530, 175)">
+    <rect width="55" height="38" class="node-box"/><text x="27.5" y="24" class="node-text">tailA</text>
+  </g>
+
+  <!-- Cycle connection curve from tailA to headB -->
+  <path d="M 557 213 C 557 320, 192 320, 192 248" class="arrow-connect"/>
+  <text x="360" y="300" class="label-text" fill="#f0883e">Connected: tailA->next = headB (Forms Cycle!)</text>
+
+  <!-- Section 2: Algorithm Execution & Restoration -->
+  <line x1="50" y1="350" x2="950" y2="350" stroke="#30363d" stroke-width="1"/>
+  <text x="50" y="385" class="section-title">Algorithm Mechanics &amp; Safety Rule</text>
+
+  <g transform="translate(50, 410)">
+    <rect width="420" height="250" class="box-panel"/>
+    <text x="20" y="30" class="section-title" fill="#58a6ff">Cycle Algorithm Strategy</text>
+    <text x="20" y="65" class="step-desc">1. Traverse to end of List A to find <tspan font-family="monospace" fill="#79c0ff">tailA</tspan>.</text>
+    <text x="20" y="95" class="step-desc">2. Form loop: <tspan font-family="monospace" fill="#f0883e">tailA.next = headB</tspan>.</text>
+    <text x="20" y="125" class="step-desc">3. Run <tspan font-weight="bold" fill="#3fb950">findStartingPoint(headA)</tspan> to get node <tspan font-family="monospace" fill="#3fb950">C1</tspan>.</text>
+    <text x="20" y="155" class="step-desc">4. <tspan fill="#f85149" font-weight="bold">CRITICAL RESTORATION:</tspan></text>
+    <text x="35" y="180" class="step-desc">Break cycle: <tspan font-family="monospace" fill="#79c0ff">tailA.next = null</tspan> before returning!</text>
+    <text x="20" y="215" class="step-desc">• Time: <tspan fill="#3fb950" font-weight="bold">O(N + M)</tspan> | Space: <tspan fill="#3fb950" font-weight="bold">O(1)</tspan></text>
+  </g>
+
+  <g transform="translate(500, 410)">
+    <rect width="450" height="250" class="box-panel" stroke="#d29922"/>
+    <text x="20" y="30" class="section-title" fill="#d29922">Alternative 2-Pointer Switch Approach</text>
+    <text x="20" y="65" class="step-desc">Direct pointer redirection without modifying structure:</text>
+    <text x="20" y="95" class="step-desc" font-family="monospace" fill="#79c0ff">ListNode a = headA, b = headB;</text>
+    <text x="20" y="120" class="step-desc" font-family="monospace" fill="#79c0ff">while (a != b) {</text>
+    <text x="35" y="145" class="step-desc" font-family="monospace" fill="#79c0ff">  a = (a == null) ? headB : a.next;</text>
+    <text x="35" y="170" class="step-desc" font-family="monospace" fill="#79c0ff">  b = (b == null) ? headA : b.next;</text>
+    <text x="20" y="195" class="step-desc" font-family="monospace" fill="#79c0ff">}</text>
+    <text x="20" y="225" class="step-desc">Both pointers traverse exactly <tspan font-weight="bold" fill="#3fb950">Length(A) + Length(B)</tspan>!</text>
+  </g>
+</svg>

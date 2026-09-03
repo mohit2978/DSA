@@ -1,0 +1,210 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 780" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0f172a; }
+      .card { fill: #1e293b; stroke: #334155; stroke-width: 1.5; rx: 12; }
+      .title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 20px; font-weight: 700; fill: #f8fafc; }
+      .subtitle { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13px; fill: #94a3b8; }
+      .step-title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; font-weight: 700; fill: #38bdf8; }
+      .node-val { font-family: 'Segoe UI', monospace, sans-serif; font-size: 15px; font-weight: 700; text-anchor: middle; dominant-baseline: middle; fill: #ffffff; }
+      .label-text { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 11px; font-weight: 600; text-anchor: middle; }
+      .code-badge { font-family: 'Fira Code', Consolas, monospace; font-size: 11px; fill: #fbbf24; }
+      .desc-text { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 12px; fill: #cbd5e1; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#ef4444"/>
+    </marker>
+    <marker id="arrow-sky" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" class="bg" rx="16"/>
+
+  <!-- Title Section -->
+  <g transform="translate(30, 35)">
+    <text class="title">LeetCode 234: Palindrome Linked List (O(N) Time, O(1) Space)</text>
+    <text y="24" class="subtitle">Complete 4-Step Strategy: 1st Mid ➔ Reverse 2nd Half ➔ Node Comparison ➔ List Restoration</text>
+  </g>
+
+  <!-- Step 1: Find 1st Mid -->
+  <g transform="translate(30, 80)">
+    <rect width="940" height="150" class="card"/>
+    <text x="20" y="25" class="step-title">Step 1: Find 1st Middle &amp; Disconnect Halves</text>
+    <text x="350" y="25" class="code-badge">while (fast-&gt;next &amp;&amp; fast-&gt;next-&gt;next) { slow = slow-&gt;next; fast = fast-&gt;next-&gt;next; }</text>
+
+    <g transform="translate(40, 45)">
+      <!-- Original List 1 -> 2 -> 2 -> 1 -->
+      <circle cx="40" cy="35" r="18" fill="#3b82f6"/>
+      <text x="40" y="35" class="node-val">1</text>
+      <text x="40" y="68" class="label-text" fill="#93c5fd">head</text>
+
+      <line x1="58" y1="35" x2="102" y2="35" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <circle cx="120" cy="35" r="18" fill="#6366f1"/>
+      <text x="120" y="35" class="node-val">2</text>
+      <text x="120" y="68" class="label-text" fill="#a5b4fc">1st Mid (slow)</text>
+
+      <line x1="138" y1="35" x2="182" y2="35" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow-red)"/>
+      <text x="160" y="22" class="label-text" fill="#ef4444">sever link</text>
+
+      <circle cx="200" cy="35" r="18" fill="#10b981"/>
+      <text x="200" y="35" class="node-val">2</text>
+      <text x="200" y="68" class="label-text" fill="#6ee7b7">nhead = mid-&gt;next</text>
+
+      <line x1="218" y1="35" x2="262" y2="35" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <circle cx="280" cy="35" r="18" fill="#10b981"/>
+      <text x="280" y="35" class="node-val">1</text>
+      <text x="280" y="68" class="label-text" fill="#6ee7b7">fast</text>
+
+      <line x1="298" y1="35" x2="335" y2="35" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="355" y="39" class="node-val" fill="#64748b">null</text>
+    </g>
+
+    <!-- Why 1st mid callout -->
+    <g transform="translate(480, 45)">
+      <rect width="430" height="85" rx="8" fill="#0f172a" stroke="#475569"/>
+      <text x="15" y="22" class="desc-text" font-weight="600" fill="#f59e0b">💡 Why 1st Middle for Palindrome?</text>
+      <text x="15" y="44" class="desc-text">• For even length (e.g. 4 nodes), 1st mid splits into equal halves [1,2] &amp; [2,1].</text>
+      <text x="15" y="66" class="desc-text">• For odd length (e.g. 5 nodes), 1st mid puts the center node with 1st half.</text>
+    </g>
+  </g>
+
+  <!-- Step 2: Reverse 2nd Half -->
+  <g transform="translate(30, 245)">
+    <rect width="940" height="150" class="card"/>
+    <text x="20" y="25" class="step-title">Step 2: Reverse the 2nd Half Linked List</text>
+    <text x="350" y="25" class="code-badge">nhead = reverseList(nhead); // [2 -&gt; 1] becomes [1 -&gt; 2]</text>
+
+    <!-- 1st Half -->
+    <g transform="translate(40, 50)">
+      <circle cx="40" cy="35" r="18" fill="#3b82f6"/>
+      <text x="40" y="35" class="node-val">1</text>
+      <text x="40" y="68" class="label-text" fill="#93c5fd">curr1 (head)</text>
+
+      <line x1="58" y1="35" x2="102" y2="35" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <circle cx="120" cy="35" r="18" fill="#6366f1"/>
+      <text x="120" y="35" class="node-val">2</text>
+      <text x="120" y="68" class="label-text" fill="#a5b4fc">mid</text>
+
+      <line x1="138" y1="35" x2="170" y2="35" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="188" y="39" class="node-val" fill="#64748b">null</text>
+    </g>
+
+    <!-- 2nd Half (Reversed) -->
+    <g transform="translate(340, 50)">
+      <circle cx="40" cy="35" r="18" fill="#10b981"/>
+      <text x="40" y="35" class="node-val">1</text>
+      <text x="40" y="68" class="label-text" fill="#6ee7b7">curr2 (nhead)</text>
+
+      <line x1="58" y1="35" x2="102" y2="35" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+      <circle cx="120" cy="35" r="18" fill="#10b981"/>
+      <text x="120" y="35" class="node-val">2</text>
+
+      <line x1="138" y1="35" x2="170" y2="35" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="188" y="39" class="node-val" fill="#64748b">null</text>
+    </g>
+
+    <g transform="translate(620, 45)">
+      <rect width="290" height="85" rx="8" fill="#0f172a" stroke="#475569"/>
+      <text x="15" y="24" class="desc-text" font-weight="600" fill="#38bdf8">Result after Reversal:</text>
+      <text x="15" y="48" class="desc-text">Half 1: <tspan fill="#60a5fa">1 ➔ 2 ➔ null</tspan></text>
+      <text x="15" y="70" class="desc-text">Half 2: <tspan fill="#34d399">1 ➔ 2 ➔ null</tspan> (mirrored!)</text>
+    </g>
+  </g>
+
+  <!-- Step 3: Simultaneous Comparison -->
+  <g transform="translate(30, 410)">
+    <rect width="940" height="175" class="card"/>
+    <text x="20" y="25" class="step-title">Step 3: Compare Node-by-Node (curr1 vs curr2)</text>
+    
+    <g transform="translate(40, 45)">
+      <!-- Compare 1st elements -->
+      <g transform="translate(0, 0)">
+        <circle cx="40" cy="30" r="16" fill="#3b82f6"/>
+        <text x="40" y="30" class="node-val">1</text>
+        <text x="40" y="-8" class="label-text" fill="#93c5fd">curr1</text>
+
+        <path d="M 40 48 L 40 72" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3,3"/>
+        <text x="40" y="65" class="label-text" fill="#fbbf24">== ?</text>
+
+        <circle cx="40" cy="90" r="16" fill="#10b981"/>
+        <text x="40" y="90" class="node-val">1</text>
+        <text x="40" y="125" class="label-text" fill="#6ee7b7">curr2</text>
+
+        <rect x="75" y="45" width="60" height="24" rx="4" fill="#065f46" stroke="#10b981"/>
+        <text x="105" y="61" class="label-text" fill="#a7f3d0">MATCH ✓</text>
+      </g>
+
+      <!-- Step arrow -->
+      <line x1="160" y1="60" x2="200" y2="60" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- Compare 2nd elements -->
+      <g transform="translate(230, 0)">
+        <circle cx="40" cy="30" r="16" fill="#6366f1"/>
+        <text x="40" y="30" class="node-val">2</text>
+        <text x="40" y="-8" class="label-text" fill="#93c5fd">curr1</text>
+
+        <path d="M 40 48 L 40 72" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3,3"/>
+        <text x="40" y="65" class="label-text" fill="#fbbf24">== ?</text>
+
+        <circle cx="40" cy="90" r="16" fill="#10b981"/>
+        <text x="40" y="90" class="node-val">2</text>
+        <text x="40" y="125" class="label-text" fill="#6ee7b7">curr2</text>
+
+        <rect x="75" y="45" width="60" height="24" rx="4" fill="#065f46" stroke="#10b981"/>
+        <text x="105" y="61" class="label-text" fill="#a7f3d0">MATCH ✓</text>
+      </g>
+    </g>
+
+    <g transform="translate(480, 45)">
+      <rect width="430" height="110" rx="8" fill="#0f172a" stroke="#475569"/>
+      <text x="15" y="24" class="desc-text" font-weight="600" fill="#38bdf8">Termination Condition &amp; Odd-Parity Truth:</text>
+      <text x="15" y="48" class="desc-text">• Loop condition: <tspan fill="#fbbf24" font-family="monospace">while (curr1 != null &amp;&amp; curr2 != null)</tspan></text>
+      <text x="15" y="70" class="desc-text">• In odd lists [1,2,3,2,1], 1st half has 3 nodes [1,2,3] and 2nd half has 2 nodes [1,2].</text>
+      <text x="15" y="92" class="desc-text">• When curr2 reaches null, the middle node '3' is naturally matched with itself!</text>
+    </g>
+  </g>
+
+  <!-- Step 4: Restore List Structure -->
+  <g transform="translate(30, 600)">
+    <rect width="940" height="155" class="card"/>
+    <text x="20" y="25" class="step-title">Step 4: Restore Original List (Good Engineering Practice)</text>
+    <text x="480" y="25" class="code-badge">nhead = reverseList(nhead); mid-&gt;next = nhead; return res;</text>
+
+    <g transform="translate(40, 50)">
+      <circle cx="40" cy="35" r="18" fill="#3b82f6"/>
+      <text x="40" y="35" class="node-val">1</text>
+      <line x1="58" y1="35" x2="102" y2="35" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <circle cx="120" cy="35" r="18" fill="#6366f1"/>
+      <text x="120" y="35" class="node-val">2</text>
+      <line x1="138" y1="35" x2="182" y2="35" stroke="#10b981" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+
+      <circle cx="200" cy="35" r="18" fill="#3b82f6"/>
+      <text x="200" y="35" class="node-val">2</text>
+      <line x1="218" y1="35" x2="262" y2="35" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <circle cx="280" cy="35" r="18" fill="#3b82f6"/>
+      <text x="280" y="35" class="node-val">1</text>
+      <line x1="298" y1="35" x2="335" y2="35" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="355" y="39" class="node-val" fill="#64748b">null</text>
+    </g>
+
+    <g transform="translate(480, 45)">
+      <rect width="430" height="90" rx="8" fill="#0f172a" stroke="#475569"/>
+      <text x="15" y="22" class="desc-text" font-weight="600" fill="#10b981">✨ Zero Side-Effects:</text>
+      <text x="15" y="44" class="desc-text">In concurrent/production code, mutating input lists without restoring causes hard-to-trace bugs. Re-reversing restores the caller's linked list cleanly.</text>
+      <text x="15" y="68" class="desc-text"><tspan fill="#38bdf8">Total Complexity:</tspan> Time: <tspan fill="#34d399">O(N)</tspan> | Space: <tspan fill="#34d399">O(1)</tspan></text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 820" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .card { fill: #161b22; stroke: #30363d; stroke-width: 1.5; rx: 10; }
+      .header-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 20px; font-weight: 700; fill: #58a6ff; }
+      .step-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; font-weight: 700; fill: #38bdf8; }
+      .sub-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 600; fill: #8b949e; }
+      .node-box { fill: #1f6feb; stroke: #58a6ff; stroke-width: 1.5; rx: 6; }
+      .node-match { fill: #065f46; stroke: #34d399; stroke-width: 1.5; rx: 6; }
+      .node-val { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+      .desc-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; fill: #c9d1d9; }
+      .code-snippet { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: #7ee787; }
+      .ptr-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 700; text-anchor: middle; }
+    </style>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="820" class="bg" />
+
+  <!-- Header -->
+  <g transform="translate(30, 30)">
+    <text x="0" y="0" class="header-title">Circular Linked List Check &amp; Sorted Linked Lists Intersection</text>
+    <text x="0" y="24" class="sub-title">Two-pointer traversal logic and sentinel list construction patterns</text>
+  </g>
+
+  <!-- Panel 1: Check If Circular -->
+  <g transform="translate(30, 75)">
+    <rect width="1040" height="320" class="card" />
+    <text x="25" y="30" class="step-title">1. Check If Linked List is Circular (Tail points back to Head)</text>
+
+    <g transform="translate(35, 60)">
+      <!-- 1 -->
+      <g transform="translate(0, 0)">
+        <rect width="45" height="30" class="node-box"/><text x="22.5" y="20" class="node-val">1</text>
+        <text x="22.5" y="-6" class="ptr-text" fill="#58a6ff">head</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+      </g>
+      <!-- 2 -->
+      <g transform="translate(90, 0)">
+        <rect width="45" height="30" class="node-box"/><text x="22.5" y="20" class="node-val">2</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+      </g>
+      <!-- 3 -->
+      <g transform="translate(180, 0)">
+        <rect width="45" height="30" class="node-box"/><text x="22.5" y="20" class="node-val">3</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+      </g>
+      <!-- 4 -->
+      <g transform="translate(270, 0)">
+        <rect width="45" height="30" class="node-box"/><text x="22.5" y="20" class="node-val">4</text>
+        <line x1="45" y1="15" x2="85" y2="15" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+      </g>
+      <!-- 5 -->
+      <g transform="translate(360, 0)">
+        <rect width="45" height="30" class="node-box"/><text x="22.5" y="20" class="node-val">5</text>
+        <text x="22.5" y="-6" class="ptr-text" fill="#34d399">tail</text>
+      </g>
+
+      <!-- Return Arc (5 -> 1) -->
+      <path d="M 382 30 C 382 95, 22 95, 22 30" fill="none" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-green)"/>
+      <text x="202" y="85" class="ptr-text" fill="#34d399">tail.next == head → Return True</text>
+    </g>
+
+    <g transform="translate(560, 45)">
+      <rect width="450" height="150" fill="#0d1117" stroke="#30363d" rx="8"/>
+      <text x="20" y="25" class="code-snippet">if (head == null) return true; // empty list is circular</text>
+      <text x="20" y="55" class="code-snippet">Node curr = head;</text>
+      <text x="20" y="85" class="code-snippet">while (curr != null) {</text>
+      <text x="40" y="110" class="code-snippet">if (curr.next == head) return true;</text>
+      <text x="40" y="130" class="code-snippet">curr = curr.next;</text>
+      <text x="20" y="150" class="code-snippet">}</text>
+      <text x="20" y="170" class="code-snippet">return false;</text>
+    </g>
+
+    <text x="25" y="245" class="desc-text">• Time Complexity: <tspan fill="#38bdf8" font-weight="700">O(N)</tspan> where N is number of nodes. Space Complexity: <tspan fill="#38bdf8" font-weight="700">O(1)</tspan>.</text>
+    <text x="25" y="270" class="desc-text">• Note: If a cycle exists that doesn't loop back to head (inner cycle), Floyd's Cycle Detection is used.</text>
+  </g>
+
+  <!-- Panel 2: Intersection of 2 Sorted Lists -->
+  <g transform="translate(30, 415)">
+    <rect width="1040" height="375" class="card" />
+    <text x="25" y="30" class="step-title" fill="#34d399">2. Intersection of Two Sorted Linked Lists (2-Pointer Parallel Scan)</text>
+
+    <!-- List 1 & 2 -->
+    <g transform="translate(35, 55)">
+      <text x="0" y="20" class="ptr-text" fill="#58a6ff">L1 (1 ➔ 2 ➔ 3 ➔ 4 ➔ 6):</text>
+      <g transform="translate(180, 0)">
+        <rect width="38" height="28" class="node-box"/><text x="19" y="19" class="node-val" font-size="12">1</text>
+        <line x1="38" y1="14" x2="68" y2="14" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+      </g>
+      <g transform="translate(250, 0)">
+        <rect width="38" height="28" class="node-match"/><text x="19" y="19" class="node-val" font-size="12">2</text>
+        <line x1="38" y1="14" x2="68" y2="14" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      </g>
+      <g transform="translate(320, 0)">
+        <rect width="38" height="28" class="node-box"/><text x="19" y="19" class="node-val" font-size="12">3</text>
+        <line x1="38" y1="14" x2="68" y2="14" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+      </g>
+      <g transform="translate(390, 0)">
+        <rect width="38" height="28" class="node-match"/><text x="19" y="19" class="node-val" font-size="12">4</text>
+        <line x1="38" y1="14" x2="68" y2="14" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      </g>
+      <g transform="translate(460, 0)">
+        <rect width="38" height="28" class="node-match"/><text x="19" y="19" class="node-val" font-size="12">6</text>
+      </g>
+
+      <text x="0" y="75" class="ptr-text" fill="#58a6ff">L2 (2 ➔ 4 ➔ 6 ➔ 8):</text>
+      <g transform="translate(180, 55)">
+        <rect width="38" height="28" class="node-match"/><text x="19" y="19" class="node-val" font-size="12">2</text>
+        <line x1="38" y1="14" x2="68" y2="14" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      </g>
+      <g transform="translate(250, 55)">
+        <rect width="38" height="28" class="node-match"/><text x="19" y="19" class="node-val" font-size="12">4</text>
+        <line x1="38" y1="14" x2="68" y2="14" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      </g>
+      <g transform="translate(320, 55)">
+        <rect width="38" height="28" class="node-match"/><text x="19" y="19" class="node-val" font-size="12">6</text>
+        <line x1="38" y1="14" x2="68" y2="14" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      </g>
+      <g transform="translate(390, 55)">
+        <rect width="38" height="28" class="node-box"/><text x="19" y="19" class="node-val" font-size="12">8</text>
+      </g>
+
+      <text x="0" y="135" class="ptr-text" fill="#34d399">Result Intersection:</text>
+      <g transform="translate(180, 115)">
+        <rect width="38" height="28" class="node-match"/><text x="19" y="19" class="node-val" font-size="12">2</text>
+        <line x1="38" y1="14" x2="68" y2="14" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      </g>
+      <g transform="translate(250, 115)">
+        <rect width="38" height="28" class="node-match"/><text x="19" y="19" class="node-val" font-size="12">4</text>
+        <line x1="38" y1="14" x2="68" y2="14" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      </g>
+      <g transform="translate(320, 115)">
+        <rect width="38" height="28" class="node-match"/><text x="19" y="19" class="node-val" font-size="12">6</text>
+        <line x1="38" y1="14" x2="68" y2="14" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+        <text x="78" y="19" class="desc-text" fill="#8b949e">null</text>
+      </g>
+    </g>
+
+    <g transform="translate(560, 50)">
+      <rect width="450" height="200" fill="#0d1117" stroke="#30363d" rx="8"/>
+      <text x="20" y="25" class="code-snippet">while (h1 != null &amp;&amp; h2 != null) {</text>
+      <text x="40" y="50" class="code-snippet">if (h1.data == h2.data) {</text>
+      <text x="60" y="75" class="code-snippet">res.next = new Node(h1.data);</text>
+      <text x="60" y="95" class="code-snippet">res = res.next; h1 = h1.next; h2 = h2.next;</text>
+      <text x="40" y="120" class="code-snippet">} else if (h1.data &lt; h2.data) {</text>
+      <text x="60" y="145" class="code-snippet">h1 = h1.next; // advance smaller</text>
+      <text x="40" y="170" class="code-snippet">} else { h2 = h2.next; }</text>
+      <text x="20" y="195" class="code-snippet">}</text>
+    </g>
+
+    <text x="25" y="325" class="desc-text">• Time Complexity: <tspan fill="#34d399" font-weight="700">O(N + M)</tspan> where N, M are lengths of the lists. Auxiliary Space: <tspan fill="#34d399" font-weight="700">O(min(N, M))</tspan> for new intersection nodes.</text>
+  </g>
+</svg>

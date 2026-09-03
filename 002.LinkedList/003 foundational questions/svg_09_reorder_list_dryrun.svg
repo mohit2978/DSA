@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0f172a; }
+      .card { fill: #1e293b; stroke: #334155; stroke-width: 1.5; rx: 12; }
+      .title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 20px; font-weight: 700; fill: #f8fafc; }
+      .subtitle { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13px; fill: #94a3b8; }
+      .step-title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; font-weight: 700; fill: #38bdf8; }
+      .node-val { font-family: 'Segoe UI', monospace, sans-serif; font-size: 15px; font-weight: 700; text-anchor: middle; dominant-baseline: middle; fill: #ffffff; }
+      .label-text { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 11px; font-weight: 600; text-anchor: middle; }
+      .code-badge { font-family: 'Fira Code', Consolas, monospace; font-size: 11px; fill: #fbbf24; }
+      .desc-text { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 12px; fill: #cbd5e1; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981"/>
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" class="bg" rx="16"/>
+
+  <!-- Title -->
+  <g transform="translate(30, 35)">
+    <text class="title">LeetCode 143: Reorder List (L₀ ➔ Lₙ ➔ L₁ ➔ Lₙ₋₁ ➔ L₂ ...)</text>
+    <text y="24" class="subtitle">3-Phase Decomposition: Split at 1st Middle ➔ Reverse 2nd Half ➔ Alternating Dummy Merge</text>
+  </g>
+
+  <!-- Step 1 & 2: Split and Reverse -->
+  <g transform="translate(30, 80)">
+    <rect width="940" height="170" class="card"/>
+    <text x="20" y="25" class="step-title">Phase 1 &amp; 2: Find 1st Mid, Sever Link, and Reverse Second Half</text>
+    <text x="490" y="25" class="code-badge">midNode.next = null; h2 = reverse(midnext);</text>
+
+    <!-- Original List: 1 -> 2 -> 3 -> 4 -> 5 -->
+    <g transform="translate(30, 45)">
+      <!-- h1 -->
+      <circle cx="40" cy="30" r="17" fill="#3b82f6"/>
+      <text x="40" y="30" class="node-val">1</text>
+      <text x="40" y="62" class="label-text" fill="#93c5fd">h1</text>
+      <line x1="57" y1="30" x2="93" y2="30" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <circle cx="110" cy="30" r="17" fill="#3b82f6"/>
+      <text x="110" y="30" class="node-val">2</text>
+      <line x1="127" y1="30" x2="163" y2="30" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <circle cx="180" cy="30" r="17" fill="#6366f1"/>
+      <text x="180" y="30" class="node-val">3</text>
+      <text x="180" y="62" class="label-text" fill="#a5b4fc">mid</text>
+      <line x1="197" y1="30" x2="230" y2="30" stroke="#ef4444" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow)"/>
+      <text x="250" y="34" class="node-val" fill="#64748b">null</text>
+    </g>
+
+    <!-- Reversed h2 -->
+    <g transform="translate(340, 45)">
+      <circle cx="40" cy="30" r="17" fill="#10b981"/>
+      <text x="40" y="30" class="node-val">5</text>
+      <text x="40" y="62" class="label-text" fill="#6ee7b7">h2 (Rev)</text>
+      <line x1="57" y1="30" x2="93" y2="30" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+      <circle cx="110" cy="30" r="17" fill="#10b981"/>
+      <text x="110" y="30" class="node-val">4</text>
+      <line x1="127" y1="30" x2="160" y2="30" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="180" y="34" class="node-val" fill="#64748b">null</text>
+    </g>
+
+    <g transform="translate(600, 40)">
+      <rect width="315" height="105" rx="8" fill="#0f172a" stroke="#475569"/>
+      <text x="15" y="22" class="desc-text" font-weight="600" fill="#38bdf8">Key Invariant:</text>
+      <text x="15" y="44" class="desc-text">• Length of h1 is always <tspan fill="#fbbf24">≥ length of h2</tspan>.</text>
+      <text x="15" y="66" class="desc-text">• Loop condition is simply <tspan fill="#34d399" font-family="monospace">while (h2 != null)</tspan>.</text>
+      <text x="15" y="88" class="desc-text">• Handles both Even and Odd lengths cleanly.</text>
+    </g>
+  </g>
+
+  <!-- Step 3: Alternating Merge Execution Trace -->
+  <g transform="translate(30, 265)">
+    <rect width="940" height="405" class="card"/>
+    <text x="20" y="25" class="step-title">Phase 3: Alternating Stitching via Dummy Node</text>
+
+    <!-- Iteration 1 -->
+    <g transform="translate(30, 45)">
+      <text x="0" y="25" class="label-text" fill="#38bdf8" text-anchor="start">Iteration 1: Attach h1 (1), then h2 (5)</text>
+      <rect x="0" y="40" width="880" height="60" rx="8" fill="#0f172a" stroke="#334155"/>
+      
+      <!-- Dummy -->
+      <circle cx="50" cy="70" r="15" fill="#475569"/>
+      <text x="50" y="70" class="node-val">-1</text>
+      <text x="50" y="100" class="label-text" fill="#94a3b8">dummy</text>
+      <line x1="65" y1="70" x2="105" y2="70" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrow-amber)"/>
+
+      <!-- Node 1 -->
+      <circle cx="120" cy="70" r="15" fill="#3b82f6"/>
+      <text x="120" y="70" class="node-val">1</text>
+      <line x1="135" y1="70" x2="175" y2="70" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrow-amber)"/>
+
+      <!-- Node 5 -->
+      <circle cx="190" cy="70" r="15" fill="#10b981"/>
+      <text x="190" y="70" class="node-val">5</text>
+
+      <text x="280" y="75" class="desc-text" fill="#94a3b8">Remaining: h1 ➔ [2, 3] | h2 ➔ [4]</text>
+    </g>
+
+    <!-- Iteration 2 -->
+    <g transform="translate(30, 160)">
+      <text x="0" y="25" class="label-text" fill="#38bdf8" text-anchor="start">Iteration 2: Attach h1 (2), then h2 (4)</text>
+      <rect x="0" y="40" width="880" height="60" rx="8" fill="#0f172a" stroke="#334155"/>
+      
+      <!-- List so far -->
+      <circle cx="50" cy="70" r="15" fill="#475569"/>
+      <text x="50" y="70" class="node-val">-1</text>
+      <line x1="65" y1="70" x2="95" y2="70" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <circle cx="110" cy="70" r="15" fill="#3b82f6"/>
+      <text x="110" y="70" class="node-val">1</text>
+      <line x1="125" y1="70" x2="155" y2="70" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <circle cx="170" cy="70" r="15" fill="#10b981"/>
+      <text x="170" y="70" class="node-val">5</text>
+      <line x1="185" y1="70" x2="215" y2="70" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrow-amber)"/>
+
+      <circle cx="230" cy="70" r="15" fill="#3b82f6"/>
+      <text x="230" y="70" class="node-val">2</text>
+      <line x1="245" y1="70" x2="275" y2="70" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrow-amber)"/>
+
+      <circle cx="290" cy="70" r="15" fill="#10b981"/>
+      <text x="290" y="70" class="node-val">4</text>
+
+      <text x="370" y="75" class="desc-text" fill="#94a3b8">h2 is now <tspan fill="#ef4444">null</tspan>! Loop terminates. Remaining h1 ➔ [3]</text>
+    </g>
+
+    <!-- Final Stitching -->
+    <g transform="translate(30, 275)">
+      <text x="0" y="25" class="label-text" fill="#10b981" text-anchor="start">Final Step: Attach remaining h1 (Node 3) &amp; Set head = dummy.next</text>
+      <rect x="0" y="40" width="880" height="70" rx="8" fill="#0f172a" stroke="#10b981"/>
+
+      <circle cx="45" cy="75" r="14" fill="#3b82f6"/>
+      <text x="45" y="75" class="node-val">1</text>
+      <text x="45" y="102" class="label-text" fill="#60a5fa">head</text>
+      <line x1="59" y1="75" x2="89" y2="75" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+      <circle cx="103" cy="75" r="14" fill="#10b981"/>
+      <text x="103" y="75" class="node-val">5</text>
+      <line x1="117" y1="75" x2="147" y2="75" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+      <circle cx="161" cy="75" r="14" fill="#3b82f6"/>
+      <text x="161" y="75" class="node-val">2</text>
+      <line x1="175" y1="75" x2="205" y2="75" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+      <circle cx="219" cy="75" r="14" fill="#10b981"/>
+      <text x="219" y="75" class="node-val">4</text>
+      <line x1="233" y1="75" x2="263" y2="75" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#arrow-amber)"/>
+
+      <circle cx="277" cy="75" r="14" fill="#6366f1"/>
+      <text x="277" y="75" class="node-val">3</text>
+      <line x1="291" y1="75" x2="320" y2="75" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="340" y="79" class="node-val" fill="#64748b">null</text>
+
+      <text x="420" y="80" class="desc-text" fill="#34d399" font-weight="600">✓ In-place Reordered Result: 1 ➔ 5 ➔ 2 ➔ 4 ➔ 3</text>
+    </g>
+  </g>
+</svg>

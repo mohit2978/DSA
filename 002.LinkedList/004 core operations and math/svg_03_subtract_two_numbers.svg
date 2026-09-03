@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 22px; font-weight: bold; fill: #58a6ff; }
+      .subtitle { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; fill: #8b949e; }
+      .section-title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #f0883e; }
+      .node-box { fill: #161b22; stroke: #30363d; stroke-width: 2px; rx: 8px; }
+      .node-box-res { fill: #0d2818; stroke: #3fb950; stroke-width: 2px; rx: 8px; }
+      .node-box-zero { fill: #21262d; stroke: #f85149; stroke-dasharray: 4; stroke-width: 2px; rx: 8px; }
+      .node-text { font-family: 'Segoe UI', monospace; font-size: 16px; font-weight: bold; fill: #c9d1d9; text-anchor: middle; }
+      .node-text-res { font-family: 'Segoe UI', monospace; font-size: 16px; font-weight: bold; fill: #56d364; text-anchor: middle; }
+      .label-text { font-family: 'Segoe UI', system-ui; font-size: 13px; font-weight: bold; fill: #79c0ff; text-anchor: middle; }
+      .borrow-text { font-family: 'Segoe UI', monospace; font-size: 13px; font-weight: bold; fill: #f85149; text-anchor: middle; }
+      .arrow { stroke: #58a6ff; stroke-width: 2px; fill: none; marker-end: url(#arrow-head); }
+      .arrow-res { stroke: #3fb950; stroke-width: 2px; fill: none; marker-end: url(#arrow-green); }
+      .step-desc { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13.5px; fill: #c9d1d9; }
+      .box-panel { fill: #161b22; stroke: #30363d; stroke-width: 1.5px; rx: 8px; }
+    </style>
+    <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="700" class="bg" rx="12"/>
+
+  <!-- Header -->
+  <text x="50" y="45" class="title">Subtract Two Numbers Represented as Linked Lists</text>
+  <text x="50" y="70" class="subtitle">Comparison (L1 ≥ L2) → Reverse → Borrow Mechanism → Reverse &amp; Strip Leading Zeros</text>
+
+  <!-- Step 1: Borrow Simulation Trace -->
+  <text x="50" y="115" class="section-title">Step 1: Subtraction with Borrow (Reversed: L1 = 967894 - L2 = 23869)</text>
+
+  <!-- L1 Reversed -->
+  <text x="50" y="165" class="label-text" fill="#79c0ff" text-anchor="start">L1 (Reversed):</text>
+  <g transform="translate(170, 140)">
+    <rect width="50" height="38" class="node-box"/><text x="25" y="24" class="node-text">4</text>
+  </g>
+  <path d="M 220 159 L 245 159" class="arrow"/>
+  <g transform="translate(250, 140)">
+    <rect width="50" height="38" class="node-box"/><text x="25" y="24" class="node-text">5</text>
+  </g>
+  <path d="M 300 159 L 325 159" class="arrow"/>
+  <g transform="translate(330, 140)">
+    <rect width="50" height="38" class="node-box"/><text x="25" y="24" class="node-text">6</text>
+  </g>
+  <path d="M 380 159 L 405 159" class="arrow"/>
+  <g transform="translate(410, 140)">
+    <rect width="50" height="38" class="node-box"/><text x="25" y="24" class="node-text">7</text>
+  </g>
+  <path d="M 460 159 L 485 159" class="arrow"/>
+  <g transform="translate(490, 140)">
+    <rect width="50" height="38" class="node-box"/><text x="25" y="24" class="node-text">8</text>
+  </g>
+  <path d="M 540 159 L 565 159" class="arrow"/>
+  <g transform="translate(570, 140)">
+    <rect width="50" height="38" class="node-box"/><text x="25" y="24" class="node-text">9</text>
+  </g>
+
+  <!-- L2 Reversed -->
+  <text x="50" y="225" class="label-text" fill="#79c0ff" text-anchor="start">L2 (Reversed):</text>
+  <g transform="translate(170, 200)">
+    <rect width="50" height="38" class="node-box"/><text x="25" y="24" class="node-text">9</text>
+  </g>
+  <path d="M 220 219 L 245 219" class="arrow"/>
+  <g transform="translate(250, 200)">
+    <rect width="50" height="38" class="node-box"/><text x="25" y="24" class="node-text">6</text>
+  </g>
+  <path d="M 300 219 L 325 219" class="arrow"/>
+  <g transform="translate(330, 200)">
+    <rect width="50" height="38" class="node-box"/><text x="25" y="24" class="node-text">8</text>
+  </g>
+  <path d="M 380 219 L 405 219" class="arrow"/>
+  <g transform="translate(410, 200)">
+    <rect width="50" height="38" class="node-box"/><text x="25" y="24" class="node-text">3</text>
+  </g>
+  <path d="M 460 219 L 485 219" class="arrow"/>
+  <g transform="translate(490, 200)">
+    <rect width="50" height="38" class="node-box"/><text x="25" y="24" class="node-text">2</text>
+  </g>
+
+  <!-- Borrow logic indicator -->
+  <text x="195" y="265" class="borrow-text">4-9&lt;0 → 14-9=5 [b=-1]</text>
+  <text x="275" y="265" class="borrow-text">-1+5-6=-2 → 8 [b=-1]</text>
+  <text x="355" y="265" class="borrow-text">-1+6-8=-3 → 7 [b=-1]</text>
+  <text x="435" y="265" class="borrow-text" fill="#3fb950">-1+7-3=3 [b=0]</text>
+  <text x="515" y="265" class="borrow-text" fill="#3fb950">8-2=6 [b=0]</text>
+  <text x="595" y="265" class="borrow-text" fill="#3fb950">9-0=9 [b=0]</text>
+
+  <!-- Result List -->
+  <text x="50" y="315" class="label-text" fill="#3fb950" text-anchor="start">Reversed Diff:</text>
+  <g transform="translate(170, 290)">
+    <rect width="50" height="38" class="node-box-res"/><text x="25" y="24" class="node-text-res">5</text>
+  </g>
+  <path d="M 220 309 L 245 309" class="arrow-res"/>
+  <g transform="translate(250, 290)">
+    <rect width="50" height="38" class="node-box-res"/><text x="25" y="24" class="node-text-res">8</text>
+  </g>
+  <path d="M 300 309 L 325 309" class="arrow-res"/>
+  <g transform="translate(330, 290)">
+    <rect width="50" height="38" class="node-box-res"/><text x="25" y="24" class="node-text-res">7</text>
+  </g>
+  <path d="M 380 309 L 405 309" class="arrow-res"/>
+  <g transform="translate(410, 290)">
+    <rect width="50" height="38" class="node-box-res"/><text x="25" y="24" class="node-text-res">3</text>
+  </g>
+  <path d="M 460 309 L 485 309" class="arrow-res"/>
+  <g transform="translate(490, 290)">
+    <rect width="50" height="38" class="node-box-res"/><text x="25" y="24" class="node-text-res">6</text>
+  </g>
+  <path d="M 540 309 L 565 309" class="arrow-res"/>
+  <g transform="translate(570, 290)">
+    <rect width="50" height="38" class="node-box-res"/><text x="25" y="24" class="node-text-res">9</text>
+  </g>
+
+  <!-- Final Output after reversing back -->
+  <text x="50" y="375" class="label-text" fill="#f0883e" text-anchor="start">Final Output (Reversed Back):  9 -> 6 -> 3 -> 7 -> 8 -> 5</text>
+
+  <!-- Section 2: Four Crucial Pillars -->
+  <line x1="50" y1="410" x2="950" y2="410" stroke="#30363d" stroke-width="1"/>
+  <text x="50" y="440" class="section-title">4 Critical Steps to Solve Subtraction in Linked Lists</text>
+
+  <g transform="translate(50, 460)">
+    <rect width="210" height="210" class="box-panel"/>
+    <text x="15" y="30" class="label-text" fill="#58a6ff" text-anchor="start">1. Determine Bigger List</text>
+    <text x="15" y="60" class="step-desc">• Compare lengths:</text>
+    <text x="15" y="85" class="step-desc">  len(L1) vs len(L2)</text>
+    <text x="15" y="110" class="step-desc">• If equal length,</text>
+    <text x="15" y="135" class="step-desc">  compare digit by digit.</text>
+    <text x="15" y="165" class="step-desc" fill="#f0883e">• Swap so L1 ≥ L2!</text>
+  </g>
+
+  <g transform="translate(280, 460)">
+    <rect width="210" height="210" class="box-panel"/>
+    <text x="15" y="30" class="label-text" fill="#58a6ff" text-anchor="start">2. Reverse Inputs</text>
+    <text x="15" y="60" class="step-desc">• Reverse L1 and L2</text>
+    <text x="15" y="85" class="step-desc">• Subtraction requires</text>
+    <text x="15" y="110" class="step-desc">  starting from the</text>
+    <text x="15" y="135" class="step-desc">  <tspan fill="#79c0ff" font-weight="bold">least significant digit</tspan></text>
+    <text x="15" y="165" class="step-desc">  (Units place first).</text>
+  </g>
+
+  <g transform="translate(510, 460)">
+    <rect width="210" height="210" class="box-panel"/>
+    <text x="15" y="30" class="label-text" fill="#58a6ff" text-anchor="start">3. Borrow Logic</text>
+    <text x="15" y="60" class="step-desc" font-family="monospace" font-size="12">val = borrow + v1 - v2;</text>
+    <text x="15" y="90" class="step-desc" font-family="monospace" font-size="12">if (val &lt; 0) {</text>
+    <text x="15" y="115" class="step-desc" font-family="monospace" font-size="12">  val += 10;</text>
+    <text x="15" y="140" class="step-desc" font-family="monospace" font-size="12">  borrow = -1;</text>
+    <text x="15" y="165" class="step-desc" font-family="monospace" font-size="12">} else borrow = 0;</text>
+  </g>
+
+  <g transform="translate(740, 460)">
+    <rect width="210" height="210" class="box-panel"/>
+    <text x="15" y="30" class="label-text" fill="#f85149" text-anchor="start">4. Strip Leading Zeros</text>
+    <text x="15" y="60" class="step-desc">• 999999 - 999998</text>
+    <text x="15" y="85" class="step-desc">  = <tspan fill="#f85149">000001</tspan> → <tspan fill="#3fb950" font-weight="bold">1</tspan></text>
+    <text x="15" y="115" class="step-desc">• After reversing result:</text>
+    <text x="15" y="140" class="step-desc" font-family="monospace" font-size="11">while(c.next &amp;&amp; c.val==0)</text>
+    <text x="15" y="165" class="step-desc" font-family="monospace" font-size="11">  c = c.next;</text>
+  </g>
+</svg>

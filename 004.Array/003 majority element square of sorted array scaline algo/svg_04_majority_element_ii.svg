@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 640" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#9333ea"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <rect width="950" height="640" rx="16" fill="url(#bgGrad)"/>
+
+  <!-- Header -->
+  <rect x="30" y="20" width="890" height="60" rx="12" fill="url(#cardGrad)" filter="url(#shadow)" stroke="#475569" stroke-width="1"/>
+  <text x="50" y="57" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#f8fafc">Majority Element II (Frequency &gt; n / 3) - Extended Boyer-Moore</text>
+  <rect x="740" y="35" width="160" height="30" rx="15" fill="#38bdf8" fill-opacity="0.15" stroke="#38bdf8" stroke-width="1"/>
+  <text x="820" y="55" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#38bdf8" text-anchor="middle">O(N) Time, O(1) Space</text>
+
+  <!-- Section 1: Mathematical Logic & Candidate Rules -->
+  <g transform="translate(30, 95)">
+    <rect width="890" height="150" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#38bdf8">1. Mathematical Principle: Triplet Cancellation</text>
+    <text x="20" y="48" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">An array of size n can contain AT MOST TWO elements with frequency &gt; floor(n/3).</text>
+
+    <!-- 3 Action Rule Cards -->
+    <g transform="translate(20, 65)">
+      <rect width="270" height="65" rx="8" fill="#0f172a" stroke="#0284c7" stroke-width="1"/>
+      <text x="15" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8">Rule 1: Element matches Candidate</text>
+      <text x="15" y="40" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">if (arr[i] == v1) c1++</text>
+      <text x="15" y="55" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">else if (arr[i] == v2) c2++</text>
+
+      <rect x="290" y="0" width="270" height="65" rx="8" fill="#0f172a" stroke="#059669" stroke-width="1"/>
+      <text x="305" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">Rule 2: Count is Zero (New Slot)</text>
+      <text x="305" y="40" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">if (c1 == 0) { v1 = arr[i]; c1 = 1; }</text>
+      <text x="305" y="55" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">else if (c2 == 0) { v2 = arr[i]; c2 = 1; }</text>
+
+      <rect x="580" y="0" width="270" height="65" rx="8" fill="#0f172a" stroke="#f43f5e" stroke-width="1"/>
+      <text x="595" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#f87171">Rule 3: Distinct from Both (Triplet)</text>
+      <text x="595" y="40" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">else { c1--; c2--; }</text>
+      <text x="595" y="55" font-family="system-ui, sans-serif" font-size="10" fill="#f87171">Cancels triplet (v1, v2, arr[i])</text>
+    </g>
+  </g>
+
+  <!-- Section 2: Step by step trace on [1, 2, 1, 3, 2, 2, 1] -->
+  <g transform="translate(30, 260)">
+    <rect width="890" height="355" rx="12" fill="#1e293b" stroke="#059669" stroke-width="1.5"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#34d399">2. Step-by-Step Dry Run on Array: [ 1, 2, 1, 3, 2, 2, 1 ] (n = 7, threshold = 7/3 = 2)</text>
+
+    <!-- Table -->
+    <g transform="translate(20, 50)">
+      <rect width="850" height="285" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+
+      <!-- Header -->
+      <text x="15" y="25" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">i</text>
+      <text x="45" y="25" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">arr[i]</text>
+      <text x="100" y="25" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">Action Taken</text>
+      <text x="350" y="25" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">Candidate 1 (v1, c1)</text>
+      <text x="520" y="25" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">Candidate 2 (v2, c2)</text>
+      <text x="690" y="25" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#94a3b8">State Note</text>
+      <line x1="10" y1="35" x2="840" y2="35" stroke="#334155" stroke-width="1"/>
+
+      <!-- Row 0 -->
+      <text x="15" y="58" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">0</text>
+      <text x="45" y="58" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#38bdf8">1</text>
+      <text x="100" y="58" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">Init: v1 = 1, c1 = 1</text>
+      <text x="350" y="58" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8">v1 = 1, c1 = 1</text>
+      <text x="520" y="58" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">v2 = 1, c2 = 0</text>
+      <text x="690" y="58" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Slot 1 active</text>
+
+      <!-- Row 1 -->
+      <text x="15" y="85" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">1</text>
+      <text x="45" y="85" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#34d399">2</text>
+      <text x="100" y="85" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">c2 == 0 -&gt; v2 = 2, c2 = 1</text>
+      <text x="350" y="85" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8">v1 = 1, c1 = 1</text>
+      <text x="520" y="85" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">v2 = 2, c2 = 1</text>
+      <text x="690" y="85" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Slot 2 active</text>
+
+      <!-- Row 2 -->
+      <text x="15" y="112" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">2</text>
+      <text x="45" y="112" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#38bdf8">1</text>
+      <text x="100" y="112" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">arr[i] == v1 -&gt; c1++</text>
+      <text x="350" y="112" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8">v1 = 1, c1 = 2</text>
+      <text x="520" y="112" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">v2 = 2, c2 = 1</text>
+      <text x="690" y="112" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Reinforce Slot 1</text>
+
+      <!-- Row 3 -->
+      <text x="15" y="139" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">3</text>
+      <text x="45" y="139" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#f43f5e">3</text>
+      <text x="100" y="139" font-family="system-ui, sans-serif" font-size="11" fill="#f43f5e">Distinct from both -&gt; c1--, c2--</text>
+      <text x="350" y="139" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8">v1 = 1, c1 = 1</text>
+      <text x="520" y="139" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#f43f5e">v2 = 2, c2 = 0</text>
+      <text x="690" y="139" font-family="system-ui, sans-serif" font-size="10" fill="#f87171">Triplet cancelled</text>
+
+      <!-- Row 4 -->
+      <text x="15" y="166" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">4</text>
+      <text x="45" y="166" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#34d399">2</text>
+      <text x="100" y="166" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">c2 == 0 -&gt; v2 = 2, c2 = 1</text>
+      <text x="350" y="166" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8">v1 = 1, c1 = 1</text>
+      <text x="520" y="166" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">v2 = 2, c2 = 1</text>
+      <text x="690" y="166" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Slot 2 re-assigned</text>
+
+      <!-- Row 5 -->
+      <text x="15" y="193" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">5</text>
+      <text x="45" y="193" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#34d399">2</text>
+      <text x="100" y="193" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">arr[i] == v2 -&gt; c2++</text>
+      <text x="350" y="193" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8">v1 = 1, c1 = 1</text>
+      <text x="520" y="193" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">v2 = 2, c2 = 2</text>
+      <text x="690" y="193" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Reinforce Slot 2</text>
+
+      <!-- Row 6 -->
+      <text x="15" y="220" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">6</text>
+      <text x="45" y="220" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#38bdf8">1</text>
+      <text x="100" y="220" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">arr[i] == v1 -&gt; c1++</text>
+      <text x="350" y="220" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8">v1 = 1, c1 = 2</text>
+      <text x="520" y="220" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">v2 = 2, c2 = 2</text>
+      <text x="690" y="220" font-family="system-ui, sans-serif" font-size="10" fill="#34d399">Final Candidates</text>
+
+      <!-- Phase 2 Verification Box -->
+      <line x1="10" y1="235" x2="840" y2="235" stroke="#334155" stroke-width="1"/>
+      <text x="15" y="258" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fbbf24">Phase 2 Verification Pass:</text>
+      <text x="195" y="258" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">Count of 1 in array = 3 (&gt; 7/3 = 2) [VALID]  |  Count of 2 in array = 3 (&gt; 7/3 = 2) [VALID]</text>
+      <text x="15" y="276" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#34d399">Output: [ 1, 2 ]</text>
+    </g>
+  </g>
+</svg>
