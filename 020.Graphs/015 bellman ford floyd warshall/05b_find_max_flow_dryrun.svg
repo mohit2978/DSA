@@ -1,0 +1,306 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 780" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95" />
+    </linearGradient>
+
+    <!-- Node Gradients -->
+    <linearGradient id="srcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+
+    <linearGradient id="sinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f43f5e" />
+      <stop offset="100%" stop-color="#e11d48" />
+    </linearGradient>
+
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+
+    <!-- Arrow Markers -->
+    <marker id="arrowGray" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b" />
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+    <marker id="arrowCyan" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#06b6d4" />
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a855f7" />
+    </marker>
+    <marker id="arrowEmerald" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+    </marker>
+    
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+    
+    <style>
+      .title { font-family: 'Segoe UI', Inter, sans-serif; font-weight: 800; font-size: 21px; fill: #f8fafc; }
+      .subtitle { font-family: 'Segoe UI', Inter, sans-serif; font-weight: 400; font-size: 13px; fill: #94a3b8; }
+      .card-title { font-family: 'Segoe UI', Inter, sans-serif; font-weight: 700; font-size: 13.5px; fill: #38bdf8; }
+      .card-sub { font-family: 'Segoe UI', Inter, sans-serif; font-weight: 500; font-size: 11px; fill: #cbd5e1; }
+      .node-text { font-family: 'Segoe UI', Inter, sans-serif; font-weight: 700; font-size: 14px; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
+      .edge-label { font-family: 'Segoe UI', Inter, sans-serif; font-weight: 700; font-size: 11px; text-anchor: middle; dominant-baseline: central; }
+      .flow-box { font-family: 'Segoe UI', Inter, sans-serif; font-size: 10.5px; fill: #e2e8f0; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="780" fill="url(#bgGrad)" />
+
+  <!-- Main Title Banner -->
+  <g transform="translate(40, 20)">
+    <text class="title" x="500" y="20" text-anchor="middle">Edmonds-Karp (BFS) Dry Run on Graph with Varied Capacities</text>
+    <text class="subtitle" x="500" y="42" text-anchor="middle">Source = 1, Sink = 4 | Capacities: (1→2): 10, (1→3): 8, (2→3): 4, (2→4): 6, (3→4): 9 | Total Max Flow = 15</text>
+  </g>
+
+  <!-- GRID: 4 PANELS -->
+
+  <!-- ==================== PANEL 1: INITIAL GRAPH ==================== -->
+  <g transform="translate(30, 80)" filter="url(#shadow)">
+    <rect width="495" height="320" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.5"/>
+    <text class="card-title" x="20" y="26">Initial Residual Graph (rGraph)</text>
+    <text class="card-sub" x="20" y="44">Capacities initialized from input edges | Total Flow = 0</text>
+    
+    <!-- Graph Layout: 1(65, 175), 2(195, 105), 3(195, 245), 4(325, 175) -->
+    <!-- 1 -> 2 (10) -->
+    <line x1="65" y1="175" x2="195" y2="105" stroke="#64748b" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="105" y="122" width="46" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="128" y="131" fill="#cbd5e1">c: 10</text>
+
+    <!-- 1 -> 3 (8) -->
+    <line x1="65" y1="175" x2="195" y2="245" stroke="#64748b" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="105" y="202" width="46" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="128" y="211" fill="#cbd5e1">c: 8</text>
+
+    <!-- 2 -> 3 (4) -->
+    <line x1="195" y1="105" x2="195" y2="245" stroke="#64748b" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="172" y="166" width="46" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="195" y="175" fill="#cbd5e1">c: 4</text>
+
+    <!-- 2 -> 4 (6) -->
+    <line x1="195" y1="105" x2="325" y2="175" stroke="#64748b" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="245" y="122" width="46" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="268" y="131" fill="#cbd5e1">c: 6</text>
+
+    <!-- 3 -> 4 (9) -->
+    <line x1="195" y1="245" x2="325" y2="175" stroke="#64748b" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="245" y="202" width="46" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="268" y="211" fill="#cbd5e1">c: 9</text>
+
+    <!-- Nodes -->
+    <circle cx="65" cy="175" r="18" fill="url(#srcGrad)" stroke="#34d399" stroke-width="2"/>
+    <text class="node-text" x="65" y="175">1 (S)</text>
+
+    <circle cx="195" cy="105" r="18" fill="url(#nodeGrad)" stroke="#818cf8" stroke-width="2"/>
+    <text class="node-text" x="195" y="105">2</text>
+
+    <circle cx="195" cy="245" r="18" fill="url(#nodeGrad)" stroke="#818cf8" stroke-width="2"/>
+    <text class="node-text" x="195" y="245">3</text>
+
+    <circle cx="325" cy="175" r="18" fill="url(#sinkGrad)" stroke="#fb7185" stroke-width="2"/>
+    <text class="node-text" x="325" y="175">4 (T)</text>
+
+    <!-- Info side box -->
+    <rect x="375" y="70" width="105" height="235" rx="6" fill="#0f172a" stroke="#334155"/>
+    <text class="flow-box" x="385" y="92" font-weight="700" fill="#38bdf8">Input Edges:</text>
+    <text class="flow-box" x="385" y="112">• 1 → 2: 10</text>
+    <text class="flow-box" x="385" y="128">• 1 → 3: 8</text>
+    <text class="flow-box" x="385" y="144">• 2 → 3: 4</text>
+    <text class="flow-box" x="385" y="160">• 2 → 4: 6</text>
+    <text class="flow-box" x="385" y="176">• 3 → 4: 9</text>
+    <text class="flow-box" x="385" y="202" font-weight="700" fill="#38bdf8">Source:</text>
+    <text class="flow-box" x="430" y="202" fill="#34d399">s = 1</text>
+    <text class="flow-box" x="385" y="222" font-weight="700" fill="#38bdf8">Sink:</text>
+    <text class="flow-box" x="430" y="222" fill="#fb7185">t = 4</text>
+    <text class="flow-box" x="385" y="250" font-weight="700" fill="#cbd5e1">maxFlow = 0</text>
+  </g>
+
+  <!-- ==================== PANEL 2: ITERATION 1 ==================== -->
+  <g transform="translate(555, 80)" filter="url(#shadow)">
+    <rect width="495" height="320" rx="12" fill="url(#cardGrad)" stroke="#f59e0b" stroke-width="1.5"/>
+    <text class="card-title" x="20" y="26" fill="#f59e0b">Pass 1: BFS Path 1 → 2 → 4 (Δ = 6)</text>
+    <text class="card-sub" x="20" y="44">Bottleneck = min(rGraph[1][2]=10, rGraph[2][4]=6) = 6 | maxFlow = 6</text>
+
+    <!-- Graph Layout -->
+    <!-- 1 -> 2 (Active) -->
+    <line x1="65" y1="175" x2="195" y2="105" stroke="#f59e0b" stroke-width="3.5" marker-end="url(#arrowAmber)"/>
+    <rect x="105" y="122" width="50" height="18" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="1"/>
+    <text class="edge-label" x="130" y="131" fill="#fef08a">10 - 6 = 4</text>
+
+    <!-- 1 -> 3 (Unused) -->
+    <line x1="65" y1="175" x2="195" y2="245" stroke="#475569" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="105" y="202" width="46" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="128" y="211" fill="#94a3b8">8</text>
+
+    <!-- 2 -> 3 (Unused) -->
+    <line x1="195" y1="105" x2="195" y2="245" stroke="#475569" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="172" y="166" width="46" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="195" y="175" fill="#94a3b8">4</text>
+
+    <!-- 2 -> 4 (Active - Saturated!) -->
+    <line x1="195" y1="105" x2="325" y2="175" stroke="#f59e0b" stroke-width="3.5" marker-end="url(#arrowAmber)"/>
+    <rect x="245" y="122" width="50" height="18" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="1"/>
+    <text class="edge-label" x="270" y="131" fill="#fef08a">6 - 6 = 0</text>
+
+    <!-- 3 -> 4 (Unused) -->
+    <line x1="195" y1="245" x2="325" y2="175" stroke="#475569" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="245" y="202" width="46" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="268" y="211" fill="#94a3b8">9</text>
+
+    <!-- Nodes -->
+    <circle cx="65" cy="175" r="18" fill="url(#srcGrad)" stroke="#34d399" stroke-width="2"/>
+    <text class="node-text" x="65" y="175">1</text>
+
+    <circle cx="195" cy="105" r="18" fill="url(#nodeGrad)" stroke="#818cf8" stroke-width="2"/>
+    <text class="node-text" x="195" y="105">2</text>
+
+    <circle cx="195" cy="245" r="18" fill="url(#nodeGrad)" stroke="#818cf8" stroke-width="2"/>
+    <text class="node-text" x="195" y="245">3</text>
+
+    <circle cx="325" cy="175" r="18" fill="url(#sinkGrad)" stroke="#fb7185" stroke-width="2"/>
+    <text class="node-text" x="325" y="175">4</text>
+
+    <!-- Info side box -->
+    <rect x="375" y="70" width="105" height="235" rx="6" fill="#0f172a" stroke="#78350f"/>
+    <text class="flow-box" x="385" y="92" font-weight="700" fill="#f59e0b">Pass 1 Summary:</text>
+    <text class="flow-box" x="385" y="112">Path: 1 → 2 → 4</text>
+    <text class="flow-box" x="385" y="130">pathFlow = 6</text>
+    <text class="flow-box" x="385" y="156" font-weight="700" fill="#38bdf8">rGraph Updates:</text>
+    <text class="flow-box" x="385" y="174">• rG[1][2] = 4</text>
+    <text class="flow-box" x="385" y="190">• rG[2][1] = 16</text>
+    <text class="flow-box" x="385" y="206">• rG[2][4] = 0</text>
+    <text class="flow-box" x="385" y="222">• rG[4][2] = 12</text>
+    <text class="flow-box" x="385" y="250" font-weight="700" fill="#f59e0b">Total Flow = 6</text>
+  </g>
+
+  <!-- ==================== PANEL 3: ITERATION 2 ==================== -->
+  <g transform="translate(30, 430)" filter="url(#shadow)">
+    <rect width="495" height="320" rx="12" fill="url(#cardGrad)" stroke="#06b6d4" stroke-width="1.5"/>
+    <text class="card-title" x="20" y="26" fill="#06b6d4">Pass 2: BFS Path 1 → 3 → 4 (Δ = 8)</text>
+    <text class="card-sub" x="20" y="44">Bottleneck = min(rGraph[1][3]=8, rGraph[3][4]=9) = 8 | maxFlow = 6 + 8 = 14</text>
+
+    <!-- Graph Layout -->
+    <!-- 1 -> 2 (Remaining 4) -->
+    <line x1="65" y1="175" x2="195" y2="105" stroke="#475569" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="105" y="122" width="46" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="128" y="131" fill="#94a3b8">4</text>
+
+    <!-- 1 -> 3 (Active) -->
+    <line x1="65" y1="175" x2="195" y2="245" stroke="#06b6d4" stroke-width="3.5" marker-end="url(#arrowCyan)"/>
+    <rect x="105" y="202" width="50" height="18" rx="4" fill="#164e63" stroke="#06b6d4" stroke-width="1"/>
+    <text class="edge-label" x="130" y="211" fill="#a5f3fc">8 - 8 = 0</text>
+
+    <!-- 2 -> 3 (Unused 4) -->
+    <line x1="195" y1="105" x2="195" y2="245" stroke="#475569" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="172" y="166" width="46" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="195" y="175" fill="#94a3b8">4</text>
+
+    <!-- 2 -> 4 (Empty 0) -->
+    <line x1="195" y1="105" x2="325" y2="175" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <rect x="245" y="122" width="46" height="18" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text class="edge-label" x="268" y="131" fill="#64748b">0</text>
+
+    <!-- 3 -> 4 (Active) -->
+    <line x1="195" y1="245" x2="325" y2="175" stroke="#06b6d4" stroke-width="3.5" marker-end="url(#arrowCyan)"/>
+    <rect x="245" y="202" width="50" height="18" rx="4" fill="#164e63" stroke="#06b6d4" stroke-width="1"/>
+    <text class="edge-label" x="270" y="211" fill="#a5f3fc">9 - 8 = 1</text>
+
+    <!-- Nodes -->
+    <circle cx="65" cy="175" r="18" fill="url(#srcGrad)" stroke="#34d399" stroke-width="2"/>
+    <text class="node-text" x="65" y="175">1</text>
+
+    <circle cx="195" cy="105" r="18" fill="url(#nodeGrad)" stroke="#818cf8" stroke-width="2"/>
+    <text class="node-text" x="195" y="105">2</text>
+
+    <circle cx="195" cy="245" r="18" fill="url(#nodeGrad)" stroke="#818cf8" stroke-width="2"/>
+    <text class="node-text" x="195" y="245">3</text>
+
+    <circle cx="325" cy="175" r="18" fill="url(#sinkGrad)" stroke="#fb7185" stroke-width="2"/>
+    <text class="node-text" x="325" y="175">4</text>
+
+    <!-- Info side box -->
+    <rect x="375" y="70" width="105" height="235" rx="6" fill="#0f172a" stroke="#0891b2"/>
+    <text class="flow-box" x="385" y="92" font-weight="700" fill="#06b6d4">Pass 2 Summary:</text>
+    <text class="flow-box" x="385" y="112">Path: 1 → 3 → 4</text>
+    <text class="flow-box" x="385" y="130">pathFlow = 8</text>
+    <text class="flow-box" x="385" y="156" font-weight="700" fill="#38bdf8">rGraph Updates:</text>
+    <text class="flow-box" x="385" y="174">• rG[1][3] = 0</text>
+    <text class="flow-box" x="385" y="190">• rG[3][1] = 16</text>
+    <text class="flow-box" x="385" y="206">• rG[3][4] = 1</text>
+    <text class="flow-box" x="385" y="222">• rG[4][3] = 17</text>
+    <text class="flow-box" x="385" y="250" font-weight="700" fill="#06b6d4">Total Flow = 14</text>
+  </g>
+
+  <!-- ==================== PANEL 4: ITERATION 3 & FINAL ==================== -->
+  <g transform="translate(555, 430)" filter="url(#shadow)">
+    <rect width="495" height="320" rx="12" fill="url(#cardGrad)" stroke="#10b981" stroke-width="1.5"/>
+    <text class="card-title" x="20" y="26" fill="#10b981">Pass 3: BFS Path 1 → 2 → 3 → 4 (Δ = 1) → Optimal Max Flow = 15</text>
+    <text class="card-sub" x="20" y="44">Bottleneck = min(4, 4, 1) = 1 | Total Max Flow = 14 + 1 = 15 | Pass 4: No path (Terminates)</text>
+
+    <!-- Graph Layout -->
+    <!-- 1 -> 2 (Active) -->
+    <line x1="65" y1="175" x2="195" y2="105" stroke="#a855f7" stroke-width="3" marker-end="url(#arrowPurple)"/>
+    <rect x="105" y="122" width="50" height="18" rx="4" fill="#581c87" stroke="#a855f7" stroke-width="1"/>
+    <text class="edge-label" x="130" y="131" fill="#f3e8ff">4 - 1 = 3</text>
+
+    <!-- 1 -> 3 (Saturated 0) -->
+    <line x1="65" y1="175" x2="195" y2="245" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <rect x="105" y="202" width="46" height="18" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text class="edge-label" x="128" y="211" fill="#64748b">0</text>
+
+    <!-- 2 -> 3 (Active) -->
+    <line x1="195" y1="105" x2="195" y2="245" stroke="#a855f7" stroke-width="3" marker-end="url(#arrowPurple)"/>
+    <rect x="172" y="166" width="50" height="18" rx="4" fill="#581c87" stroke="#a855f7" stroke-width="1"/>
+    <text class="edge-label" x="197" y="175" fill="#f3e8ff">4 - 1 = 3</text>
+
+    <!-- 2 -> 4 (Saturated 0) -->
+    <line x1="195" y1="105" x2="325" y2="175" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <rect x="245" y="122" width="46" height="18" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text class="edge-label" x="268" y="131" fill="#64748b">0</text>
+
+    <!-- 3 -> 4 (Active - Saturated!) -->
+    <line x1="195" y1="245" x2="325" y2="175" stroke="#a855f7" stroke-width="3" marker-end="url(#arrowPurple)"/>
+    <rect x="245" y="202" width="50" height="18" rx="4" fill="#581c87" stroke="#a855f7" stroke-width="1"/>
+    <text class="edge-label" x="270" y="211" fill="#f3e8ff">1 - 1 = 0</text>
+
+    <!-- Nodes -->
+    <circle cx="65" cy="175" r="18" fill="url(#srcGrad)" stroke="#34d399" stroke-width="2"/>
+    <text class="node-text" x="65" y="175">1</text>
+
+    <circle cx="195" cy="105" r="18" fill="url(#nodeGrad)" stroke="#818cf8" stroke-width="2"/>
+    <text class="node-text" x="195" y="105">2</text>
+
+    <circle cx="195" cy="245" r="18" fill="url(#nodeGrad)" stroke="#818cf8" stroke-width="2"/>
+    <text class="node-text" x="195" y="245">3</text>
+
+    <circle cx="325" cy="175" r="18" fill="url(#sinkGrad)" stroke="#fb7185" stroke-width="2"/>
+    <text class="node-text" x="325" y="175">4</text>
+
+    <!-- Info side box -->
+    <rect x="375" y="70" width="105" height="235" rx="6" fill="#0f172a" stroke="#059669"/>
+    <text class="flow-box" x="385" y="92" font-weight="700" fill="#10b981">Final Result:</text>
+    <text class="flow-box" x="385" y="112">Path 1: 6</text>
+    <text class="flow-box" x="385" y="128">Path 2: 8</text>
+    <text class="flow-box" x="385" y="144">Path 3: 1</text>
+    <text class="flow-box" x="385" y="170" font-weight="700" fill="#34d399" font-size="12px">Max Flow = 15</text>
+    <text class="flow-box" x="385" y="196" font-weight="700" fill="#f87171">Pass 4 (BFS):</text>
+    <text class="flow-box" x="385" y="214" fill="#fca5a5">• Sink 4 unreachable</text>
+    <text class="flow-box" x="385" y="230" fill="#fca5a5">• Returns false</text>
+    <text class="flow-box" x="385" y="250" font-weight="700" fill="#38bdf8">Algorithm Stops</text>
+  </g>
+
+</svg>

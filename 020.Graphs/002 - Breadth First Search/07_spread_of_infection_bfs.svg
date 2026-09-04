@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 520" width="980" height="520">
+  <defs>
+    <linearGradient id="bgGradInf" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+
+    <linearGradient id="cardGradInf" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <linearGradient id="t1Node" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+
+    <linearGradient id="t2Node" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <linearGradient id="t3Node" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+
+    <linearGradient id="uninfNode" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+
+    <filter id="shInf" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="520" rx="16" fill="url(#bgGradInf)" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="490" y="38" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#f8fafc" text-anchor="middle">
+    Spread of Infection: BFS Time-Bound Wave Propagation
+  </text>
+  <text x="490" y="60" font-family="system-ui, sans-serif" font-size="13" font-weight="400" fill="#94a3b8" text-anchor="middle">
+    Count number of infected people within time threshold t (e.g. Source = 6, Time Limit t = 3)
+  </text>
+
+  <!-- Left: Infection Wavefront Network Diagram -->
+  <g transform="translate(35, 85)" filter="url(#shInf)">
+    <rect width="430" height="400" rx="12" fill="url(#cardGradInf)" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#f87171">
+      Social Network &amp; Infection Progression
+    </text>
+
+    <!-- Graph Edges -->
+    <line x1="80" y1="130" x2="180" y2="130" stroke="#64748b" stroke-width="2"/>
+    <line x1="180" y1="130" x2="280" y2="130" stroke="#64748b" stroke-width="2"/>
+    <line x1="80" y1="130" x2="80" y2="250" stroke="#64748b" stroke-width="2"/>
+    <line x1="80" y1="250" x2="180" y2="250" stroke="#64748b" stroke-width="2"/>
+    <line x1="180" y1="250" x2="280" y2="130" stroke="#64748b" stroke-width="2"/>
+    <line x1="280" y1="130" x2="350" y2="190" stroke="#64748b" stroke-width="2"/>
+    <line x1="350" y1="190" x2="350" y2="300" stroke="#64748b" stroke-width="2"/>
+    <line x1="180" y1="250" x2="280" y2="300" stroke="#64748b" stroke-width="2"/>
+
+    <!-- Nodes with Timestamps -->
+    <!-- Node 6 (Source, t=1) -->
+    <circle cx="350" cy="300" r="22" fill="url(#t1Node)" stroke="#fca5a5" stroke-width="3"/>
+    <text x="350" y="305" font-family="system-ui" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">6 (SRC)</text>
+    <text x="350" y="335" font-family="monospace" font-size="10" font-weight="700" fill="#f87171" text-anchor="middle">Time t=1</text>
+
+    <!-- Node 4 (t=2) -->
+    <circle cx="280" cy="300" r="18" fill="url(#t2Node)" stroke="#fde68a" stroke-width="2"/>
+    <text x="280" y="305" font-family="system-ui" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+    <text x="280" y="330" font-family="monospace" font-size="10" fill="#fbbf24" text-anchor="middle">t=2</text>
+
+    <!-- Node 5 (t=2) -->
+    <circle cx="350" cy="190" r="18" fill="url(#t2Node)" stroke="#fde68a" stroke-width="2"/>
+    <text x="350" y="195" font-family="system-ui" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+    <text x="390" y="195" font-family="monospace" font-size="10" fill="#fbbf24">t=2</text>
+
+    <!-- Node 3 (t=3) -->
+    <circle cx="180" cy="250" r="18" fill="url(#t3Node)" stroke="#93c5fd" stroke-width="2"/>
+    <text x="180" y="255" font-family="system-ui" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+    <text x="180" y="280" font-family="monospace" font-size="10" fill="#93c5fd" text-anchor="middle">t=3</text>
+
+    <!-- Node 2 (t=3) -->
+    <circle cx="280" cy="130" r="18" fill="url(#t3Node)" stroke="#93c5fd" stroke-width="2"/>
+    <text x="280" y="135" font-family="system-ui" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+    <text x="280" y="105" font-family="monospace" font-size="10" fill="#93c5fd" text-anchor="middle">t=3</text>
+
+    <!-- Node 0 (Uninfected, t=4 > 3) -->
+    <circle cx="80" cy="130" r="18" fill="url(#uninfNode)" stroke="#64748b" stroke-width="2"/>
+    <text x="80" y="135" font-family="system-ui" font-size="12" font-weight="700" fill="#94a3b8" text-anchor="middle">0</text>
+    <text x="80" y="105" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">t=4 (&gt;3)</text>
+
+    <!-- Node 1 (Uninfected, t=4 > 3) -->
+    <circle cx="180" cy="130" r="18" fill="url(#uninfNode)" stroke="#64748b" stroke-width="2"/>
+    <text x="180" y="135" font-family="system-ui" font-size="12" font-weight="700" fill="#94a3b8" text-anchor="middle">1</text>
+    <text x="180" y="105" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">t=4 (&gt;3)</text>
+
+    <!-- Legend -->
+    <rect x="20" y="350" width="390" height="35" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="215" y="372" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1" text-anchor="middle">
+      <tspan fill="#ef4444">■ t=1</tspan>   <tspan fill="#f59e0b">■ t=2</tspan>   <tspan fill="#3b82f6">■ t=3 (Within limit)</tspan>   <tspan fill="#64748b">■ t &gt; 3 (Safe)</tspan>
+    </text>
+  </g>
+
+  <!-- Right: Queue Execution Log & Count -->
+  <g transform="translate(495, 85)" filter="url(#shInf)">
+    <rect width="450" height="400" rx="12" fill="url(#cardGradInf)" stroke="#38bdf8" stroke-width="1.5"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#38bdf8">
+      Queue Trace &amp; Infection Counter
+    </text>
+
+    <!-- Table Header -->
+    <rect x="15" y="45" width="420" height="26" rx="4" fill="#0c4a6e"/>
+    <text x="25" y="62" font-family="monospace" font-size="10" font-weight="700" fill="#e0f2fe">Pop</text>
+    <text x="75" y="62" font-family="monospace" font-size="10" font-weight="700" fill="#e0f2fe">Time (t)</text>
+    <text x="140" y="62" font-family="monospace" font-size="10" font-weight="700" fill="#e0f2fe">Action / Enqueue</text>
+    <text x="330" y="62" font-family="monospace" font-size="10" font-weight="700" fill="#e0f2fe">Infected Count</text>
+
+    <!-- Rows -->
+    <rect x="15" y="75" width="420" height="32" rx="3" fill="#1e293b" fill-opacity="0.6"/>
+    <text x="25" y="95" font-family="monospace" font-size="10" fill="#f87171">6</text>
+    <text x="75" y="95" font-family="monospace" font-size="10" fill="#f87171">t = 1</text>
+    <text x="140" y="95" font-family="monospace" font-size="10" fill="#cbd5e1">Push (4, t=2), (5, t=2)</text>
+    <text x="330" y="95" font-family="monospace" font-size="10" font-weight="700" fill="#34d399">count = 1</text>
+
+    <rect x="15" y="110" width="420" height="32" rx="3" fill="#1e293b" fill-opacity="0.3"/>
+    <text x="25" y="130" font-family="monospace" font-size="10" fill="#fbbf24">4</text>
+    <text x="75" y="130" font-family="monospace" font-size="10" fill="#fbbf24">t = 2</text>
+    <text x="140" y="130" font-family="monospace" font-size="10" fill="#cbd5e1">Push (3, t=3)</text>
+    <text x="330" y="130" font-family="monospace" font-size="10" font-weight="700" fill="#34d399">count = 2</text>
+
+    <rect x="15" y="145" width="420" height="32" rx="3" fill="#1e293b" fill-opacity="0.6"/>
+    <text x="25" y="165" font-family="monospace" font-size="10" fill="#fbbf24">5</text>
+    <text x="75" y="165" font-family="monospace" font-size="10" fill="#fbbf24">t = 2</text>
+    <text x="140" y="165" font-family="monospace" font-size="10" fill="#cbd5e1">Push (2, t=3)</text>
+    <text x="330" y="165" font-family="monospace" font-size="10" font-weight="700" fill="#34d399">count = 3</text>
+
+    <rect x="15" y="180" width="420" height="32" rx="3" fill="#1e293b" fill-opacity="0.3"/>
+    <text x="25" y="200" font-family="monospace" font-size="10" fill="#93c5fd">3</text>
+    <text x="75" y="200" font-family="monospace" font-size="10" fill="#93c5fd">t = 3</text>
+    <text x="140" y="200" font-family="monospace" font-size="10" fill="#cbd5e1">Push (0, t=4), (1, t=4)</text>
+    <text x="330" y="200" font-family="monospace" font-size="10" font-weight="700" fill="#34d399">count = 4</text>
+
+    <rect x="15" y="215" width="420" height="32" rx="3" fill="#1e293b" fill-opacity="0.6"/>
+    <text x="25" y="235" font-family="monospace" font-size="10" fill="#93c5fd">2</text>
+    <text x="75" y="235" font-family="monospace" font-size="10" fill="#93c5fd">t = 3</text>
+    <text x="140" y="235" font-family="monospace" font-size="10" fill="#cbd5e1">All neighbors visited</text>
+    <text x="330" y="235" font-family="monospace" font-size="10" font-weight="700" fill="#34d399">count = 5</text>
+
+    <!-- Threshold Reached (t > 3) -->
+    <rect x="15" y="250" width="420" height="35" rx="4" fill="#450a0a" stroke="#ef4444" stroke-width="1"/>
+    <text x="25" y="272" font-family="monospace" font-size="10" fill="#fca5a5">0</text>
+    <text x="75" y="272" font-family="monospace" font-size="10" font-weight="700" fill="#f87171">t = 4 &gt; 3</text>
+    <text x="140" y="272" font-family="monospace" font-size="10" font-weight="700" fill="#fca5a5">STOP! Exceeds time threshold t</text>
+    <text x="330" y="272" font-family="monospace" font-size="10" font-weight="700" fill="#94a3b8">Final = 5</text>
+
+    <!-- Result Banner -->
+    <rect x="15" y="300" width="420" height="50" rx="6" fill="#064e3b" stroke="#059669" stroke-width="1.5"/>
+    <text x="225" y="323" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#6ee7b7" text-anchor="middle">
+      Total Infected People within t = 3: 5 people {6, 4, 5, 3, 2}
+    </text>
+    <text x="225" y="341" font-family="system-ui, sans-serif" font-size="11" fill="#a7f3d0" text-anchor="middle">
+      Time Complexity: O(V + E)  |  Space Complexity: O(V)
+    </text>
+  </g>
+</svg>

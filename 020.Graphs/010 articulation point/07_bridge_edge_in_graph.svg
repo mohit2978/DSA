@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 520" width="980" height="520">
+  <defs>
+    <linearGradient id="bgGrad7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad7" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <linearGradient id="blueNode7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+
+    <linearGradient id="amberNode7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <linearGradient id="redNode7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+
+    <filter id="sh7" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="520" rx="16" fill="url(#bgGrad7)" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="490" y="38" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#f8fafc" text-anchor="middle">
+    GFG: Bridge Edge in a Graph — Testing Specific Edge (c, d)
+  </text>
+  <text x="490" y="60" font-family="system-ui, sans-serif" font-size="13" font-weight="400" fill="#94a3b8" text-anchor="middle">
+    Determines if removing the given target edge (c, d) increases connected components
+  </text>
+
+  <!-- Left Card: Approach 1 - Tarjan DFS -->
+  <g transform="translate(35, 85)" filter="url(#sh7)">
+    <rect width="430" height="400" rx="12" fill="url(#cardGrad7)" stroke="#38bdf8" stroke-width="1.5"/>
+    
+    <rect x="0" y="0" width="430" height="42" rx="12" fill="#38bdf8" fill-opacity="0.15"/>
+    <text x="20" y="27" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#38bdf8">
+      APPROACH 1: Tarjan's Single DFS
+    </text>
+
+    <!-- Formula badge -->
+    <rect x="20" y="55" width="390" height="32" rx="6" fill="#0c4a6e" stroke="#0284c7" stroke-width="1"/>
+    <text x="215" y="76" font-family="system-ui, sans-serif" font-size="12.5" font-weight="700" fill="#bae6fd" text-anchor="middle">
+      Target (c, d) is a Bridge &lt;==&gt; low[d] &gt; disc[c]
+    </text>
+
+    <!-- Diagram -->
+    <line x1="140" y1="170" x2="290" y2="170" stroke="#ef4444" stroke-width="4" stroke-dasharray="6,4"/>
+    <text x="215" y="155" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#f87171" text-anchor="middle">Target Edge (c, d)</text>
+
+    <!-- Node c -->
+    <circle cx="140" cy="170" r="24" fill="url(#blueNode7)" stroke="#60a5fa" stroke-width="2"/>
+    <text x="140" y="176" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">c</text>
+    <text x="140" y="215" font-family="system-ui, sans-serif" font-size="11" fill="#93c5fd" text-anchor="middle">disc[c] = 1</text>
+
+    <!-- Node d -->
+    <circle cx="290" cy="170" r="24" fill="url(#amberNode7)" stroke="#fde68a" stroke-width="2"/>
+    <text x="290" y="176" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">d</text>
+    <text x="290" y="215" font-family="system-ui, sans-serif" font-size="11" fill="#fde68a" text-anchor="middle">low[d] = 2 &gt; 1</text>
+
+    <!-- Subtree blobs -->
+    <path d="M 290 194 Q 370 240 330 300 Q 250 310 290 194" fill="#3b0764" fill-opacity="0.3" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="315" y="265" font-family="system-ui, sans-serif" font-size="11" fill="#d8b4fe" text-anchor="middle">Subtree(d)</text>
+
+    <!-- Explanation Box -->
+    <rect x="20" y="325" width="390" height="60" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="215" y="347" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1" text-anchor="middle">
+      During DFS, when edge (c, d) is evaluated:
+    </text>
+    <text x="215" y="367" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#38bdf8" text-anchor="middle">
+      If low[d] &gt; disc[c], return 1 (Bridge), else return 0.
+    </text>
+  </g>
+
+  <!-- Right Card: Approach 2 - Edge Removal & Reachability -->
+  <g transform="translate(505, 85)" filter="url(#sh7)">
+    <rect width="440" height="400" rx="12" fill="url(#cardGrad7)" stroke="#10b981" stroke-width="1.5"/>
+    
+    <rect x="0" y="0" width="440" height="42" rx="12" fill="#10b981" fill-opacity="0.15"/>
+    <text x="20" y="27" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#34d399">
+      APPROACH 2: Bypass Reachability (DFS / BFS)
+    </text>
+
+    <!-- Formula badge -->
+    <rect x="20" y="55" width="400" height="32" rx="6" fill="#064e3b" stroke="#059669" stroke-width="1"/>
+    <text x="220" y="76" font-family="system-ui, sans-serif" font-size="12.5" font-weight="700" fill="#6ee7b7" text-anchor="middle">
+      Ignore edge (c, d). If DFS(c) cannot reach d ==&gt; IS A BRIDGE
+    </text>
+
+    <!-- Diagram -->
+    <!-- Node c -->
+    <circle cx="120" cy="170" r="24" fill="url(#blueNode7)" stroke="#60a5fa" stroke-width="2"/>
+    <text x="120" y="176" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">c</text>
+
+    <!-- Crossed out Edge (c, d) -->
+    <line x1="144" y1="170" x2="286" y2="170" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,4"/>
+    <text x="215" y="160" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ef4444" text-anchor="middle">✕ (Ignored)</text>
+
+    <!-- Node d -->
+    <circle cx="310" cy="170" r="24" fill="url(#amberNode7)" stroke="#fde68a" stroke-width="2"/>
+    <text x="310" y="176" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">d</text>
+
+    <!-- Search wave from c -->
+    <path d="M 120 135 A 40 40 0 0 1 120 205" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="3,3"/>
+    <text x="70" y="175" font-family="system-ui, sans-serif" font-size="11" fill="#38bdf8" text-anchor="middle">DFS from c</text>
+
+    <!-- Disconnected indicator -->
+    <rect x="155" y="225" width="130" height="26" rx="4" fill="#450a0a" stroke="#ef4444" stroke-width="1"/>
+    <text x="220" y="242" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fca5a5" text-anchor="middle">d UNREACHABLE</text>
+
+    <!-- Explanation Box -->
+    <rect x="20" y="325" width="400" height="60" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="220" y="347" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1" text-anchor="middle">
+      If a bypass exists, DFS(c) will eventually reach d (returns 0).
+    </text>
+    <text x="220" y="367" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#34d399" text-anchor="middle">
+      If visited[d] == false after DFS(c), return 1 (Bridge)!
+    </text>
+  </g>
+</svg>

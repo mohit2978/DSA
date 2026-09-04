@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="960" height="520">
+  <defs>
+    <linearGradient id="bgGrad6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad6" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <linearGradient id="correctGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+
+    <linearGradient id="wrongGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+
+    <filter id="sh6" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="520" rx="16" fill="url(#bgGrad6)" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="480" y="38" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#f8fafc" text-anchor="middle">
+    The "Time Portal" Analogy: Why min(low[u], disc[v]) for Back-Edges?
+  </text>
+  <text x="480" y="60" font-family="system-ui, sans-serif" font-size="13" font-weight="400" fill="#94a3b8" text-anchor="middle">
+    Back-Edge = Fixed Time Portal to Grandfather (disc[v]) vs. Tree-Edge = Apprentice's Scouting Report (low[v])
+  </text>
+
+  <!-- Left: Correct Behavior -->
+  <g transform="translate(40, 85)" filter="url(#sh6)">
+    <rect width="420" height="400" rx="12" fill="url(#cardGrad6)" stroke="#10b981" stroke-width="1.5"/>
+    
+    <rect x="0" y="0" width="420" height="40" rx="12" fill="#10b981" fill-opacity="0.15"/>
+    <text x="20" y="26" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#34d399">
+      CORRECT: low[u] = min(low[u], disc[v])
+    </text>
+
+    <!-- Diagram elements -->
+    <!-- Ancestor Great-Grandfather (1900) -->
+    <circle cx="210" cy="85" r="18" fill="#334155" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="210" y="90" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="middle">1900</text>
+    <text x="250" y="90" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Great-Grandpa</text>
+
+    <!-- Edge to Grandpa -->
+    <line x1="210" y1="103" x2="210" y2="155" stroke="#64748b" stroke-width="2"/>
+
+    <!-- Grandfather (1950) -->
+    <circle cx="210" cy="170" r="22" fill="#3b82f6" stroke="#60a5fa" stroke-width="2"/>
+    <text x="210" y="175" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">1950 (v)</text>
+    <text x="260" y="175" font-family="system-ui, sans-serif" font-size="11" fill="#93c5fd">Grandpa (AP)</text>
+
+    <!-- Tree edges down to u -->
+    <line x1="210" y1="192" x2="210" y2="245" stroke="#38bdf8" stroke-width="2"/>
+
+    <!-- Traveler u (2025) -->
+    <circle cx="210" cy="265" r="22" fill="#10b981" stroke="#34d399" stroke-width="2"/>
+    <text x="210" y="270" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">2025 (u)</text>
+    <text x="260" y="270" font-family="system-ui, sans-serif" font-size="11" fill="#6ee7b7">You (Traveler)</text>
+
+    <!-- Back Edge directly to Grandpa (1950) -->
+    <path d="M 190 260 Q 130 215 190 175" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="5,3"/>
+    <text x="100" y="220" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#fbbf24">Portal to 1950</text>
+
+    <!-- Logic Box -->
+    <rect x="20" y="315" width="380" height="68" rx="6" fill="#064e3b" stroke="#059669" stroke-width="1"/>
+    <text x="210" y="335" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#6ee7b7" text-anchor="middle">
+      TRUTH: You can ONLY reach Grandpa (1950).
+    </text>
+    <text x="210" y="355" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1" text-anchor="middle">
+      low[u] = min(low[u], disc[1950]) = 1950.
+    </text>
+    <text x="210" y="372" font-family="system-ui, sans-serif" font-size="10.5" fill="#fde68a" text-anchor="middle">
+      If Grandpa (1950) dies, your portal is destroyed!
+    </text>
+  </g>
+
+  <!-- Right: Fatal Error Case -->
+  <g transform="translate(500, 85)" filter="url(#sh6)">
+    <rect width="420" height="400" rx="12" fill="url(#cardGrad6)" stroke="#ef4444" stroke-width="1.5"/>
+    
+    <rect x="0" y="0" width="420" height="40" rx="12" fill="#ef4444" fill-opacity="0.15"/>
+    <text x="20" y="26" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#f87171">
+      FATAL BUG: low[u] = min(low[u], low[v])
+    </text>
+
+    <!-- Diagram elements -->
+    <!-- Ancestor Great-Grandfather (1900) -->
+    <circle cx="210" cy="85" r="18" fill="#334155" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="210" y="90" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="middle">1900</text>
+    <text x="250" y="90" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Great-Grandpa</text>
+
+    <!-- Edge to Grandpa -->
+    <line x1="210" y1="103" x2="210" y2="155" stroke="#64748b" stroke-width="2"/>
+
+    <!-- Grandfather (1950) -->
+    <circle cx="210" cy="170" r="22" fill="#ef4444" stroke="#fca5a5" stroke-width="2"/>
+    <text x="210" y="175" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">1950 (v)</text>
+    <text x="260" y="175" font-family="system-ui, sans-serif" font-size="11" fill="#fca5a5">Grandpa (low=1900)</text>
+
+    <!-- Tree edges down to u -->
+    <line x1="210" y1="192" x2="210" y2="245" stroke="#38bdf8" stroke-width="2"/>
+
+    <!-- Traveler u (2025) -->
+    <circle cx="210" cy="265" r="22" fill="#475569" stroke="#94a3b8" stroke-width="2"/>
+    <text x="210" y="270" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">2025 (u)</text>
+    <text x="260" y="270" font-family="system-ui, sans-serif" font-size="11" fill="#fca5a5">low[u] becomes 1900?!</text>
+
+    <!-- False bypass path -->
+    <path d="M 190 260 Q 90 170 190 90" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="5,3"/>
+    <text x="80" y="180" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#ef4444">FALSE BYPASS</text>
+
+    <!-- Logic Box -->
+    <rect x="20" y="315" width="380" height="68" rx="6" fill="#450a0a" stroke="#dc2626" stroke-width="1"/>
+    <text x="210" y="335" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fca5a5" text-anchor="middle">
+      FATAL LIE: Claiming you can jump directly to 1900.
+    </text>
+    <text x="210" y="355" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1" text-anchor="middle">
+      low[2025] falsely becomes 1900 (&lt; disc[1950]).
+    </text>
+    <text x="210" y="372" font-family="system-ui, sans-serif" font-size="10.5" fill="#f87171" text-anchor="middle">
+      Algorithm FAILS to detect Grandpa as an Articulation Point!
+    </text>
+  </g>
+</svg>

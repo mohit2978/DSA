@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGradQ7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+
+    <linearGradient id="cardGradQ7" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <linearGradient id="nodeRoomUnlocked" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+
+    <linearGradient id="nodeRoomLocked" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+
+    <linearGradient id="nodeRoomStart" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+
+    <marker id="arrCyanQ7" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+
+    <marker id="arrEmeraldQ7" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399" />
+    </marker>
+
+    <filter id="shQ7" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="520" rx="16" fill="url(#bgGradQ7)" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="480" y="36" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#f8fafc" text-anchor="middle">
+    LeetCode 841: Keys and Rooms (DFS / BFS Reachability)
+  </text>
+  <text x="480" y="58" font-family="system-ui, sans-serif" font-size="13" font-weight="400" fill="#94a3b8" text-anchor="middle">
+    Modeling Rooms as Vertices and Keys as Directed Edges
+  </text>
+
+  <!-- Card 1: Example 1 (All Rooms Reachable -> True) -->
+  <g transform="translate(35, 80)" filter="url(#shQ7)">
+    <rect width="430" height="300" rx="12" fill="url(#cardGradQ7)" stroke="#10b981" stroke-width="1.5"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#34d399">
+      Example 1: rooms = [[1], [2], [3], []]
+    </text>
+    <text x="20" y="48" font-family="system-ui, sans-serif" font-size="11.5" fill="#94a3b8">
+      Chain of keys: 0 unlocks 1 → 1 unlocks 2 → 2 unlocks 3
+    </text>
+
+    <!-- Graph Diagram -->
+    <g transform="translate(25, 75)">
+      <!-- Edges -->
+      <line x1="30" y1="40" x2="115" y2="40" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrEmeraldQ7)"/>
+      <text x="72" y="30" font-family="sans-serif" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">Key 1</text>
+
+      <line x1="125" y1="40" x2="210" y2="40" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrEmeraldQ7)"/>
+      <text x="167" y="30" font-family="sans-serif" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">Key 2</text>
+
+      <line x1="220" y1="40" x2="305" y2="40" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrEmeraldQ7)"/>
+      <text x="262" y="30" font-family="sans-serif" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">Key 3</text>
+
+      <!-- Nodes -->
+      <circle cx="25" cy="40" r="17" fill="url(#nodeRoomStart)"/>
+      <text x="25" y="44" font-family="sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">0</text>
+      <text x="25" y="70" font-family="sans-serif" font-size="9.5" fill="#60a5fa" text-anchor="middle">Start</text>
+
+      <circle cx="120" cy="40" r="17" fill="url(#nodeRoomUnlocked)"/>
+      <text x="120" y="44" font-family="sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+      <text x="120" y="70" font-family="sans-serif" font-size="9.5" fill="#34d399" text-anchor="middle">Visited</text>
+
+      <circle cx="215" cy="40" r="17" fill="url(#nodeRoomUnlocked)"/>
+      <text x="215" y="44" font-family="sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+      <text x="215" y="70" font-family="sans-serif" font-size="9.5" fill="#34d399" text-anchor="middle">Visited</text>
+
+      <circle cx="310" cy="40" r="17" fill="url(#nodeRoomUnlocked)"/>
+      <text x="310" y="44" font-family="sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+      <text x="310" y="70" font-family="sans-serif" font-size="9.5" fill="#34d399" text-anchor="middle">Visited</text>
+    </g>
+
+    <!-- Visited Array Table -->
+    <rect x="20" y="170" width="390" height="70" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="35" y="192" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#94a3b8">Final `vis` Array:</text>
+    <g transform="translate(145, 178)">
+      <rect x="0" y="0" width="55" height="22" rx="4" fill="#065f46" stroke="#10b981"/>
+      <text x="27" y="15" font-family="Consolas" font-size="10" font-weight="700" fill="#a7f3d0" text-anchor="middle">vis[0]=T</text>
+
+      <rect x="60" y="0" width="55" height="22" rx="4" fill="#065f46" stroke="#10b981"/>
+      <text x="87" y="15" font-family="Consolas" font-size="10" font-weight="700" fill="#a7f3d0" text-anchor="middle">vis[1]=T</text>
+
+      <rect x="120" y="0" width="55" height="22" rx="4" fill="#065f46" stroke="#10b981"/>
+      <text x="147" y="15" font-family="Consolas" font-size="10" font-weight="700" fill="#a7f3d0" text-anchor="middle">vis[2]=T</text>
+
+      <rect x="180" y="0" width="55" height="22" rx="4" fill="#065f46" stroke="#10b981"/>
+      <text x="207" y="15" font-family="Consolas" font-size="10" font-weight="700" fill="#a7f3d0" text-anchor="middle">vis[3]=T</text>
+    </g>
+    <text x="35" y="226" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#34d399">
+      All entries are true → Result: TRUE
+    </text>
+
+    <!-- Bottom Status -->
+    <rect x="20" y="250" width="390" height="36" rx="6" fill="#064e3b"/>
+    <text x="215" y="273" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#6ee7b7" text-anchor="middle">
+      ✓ All Rooms Visited Successfully
+    </text>
+  </g>
+
+  <!-- Card 2: Example 2 (Trapped Room 2 -> False) -->
+  <g transform="translate(495, 80)" filter="url(#shQ7)">
+    <rect width="430" height="300" rx="12" fill="url(#cardGradQ7)" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#f87171">
+      Example 2: rooms = [[1,3], [3,0,1], [2], [0]]
+    </text>
+    <text x="20" y="48" font-family="system-ui, sans-serif" font-size="11.5" fill="#94a3b8">
+      Room 2 contains key 2 (trapped inside itself). Unreachable from 0.
+    </text>
+
+    <!-- Graph Diagram -->
+    <g transform="translate(25, 75)">
+      <!-- Reachable Cycle: 0 <-> 1 <-> 3 -->
+      <line x1="30" y1="40" x2="115" y2="20" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrCyanQ7)"/>
+      <line x1="30" y1="40" x2="115" y2="60" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrCyanQ7)"/>
+      <line x1="125" y1="20" x2="125" y2="55" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrCyanQ7)"/>
+
+      <!-- Nodes -->
+      <circle cx="25" cy="40" r="17" fill="url(#nodeRoomStart)"/>
+      <text x="25" y="44" font-family="sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">0</text>
+      <text x="25" y="70" font-family="sans-serif" font-size="9.5" fill="#60a5fa" text-anchor="middle">Start</text>
+
+      <circle cx="125" cy="20" r="17" fill="url(#nodeRoomUnlocked)"/>
+      <text x="125" y="24" font-family="sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+
+      <circle cx="125" cy="60" r="17" fill="url(#nodeRoomUnlocked)"/>
+      <text x="125" y="64" font-family="sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+
+      <!-- Disconnected Node 2 (Self Loop) -->
+      <circle cx="280" cy="40" r="17" fill="url(#nodeRoomLocked)"/>
+      <text x="280" y="44" font-family="sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+      <text x="280" y="70" font-family="sans-serif" font-size="9.5" font-weight="700" fill="#ef4444" text-anchor="middle">LOCKED!</text>
+
+      <path d="M 295 30 A 12 12 0 1 1 295 50" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrCyanQ7)"/>
+      <text x="330" y="43" font-family="sans-serif" font-size="9.5" fill="#f87171">Key 2</text>
+    </g>
+
+    <!-- Visited Array Table -->
+    <rect x="20" y="170" width="390" height="70" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="35" y="192" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#94a3b8">Final `vis` Array:</text>
+    <g transform="translate(145, 178)">
+      <rect x="0" y="0" width="55" height="22" rx="4" fill="#065f46" stroke="#10b981"/>
+      <text x="27" y="15" font-family="Consolas" font-size="10" font-weight="700" fill="#a7f3d0" text-anchor="middle">vis[0]=T</text>
+
+      <rect x="60" y="0" width="55" height="22" rx="4" fill="#065f46" stroke="#10b981"/>
+      <text x="87" y="15" font-family="Consolas" font-size="10" font-weight="700" fill="#a7f3d0" text-anchor="middle">vis[1]=T</text>
+
+      <rect x="120" y="0" width="55" height="22" rx="4" fill="#7f1d1d" stroke="#ef4444"/>
+      <text x="147" y="15" font-family="Consolas" font-size="10" font-weight="700" fill="#fca5a5" text-anchor="middle">vis[2]=F</text>
+
+      <rect x="180" y="0" width="55" height="22" rx="4" fill="#065f46" stroke="#10b981"/>
+      <text x="207" y="15" font-family="Consolas" font-size="10" font-weight="700" fill="#a7f3d0" text-anchor="middle">vis[3]=T</text>
+    </g>
+    <text x="35" y="226" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#ef4444">
+      Room 2 has vis[2] = false → Result: FALSE
+    </text>
+
+    <!-- Bottom Status -->
+    <rect x="20" y="250" width="390" height="36" rx="6" fill="#7f1d1d"/>
+    <text x="215" y="273" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fca5a5" text-anchor="middle">
+      ✗ Room 2 Cannot Be Unlocked
+    </text>
+  </g>
+
+  <!-- Bottom Summary Banner -->
+  <g transform="translate(35, 400)">
+    <rect width="890" height="95" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+    <text x="25" y="28" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#38bdf8">Key Algorithmic Principles:</text>
+    <text x="25" y="48" font-family="system-ui, sans-serif" font-size="11.5" fill="#cbd5e1">1. Start DFS from Room 0 with a boolean visited array `vis[]` of size N.</text>
+    <text x="25" y="66" font-family="system-ui, sans-serif" font-size="11.5" fill="#cbd5e1">2. Traverse each distinct key in the current room: if destination is unvisited, recursively visit it.</text>
+    <text x="25" y="84" font-family="system-ui, sans-serif" font-size="11.5" fill="#cbd5e1">3. At the end, scan `vis[]`: if all rooms are marked true, return true; else return false.</text>
+    <text x="730" y="58" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#34d399">Time: O(V + E)</text>
+    <text x="730" y="76" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#38bdf8">Space: O(V)</text>
+  </g>
+</svg>

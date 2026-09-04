@@ -1,0 +1,307 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 760" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95" />
+    </linearGradient>
+
+    <!-- Node Gradients -->
+    <linearGradient id="srcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+
+    <linearGradient id="sinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f43f5e" />
+      <stop offset="100%" stop-color="#e11d48" />
+    </linearGradient>
+
+    <linearGradient id="nodeAGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+
+    <linearGradient id="nodeBGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+
+    <!-- Arrow Markers -->
+    <marker id="arrowGray" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b" />
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+    <marker id="arrowCyan" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#06b6d4" />
+    </marker>
+    <marker id="arrowEmerald" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+    </marker>
+    <marker id="arrowMagenta" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ec4899" />
+    </marker>
+    
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+    
+    <style>
+      .title { font-family: 'Segoe UI', Inter, sans-serif; font-weight: 800; font-size: 22px; fill: #f8fafc; }
+      .subtitle { font-family: 'Segoe UI', Inter, sans-serif; font-weight: 400; font-size: 13px; fill: #94a3b8; }
+      .card-title { font-family: 'Segoe UI', Inter, sans-serif; font-weight: 700; font-size: 14px; fill: #38bdf8; }
+      .card-sub { font-family: 'Segoe UI', Inter, sans-serif; font-weight: 500; font-size: 11px; fill: #cbd5e1; }
+      .node-text { font-family: 'Segoe UI', Inter, sans-serif; font-weight: 700; font-size: 14px; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
+      .edge-label { font-family: 'Segoe UI', Inter, sans-serif; font-weight: 700; font-size: 11px; text-anchor: middle; dominant-baseline: central; }
+      .edge-sub { font-family: 'Segoe UI', Inter, sans-serif; font-weight: 500; font-size: 9px; text-anchor: middle; }
+      .flow-box { font-family: 'Segoe UI', Inter, sans-serif; font-size: 11px; fill: #e2e8f0; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="760" fill="url(#bgGrad)" />
+
+  <!-- Main Title Banner -->
+  <g transform="translate(40, 25)">
+    <text class="title" x="500" y="20" text-anchor="middle">Ford-Fulkerson Dry Run: The Reverse Edge &quot;Undo&quot; Mechanism</text>
+    <text class="subtitle" x="500" y="42" text-anchor="middle">How traversing reverse edge (B → A) cancels sub-optimal flow on (A → B) to achieve Global Max Flow = 2</text>
+  </g>
+
+  <!-- GRID: 4 PANELS -->
+
+  <!-- ==================== PANEL 1: INITIAL STATE ==================== -->
+  <g transform="translate(30, 85)" filter="url(#shadow)">
+    <rect width="495" height="310" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.5"/>
+    <text class="card-title" x="20" y="28">Stage 0: Initial Flow Network</text>
+    <text class="card-sub" x="20" y="46">All capacities = 1 | Current Flow = 0/1 on all edges</text>
+    
+    <!-- Graph 1 Layout: S(70, 170), A(200, 100), B(200, 240), T(340, 170) -->
+    <!-- Edges -->
+    <!-- S -> A -->
+    <line x1="70" y1="170" x2="200" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="110" y="115" width="40" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="130" y="124" fill="#cbd5e1">0/1</text>
+
+    <!-- S -> B -->
+    <line x1="70" y1="170" x2="200" y2="240" stroke="#64748b" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="110" y="200" width="40" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="130" y="209" fill="#cbd5e1">0/1</text>
+
+    <!-- A -> B (Bridge) -->
+    <line x1="200" y1="100" x2="200" y2="240" stroke="#64748b" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="175" y="160" width="40" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="195" y="169" fill="#cbd5e1">0/1</text>
+
+    <!-- A -> T -->
+    <line x1="200" y1="100" x2="340" y2="170" stroke="#64748b" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="250" y="115" width="40" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="270" y="124" fill="#cbd5e1">0/1</text>
+
+    <!-- B -> T -->
+    <line x1="200" y1="240" x2="340" y2="170" stroke="#64748b" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="250" y="200" width="40" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="270" y="209" fill="#cbd5e1">0/1</text>
+
+    <!-- Nodes -->
+    <circle cx="70" cy="170" r="18" fill="url(#srcGrad)" stroke="#34d399" stroke-width="2"/>
+    <text class="node-text" x="70" y="170">S</text>
+
+    <circle cx="200" cy="100" r="18" fill="url(#nodeAGrad)" stroke="#818cf8" stroke-width="2"/>
+    <text class="node-text" x="200" y="100">A</text>
+
+    <circle cx="200" cy="240" r="18" fill="url(#nodeBGrad)" stroke="#a78bfa" stroke-width="2"/>
+    <text class="node-text" x="200" y="240">B</text>
+
+    <circle cx="340" cy="170" r="18" fill="url(#sinkGrad)" stroke="#fb7185" stroke-width="2"/>
+    <text class="node-text" x="340" y="170">T</text>
+
+    <!-- Info side box -->
+    <rect x="385" y="90" width="95" height="185" rx="6" fill="#0f172a" stroke="#1e293b"/>
+    <text class="flow-box" x="395" y="112" font-weight="700" fill="#38bdf8">State:</text>
+    <text class="flow-box" x="395" y="132">Total Flow: <tspan font-weight="700" fill="#f8fafc">0</tspan></text>
+    <text class="flow-box" x="395" y="160" font-weight="700" fill="#38bdf8">Potential Paths:</text>
+    <text class="flow-box" x="395" y="180">• S → A → T</text>
+    <text class="flow-box" x="395" y="198">• S → B → T</text>
+    <text class="flow-box" x="395" y="216">• S → A → B → T</text>
+    <text class="flow-box" x="395" y="248" fill="#94a3b8" font-size="10px">(Optimum = 2)</text>
+  </g>
+
+  <!-- ==================== PANEL 2: SUBOPTIMAL PATH 1 ==================== -->
+  <g transform="translate(555, 85)" filter="url(#shadow)">
+    <rect width="495" height="310" rx="12" fill="url(#cardGrad)" stroke="#f59e0b" stroke-width="1.5"/>
+    <text class="card-title" x="20" y="28" fill="#f59e0b">Stage 1: Greedily Pick Path 1 (S → A → B → T)</text>
+    <text class="card-sub" x="20" y="46">Bottleneck Δ = 1 | Flow across A → B becomes 1/1 (Saturated!)</text>
+
+    <!-- Graph 2 Layout -->
+    <!-- S -> A (Active Path) -->
+    <line x1="70" y1="170" x2="200" y2="100" stroke="#f59e0b" stroke-width="3.5" marker-end="url(#arrowAmber)"/>
+    <rect x="110" y="115" width="40" height="18" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="1"/>
+    <text class="edge-label" x="130" y="124" fill="#fef08a">1/1</text>
+
+    <!-- S -> B (Unused) -->
+    <line x1="70" y1="170" x2="200" y2="240" stroke="#475569" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="110" y="200" width="40" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="130" y="209" fill="#94a3b8">0/1</text>
+
+    <!-- A -> B (Active Bridge - Saturated!) -->
+    <line x1="200" y1="100" x2="200" y2="240" stroke="#f59e0b" stroke-width="3.5" marker-end="url(#arrowAmber)"/>
+    <rect x="175" y="160" width="40" height="18" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="1"/>
+    <text class="edge-label" x="195" y="169" fill="#fef08a">1/1</text>
+
+    <!-- A -> T (Unused) -->
+    <line x1="200" y1="100" x2="340" y2="170" stroke="#475569" stroke-width="2" marker-end="url(#arrowGray)"/>
+    <rect x="250" y="115" width="40" height="18" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text class="edge-label" x="270" y="124" fill="#94a3b8">0/1</text>
+
+    <!-- B -> T (Active Path) -->
+    <line x1="200" y1="240" x2="340" y2="170" stroke="#f59e0b" stroke-width="3.5" marker-end="url(#arrowAmber)"/>
+    <rect x="250" y="200" width="40" height="18" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="1"/>
+    <text class="edge-label" x="270" y="209" fill="#fef08a">1/1</text>
+
+    <!-- Nodes -->
+    <circle cx="70" cy="170" r="18" fill="url(#srcGrad)" stroke="#34d399" stroke-width="2"/>
+    <text class="node-text" x="70" y="170">S</text>
+
+    <circle cx="200" cy="100" r="18" fill="url(#nodeAGrad)" stroke="#818cf8" stroke-width="2"/>
+    <text class="node-text" x="200" y="100">A</text>
+
+    <circle cx="200" cy="240" r="18" fill="url(#nodeBGrad)" stroke="#a78bfa" stroke-width="2"/>
+    <text class="node-text" x="200" y="240">B</text>
+
+    <circle cx="340" cy="170" r="18" fill="url(#sinkGrad)" stroke="#fb7185" stroke-width="2"/>
+    <text class="node-text" x="340" y="170">T</text>
+
+    <!-- Info side box -->
+    <rect x="385" y="90" width="95" height="195" rx="6" fill="#0f172a" stroke="#78350f"/>
+    <text class="flow-box" x="395" y="112" font-weight="700" fill="#f59e0b">Residual Edges:</text>
+    <text class="flow-box" x="395" y="130" font-size="10px">rGraph[S][A] = 0</text>
+    <text class="flow-box" x="395" y="146" font-size="10px">rGraph[A][S] = 1</text>
+    <text class="flow-box" x="395" y="166" font-size="10px" fill="#ef4444">rGraph[A][B] = 0</text>
+    <text class="flow-box" x="395" y="182" font-size="10px" font-weight="700" fill="#38bdf8">rGraph[B][A] = 1</text>
+    <text class="flow-box" x="395" y="202" font-size="10px">rGraph[B][T] = 0</text>
+    <text class="flow-box" x="395" y="228" font-weight="700" fill="#f59e0b">Total Flow: 1</text>
+    <text class="flow-box" x="395" y="250" fill="#f87171" font-size="10px">Without reverse,</text>
+    <text class="flow-box" x="395" y="264" fill="#f87171" font-size="10px">we are stuck!</text>
+  </g>
+
+  <!-- ==================== PANEL 3: REVERSE EDGE UNDO ==================== -->
+  <g transform="translate(30, 420)" filter="url(#shadow)">
+    <rect width="495" height="310" rx="12" fill="url(#cardGrad)" stroke="#06b6d4" stroke-width="1.5"/>
+    <text class="card-title" x="20" y="28" fill="#06b6d4">Stage 2: Path 2 Uses Reverse Edge (S → B → A → T)</text>
+    <text class="card-sub" x="20" y="46">Residual Path with Δ = 1 pushes backwards on (B → A), cancelling flow on (A → B)!</text>
+
+    <!-- Graph 3 Layout -->
+    <!-- S -> A (Already pushed) -->
+    <line x1="70" y1="170" x2="200" y2="100" stroke="#64748b" stroke-width="2" stroke-dasharray="4,4"/>
+    <rect x="110" y="115" width="40" height="18" rx="4" fill="#0f172a" stroke="#64748b" stroke-width="1"/>
+    <text class="edge-label" x="130" y="124" fill="#cbd5e1">1/1</text>
+
+    <!-- S -> B (New Augmenting Edge) -->
+    <line x1="70" y1="170" x2="200" y2="240" stroke="#06b6d4" stroke-width="3.5" marker-end="url(#arrowCyan)"/>
+    <rect x="110" y="200" width="40" height="18" rx="4" fill="#164e63" stroke="#06b6d4" stroke-width="1"/>
+    <text class="edge-label" x="130" y="209" fill="#a5f3fc">+1</text>
+
+    <!-- B -> A (REVERSE EDGE AUGMENTATION - HIGHLIGHTED) -->
+    <!-- Curved dashed magenta/cyan reverse arrow -->
+    <path d="M 190 230 Q 155 170 190 110" fill="none" stroke="#ec4899" stroke-width="3.5" stroke-dasharray="6,4" marker-end="url(#arrowMagenta)"/>
+    <rect x="125" y="160" width="60" height="20" rx="4" fill="#831843" stroke="#ec4899" stroke-width="1.5"/>
+    <text class="edge-label" x="155" y="170" fill="#fbcfe8" font-size="10px">Undo: -1</text>
+
+    <!-- A -> T (New Augmenting Edge) -->
+    <line x1="200" y1="100" x2="340" y2="170" stroke="#06b6d4" stroke-width="3.5" marker-end="url(#arrowCyan)"/>
+    <rect x="250" y="115" width="40" height="18" rx="4" fill="#164e63" stroke="#06b6d4" stroke-width="1"/>
+    <text class="edge-label" x="270" y="124" fill="#a5f3fc">+1</text>
+
+    <!-- B -> T (Already pushed) -->
+    <line x1="200" y1="240" x2="340" y2="170" stroke="#64748b" stroke-width="2" stroke-dasharray="4,4"/>
+    <rect x="250" y="200" width="40" height="18" rx="4" fill="#0f172a" stroke="#64748b" stroke-width="1"/>
+    <text class="edge-label" x="270" y="209" fill="#cbd5e1">1/1</text>
+
+    <!-- Nodes -->
+    <circle cx="70" cy="170" r="18" fill="url(#srcGrad)" stroke="#34d399" stroke-width="2"/>
+    <text class="node-text" x="70" y="170">S</text>
+
+    <circle cx="200" cy="100" r="18" fill="url(#nodeAGrad)" stroke="#818cf8" stroke-width="2"/>
+    <text class="node-text" x="200" y="100">A</text>
+
+    <circle cx="200" cy="240" r="18" fill="url(#nodeBGrad)" stroke="#a78bfa" stroke-width="2"/>
+    <text class="node-text" x="200" y="240">B</text>
+
+    <circle cx="340" cy="170" r="18" fill="url(#sinkGrad)" stroke="#fb7185" stroke-width="2"/>
+    <text class="node-text" x="340" y="170">T</text>
+
+    <!-- Info side box -->
+    <rect x="385" y="90" width="95" height="195" rx="6" fill="#0f172a" stroke="#0891b2"/>
+    <text class="flow-box" x="395" y="112" font-weight="700" fill="#06b6d4">Flow Math:</text>
+    <text class="flow-box" x="395" y="132">Δ = 1</text>
+    <text class="flow-box" x="395" y="152" font-size="10px">rGraph[B][A] -= 1</text>
+    <text class="flow-box" x="395" y="168" font-size="10px" font-weight="700" fill="#f43f5e">Flow(A→B):</text>
+    <text class="flow-box" x="395" y="184" font-size="10px">1 - 1 = <tspan font-weight="700" fill="#4ade80">0</tspan></text>
+    <text class="flow-box" x="395" y="206" font-size="10px">Flow(S→B) = 1</text>
+    <text class="flow-box" x="395" y="222" font-size="10px">Flow(A→T) = 1</text>
+    <text class="flow-box" x="395" y="250" font-weight="700" fill="#06b6d4">Total Flow: 2</text>
+  </g>
+
+  <!-- ==================== PANEL 4: FINAL OPTIMAL FLOW ==================== -->
+  <g transform="translate(555, 420)" filter="url(#shadow)">
+    <rect width="495" height="310" rx="12" fill="url(#cardGrad)" stroke="#10b981" stroke-width="1.5"/>
+    <text class="card-title" x="20" y="28" fill="#10b981">Stage 3: Final Maximum Flow (Max Flow = 2)</text>
+    <text class="card-sub" x="20" y="46">Flow rerouted: Two disjoint paths (S → A → T) &amp; (S → B → T)</text>
+
+    <!-- Graph 4 Layout -->
+    <!-- S -> A (Flow = 1) -->
+    <line x1="70" y1="170" x2="200" y2="100" stroke="#10b981" stroke-width="3.5" marker-end="url(#arrowEmerald)"/>
+    <rect x="110" y="115" width="40" height="18" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+    <text class="edge-label" x="130" y="124" fill="#a7f3d0">1/1</text>
+
+    <!-- S -> B (Flow = 1) -->
+    <line x1="70" y1="170" x2="200" y2="240" stroke="#10b981" stroke-width="3.5" marker-end="url(#arrowEmerald)"/>
+    <rect x="110" y="200" width="40" height="18" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+    <text class="edge-label" x="130" y="209" fill="#a7f3d0">1/1</text>
+
+    <!-- A -> B (Flow = 0 - Cancelled!) -->
+    <line x1="200" y1="100" x2="200" y2="240" stroke="#334155" stroke-width="2" stroke-dasharray="4,4"/>
+    <rect x="175" y="160" width="40" height="18" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text class="edge-label" x="195" y="169" fill="#64748b">0/1</text>
+
+    <!-- A -> T (Flow = 1) -->
+    <line x1="200" y1="100" x2="340" y2="170" stroke="#10b981" stroke-width="3.5" marker-end="url(#arrowEmerald)"/>
+    <rect x="250" y="115" width="40" height="18" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+    <text class="edge-label" x="270" y="124" fill="#a7f3d0">1/1</text>
+
+    <!-- B -> T (Flow = 1) -->
+    <line x1="200" y1="240" x2="340" y2="170" stroke="#10b981" stroke-width="3.5" marker-end="url(#arrowEmerald)"/>
+    <rect x="250" y="200" width="40" height="18" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+    <text class="edge-label" x="270" y="209" fill="#a7f3d0">1/1</text>
+
+    <!-- Nodes -->
+    <circle cx="70" cy="170" r="18" fill="url(#srcGrad)" stroke="#34d399" stroke-width="2"/>
+    <text class="node-text" x="70" y="170">S</text>
+
+    <circle cx="200" cy="100" r="18" fill="url(#nodeAGrad)" stroke="#818cf8" stroke-width="2"/>
+    <text class="node-text" x="200" y="100">A</text>
+
+    <circle cx="200" cy="240" r="18" fill="url(#nodeBGrad)" stroke="#a78bfa" stroke-width="2"/>
+    <text class="node-text" x="200" y="240">B</text>
+
+    <circle cx="340" cy="170" r="18" fill="url(#sinkGrad)" stroke="#fb7185" stroke-width="2"/>
+    <text class="node-text" x="340" y="170">T</text>
+
+    <!-- Info side box -->
+    <rect x="385" y="90" width="95" height="195" rx="6" fill="#0f172a" stroke="#059669"/>
+    <text class="flow-box" x="395" y="112" font-weight="700" fill="#10b981">Optimal Result:</text>
+    <text class="flow-box" x="395" y="134" font-weight="700" fill="#34d399" font-size="13px">Max Flow = 2</text>
+    <text class="flow-box" x="395" y="162" font-weight="700" fill="#38bdf8">Final Paths:</text>
+    <text class="flow-box" x="395" y="182" fill="#a7f3d0">1. S → A → T</text>
+    <text class="flow-box" x="395" y="200" fill="#a7f3d0">2. S → B → T</text>
+    <text class="flow-box" x="395" y="230" fill="#94a3b8" font-size="10px">Middle pipe (A→B)</text>
+    <text class="flow-box" x="395" y="244" fill="#94a3b8" font-size="10px">is freed up!</text>
+  </g>
+
+</svg>
