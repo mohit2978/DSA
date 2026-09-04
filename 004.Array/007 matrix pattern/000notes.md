@@ -1,10 +1,27 @@
-# Notes
-
 ## Q1 Spiral Matrix
 
-![alt text](image.png)
+Given an `m x n` matrix, return all elements of the matrix in **clockwise spiral order**.
 
-![alt text](Scanned_20250819-0416.jpg)
+**Examples:**
+
+**Input:** `matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]`  
+**Output:** `[1, 2, 3, 6, 9, 8, 7, 4, 5]`  
+**Explanation:** The elements in the spiral order are 1, 2, 3 -> 6, 9 -> 8, 7 -> 4, 5
+
+**Input:** `matrix = [[1, 2, 3, 4], [5, 6, 7, 8]]`  
+**Output:** `[1, 2, 3, 4, 8, 7, 6, 5]`  
+**Explanation:** The elements in the spiral order are 1, 2, 3, 4 -> 8, 7, 6, 5
+
+**Input:** `matrix = [[1, 2], [3, 4], [5, 6], [7, 8]]`  
+**Output:** `[1, 2, 4, 6, 8, 7, 5, 3]`  
+
+**Constraints:**
+- `m == matrix.length`
+- `n == matrix[i].length`
+- `1 <= m, n <= 100`
+- `-100 <= matrix[i][j] <= 100`
+
+![Spiral Matrix Explanation](spiral_matrix_explanation.svg)
 
 ```cpp
 
@@ -49,9 +66,24 @@ public:
 ```
 ## Q2 Diagonal traversal
 
-![alt text](image-1.png)
+Given an `m x n` matrix `mat`, return *an array of all the elements of the array in a diagonal order*.
 
-![alt text](Scanned_20250826-0226.jpg)
+**Examples:**
+
+**Input:** `mat = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]`  
+**Output:** `[1, 2, 4, 7, 5, 3, 6, 8, 9]`  
+
+**Input:** `mat = [[1, 2], [3, 4]]`  
+**Output:** `[1, 2, 3, 4]`  
+
+**Constraints:**
+- `m == mat.length`
+- `n == mat[i].length`
+- `1 <= m, n <= 10^4`
+- `1 <= m * n <= 10^4`
+- `-10^5 <= mat[i][j] <= 10^5`
+
+![Diagonal Traverse Explanation](diagonal_traverse_explanation.svg)
 
 ```cpp
 
@@ -96,17 +128,25 @@ public:
 };
 
 ```
-## Q3 Roatate matrix by 90 degreee
+## Q3 Rotate matrix by 90 degree
 
-![img.png](img.png)
+Given an `n x n` 2D matrix representing an image, rotate the image by **90 degrees (clockwise)** in-place.
 
-Solution:
+**Examples:**
 
-![img_1.png](img_1.png)
+**Input:** `matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]`  
+**Output:** `[[7, 4, 1], [8, 5, 2], [9, 6, 3]]`  
 
-![img_2.png](img_2.png)
+**Constraints:**
+- `n == matrix.length == matrix[i].length`
+- `1 <= n <= 20`
+- `-1000 <= matrix[i][j] <= 1000`
 
-Reverse each row means if row is 1,2,3,4 we make it to 4,3,2,1
+### Solution:
+
+![Rotate Matrix Explanation](rotate_matrix_explanation.svg)
+
+Reverse each row means if row is `1, 2, 3, 4` we make it `4, 3, 2, 1`.
 
 ```cpp
 
@@ -129,12 +169,4 @@ public:
     }
 };
 
-
 ```
-
-
-
-
-
-
-

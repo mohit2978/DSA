@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 340" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 18px; font-weight: bold; fill: #f8fafc; }
+      .subtitle { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13px; fill: #94a3b8; }
+      .matrix-title { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; font-weight: bold; fill: #f1f5f9; text-anchor: middle; }
+      .cell-text { font-family: 'Segoe UI', monospace, sans-serif; font-size: 15px; font-weight: bold; fill: #f8fafc; text-anchor: middle; dominant-baseline: middle; }
+      .arrow-label { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13px; font-weight: bold; fill: #38bdf8; text-anchor: middle; }
+      .arrow-sub { font-family: 'Consolas', monospace; font-size: 11px; fill: #94a3b8; text-anchor: middle; }
+    </style>
+    
+    <marker id="arrow-trans" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrow-rev" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#4ade80" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#0f172a" rx="12" />
+  <rect x="2" y="2" width="876" height="336" fill="none" stroke="#1e293b" stroke-width="2" rx="10" />
+
+  <!-- Header -->
+  <text x="30" y="35" class="title">Rotate Matrix by 90° Clockwise: 2-Step In-Place Approach</text>
+  <text x="30" y="55" class="subtitle">Step 1: Transpose Matrix (swap arr[i][j] with arr[j][i]) ➔ Step 2: Reverse each row</text>
+
+  <!-- Matrix 1: Original Matrix (4x4) -->
+  <g transform="translate(30, 80)">
+    <text x="96" y="20" class="matrix-title">1. Original Matrix</text>
+    
+    <!-- 4x4 Grid -->
+    <g transform="translate(0, 35)">
+      <!-- Row 0: 1, 2, 3, 4 -->
+      <rect x="0" y="0" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="22.5" y="18" class="cell-text">1</text>
+      <rect x="48" y="0" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="70.5" y="18" class="cell-text">2</text>
+      <rect x="96" y="0" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="118.5" y="18" class="cell-text">3</text>
+      <rect x="144" y="0" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="166.5" y="18" class="cell-text">4</text>
+
+      <!-- Row 1: 5, 6, 7, 8 -->
+      <rect x="0" y="39" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="22.5" y="57" class="cell-text">5</text>
+      <rect x="48" y="39" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="70.5" y="57" class="cell-text">6</text>
+      <rect x="96" y="39" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="118.5" y="57" class="cell-text">7</text>
+      <rect x="144" y="39" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="166.5" y="57" class="cell-text">8</text>
+
+      <!-- Row 2: 9, 10, 11, 12 -->
+      <rect x="0" y="78" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="22.5" y="96" class="cell-text">9</text>
+      <rect x="48" y="78" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="70.5" y="96" class="cell-text">10</text>
+      <rect x="96" y="78" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="118.5" y="96" class="cell-text">11</text>
+      <rect x="144" y="78" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="166.5" y="96" class="cell-text">12</text>
+
+      <!-- Row 3: 13, 14, 15, 16 -->
+      <rect x="0" y="117" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="22.5" y="135" class="cell-text">13</text>
+      <rect x="48" y="117" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="70.5" y="135" class="cell-text">14</text>
+      <rect x="96" y="117" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="118.5" y="135" class="cell-text">15</text>
+      <rect x="144" y="117" width="45" height="36" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="166.5" y="135" class="cell-text">16</text>
+    </g>
+  </g>
+
+  <!-- Transition 1: Transpose -->
+  <g transform="translate(235, 150)">
+    <text x="50" y="-12" class="arrow-label">Step 1: Transpose</text>
+    <text x="50" y="5" class="arrow-sub">swap(arr[i][j], arr[j][i])</text>
+    <line x1="10" y1="20" x2="90" y2="20" stroke="#38bdf8" stroke-width="3" marker-end="url(#arrow-trans)" />
+  </g>
+
+  <!-- Matrix 2: Transposed Matrix -->
+  <g transform="translate(345, 80)">
+    <text x="96" y="20" class="matrix-title" fill="#38bdf8">2. Transposed Matrix</text>
+    
+    <!-- 4x4 Grid -->
+    <g transform="translate(0, 35)">
+      <!-- Row 0: 1, 5, 9, 13 -->
+      <rect x="0" y="0" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="22.5" y="18" class="cell-text">1</text>
+      <rect x="48" y="0" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="70.5" y="18" class="cell-text">5</text>
+      <rect x="96" y="0" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="118.5" y="18" class="cell-text">9</text>
+      <rect x="144" y="0" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="166.5" y="18" class="cell-text">13</text>
+
+      <!-- Row 1: 2, 6, 10, 14 -->
+      <rect x="0" y="39" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="22.5" y="57" class="cell-text">2</text>
+      <rect x="48" y="39" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="70.5" y="57" class="cell-text">6</text>
+      <rect x="96" y="39" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="118.5" y="57" class="cell-text">10</text>
+      <rect x="144" y="39" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="166.5" y="57" class="cell-text">14</text>
+
+      <!-- Row 2: 3, 7, 11, 15 -->
+      <rect x="0" y="78" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="22.5" y="96" class="cell-text">3</text>
+      <rect x="48" y="78" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="70.5" y="96" class="cell-text">7</text>
+      <rect x="96" y="78" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="118.5" y="96" class="cell-text">11</text>
+      <rect x="144" y="78" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="166.5" y="96" class="cell-text">15</text>
+
+      <!-- Row 3: 4, 8, 12, 16 -->
+      <rect x="0" y="117" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="22.5" y="135" class="cell-text">4</text>
+      <rect x="48" y="117" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="70.5" y="135" class="cell-text">8</text>
+      <rect x="96" y="117" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="118.5" y="135" class="cell-text">12</text>
+      <rect x="144" y="117" width="45" height="36" rx="4" fill="#0369a1" fill-opacity="0.3" stroke="#0284c7" />
+      <text x="166.5" y="135" class="cell-text">16</text>
+    </g>
+  </g>
+
+  <!-- Transition 2: Reverse Rows -->
+  <g transform="translate(550, 150)">
+    <text x="50" y="-12" class="arrow-label" fill="#4ade80">Step 2: Reverse Rows</text>
+    <text x="50" y="5" class="arrow-sub">reverse(row.begin(), ...)</text>
+    <line x1="10" y1="20" x2="90" y2="20" stroke="#4ade80" stroke-width="3" marker-end="url(#arrow-rev)" />
+  </g>
+
+  <!-- Matrix 3: Final Rotated Matrix (90 deg clockwise) -->
+  <g transform="translate(660, 80)">
+    <text x="96" y="20" class="matrix-title" fill="#4ade80">3. Final Rotated 90°</text>
+    
+    <!-- 4x4 Grid -->
+    <g transform="translate(0, 35)">
+      <!-- Row 0: 13, 9, 5, 1 -->
+      <rect x="0" y="0" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="22.5" y="18" class="cell-text">13</text>
+      <rect x="48" y="0" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="70.5" y="18" class="cell-text">9</text>
+      <rect x="96" y="0" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="118.5" y="18" class="cell-text">5</text>
+      <rect x="144" y="0" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="166.5" y="18" class="cell-text">1</text>
+
+      <!-- Row 1: 14, 10, 6, 2 -->
+      <rect x="0" y="39" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="22.5" y="57" class="cell-text">14</text>
+      <rect x="48" y="39" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="70.5" y="57" class="cell-text">10</text>
+      <rect x="96" y="39" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="118.5" y="57" class="cell-text">6</text>
+      <rect x="144" y="39" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="166.5" y="57" class="cell-text">2</text>
+
+      <!-- Row 2: 15, 11, 7, 3 -->
+      <rect x="0" y="78" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="22.5" y="96" class="cell-text">15</text>
+      <rect x="48" y="78" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="70.5" y="96" class="cell-text">11</text>
+      <rect x="96" y="78" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="118.5" y="96" class="cell-text">7</text>
+      <rect x="144" y="78" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="166.5" y="96" class="cell-text">3</text>
+
+      <!-- Row 3: 16, 12, 8, 4 -->
+      <rect x="0" y="117" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="22.5" y="135" class="cell-text">16</text>
+      <rect x="48" y="117" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="70.5" y="135" class="cell-text">12</text>
+      <rect x="96" y="117" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="118.5" y="135" class="cell-text">8</text>
+      <rect x="144" y="117" width="45" height="36" rx="4" fill="#15803d" fill-opacity="0.3" stroke="#16a34a" />
+      <text x="166.5" y="135" class="cell-text">4</text>
+    </g>
+  </g>
+
+  <!-- Bottom Note -->
+  <text x="440" y="305" font-family="sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">
+    Time Complexity: <tspan fill="#facc15" font-family="monospace">O(N²)</tspan> | Space Complexity: <tspan fill="#4ade80" font-family="monospace">O(1)</tspan> In-place
+  </text>
+</svg>

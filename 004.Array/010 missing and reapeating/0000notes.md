@@ -1,6 +1,5 @@
-# Notes
 
-## Find the repeating and missing number
+## Q1 Find the repeating and missing number
 
 Given an integer array nums of size n containing values from [1, n] and each value appears exactly once in the array, except for A, which appears twice and B which is missing.
 

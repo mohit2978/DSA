@@ -1,11 +1,23 @@
-# Notes
 
 ## Q1 simple kadanes
 
-![alt text](image.png)
+Given an integer array `nums`, find the subarray with the largest sum and return the sum of the elements present in that subarray.
 
+A subarray is a contiguous non-empty sequence of elements within an array.
 
-![alt text](image-1.png)
+**Examples:**
+
+**Input:** `nums = [2, 3, 5, -2, 7, -4]`  
+**Output:** `15`  
+**Explanation:** The subarray from index 0 to index 4 has the largest sum = 15
+
+**Input:** `nums = [-2, -3, -7, -2, -10, -4]`  
+**Output:** `-2`  
+**Explanation:** The element on index 0 or index 3 make up the largest sum when taken as a subarray
+
+**Constraints:**
+- $1 \le \text{nums.length} \le 10^5$
+- $-10^4 \le \text{nums}[i] \le 10^4$
 
 
 in here qw choose whether we choose arr[i] singly or sum+arr[i] at every step,
@@ -36,7 +48,19 @@ if you put -(1e9) then something is added in it say -(1e9)+-(1e3) that will circ
 
 ## Q2 max produxt subarray
 
-![alt text](image-2.png)
+Given an integer array `nums`. Find the **subarray** with the **largest product**, and return the **product** of the elements present in that **subarray**.
+
+A **subarray** is a **contiguous** non-empty **sequence** of elements within an array.
+
+**Examples:**
+
+**Input:** `nums = [4, 5, 3, 7, 1, 2]`  
+**Output:** `840`  
+**Explanation:** The largest product is given by the whole array itself
+
+**Input:** `nums = [-5, 0, -2]`  
+**Output:** `0`  
+**Explanation:** The largest product is achieved with the following subarrays `[0]`, `[-5, 0]`, `[0, -2]`, `[-5, 0, -2]`.
 
 
 ```cpp

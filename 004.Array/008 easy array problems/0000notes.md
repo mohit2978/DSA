@@ -1,8 +1,21 @@
-# Notes
+
 
 ## Q1 leaders in an array  
 
-![alt text](image.png)
+Given an integer array **nums**, return a list of all the leaders in the array.
+
+A leader in an array is an element whose value is **strictly** greater than all elements to its right in the given array. The rightmost element is always a leader. The elements in the leader array must appear in the **order they appear** in the nums array.
+
+**Examples:**
+
+**Input:** `nums = [1, 2, 5, 3, 1, 2]`  
+**Output:** `[5, 3, 2]`  
+**Explanation:** 2 is the rightmost element, 3 is the largest element in the index range [3, 5], 5 is the largest element in the index range [2, 5]
+
+**Input:** `nums = [-3, 4, 5, 1, -4, -5]`  
+**Output:** `[5, 1, -4, -5]`  
+**Explanation:** -5 is the rightmost element, -4 is the largest element in the index range [4, 5], 1 is the largest element in the index range [3, 5] and 5 is the largest element in the range [2, 5]
+
 
 
 ```cpp
@@ -29,7 +42,28 @@ public:
 tc-->O(n)
 
 ## Q2 Equilibrium point 
-![img.png](img.png)
+Given an array of integers **arr[]**, the task is to find the first **equilibrium point** in the array.
+
+The equilibrium point in an array is an index (0-based indexing) such that the sum of all elements before that index is the same as the sum of elements after it. Return -1 if no such point exists.
+
+**Examples:**
+
+**Input:** `arr[] = [1, 2, 0, 3]`  
+**Output:** `2`  
+**Explanation:** The sum of left of index 2 is `1 + 2 = 3` and sum on right of index 2 is `3`.
+
+**Input:** `arr[] = [1, 1, 1, 1]`  
+**Output:** `-1`  
+**Explanation:** There is no equilibrium index in the array.
+
+**Input:** `arr[] = [-7, 1, 5, 2, -4, 3, 0]`  
+**Output:** `3`  
+**Explanation:** The sum of left of index 3 is `-7 + 1 + 5 = -1` and sum on right of index 3 is `-4 + 3 + 0 = -1`.
+
+**Constraints:**
+- `3 <= arr.size() <= 10^5`
+- `-10^4 <= arr[i] <= 10^4`
+
 
 ```cpp
 
@@ -55,7 +89,7 @@ class Solution {
   
   ```
 
-## Q3 remove duplicates from sorted array
+## Q3 Remove duplicates from sorted array
 
 
 Given an integer array nums sorted in non-decreasing order, remove all duplicates in-place so that each unique element appears only once.
