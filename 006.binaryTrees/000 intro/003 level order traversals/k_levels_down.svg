@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="targetNodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <linearGradient id="normNodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow3" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="600" fill="url(#bgGrad3)" rx="16"/>
+
+  <text x="500" y="42" fill="#f8fafc" font-size="22" font-weight="bold" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">Print K Levels Down Trace (k = 3)</text>
+  <text x="500" y="68" fill="#94a3b8" font-size="14" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">Decrements k at each child step; prints when k == 0 and returns</text>
+
+  <!-- Level Guidelines -->
+  <g stroke="#334155" stroke-dasharray="4" stroke-width="1">
+    <line x1="120" y1="120" x2="920" y2="120"/>
+    <line x1="120" y1="210" x2="920" y2="210"/>
+    <line x1="120" y1="300" x2="920" y2="300"/>
+    <line x1="120" y1="390" x2="920" y2="390"/>
+  </g>
+
+  <!-- Level Badges -->
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold">
+    <rect x="40" y="108" width="80" height="24" rx="12" fill="#1e293b" stroke="#38bdf8"/>
+    <text x="80" y="124" fill="#38bdf8" text-anchor="middle">k = 3</text>
+
+    <rect x="40" y="198" width="80" height="24" rx="12" fill="#1e293b" stroke="#818cf8"/>
+    <text x="80" y="214" fill="#818cf8" text-anchor="middle">k = 2</text>
+
+    <rect x="40" y="288" width="80" height="24" rx="12" fill="#1e293b" stroke="#fbbf24"/>
+    <text x="80" y="304" fill="#fbbf24" text-anchor="middle">k = 1</text>
+
+    <rect x="40" y="378" width="80" height="24" rx="12" fill="#1e293b" stroke="#34d399"/>
+    <text x="80" y="394" fill="#34d399" text-anchor="middle">k = 0 (Print!)</text>
+  </g>
+
+  <!-- Tree Edges -->
+  <g stroke="#64748b" stroke-width="2">
+    <!-- 50 to 25, 75 -->
+    <line x1="520" y1="120" x2="340" y2="210"/>
+    <line x1="520" y1="120" x2="700" y2="210"/>
+
+    <!-- 25 to 12, 37 -->
+    <line x1="340" y1="210" x2="240" y2="300"/>
+    <line x1="340" y1="210" x2="440" y2="300"/>
+
+    <!-- 37 to 30 -->
+    <line x1="440" y1="300" x2="380" y2="390" stroke="#10b981" stroke-width="3"/>
+
+    <!-- 75 to 62, 87 -->
+    <line x1="700" y1="210" x2="600" y2="300"/>
+    <line x1="700" y1="210" x2="800" y2="300"/>
+
+    <!-- 62 to 70 -->
+    <line x1="600" y1="300" x2="660" y2="390" stroke="#10b981" stroke-width="3"/>
+  </g>
+
+  <!-- Nodes -->
+  <!-- Level 0 (k=3): 50 -->
+  <circle cx="520" cy="120" r="22" fill="url(#normNodeGrad)" stroke="#38bdf8" stroke-width="2" filter="url(#shadow3)"/>
+  <text x="520" y="126" fill="#f8fafc" font-size="15" font-weight="bold" text-anchor="middle" font-family="monospace">50</text>
+
+  <!-- Level 1 (k=2): 25, 75 -->
+  <circle cx="340" cy="210" r="22" fill="url(#normNodeGrad)" stroke="#818cf8" stroke-width="2" filter="url(#shadow3)"/>
+  <text x="340" y="216" fill="#f8fafc" font-size="15" font-weight="bold" text-anchor="middle" font-family="monospace">25</text>
+
+  <circle cx="700" cy="210" r="22" fill="url(#normNodeGrad)" stroke="#818cf8" stroke-width="2" filter="url(#shadow3)"/>
+  <text x="700" y="216" fill="#f8fafc" font-size="15" font-weight="bold" text-anchor="middle" font-family="monospace">75</text>
+
+  <!-- Level 2 (k=1): 12, 37, 62, 87 -->
+  <circle cx="240" cy="300" r="20" fill="url(#normNodeGrad)" stroke="#fbbf24" stroke-width="2" filter="url(#shadow3)"/>
+  <text x="240" y="306" fill="#f8fafc" font-size="14" font-weight="bold" text-anchor="middle" font-family="monospace">12</text>
+
+  <circle cx="440" cy="300" r="20" fill="url(#normNodeGrad)" stroke="#fbbf24" stroke-width="2" filter="url(#shadow3)"/>
+  <text x="440" y="306" fill="#f8fafc" font-size="14" font-weight="bold" text-anchor="middle" font-family="monospace">37</text>
+
+  <circle cx="600" cy="300" r="20" fill="url(#normNodeGrad)" stroke="#fbbf24" stroke-width="2" filter="url(#shadow3)"/>
+  <text x="600" y="306" fill="#f8fafc" font-size="14" font-weight="bold" text-anchor="middle" font-family="monospace">62</text>
+
+  <circle cx="800" cy="300" r="20" fill="url(#normNodeGrad)" stroke="#fbbf24" stroke-width="2" filter="url(#shadow3)"/>
+  <text x="800" y="306" fill="#f8fafc" font-size="14" font-weight="bold" text-anchor="middle" font-family="monospace">87</text>
+
+  <!-- Level 3 (k=0 Target Nodes): 30, 70 -->
+  <circle cx="380" cy="390" r="24" fill="url(#targetNodeGrad)" stroke="#34d399" stroke-width="3" filter="url(#shadow3)"/>
+  <text x="380" y="396" fill="#ffffff" font-size="16" font-weight="bold" text-anchor="middle" font-family="monospace">30</text>
+  <rect x="345" y="422" width="70" height="20" rx="4" fill="#059669"/>
+  <text x="380" y="436" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle" font-family="sans-serif">PRINT 30</text>
+
+  <circle cx="660" cy="390" r="24" fill="url(#targetNodeGrad)" stroke="#34d399" stroke-width="3" filter="url(#shadow3)"/>
+  <text x="660" y="396" fill="#ffffff" font-size="16" font-weight="bold" text-anchor="middle" font-family="monospace">70</text>
+  <rect x="625" y="422" width="70" height="20" rx="4" fill="#059669"/>
+  <text x="660" y="436" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle" font-family="sans-serif">PRINT 70</text>
+
+  <!-- Output Box -->
+  <g transform="translate(200, 480)">
+    <rect width="600" height="90" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <text x="30" y="30" fill="#38bdf8" font-size="14" font-weight="bold" font-family="sans-serif">Result / Console Output for k = 3:</text>
+    <rect x="30" y="42" width="80" height="32" rx="6" fill="#1e293b" stroke="#34d399" stroke-width="1.5"/>
+    <text x="70" y="63" fill="#34d399" font-size="15" font-weight="bold" text-anchor="middle" font-family="monospace">30</text>
+    <rect x="125" y="42" width="80" height="32" rx="6" fill="#1e293b" stroke="#34d399" stroke-width="1.5"/>
+    <text x="165" y="63" fill="#34d399" font-size="15" font-weight="bold" text-anchor="middle" font-family="monospace">70</text>
+    <text x="230" y="62" fill="#94a3b8" font-size="13" font-family="sans-serif">(Order: Pre-order traversal order across target level)</text>
+  </g>
+</svg>

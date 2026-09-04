@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 780" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #181825; }
+      .card { fill: #1e1e2e; stroke: #313244; stroke-width: 1.5; rx: 12px; }
+      .header-title { font-family: system-ui, -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #cdd6f4; }
+      .subtitle { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; fill: #a6adc8; }
+      .section-title { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 600; fill: #89b4fa; }
+      .text-main { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; fill: #cdd6f4; }
+      .text-sub { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; fill: #bac2de; }
+      .text-code { font-family: 'Consolas', 'Courier New', monospace; font-size: 12px; fill: #f5e0dc; }
+      .node-norm { fill: #313244; stroke: #89b4fa; stroke-width: 2.2; }
+      .node-leaf { fill: #45475a; stroke: #f38ba8; stroke-width: 2.2; stroke-dasharray: 4 2; }
+      .node-text { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; font-weight: 700; fill: #cdd6f4; text-anchor: middle; dominant-baseline: central; }
+      .tree-edge { stroke: #585b70; stroke-width: 2.2; }
+      .edge-del { stroke: #f38ba8; stroke-width: 2; stroke-dasharray: 3 3; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1050" height="780" class="bg" rx="16" />
+
+  <!-- Header -->
+  <g transform="translate(40, 35)">
+    <text class="header-title" x="0" y="0">Remove Leaves Transformation</text>
+    <text class="subtitle" x="0" y="24">Recursively removing all leaf nodes (nodes with 0 children) and reconnecting parent pointers</text>
+  </g>
+
+  <!-- Left Card: Before & After Trees -->
+  <g transform="translate(40, 80)">
+    <rect width="480" height="660" class="card" />
+    <text class="section-title" x="24" y="32">1. Visual Transformation (Before vs After)</text>
+
+    <!-- BEFORE TREE -->
+    <g transform="translate(240, 110)">
+      <text x="0" y="-30" class="text-main" font-weight="bold" text-anchor="middle" fill="#89b4fa">Original Tree (Leaves Marked in Red)</text>
+      
+      <!-- Edges -->
+      <line x1="0" y1="0" x2="-75" y2="55" class="tree-edge" />
+      <line x1="0" y1="0" x2="75" y2="55" class="tree-edge" />
+      <line x1="-75" y1="55" x2="-115" y2="110" class="edge-del" />
+      <line x1="-75" y1="55" x2="-35" y2="110" class="tree-edge" />
+      <line x1="-35" y1="110" x2="-35" y2="165" class="edge-del" />
+      <line x1="75" y1="55" x2="75" y2="110" class="edge-del" />
+
+      <!-- Nodes -->
+      <circle cx="0" cy="0" r="17" class="node-norm" />
+      <text x="0" y="0" class="node-text">1</text>
+
+      <circle cx="-75" cy="55" r="17" class="node-norm" />
+      <text x="-75" y="55" class="node-text">2</text>
+
+      <circle cx="75" cy="55" r="17" class="node-norm" />
+      <text x="75" y="55" class="node-text">3</text>
+
+      <!-- Leaf 4 -->
+      <circle cx="-115" cy="110" r="16" class="node-leaf" />
+      <text x="-115" y="110" class="node-text" fill="#f38ba8">4 ✕</text>
+
+      <!-- Node 8 -->
+      <circle cx="-35" cy="110" r="17" class="node-norm" />
+      <text x="-35" y="110" class="node-text">8</text>
+
+      <!-- Leaf 7 -->
+      <circle cx="-35" cy="165" r="16" class="node-leaf" />
+      <text x="-35" y="165" class="node-text" fill="#f38ba8">7 ✕</text>
+
+      <!-- Leaf 6 -->
+      <circle cx="75" cy="110" r="16" class="node-leaf" />
+      <text x="75" y="110" class="node-text" fill="#f38ba8">6 ✕</text>
+    </g>
+
+    <!-- Down Arrow -->
+    <g transform="translate(240, 340)">
+      <text x="0" y="0" font-family="system-ui" font-size="22px" fill="#fab387" text-anchor="middle">↓ Remove Leaves Pass ↓</text>
+    </g>
+
+    <!-- AFTER TREE -->
+    <g transform="translate(240, 420)">
+      <text x="0" y="-20" class="text-main" font-weight="bold" text-anchor="middle" fill="#a6e3a1">Tree After Leaves Removed</text>
+      
+      <!-- Edges -->
+      <line x1="0" y1="0" x2="-65" y2="55" class="tree-edge" stroke="#a6e3a1" />
+      <line x1="0" y1="0" x2="65" y2="55" class="tree-edge" stroke="#a6e3a1" />
+      <line x1="-65" y1="55" x2="-65" y2="110" class="tree-edge" stroke="#a6e3a1" />
+
+      <!-- Nodes -->
+      <circle cx="0" cy="0" r="17" class="node-norm" stroke="#a6e3a1" />
+      <text x="0" y="0" class="node-text">1</text>
+
+      <circle cx="-65" cy="55" r="17" class="node-norm" stroke="#a6e3a1" />
+      <text x="-65" y="55" class="node-text">2</text>
+
+      <circle cx="65" cy="55" r="17" class="node-norm" stroke="#a6e3a1" />
+      <text x="65" y="55" class="node-text">3</text>
+
+      <circle cx="-65" cy="110" r="17" class="node-norm" stroke="#a6e3a1" />
+      <text x="-65" y="110" class="node-text">8</text>
+
+      <text x="0" y="170" class="text-sub" fill="#fab387" text-anchor="middle">Note: Leaves (4, 6, 7) deleted! 8 and 3 become newly exposed leaves for next round.</text>
+    </g>
+  </g>
+
+  <!-- Right Card: Logic, Code & Critical Trap -->
+  <g transform="translate(540, 80)">
+    <rect width="470" height="660" class="card" />
+    <text class="section-title" x="24" y="32">2. Recursive Mechanism &amp; Correct Code</text>
+
+    <!-- Code Block -->
+    <g transform="translate(24, 50)">
+      <rect width="422" height="210" fill="#181825" stroke="#a6e3a1" rx="8" stroke-width="1.5" />
+      <text x="16" y="24" class="text-code" fill="#89b4fa">public static Node removeLeaves(Node node) {</text>
+      <text x="32" y="44" class="text-code" fill="#a6adc8">if (node == null) return null;</text>
+      <text x="32" y="70" class="text-code" fill="#f38ba8">// Leaf node condition: return null to parent</text>
+      <text x="32" y="90" class="text-code" fill="#f38ba8">if (node.left == null &amp;&amp; node.right == null) {</text>
+      <text x="48" y="110" class="text-code" fill="#f38ba8">return null;</text>
+      <text x="32" y="130" class="text-code" fill="#f38ba8">}</text>
+      <text x="32" y="156" class="text-code" fill="#fab387">node.left = removeLeaves(node.left);</text>
+      <text x="32" y="176" class="text-code" fill="#fab387">node.right = removeLeaves(node.right);</text>
+      <text x="32" y="196" class="text-code" fill="#a6e3a1">return node;</text>
+      <text x="16" y="206" class="text-code" fill="#89b4fa">}</text>
+    </g>
+
+    <!-- Traps & Insights -->
+    <g transform="translate(24, 280)">
+      <rect width="422" height="340" fill="#181825" stroke="#313244" rx="8" />
+      <text x="16" y="28" class="text-main" font-weight="bold" fill="#f9e2af">Crucial Traps &amp; Insights:</text>
+      
+      <text x="16" y="58" class="text-sub" fill="#f38ba8"><tspan font-weight="bold">1. Why NOT check leaf condition in Postorder?</tspan></text>
+      <text x="16" y="78" class="text-sub" fill="#bac2de">If you make recursive calls first, and <tspan font-weight="bold">then</tspan> check if</text>
+      <text x="16" y="96" class="text-sub" fill="#bac2de"><tspan font-family="monospace">node.left == null &amp;&amp; node.right == null</tspan>, then every node</text>
+      <text x="16" y="114" class="text-sub" fill="#bac2de">whose children just got removed will ALSO become a leaf and get</text>
+      <text x="16" y="132" class="text-sub" fill="#f38ba8">deleted! The whole tree will collapse to an empty tree (null)!</text>
+
+      <text x="16" y="165" class="text-sub" fill="#a6e3a1"><tspan font-weight="bold">2. Pre-Check Leaf Pattern (Correct):</tspan></text>
+      <text x="16" y="185" class="text-sub" fill="#bac2de">Checking leaf status <tspan font-weight="bold">before</tspan> calling recursion ensures only</text>
+      <text x="16" y="203" class="text-sub" fill="#bac2de">nodes that are <tspan font-weight="bold">originally leaves</tspan> return null.</text>
+
+      <text x="16" y="235" class="text-sub" fill="#89b4fa"><tspan font-weight="bold">3. Re-assigning Pointers:</tspan></text>
+      <text x="16" y="255" class="text-sub" fill="#bac2de">Parent must update its left and right pointers with the returned</text>
+      <text x="16" y="273" class="text-sub" fill="#bac2de">result: <tspan font-family="monospace" fill="#fab387">node.left = removeLeaves(node.left)</tspan>.</text>
+
+      <text x="16" y="305" class="text-sub" fill="#cdd6f4"><tspan font-weight="bold">Complexity:</tspan> Time <tspan font-family="monospace" fill="#a6e3a1">O(N)</tspan>, Space <tspan font-family="monospace" fill="#a6e3a1">O(H)</tspan>.</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 780" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #181825; }
+      .card { fill: #1e1e2e; stroke: #313244; stroke-width: 1.5; rx: 12px; }
+      .header-title { font-family: system-ui, -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #cdd6f4; }
+      .subtitle { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; fill: #a6adc8; }
+      .section-title { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 600; fill: #89b4fa; }
+      .text-main { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; fill: #cdd6f4; }
+      .text-sub { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; fill: #bac2de; }
+      .text-code { font-family: 'Consolas', 'Courier New', monospace; font-size: 12.5px; fill: #f5e0dc; }
+      .node-circle { fill: #313244; stroke: #89b4fa; stroke-width: 2.5; }
+      .node-text { font-family: system-ui, -apple-system, sans-serif; font-size: 15px; font-weight: 700; fill: #cdd6f4; text-anchor: middle; dominant-baseline: central; }
+      .tree-edge { stroke: #45475a; stroke-width: 2.5; stroke-linecap: round; }
+      .th { font-family: system-ui; font-size: 12px; font-weight: bold; fill: #89b4fa; }
+      .td { font-family: 'Consolas', monospace; font-size: 12px; fill: #cdd6f4; }
+      .highlight-in { fill: #fab387; font-weight: bold; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1050" height="780" class="bg" rx="16" />
+
+  <!-- Header -->
+  <g transform="translate(40, 40)">
+    <text class="header-title" x="0" y="0">Iterative Inorder Traversal Flow (Pair State Machine)</text>
+    <text class="subtitle" x="0" y="24">How LinkedList&lt;Pair&gt; executes Inorder Traversal iteratively without recursion</text>
+  </g>
+
+  <!-- Left: Tree & State Machine Rule -->
+  <g transform="translate(40, 90)">
+    <rect width="420" height="650" class="card" />
+    <text class="section-title" x="24" y="32">1. Sample Binary Tree &amp; Inorder Rule</text>
+
+    <!-- Tree -->
+    <g transform="translate(210, 140)">
+      <line x1="0" y1="0" x2="-80" y2="70" class="tree-edge" />
+      <line x1="0" y1="0" x2="80" y2="70" class="tree-edge" />
+      <line x1="-80" y1="70" x2="-120" y2="140" class="tree-edge" />
+      <line x1="-80" y1="70" x2="-40" y2="140" class="tree-edge" />
+      <line x1="80" y1="70" x2="120" y2="140" class="tree-edge" />
+
+      <!-- Nodes -->
+      <circle cx="0" cy="0" r="20" class="node-circle" />
+      <text x="0" y="0" class="node-text">1</text>
+
+      <circle cx="-80" cy="70" r="20" class="node-circle" />
+      <text x="-80" y="70" class="node-text">2</text>
+
+      <circle cx="80" cy="70" r="20" class="node-circle" />
+      <text x="80" y="70" class="node-text">3</text>
+
+      <circle cx="-120" cy="140" r="18" class="node-circle" />
+      <text x="-120" y="140" class="node-text">4</text>
+
+      <circle cx="-40" cy="140" r="18" class="node-circle" />
+      <text x="-40" y="140" class="node-text">5</text>
+
+      <circle cx="120" cy="140" r="18" class="node-circle" />
+      <text x="120" y="140" class="node-text">6</text>
+    </g>
+
+    <!-- Pair Structure Card -->
+    <g transform="translate(24, 330)">
+      <rect width="372" height="110" fill="#181825" stroke="#45475a" rx="8" />
+      <text x="16" y="24" class="text-main" font-weight="bold" fill="#fab387">Java Pair Class Definition</text>
+      <text x="16" y="48" class="text-code" fill="#a6adc8">class Pair {</text>
+      <text x="32" y="68" class="text-code">TreeNode node;</text>
+      <text x="32" y="86" class="text-code">int state = 1; // 1:Pre, 2:In, 3:Post</text>
+      <text x="16" y="104" class="text-code">}</text>
+    </g>
+
+    <!-- State 2 Action Highlight -->
+    <g transform="translate(24, 460)">
+      <rect width="372" height="155" fill="#181825" stroke="#fab387" rx="8" stroke-width="1.5" />
+      <text x="16" y="26" class="text-main" font-weight="bold" fill="#fab387">Inorder Action (Triggered on state == 2)</text>
+      
+      <text x="16" y="52" class="text-sub" fill="#cdd6f4">1. <tspan font-weight="bold" fill="#fab387">res.add(temp.node.val);</tspan> (Record value)</text>
+      <text x="16" y="74" class="text-sub" fill="#cdd6f4">2. <tspan font-family="monospace" fill="#89b4fa">temp.state++;</tspan> (Advance state to 3)</text>
+      <text x="16" y="96" class="text-sub" fill="#cdd6f4">3. <tspan font-family="monospace" fill="#89b4fa">stk.addFirst(temp);</tspan> (Keep on stack)</text>
+      <text x="16" y="118" class="text-sub" fill="#cdd6f4">4. <tspan font-family="monospace" fill="#a6e3a1">if (node.right != null) stk.addFirst(rc);</tspan></text>
+      <text x="16" y="140" class="text-sub" fill="#f38ba8">5. On state == 3: do nothing (it's popped/discarded)</text>
+    </g>
+  </g>
+
+  <!-- Right: Dry-Run State Trace Table -->
+  <g transform="translate(480, 90)">
+    <rect width="530" height="650" class="card" />
+    <text class="section-title" x="24" y="32">2. Step-by-Step Stack &amp; Output Trace</text>
+
+    <!-- Table Header -->
+    <g transform="translate(24, 55)">
+      <rect width="482" height="30" fill="#252538" rx="6" />
+      <text x="15" y="20" class="th">Step</text>
+      <text x="65" y="20" class="th">Active Pair</text>
+      <text x="175" y="20" class="th">Stack (Top to Bottom)</text>
+      <text x="365" y="20" class="th">Inorder Output [res]</text>
+      <line x1="0" y1="30" x2="482" y2="30" stroke="#313244" stroke-width="1.5" />
+    </g>
+
+    <!-- Table Rows -->
+    <g transform="translate(24, 90)">
+      <!-- Row 1 -->
+      <text x="15" y="24" class="td">1</text>
+      <text x="65" y="24" class="td">(1, st:1)</text>
+      <text x="175" y="24" class="td">[(2, 1), (1, 2)]</text>
+      <text x="365" y="24" class="td">[]</text>
+
+      <!-- Row 2 -->
+      <line x1="10" y1="38" x2="470" y2="38" stroke="#313244" stroke-dasharray="2 2" />
+      <text x="15" y="56" class="td">2</text>
+      <text x="65" y="56" class="td">(2, st:1)</text>
+      <text x="175" y="56" class="td">[(4, 1), (2, 2), (1, 2)]</text>
+      <text x="365" y="56" class="td">[]</text>
+
+      <!-- Row 3 -->
+      <line x1="10" y1="70" x2="470" y2="70" stroke="#313244" stroke-dasharray="2 2" />
+      <text x="15" y="88" class="td">3</text>
+      <text x="65" y="88" class="td">(4, st:1)</text>
+      <text x="175" y="88" class="td">[(4, 2), (2, 2), (1, 2)]</text>
+      <text x="365" y="88" class="td">[]</text>
+
+      <!-- Row 4 (Record 4) -->
+      <line x1="10" y1="102" x2="470" y2="102" stroke="#fab387" stroke-width="1" />
+      <text x="15" y="120" class="td" fill="#fab387">4</text>
+      <text x="65" y="120" class="td" fill="#fab387">(4, st:2)</text>
+      <text x="175" y="120" class="td">[(4, 3), (2, 2), (1, 2)]</text>
+      <text x="365" y="120" class="td" fill="#fab387">[4]</text>
+
+      <!-- Row 5 (Record 2) -->
+      <line x1="10" y1="134" x2="470" y2="134" stroke="#fab387" stroke-width="1" />
+      <text x="15" y="152" class="td" fill="#fab387">5</text>
+      <text x="65" y="152" class="td" fill="#fab387">(2, st:2)</text>
+      <text x="175" y="152" class="td">[(5, 1), (2, 3), (1, 2)]</text>
+      <text x="365" y="152" class="td" fill="#fab387">[4, 2]</text>
+
+      <!-- Row 6 (Record 5) -->
+      <line x1="10" y1="166" x2="470" y2="166" stroke="#fab387" stroke-width="1" />
+      <text x="15" y="184" class="td" fill="#fab387">6</text>
+      <text x="65" y="184" class="td" fill="#fab387">(5, st:2)</text>
+      <text x="175" y="184" class="td">[(5, 3), (2, 3), (1, 2)]</text>
+      <text x="365" y="184" class="td" fill="#fab387">[4, 2, 5]</text>
+
+      <!-- Row 7 (Record 1) -->
+      <line x1="10" y1="198" x2="470" y2="198" stroke="#fab387" stroke-width="1" />
+      <text x="15" y="216" class="td" fill="#fab387">7</text>
+      <text x="65" y="216" class="td" fill="#fab387">(1, st:2)</text>
+      <text x="175" y="216" class="td">[(3, 1), (1, 3)]</text>
+      <text x="365" y="216" class="td" fill="#fab387">[4, 2, 5, 1]</text>
+
+      <!-- Row 8 (Record 3) -->
+      <line x1="10" y1="230" x2="470" y2="230" stroke="#fab387" stroke-width="1" />
+      <text x="15" y="248" class="td" fill="#fab387">8</text>
+      <text x="65" y="248" class="td" fill="#fab387">(3, st:2)</text>
+      <text x="175" y="248" class="td">[(6, 1), (3, 3), (1, 3)]</text>
+      <text x="365" y="248" class="td" fill="#fab387">[4, 2, 5, 1, 3]</text>
+
+      <!-- Row 9 (Record 6) -->
+      <line x1="10" y1="262" x2="470" y2="262" stroke="#fab387" stroke-width="1" />
+      <text x="15" y="280" class="td" fill="#fab387">9</text>
+      <text x="65" y="280" class="td" fill="#fab387">(6, st:2)</text>
+      <text x="175" y="280" class="td">[(6, 3), (3, 3), (1, 3)]</text>
+      <text x="365" y="280" class="td" fill="#fab387">[4, 2, 5, 1, 3, 6]</text>
+    </g>
+
+    <!-- Final Result Box -->
+    <g transform="translate(24, 430)">
+      <rect width="482" height="180" fill="#181825" stroke="#a6e3a1" rx="8" stroke-width="1.5" />
+      <text x="20" y="30" class="text-main" font-weight="bold" fill="#a6e3a1">Traversal Complete</text>
+      
+      <text x="20" y="60" class="text-sub" fill="#cdd6f4">Final Inorder Sequence: <tspan font-family="monospace" font-weight="bold" fill="#fab387">[4, 2, 5, 1, 3, 6]</tspan></text>
+      
+      <text x="20" y="90" class="text-main" font-weight="bold" fill="#89b4fa">Why LinkedList vs Stack in Java?</text>
+      <text x="20" y="112" class="text-sub" fill="#bac2de"><tspan fill="#f9e2af" font-family="monospace">java.util.Stack</tspan> extends Vector and is synchronized (thread-safe overhead).</text>
+      <text x="20" y="132" class="text-sub" fill="#bac2de"><tspan fill="#a6e3a1" font-family="monospace">LinkedList / ArrayDeque</tspan> used as LIFO stack via <tspan font-family="monospace" fill="#a6e3a1">addFirst()</tspan> &amp; <tspan font-family="monospace" fill="#a6e3a1">removeFirst()</tspan></text>
+      <text x="20" y="152" class="text-sub" fill="#bac2de">provides substantially faster, non-blocking execution.</text>
+    </g>
+  </g>
+</svg>

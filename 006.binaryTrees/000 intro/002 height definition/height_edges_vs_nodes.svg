@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 860 350" xmlns="http://www.w3.org/2000/svg" style="background:#1e1e2e; border-radius:12px; font-family:'Segoe UI', sans-serif;">
+  <!-- Title -->
+  <text x="430" y="32" text-anchor="middle" fill="#cdd6f4" font-size="18" font-weight="bold">Height in Terms of Edges vs. Nodes &amp; Base Case Derivation</text>
+
+  <!-- Left: Tree Example -->
+  <g transform="translate(30, 50)">
+    <rect width="360" height="270" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+    <text x="180" y="28" text-anchor="middle" fill="#f9e2af" font-size="14" font-weight="bold">Tree Example (Sample Input)</text>
+
+    <!-- Tree Edges -->
+    <line x1="180" y1="65" x2="110" y2="115" stroke="#6c7086" stroke-width="2"/>
+    <line x1="180" y1="65" x2="250" y2="115" stroke="#f38ba8" stroke-width="3"/>
+    <line x1="250" y1="115" x2="220" y2="165" stroke="#f38ba8" stroke-width="3"/>
+    <line x1="220" y1="165" x2="250" y2="215" stroke="#f38ba8" stroke-width="3"/>
+
+    <!-- Nodes -->
+    <circle cx="180" cy="65" r="15" fill="#cba6f7"/>
+    <text x="180" y="70" text-anchor="middle" fill="#11111b" font-size="11" font-weight="bold">50</text>
+    <circle cx="110" cy="115" r="14" fill="#89b4fa"/>
+    <text x="110" y="119" text-anchor="middle" fill="#11111b" font-size="11" font-weight="bold">25</text>
+    <circle cx="250" cy="115" r="14" fill="#89b4fa"/>
+    <text x="250" y="119" text-anchor="middle" fill="#11111b" font-size="11" font-weight="bold">75</text>
+    <circle cx="220" cy="165" r="14" fill="#fab387"/>
+    <text x="220" y="169" text-anchor="middle" fill="#11111b" font-size="11" font-weight="bold">62</text>
+    <circle cx="250" cy="215" r="14" fill="#a6e3a1"/>
+    <text x="250" y="219" text-anchor="middle" fill="#11111b" font-size="11" font-weight="bold">70</text>
+
+    <!-- Metrics Box -->
+    <g transform="translate(20, 160)">
+      <rect width="160" height="85" fill="#313244" rx="6"/>
+      <text x="80" y="24" text-anchor="middle" fill="#f38ba8" font-size="12" font-weight="bold">Edges on Path: 3</text>
+      <text x="80" y="44" text-anchor="middle" fill="#a6e3a1" font-size="12" font-weight="bold">Nodes on Path: 4</text>
+      <text x="80" y="68" text-anchor="middle" fill="#f9e2af" font-size="11">Formula: H_node = H_edge + 1</text>
+    </g>
+  </g>
+
+  <!-- Right: Base Case Derivation -->
+  <g transform="translate(420, 50)">
+    <rect width="410" height="270" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+    <text x="205" y="28" text-anchor="middle" fill="#f9e2af" font-size="14" font-weight="bold">Why Base Case is -1 for Edges</text>
+
+    <!-- Derivation Steps -->
+    <g transform="translate(25, 45)">
+      <text x="0" y="20" fill="#cdd6f4" font-size="13">• For an empty tree (<tspan fill="#f38ba8">root == null</tspan>):</text>
+      <text x="20" y="45" fill="#a6adc8" font-size="12">Height in terms of nodes = <tspan fill="#a6e3a1" font-weight="bold">0</tspan></text>
+      
+      <text x="0" y="80" fill="#cdd6f4" font-size="13">• Using the universal relation:</text>
+      <text x="20" y="105" fill="#f9e2af" font-size="13" font-weight="bold">Height_nodes = Height_edges + 1</text>
+      <text x="20" y="130" fill="#89b4fa" font-size="13">0 = Height_edges + 1</text>
+      
+      <rect x="15" y="145" width="220" height="32" fill="#313244" stroke="#f38ba8" stroke-width="1.5" rx="6"/>
+      <text x="125" y="166" text-anchor="middle" fill="#f38ba8" font-size="14" font-weight="bold">Height_edges = -1</text>
+
+      <!-- Single Node Verification -->
+      <text x="0" y="205" fill="#cdd6f4" font-size="12">• Verification for single node tree [50]:</text>
+      <text x="20" y="222" fill="#a6e3a1" font-size="11">Height = max(-1, -1) + 1 = 0 edges (Correct!)</text>
+    </g>
+  </g>
+</svg>

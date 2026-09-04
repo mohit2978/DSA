@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 820" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #181825; }
+      .card { fill: #1e1e2e; stroke: #313244; stroke-width: 1.5; rx: 12px; }
+      .header-title { font-family: system-ui, -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #cdd6f4; }
+      .subtitle { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; fill: #a6adc8; }
+      .section-title { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 600; fill: #89b4fa; }
+      .text-main { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; fill: #cdd6f4; }
+      .text-sub { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; fill: #bac2de; }
+      .text-code { font-family: 'Consolas', 'Courier New', monospace; font-size: 12px; fill: #f5e0dc; }
+      .node-norm { fill: #313244; stroke: #89b4fa; stroke-width: 2.2; }
+      .node-valid { fill: #313244; stroke: #a6e3a1; stroke-width: 2.5; }
+      .node-text { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; font-weight: 700; fill: #cdd6f4; text-anchor: middle; dominant-baseline: central; }
+      .tree-edge { stroke: #585b70; stroke-width: 2.2; }
+      .edge-valid { stroke: #a6e3a1; stroke-width: 3; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="820" class="bg" rx="16" />
+
+  <!-- Header -->
+  <g transform="translate(40, 35)">
+    <text class="header-title" x="0" y="0">Root-to-Leaf Path in Sum Range [lo, hi]</text>
+    <text class="subtitle" x="0" y="24">Finding all valid root-to-leaf paths whose node sum lies within the target range [lo, hi]</text>
+  </g>
+
+  <!-- Left Card: Tree Exploration & Paths -->
+  <g transform="translate(40, 80)">
+    <rect width="500" height="700" class="card" />
+    <text class="section-title" x="24" y="32">1. Visual Path Tracing (Range: [60, 150])</text>
+
+    <!-- Tree -->
+    <g transform="translate(250, 130)">
+      <!-- Edges -->
+      <line x1="0" y1="0" x2="-90" y2="70" class="edge-valid" />
+      <line x1="0" y1="0" x2="90" y2="70" class="tree-edge" />
+      
+      <line x1="-90" y1="70" x2="-140" y2="150" class="edge-valid" />
+      <line x1="-90" y1="70" x2="-40" y2="150" class="tree-edge" />
+
+      <line x1="90" y1="70" x2="40" y2="150" class="tree-edge" />
+      <line x1="90" y1="70" x2="140" y2="150" class="edge-valid" />
+
+      <!-- Nodes -->
+      <!-- Node 50 (Root) -->
+      <circle cx="0" cy="0" r="19" class="node-norm" stroke="#a6e3a1" />
+      <text x="0" y="0" class="node-text">50</text>
+
+      <!-- Node 25 -->
+      <circle cx="-90" cy="70" r="19" class="node-norm" stroke="#a6e3a1" />
+      <text x="-90" y="70" class="node-text">25</text>
+
+      <!-- Node 75 -->
+      <circle cx="90" cy="70" r="19" class="node-norm" />
+      <text x="90" y="70" class="node-text">75</text>
+
+      <!-- Leaf 12 (Valid Path: 50 -> 25 -> 12 = 87) -->
+      <circle cx="-140" cy="150" r="19" class="node-valid" />
+      <text x="-140" y="150" class="node-text" fill="#a6e3a1">12</text>
+      <text x="-140" y="185" class="text-sub" font-weight="bold" fill="#a6e3a1" text-anchor="middle">Sum: 87 ✓</text>
+
+      <!-- Leaf 37 (Path: 50 -> 25 -> 37 = 112) -->
+      <circle cx="-40" cy="150" r="19" class="node-valid" />
+      <text x="-40" y="150" class="node-text" fill="#a6e3a1">37</text>
+      <text x="-40" y="185" class="text-sub" font-weight="bold" fill="#a6e3a1" text-anchor="middle">Sum: 112 ✓</text>
+
+      <!-- Leaf 62 (Path: 50 -> 75 -> 62 = 187 > 150) -->
+      <circle cx="40" cy="150" r="19" class="node-norm" stroke="#f38ba8" />
+      <text x="40" y="150" class="node-text" fill="#f38ba8">62</text>
+      <text x="40" y="185" class="text-sub" font-weight="bold" fill="#f38ba8" text-anchor="middle">Sum: 187 ✕</text>
+
+      <!-- Leaf 87 (Path: 50 -> 75 -> 87 = 212 > 150) -->
+      <circle cx="140" cy="150" r="19" class="node-norm" stroke="#f38ba8" />
+      <text x="140" y="150" class="node-text" fill="#f38ba8">87</text>
+      <text x="140" y="185" class="text-sub" font-weight="bold" fill="#f38ba8" text-anchor="middle">Sum: 212 ✕</text>
+    </g>
+
+    <!-- Path Results Box -->
+    <g transform="translate(24, 460)">
+      <rect width="452" height="210" fill="#181825" stroke="#a6e3a1" rx="8" stroke-width="1.5" />
+      <text x="16" y="28" class="text-main" font-weight="bold" fill="#a6e3a1">Paths Printed (lo = 60, hi = 150):</text>
+      
+      <g transform="translate(16, 45)">
+        <rect width="420" height="36" fill="#252538" rx="6" />
+        <text x="12" y="23" class="text-code" fill="#a6e3a1">Path 1: "50 25 12"  (Sum = 87 ∈ [60, 150])</text>
+      </g>
+
+      <g transform="translate(16, 90)">
+        <rect width="420" height="36" fill="#252538" rx="6" />
+        <text x="12" y="23" class="text-code" fill="#a6e3a1">Path 2: "50 25 37"  (Sum = 112 ∈ [60, 150])</text>
+      </g>
+
+      <g transform="translate(16, 135)">
+        <rect width="420" height="36" fill="#252538" rx="6" stroke="#f38ba8" stroke-dasharray="3 3" />
+        <text x="12" y="23" class="text-code" fill="#f38ba8">Rejected: "50 75 62" (187) &amp; "50 75 87" (212)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Right Card: Implementation, Pitfalls & Correct Code -->
+  <g transform="translate(560, 80)">
+    <rect width="500" height="700" class="card" />
+    <text class="section-title" x="24" y="32">2. Implementation &amp; Common Pitfalls</text>
+
+    <!-- Correct Code -->
+    <g transform="translate(24, 50)">
+      <rect width="452" height="240" fill="#181825" stroke="#a6e3a1" rx="8" stroke-width="1.5" />
+      <text x="16" y="24" class="text-code" fill="#89b4fa">public static void pathToLeafFromRoot(Node node,</text>
+      <text x="48" y="44" class="text-code" fill="#89b4fa">String path, int sum, int lo, int hi) {</text>
+      <text x="32" y="66" class="text-code" fill="#a6adc8">if (node == null) return;</text>
+      <text x="32" y="90" class="text-code" fill="#fab387">if (node.left == null &amp;&amp; node.right == null) {</text>
+      <text x="48" y="110" class="text-code" fill="#fab387">sum += node.data;</text>
+      <text x="48" y="130" class="text-code" fill="#a6e3a1">if (sum &gt;= lo &amp;&amp; sum &lt;= hi) {</text>
+      <text x="64" y="150" class="text-code" fill="#a6e3a1">System.out.println(path + node.data);</text>
+      <text x="48" y="170" class="text-code" fill="#a6e3a1">}</text>
+      <text x="48" y="190" class="text-code" fill="#cdd6f4">return;</text>
+      <text x="32" y="210" class="text-code" fill="#fab387">}</text>
+      <text x="32" y="226" class="text-code" fill="#89b4fa">pathToLeafFromRoot(node.left, path+node.data+" ", sum+node.data, lo, hi);</text>
+      <text x="32" y="242" class="text-code" fill="#89b4fa">pathToLeafFromRoot(node.right, path+node.data+" ", sum+node.data, lo, hi);</text>
+      <text x="16" y="258" class="text-code" fill="#89b4fa">}</text>
+    </g>
+
+    <!-- Pitfalls Box -->
+    <g transform="translate(24, 320)">
+      <rect width="452" height="340" fill="#181825" stroke="#313244" rx="8" />
+      <text x="16" y="28" class="text-main" font-weight="bold" fill="#f9e2af">Frequent Bugs Highlighted in Notes:</text>
+
+      <text x="16" y="58" class="text-sub" fill="#f38ba8"><tspan font-weight="bold">Mistake 1: Adding Child Data instead of Current Data</tspan></text>
+      <text x="16" y="78" class="text-code" fill="#f38ba8">✕ f(node.left, path + node.left.data, sum + node.left.data, ...)</text>
+      <text x="16" y="98" class="text-sub" fill="#bac2de">Causes NullPointerException when <tspan font-family="monospace">node.left</tspan> is null! Always pass</text>
+      <text x="16" y="116" class="text-sub" fill="#a6e3a1">✓ <tspan font-family="monospace">path + node.data + " ", sum + node.data</tspan></text>
+
+      <text x="16" y="148" class="text-sub" fill="#f38ba8"><tspan font-weight="bold">Mistake 2: Checking Range at Null Base Case</tspan></text>
+      <text x="16" y="168" class="text-sub" fill="#bac2de">If you check <tspan font-family="monospace">if (sum &gt;= lo)</tspan> at <tspan font-family="monospace">node == null</tspan>, then every leaf</text>
+      <text x="16" y="186" class="text-sub" fill="#bac2de">will call null twice (left &amp; right), printing duplicate paths!</text>
+      <text x="16" y="204" class="text-sub" fill="#a6e3a1">Always evaluate the path at the <tspan font-weight="bold">leaf condition</tspan>.</text>
+
+      <text x="16" y="238" class="text-sub" fill="#89b4fa"><tspan font-weight="bold">Space &amp; Time Complexity:</tspan></text>
+      <text x="16" y="258" class="text-sub" fill="#bac2de">• Time: <tspan font-family="monospace" fill="#a6e3a1">O(N)</tspan> visiting each node once.</text>
+      <text x="16" y="278" class="text-sub" fill="#bac2de">• Call Stack Space: <tspan font-family="monospace" fill="#a6e3a1">O(H)</tspan> recursion height.</text>
+      <text x="16" y="298" class="text-sub" fill="#bac2de">• String Immutability in Java generates new path string per branch.</text>
+    </g>
+  </g>
+</svg>

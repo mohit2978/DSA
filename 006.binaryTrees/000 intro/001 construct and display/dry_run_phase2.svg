@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 960 380" xmlns="http://www.w3.org/2000/svg" style="background:#1e1e2e; border-radius:12px; font-family:'Segoe UI', sans-serif;">
+  <!-- Title -->
+  <text x="480" y="32" text-anchor="middle" fill="#cdd6f4" font-size="17" font-weight="bold">Construction Dry Run — Phase 2: Left Subtree Completion (37, 30 &amp; Left Subtree Done)</text>
+
+  <!-- Step 6 Card (25 attaches 37) -->
+  <g transform="translate(20, 50)">
+    <rect width="215" height="310" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+    <rect width="215" height="36" rx="10" fill="#313244"/>
+    <text x="107" y="24" text-anchor="middle" fill="#f9e2af" font-size="13" font-weight="bold">Step 6: arr[5] = 37</text>
+    <text x="107" y="55" text-anchor="middle" fill="#a6adc8" font-size="11">25.right = 37; 25 st:3; Push(37,1)</text>
+
+    <!-- Mini Tree -->
+    <line x1="107" y1="85" x2="65" y2="115" stroke="#89b4fa" stroke-width="2"/>
+    <line x1="65" y1="115" x2="40" y2="145" stroke="#585b70" stroke-width="2"/>
+    <line x1="65" y1="115" x2="90" y2="145" stroke="#89b4fa" stroke-width="2"/>
+    <circle cx="107" cy="85" r="14" fill="#cba6f7"/>
+    <text x="107" y="89" text-anchor="middle" fill="#11111b" font-size="11" font-weight="bold">50</text>
+    <circle cx="65" cy="115" r="14" fill="#89b4fa"/>
+    <text x="65" y="119" text-anchor="middle" fill="#11111b" font-size="11" font-weight="bold">25</text>
+    <circle cx="40" cy="145" r="12" fill="#585b70"/>
+    <text x="40" y="149" text-anchor="middle" fill="#cdd6f4" font-size="10">12</text>
+    <circle cx="90" cy="145" r="13" fill="#fab387"/>
+    <text x="90" y="149" text-anchor="middle" fill="#11111b" font-size="10" font-weight="bold">37</text>
+
+    <!-- Stack Box -->
+    <g transform="translate(47, 160)">
+      <rect width="120" height="120" fill="#11111b" stroke="#45475a" rx="6"/>
+      <rect x="15" y="80" width="90" height="26" fill="#cba6f7" rx="4"/>
+      <text x="60" y="97" text-anchor="middle" fill="#11111b" font-size="11" font-weight="bold">50, state: 2</text>
+      <rect x="15" y="50" width="90" height="26" fill="#89b4fa" rx="4"/>
+      <text x="60" y="67" text-anchor="middle" fill="#11111b" font-size="11" font-weight="bold">25, state: 3</text>
+      <rect x="15" y="20" width="90" height="26" fill="#fab387" rx="4"/>
+      <text x="60" y="37" text-anchor="middle" fill="#11111b" font-size="11" font-weight="bold">37, state: 1</text>
+    </g>
+  </g>
+
+  <!-- Step 7 Card (37 attaches 30) -->
+  <g transform="translate(255, 50)">
+    <rect width="215" height="310" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+    <rect width="215" height="36" rx="10" fill="#313244"/>
+    <text x="107" y="24" text-anchor="middle" fill="#f9e2af" font-size="13" font-weight="bold">Step 7: arr[6] = 30</text>
+    <text x="107" y="55" text-anchor="middle" fill="#a6adc8" font-size="11">37.left = 30; 37 st:2; Push(30,1)</text>
+
+    <!-- Mini Tree -->
+    <line x1="107" y1="80" x2="65" y2="105" stroke="#89b4fa" stroke-width="2"/>
+    <line x1="65" y1="105" x2="40" y2="130" stroke="#585b70" stroke-width="2"/>
+    <line x1="65" y1="105" x2="90" y2="130" stroke="#89b4fa" stroke-width="2"/>
+    <line x1="90" y1="130" x2="70" y2="155" stroke="#89b4fa" stroke-width="2"/>
+    <circle cx="107" cy="80" r="13" fill="#cba6f7"/>
+    <text x="107" y="84" text-anchor="middle" fill="#11111b" font-size="10" font-weight="bold">50</text>
+    <circle cx="65" cy="105" r="13" fill="#89b4fa"/>
+    <text x="65" y="109" text-anchor="middle" fill="#11111b" font-size="10" font-weight="bold">25</text>
+    <circle cx="40" cy="130" r="11" fill="#585b70"/>
+    <text x="40" y="134" text-anchor="middle" fill="#cdd6f4" font-size="9">12</text>
+    <circle cx="90" cy="130" r="13" fill="#fab387"/>
+    <text x="90" y="134" text-anchor="middle" fill="#11111b" font-size="10" font-weight="bold">37</text>
+    <circle cx="70" cy="155" r="12" fill="#a6e3a1"/>
+    <text x="70" y="159" text-anchor="middle" fill="#11111b" font-size="9" font-weight="bold">30</text>
+
+    <!-- Stack Box -->
+    <g transform="translate(47, 170)">
+      <rect width="120" height="110" fill="#11111b" stroke="#45475a" rx="6"/>
+      <rect x="15" y="82" width="90" height="22" fill="#cba6f7" rx="3"/>
+      <text x="60" y="97" text-anchor="middle" fill="#11111b" font-size="10" font-weight="bold">50, state: 2</text>
+      <rect x="15" y="57" width="90" height="22" fill="#89b4fa" rx="3"/>
+      <text x="60" y="72" text-anchor="middle" fill="#11111b" font-size="10" font-weight="bold">25, state: 3</text>
+      <rect x="15" y="32" width="90" height="22" fill="#fab387" rx="3"/>
+      <text x="60" y="47" text-anchor="middle" fill="#11111b" font-size="10" font-weight="bold">37, state: 2</text>
+      <rect x="15" y="7" width="90" height="22" fill="#a6e3a1" rx="3"/>
+      <text x="60" y="22" text-anchor="middle" fill="#11111b" font-size="10" font-weight="bold">30, state: 1</text>
+    </g>
+  </g>
+
+  <!-- Steps 8-10 Card (30 pops) -->
+  <g transform="translate(490, 50)">
+    <rect width="215" height="310" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+    <rect width="215" height="36" rx="10" fill="#313244"/>
+    <text x="107" y="24" text-anchor="middle" fill="#f9e2af" font-size="13" font-weight="bold">Steps 8-10: 30 pops</text>
+    <text x="107" y="55" text-anchor="middle" fill="#a6adc8" font-size="11">null, null → 30 st:3 → pop()</text>
+
+    <!-- Mini Tree -->
+    <line x1="107" y1="80" x2="65" y2="105" stroke="#89b4fa" stroke-width="2"/>
+    <line x1="65" y1="105" x2="40" y2="130" stroke="#585b70" stroke-width="2"/>
+    <line x1="65" y1="105" x2="90" y2="130" stroke="#89b4fa" stroke-width="2"/>
+    <line x1="90" y1="130" x2="70" y2="155" stroke="#585b70" stroke-width="2"/>
+    <circle cx="107" cy="80" r="13" fill="#cba6f7"/>
+    <text x="107" y="84" text-anchor="middle" fill="#11111b" font-size="10" font-weight="bold">50</text>
+    <circle cx="65" cy="105" r="13" fill="#89b4fa"/>
+    <text x="65" y="109" text-anchor="middle" fill="#11111b" font-size="10" font-weight="bold">25</text>
+    <circle cx="40" cy="130" r="11" fill="#585b70"/>
+    <text x="40" y="134" text-anchor="middle" fill="#cdd6f4" font-size="9">12</text>
+    <circle cx="90" cy="130" r="13" fill="#fab387"/>
+    <text x="90" y="134" text-anchor="middle" fill="#11111b" font-size="10" font-weight="bold">37</text>
+    <circle cx="70" cy="155" r="12" fill="#585b70" stroke="#a6e3a1" stroke-width="1.5"/>
+    <text x="70" y="159" text-anchor="middle" fill="#a6e3a1" font-size="9" font-weight="bold">30 ✓</text>
+
+    <!-- Stack Box -->
+    <g transform="translate(47, 160)">
+      <rect width="120" height="120" fill="#11111b" stroke="#45475a" rx="6"/>
+      <text x="60" y="18" text-anchor="middle" fill="#f38ba8" font-size="10">30 popped!</text>
+      <rect x="15" y="80" width="90" height="26" fill="#cba6f7" rx="4"/>
+      <text x="60" y="97" text-anchor="middle" fill="#11111b" font-size="11" font-weight="bold">50, state: 2</text>
+      <rect x="15" y="50" width="90" height="26" fill="#89b4fa" rx="4"/>
+      <text x="60" y="67" text-anchor="middle" fill="#11111b" font-size="11" font-weight="bold">25, state: 3</text>
+      <rect x="15" y="24" width="90" height="24" fill="#fab387" rx="4"/>
+      <text x="60" y="40" text-anchor="middle" fill="#11111b" font-size="11" font-weight="bold">37, state: 2</text>
+    </g>
+  </g>
+
+  <!-- Steps 11-13 Card (37 and 25 pop) -->
+  <g transform="translate(725, 50)">
+    <rect width="215" height="310" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+    <rect width="215" height="36" rx="10" fill="#313244"/>
+    <text x="107" y="24" text-anchor="middle" fill="#f9e2af" font-size="13" font-weight="bold">Steps 11-13: 25 pops</text>
+    <text x="107" y="55" text-anchor="middle" fill="#a6adc8" font-size="11">37 null → 37 pops → 25 pops</text>
+
+    <!-- Mini Tree -->
+    <line x1="107" y1="80" x2="65" y2="105" stroke="#585b70" stroke-width="2"/>
+    <line x1="65" y1="105" x2="40" y2="130" stroke="#585b70" stroke-width="2"/>
+    <line x1="65" y1="105" x2="90" y2="130" stroke="#585b70" stroke-width="2"/>
+    <line x1="90" y1="130" x2="70" y2="155" stroke="#585b70" stroke-width="2"/>
+    <circle cx="107" cy="80" r="13" fill="#cba6f7"/>
+    <text x="107" y="84" text-anchor="middle" fill="#11111b" font-size="10" font-weight="bold">50</text>
+    <circle cx="65" cy="105" r="13" fill="#585b70" stroke="#89b4fa" stroke-width="1.5"/>
+    <text x="65" y="109" text-anchor="middle" fill="#89b4fa" font-size="10" font-weight="bold">25 ✓</text>
+    <circle cx="40" cy="130" r="11" fill="#585b70"/>
+    <text x="40" y="134" text-anchor="middle" fill="#cdd6f4" font-size="9">12 ✓</text>
+    <circle cx="90" cy="130" r="13" fill="#585b70"/>
+    <text x="90" y="134" text-anchor="middle" fill="#cdd6f4" font-size="10">37 ✓</text>
+    <circle cx="70" cy="155" r="12" fill="#585b70"/>
+    <text x="70" y="159" text-anchor="middle" fill="#cdd6f4" font-size="9">30 ✓</text>
+
+    <!-- Stack Box -->
+    <g transform="translate(47, 160)">
+      <rect width="120" height="120" fill="#11111b" stroke="#45475a" rx="6"/>
+      <text x="60" y="25" text-anchor="middle" fill="#a6e3a1" font-size="11">Left Subtree Done!</text>
+      <rect x="15" y="70" width="90" height="35" fill="#cba6f7" rx="4"/>
+      <text x="60" y="92" text-anchor="middle" fill="#11111b" font-size="12" font-weight="bold">50, state: 2</text>
+    </g>
+  </g>
+</svg>

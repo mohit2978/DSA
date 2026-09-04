@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 560" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#11111b" />
+      <stop offset="100%" stop-color="#181825" />
+    </linearGradient>
+    <linearGradient id="okNodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#89b4fa" />
+      <stop offset="100%" stop-color="#74c7ec" />
+    </linearGradient>
+    <linearGradient id="badNodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f38ba8" />
+      <stop offset="100%" stop-color="#eba0ac" />
+    </linearGradient>
+    <linearGradient id="cardGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1e2e" />
+      <stop offset="100%" stop-color="#24273a" />
+    </linearGradient>
+    <filter id="shadow3" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="950" height="560" rx="16" fill="url(#bgGrad3)" stroke="#313244" stroke-width="1.5" />
+
+  <!-- Header -->
+  <text x="475" y="40" fill="#cdd6f4" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Validate Binary Search Tree (LeetCode 98)</text>
+  <text x="475" y="66" fill="#a6adc8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" text-anchor="middle">BST Property: For EVERY node, node.val &gt; ALL left subtree keys AND node.val &lt; ALL right subtree keys</text>
+
+  <!-- Left: The Classic Pitfall -->
+  <rect x="30" y="90" width="445" height="445" rx="12" fill="url(#cardGrad3)" stroke="#313244" stroke-width="1" />
+  <text x="50" y="118" fill="#f38ba8" font-family="sans-serif" font-size="14" font-weight="700">THE PITFALL: LOCAL CHECK IS NOT ENOUGH</text>
+
+  <!-- Tree Edges -->
+  <line x1="220" y1="165" x2="140" y2="225" stroke="#45475a" stroke-width="2.5" />
+  <line x1="220" y1="165" x2="310" y2="225" stroke="#45475a" stroke-width="2.5" />
+  <line x1="310" y1="225" x2="255" y2="295" stroke="#45475a" stroke-width="2.5" />
+  <line x1="310" y1="225" x2="365" y2="295" stroke="#45475a" stroke-width="2.5" />
+  <line x1="255" y1="295" x2="290" y2="365" stroke="#f38ba8" stroke-width="2.5" stroke-dasharray="4,4" />
+
+  <!-- Root 50 -->
+  <circle cx="220" cy="165" r="18" fill="url(#okNodeGrad)" filter="url(#shadow3)" />
+  <text x="220" y="171" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">50</text>
+
+  <!-- 25 -->
+  <circle cx="140" cy="225" r="17" fill="url(#okNodeGrad)" filter="url(#shadow3)" />
+  <text x="140" y="230" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">25</text>
+
+  <!-- 75 (Ancestor) -->
+  <circle cx="310" cy="225" r="20" fill="url(#okNodeGrad)" filter="url(#shadow3)" />
+  <text x="310" y="231" fill="#11111b" font-family="sans-serif" font-size="14" font-weight="700" text-anchor="middle">75</text>
+  <text x="350" y="220" fill="#fab387" font-family="sans-serif" font-size="11" font-weight="600">Ancestor</text>
+
+  <!-- 62 -->
+  <circle cx="255" cy="295" r="17" fill="url(#okNodeGrad)" filter="url(#shadow3)" />
+  <text x="255" y="300" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">62</text>
+  <text x="175" y="300" fill="#a6adc8" font-family="sans-serif" font-size="10">62 &lt; 75 (Local OK)</text>
+
+  <!-- 87 -->
+  <circle cx="365" cy="295" r="17" fill="url(#okNodeGrad)" filter="url(#shadow3)" />
+  <text x="365" y="300" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">87</text>
+
+  <!-- 76 (Violator) -->
+  <circle cx="290" cy="365" r="18" fill="url(#badNodeGrad)" filter="url(#shadow3)" />
+  <text x="290" y="371" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">76</text>
+  
+  <!-- Callout box for bug -->
+  <rect x="50" y="415" width="405" height="105" rx="8" fill="#181825" stroke="#f38ba8" stroke-width="1.2" />
+  <text x="65" y="438" fill="#f38ba8" font-family="sans-serif" font-size="12" font-weight="700">Why Local Check Fails:</text>
+  <text x="65" y="458" fill="#bac2de" font-family="sans-serif" font-size="11">• At node 62: right child is 76 (76 &gt; 62 -&gt; Locally OK!)</text>
+  <text x="65" y="476" fill="#bac2de" font-family="sans-serif" font-size="11">• But 76 is in the LEFT subtree of 75! (76 &gt; 75 -&gt; VIOLATION!)</text>
+  <text x="65" y="496" fill="#f9e2af" font-family="sans-serif" font-size="11" font-weight="600">• Conclusion: Node must be &gt; MAX(left) and &lt; MIN(right)!</text>
+
+  <!-- Right: Pair/Triplet DP Approach -->
+  <rect x="490" y="90" width="430" height="445" rx="12" fill="url(#cardGrad3)" stroke="#313244" stroke-width="1" />
+  <text x="510" y="118" fill="#89b4fa" font-family="sans-serif" font-size="14" font-weight="700">CORRECT STRATEGY: BST TRIPLET RETURN</text>
+
+  <!-- Triplet definition box -->
+  <rect x="510" y="135" width="390" height="85" rx="8" fill="#181825" stroke="#89b4fa" stroke-width="1" />
+  <text x="525" y="158" fill="#89b4fa" font-family="sans-serif" font-size="12" font-weight="700">BSTPair Structure:</text>
+  <text x="540" y="180" fill="#cdd6f4" font-family="monospace" font-size="12">class BSTPair { boolean isBST; long min; long max; }</text>
+  <text x="525" y="205" fill="#a6e3a1" font-family="sans-serif" font-size="11">Base case (null): { isBST: true, min: +INF, max: -INF }</text>
+
+  <!-- Postorder Triplet Logic -->
+  <rect x="510" y="230" width="390" height="290" rx="8" fill="#181825" stroke="#45475a" stroke-width="1" />
+  <text x="525" y="255" fill="#fab387" font-family="sans-serif" font-size="12" font-weight="700">State Transition Equations:</text>
+  
+  <text x="525" y="280" fill="#f9e2af" font-family="sans-serif" font-size="11" font-weight="600">1. Validate Current Node:</text>
+  <text x="540" y="298" fill="#bac2de" font-family="monospace" font-size="11">boolean ok = lp.isBST &amp;&amp; rp.isBST</text>
+  <text x="615" y="316" fill="#bac2de" font-family="monospace" font-size="11">&amp;&amp; (val &gt; lp.max &amp;&amp; val &lt; rp.min);</text>
+
+  <text x="525" y="342" fill="#a6e3a1" font-family="sans-serif" font-size="11" font-weight="600">2. Aggregate Subtree Bounds for Ancestors:</text>
+  <text x="540" y="360" fill="#bac2de" font-family="monospace" font-size="11">myPair.min = min(val, min(lp.min, rp.min));</text>
+  <text x="540" y="378" fill="#bac2de" font-family="monospace" font-size="11">myPair.max = max(val, max(lp.max, rp.max));</text>
+
+  <text x="525" y="408" fill="#cba6f7" font-family="sans-serif" font-size="11" font-weight="600">Alternative: Range Validation (Preorder / Top-Down):</text>
+  <text x="540" y="428" fill="#bac2de" font-family="monospace" font-size="11">isValid(node, minLimit, maxLimit):</text>
+  <text x="555" y="446" fill="#bac2de" font-family="monospace" font-size="10">• Check: minLimit &lt; node.val &lt; maxLimit</text>
+  <text x="555" y="464" fill="#bac2de" font-family="monospace" font-size="10">• Recurse Left: (node.left, minLimit, node.val)</text>
+  <text x="555" y="482" fill="#bac2de" font-family="monospace" font-size="10">• Recurse Right: (node.right, node.val, maxLimit)</text>
+  <text x="555" y="502" fill="#89b4fa" font-family="sans-serif" font-size="10" font-weight="600">• Time: O(N) | Space: O(H)</text>
+</svg>

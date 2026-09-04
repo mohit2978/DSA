@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 860" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #181825; }
+      .card { fill: #1e1e2e; stroke: #313244; stroke-width: 1.5; rx: 12px; }
+      .header-title { font-family: system-ui, -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #cdd6f4; }
+      .subtitle { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; fill: #a6adc8; }
+      .section-title { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 600; fill: #89b4fa; }
+      .text-main { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; fill: #cdd6f4; }
+      .text-sub { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; fill: #bac2de; }
+      .text-code { font-family: 'Consolas', 'Courier New', monospace; font-size: 12px; fill: #f5e0dc; }
+      .node-orig { fill: #313244; stroke: #89b4fa; stroke-width: 2.2; }
+      .node-clone { fill: #45475a; stroke: #f38ba8; stroke-width: 2.2; stroke-dasharray: 4 2; }
+      .node-text { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; font-weight: 700; fill: #cdd6f4; text-anchor: middle; dominant-baseline: central; }
+      .edge-orig { stroke: #6c7086; stroke-width: 2; }
+      .edge-clone { stroke: #f38ba8; stroke-width: 2.2; }
+      .edge-restore { stroke: #a6e3a1; stroke-width: 2.2; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="860" class="bg" rx="16" />
+
+  <!-- Header -->
+  <g transform="translate(40, 35)">
+    <text class="header-title" x="0" y="0">Left-Clone Tree &amp; Restoration Transformation</text>
+    <text class="subtitle" x="0" y="24">Duplicating each node as its own left child and recursively restoring the original tree structure</text>
+  </g>
+
+  <!-- Left: Create Left Clone Tree -->
+  <g transform="translate(40, 80)">
+    <rect width="500" height="740" class="card" />
+    <text class="section-title" x="24" y="32">1. Create Left Clone Tree (createLeftCloneTree)</text>
+    
+    <!-- Code Box -->
+    <g transform="translate(24, 50)">
+      <rect width="452" height="150" fill="#181825" stroke="#313244" rx="8" />
+      <text x="16" y="24" class="text-code" fill="#89b4fa">public static Node createLeftCloneTree(Node node) {</text>
+      <text x="32" y="44" class="text-code" fill="#a6adc8">if (node == null) return null;</text>
+      <text x="32" y="64" class="text-code" fill="#fab387">Node lcr = createLeftCloneTree(node.left);</text>
+      <text x="32" y="84" class="text-code" fill="#fab387">Node rcr = createLeftCloneTree(node.right);</text>
+      <text x="32" y="104" class="text-code" fill="#f38ba8">Node copy = new Node(node.data, lcr, null);</text>
+      <text x="32" y="124" class="text-code" fill="#a6e3a1">node.left = copy;</text>
+      <text x="32" y="140" class="text-code" fill="#cdd6f4">return node;</text>
+      <text x="16" y="146" class="text-code" fill="#89b4fa">}</text>
+    </g>
+
+    <!-- Visual Comparison: Original -> Cloned -->
+    <g transform="translate(24, 215)">
+      <!-- Original Subtree -->
+      <g transform="translate(90, 80)">
+        <text x="0" y="-55" class="text-main" font-weight="bold" text-anchor="middle" fill="#89b4fa">Original Tree</text>
+        <line x1="0" y1="0" x2="-45" y2="55" class="edge-orig" />
+        <line x1="0" y1="0" x2="45" y2="55" class="edge-orig" />
+        
+        <circle cx="0" cy="0" r="18" class="node-orig" />
+        <text x="0" y="0" class="node-text">50</text>
+        <circle cx="-45" cy="55" r="16" class="node-orig" />
+        <text x="-45" y="55" class="node-text">25</text>
+        <circle cx="45" cy="55" r="16" class="node-orig" />
+        <text x="45" y="55" class="node-text">75</text>
+      </g>
+
+      <!-- Arrow -->
+      <g transform="translate(225, 80)">
+        <text x="0" y="5" font-family="system-ui" font-size="22px" fill="#fab387" text-anchor="middle">→</text>
+      </g>
+
+      <!-- Cloned Subtree -->
+      <g transform="translate(340, 45)">
+        <text x="0" y="-20" class="text-main" font-weight="bold" text-anchor="middle" fill="#f38ba8">Left Cloned Tree</text>
+        
+        <!-- Edges -->
+        <line x1="0" y1="0" x2="-25" y2="40" class="edge-clone" />
+        <line x1="0" y1="0" x2="60" y2="40" class="edge-orig" />
+        
+        <line x1="-25" y1="40" x2="-55" y2="85" class="edge-orig" />
+        <line x1="-55" y1="85" x2="-80" y2="125" class="edge-clone" />
+        
+        <line x1="60" y1="40" x2="35" y2="85" class="edge-clone" />
+
+        <!-- Nodes -->
+        <circle cx="0" cy="0" r="16" class="node-orig" />
+        <text x="0" y="0" class="node-text">50</text>
+
+        <!-- Cloned 50 -->
+        <circle cx="-25" cy="40" r="15" class="node-clone" />
+        <text x="-25" y="40" class="node-text" fill="#f38ba8">50'</text>
+
+        <!-- Original 25 -->
+        <circle cx="-55" cy="85" r="15" class="node-orig" />
+        <text x="-55" y="85" class="node-text">25</text>
+
+        <!-- Cloned 25 -->
+        <circle cx="-80" cy="125" r="14" class="node-clone" />
+        <text x="-80" y="125" class="node-text" fill="#f38ba8">25'</text>
+
+        <!-- Original 75 -->
+        <circle cx="60" cy="40" r="15" class="node-orig" />
+        <text x="60" y="40" class="node-text">75</text>
+
+        <!-- Cloned 75 -->
+        <circle cx="35" cy="85" r="14" class="node-clone" />
+        <text x="35" y="85" class="node-text" fill="#f38ba8">75'</text>
+      </g>
+    </g>
+
+    <!-- Key Principle Notes -->
+    <g transform="translate(24, 460)">
+      <rect width="452" height="250" fill="#181825" stroke="#313244" rx="8" />
+      <text x="16" y="28" class="text-main" font-weight="bold" fill="#f9e2af">Crucial Logic &amp; Pitfalls:</text>
+      
+      <text x="16" y="58" class="text-sub" fill="#89b4fa"><tspan font-weight="bold">1. Why Postorder is easiest:</tspan></text>
+      <text x="16" y="78" class="text-sub" fill="#bac2de">Recursively clone left (<tspan font-family="monospace">lcr</tspan>) and right (<tspan font-family="monospace">rcr</tspan>) first, then attach</text>
+      <text x="16" y="96" class="text-sub" fill="#bac2de"><tspan font-family="monospace">node.left = new Node(node.data, lcr, null)</tspan> on the way up.</text>
+
+      <text x="16" y="126" class="text-sub" fill="#f38ba8"><tspan font-weight="bold">2. Preorder Trap:</tspan></text>
+      <text x="16" y="146" class="text-sub" fill="#bac2de">If you create the copy first (<tspan font-family="monospace">node.left = copy</tspan>) and then call</text>
+      <text x="16" y="164" class="text-sub" fill="#bac2de"><tspan font-family="monospace">clone(node.left)</tspan>, you will enter an infinite recursion loop</text>
+      <text x="16" y="182" class="text-sub" fill="#bac2de">unless you explicitly call on the original left child reference!</text>
+
+      <text x="16" y="212" class="text-sub" fill="#a6e3a1"><tspan font-weight="bold">3. Right Child:</tspan> Remains untouched (<tspan font-family="monospace">node.right = rcr</tspan>).</text>
+    </g>
+  </g>
+
+  <!-- Right: Transform Back from Left Clone Tree -->
+  <g transform="translate(560, 80)">
+    <rect width="500" height="740" class="card" />
+    <text class="section-title" x="24" y="32">2. Transform Back (transBackFromLeftCloneTree)</text>
+    
+    <!-- Code Box -->
+    <g transform="translate(24, 50)">
+      <rect width="452" height="150" fill="#181825" stroke="#313244" rx="8" />
+      <text x="16" y="24" class="text-code" fill="#89b4fa">public static Node transBack(Node node) {</text>
+      <text x="32" y="44" class="text-code" fill="#a6adc8">if (node == null) return null;</text>
+      <text x="32" y="64" class="text-code" fill="#fab387">Node lnn = transBack(node.left.left); // skip clone</text>
+      <text x="32" y="84" class="text-code" fill="#fab387">Node rnn = transBack(node.right);</text>
+      <text x="32" y="104" class="text-code" fill="#a6e3a1">node.left = lnn;   // bypass clone 50'</text>
+      <text x="32" y="124" class="text-code" fill="#a6e3a1">node.right = rnn;</text>
+      <text x="32" y="140" class="text-code" fill="#cdd6f4">return node;</text>
+      <text x="16" y="146" class="text-code" fill="#89b4fa">}</text>
+    </g>
+
+    <!-- Visual Pointer Rewiring -->
+    <g transform="translate(24, 215)">
+      <rect width="452" height="230" fill="#181825" stroke="#a6e3a1" rx="8" />
+      <text x="20" y="28" class="text-main" font-weight="bold" fill="#a6e3a1">Pointer Rewiring &amp; Garbage Collection</text>
+
+      <g transform="translate(130, 85)">
+        <!-- Node 50 -->
+        <circle cx="0" cy="0" r="18" class="node-orig" />
+        <text x="0" y="0" class="node-text">50</text>
+
+        <!-- Cloned 50' (cut) -->
+        <circle cx="-50" cy="45" r="16" class="node-clone" opacity="0.4" />
+        <text x="-50" y="45" class="node-text" fill="#f38ba8" opacity="0.4">50'</text>
+        <line x1="-60" y1="35" x2="-40" y2="55" stroke="#f38ba8" stroke-width="2.5" />
+        <line x1="-40" y1="35" x2="-60" y2="55" stroke="#f38ba8" stroke-width="2.5" />
+
+        <!-- Node 25 -->
+        <circle cx="-50" cy="105" r="18" class="node-orig" />
+        <text x="-50" y="105" class="node-text">25</text>
+
+        <!-- Old link (dashed) -->
+        <line x1="0" y1="0" x2="-50" y2="45" stroke="#f38ba8" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.4" />
+        <line x1="-50" y1="45" x2="-50" y2="105" stroke="#f38ba8" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.4" />
+
+        <!-- New restored link bypassing 50' -->
+        <path d="M 0 18 Q 20 60 -32 105" fill="none" class="edge-restore" stroke-width="3" />
+        <text x="35" y="70" class="text-sub" font-weight="bold" fill="#a6e3a1">node.left = node.left.left</text>
+      </g>
+    </g>
+
+    <!-- Key Principle Notes -->
+    <g transform="translate(24, 460)">
+      <rect width="452" height="250" fill="#181825" stroke="#313244" rx="8" />
+      <text x="16" y="28" class="text-main" font-weight="bold" fill="#f9e2af">Restoration Highlights:</text>
+      
+      <text x="16" y="58" class="text-sub" fill="#89b4fa"><tspan font-weight="bold">1. Skipping the Clone Node:</tspan></text>
+      <text x="16" y="78" class="text-sub" fill="#bac2de">Since <tspan font-family="monospace">node.left</tspan> is guaranteed to be the clone <tspan font-family="monospace">node'</tspan>,</text>
+      <text x="16" y="96" class="text-sub" fill="#bac2de">the real left subtree starts at <tspan font-family="monospace" fill="#a6e3a1">node.left.left</tspan>.</text>
+
+      <text x="16" y="126" class="text-sub" fill="#89b4fa"><tspan font-weight="bold">2. Unlinking Clones:</tspan></text>
+      <text x="16" y="146" class="text-sub" fill="#bac2de">By assigning <tspan font-family="monospace">node.left = lnn</tspan>, the clone node <tspan font-family="monospace">node'</tspan> is</text>
+      <text x="16" y="164" class="text-sub" fill="#bac2de">completely unreferenced and automatically garbage-collected.</text>
+
+      <text x="16" y="194" class="text-sub" fill="#a6e3a1"><tspan font-weight="bold">3. Complexity:</tspan> <tspan font-family="monospace">O(N)</tspan> Time, <tspan font-family="monospace">O(H)</tspan> Recursion Call Stack Space.</text>
+    </g>
+  </g>
+</svg>

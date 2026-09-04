@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 780" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cardGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="780" fill="url(#bgGrad)" rx="16"/>
+
+  <!-- Title Section -->
+  <text x="550" y="45" fill="#f8fafc" font-size="24" font-weight="bold" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">Level Order Traversal (BFS Line-by-Line) — 4 Approaches</text>
+  <text x="550" y="72" fill="#94a3b8" font-size="14" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">All 4 techniques achieve O(N) Time and O(N) Space complexity</text>
+
+  <!-- Card 1: Count / Size Based -->
+  <g transform="translate(30, 95)" filter="url(#shadow)">
+    <rect width="505" height="315" rx="12" fill="url(#cardGrad1)" stroke="#0284c7" stroke-width="1.5"/>
+    <rect x="0" y="0" width="505" height="40" rx="12" fill="#0284c7" fill-opacity="0.2"/>
+    <text x="20" y="26" fill="#38bdf8" font-size="16" font-weight="bold" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">1. Queue Size / Count Based (Industry Standard)</text>
+    
+    <text x="20" y="65" fill="#e2e8f0" font-size="13" font-family="monospace">while (!q.isEmpty()) {</text>
+    <text x="40" y="85" fill="#38bdf8" font-size="13" font-family="monospace">int count = q.size(); // Freeze current level size</text>
+    <text x="40" y="105" fill="#e2e8f0" font-size="13" font-family="monospace">for (int i = 0; i &lt; count; i++) {</text>
+    <text x="60" y="125" fill="#e2e8f0" font-size="13" font-family="monospace">Node curr = q.poll();</text>
+    <text x="60" y="145" fill="#a5f3fc" font-size="13" font-family="monospace">print(curr.data + " ");</text>
+    <text x="60" y="165" fill="#94a3b8" font-size="13" font-family="monospace">if (curr.left != null) q.add(curr.left);</text>
+    <text x="60" y="185" fill="#94a3b8" font-size="13" font-family="monospace">if (curr.right != null) q.add(curr.right);</text>
+    <text x="40" y="205" fill="#e2e8f0" font-size="13" font-family="monospace">}</text>
+    <text x="40" y="225" fill="#fbbf24" font-size="13" font-family="monospace">println(); // Newline after finishing level</text>
+    <text x="20" y="245" fill="#e2e8f0" font-size="13" font-family="monospace">}</text>
+    
+    <!-- Highlights -->
+    <rect x="20" y="260" width="465" height="42" rx="6" fill="#0369a1" fill-opacity="0.2" stroke="#38bdf8" stroke-dasharray="4"/>
+    <text x="30" y="278" fill="#e2e8f0" font-size="12" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">✔ Cleanest &amp; most common pattern in LeetCode/interviews</text>
+    <text x="30" y="294" fill="#94a3b8" font-size="11" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">✔ No extra wrapper class or sentinel nodes needed</text>
+  </g>
+
+  <!-- Card 2: Two Queues -->
+  <g transform="translate(565, 95)" filter="url(#shadow)">
+    <rect width="505" height="315" rx="12" fill="url(#cardGrad1)" stroke="#7c3aed" stroke-width="1.5"/>
+    <rect x="0" y="0" width="505" height="40" rx="12" fill="#7c3aed" fill-opacity="0.2"/>
+    <text x="20" y="26" fill="#c084fc" font-size="16" font-weight="bold" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">2. Two Queues (Parent Queue &amp; Child Queue)</text>
+    
+    <text x="20" y="65" fill="#e2e8f0" font-size="13" font-family="monospace">Queue&lt;Node&gt; pq = new ArrayDeque&lt;&gt;();</text>
+    <text x="20" y="85" fill="#e2e8f0" font-size="13" font-family="monospace">Queue&lt;Node&gt; cq = new ArrayDeque&lt;&gt;();</text>
+    <text x="20" y="105" fill="#e2e8f0" font-size="13" font-family="monospace">pq.add(root);</text>
+    <text x="20" y="125" fill="#e2e8f0" font-size="13" font-family="monospace">while (!pq.isEmpty()) {</text>
+    <text x="40" y="145" fill="#e2e8f0" font-size="13" font-family="monospace">Node curr = pq.poll(); print(curr.data + " ");</text>
+    <text x="40" y="165" fill="#c084fc" font-size="13" font-family="monospace">if (curr.left != null) cq.add(curr.left);</text>
+    <text x="40" y="185" fill="#c084fc" font-size="13" font-family="monospace">if (curr.right != null) cq.add(curr.right);</text>
+    <text x="40" y="205" fill="#e2e8f0" font-size="13" font-family="monospace">if (pq.isEmpty()) {</text>
+    <text x="60" y="225" fill="#fbbf24" font-size="13" font-family="monospace">pq = cq; cq = new ArrayDeque&lt;&gt;(); println();</text>
+    <text x="40" y="245" fill="#e2e8f0" font-size="13" font-family="monospace">}</text>
+    <text x="20" y="260" fill="#e2e8f0" font-size="13" font-family="monospace">}</text>
+    
+    <rect x="20" y="265" width="465" height="38" rx="6" fill="#6b21a8" fill-opacity="0.2" stroke="#c084fc" stroke-dasharray="4"/>
+    <text x="30" y="285" fill="#e2e8f0" font-size="12" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">✔ Clear physical separation between parent &amp; child levels</text>
+  </g>
+
+  <!-- Card 3: Delimiter / Sentinel -->
+  <g transform="translate(30, 435)" filter="url(#shadow)">
+    <rect width="505" height="315" rx="12" fill="url(#cardGrad1)" stroke="#059669" stroke-width="1.5"/>
+    <rect x="0" y="0" width="505" height="40" rx="12" fill="#059669" fill-opacity="0.2"/>
+    <text x="20" y="26" fill="#34d399" font-size="16" font-weight="bold" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">3. Delimiter / Sentinel (Dummy Node / Null marker)</text>
+    
+    <text x="20" y="65" fill="#e2e8f0" font-size="13" font-family="monospace">q.add(root); q.add(new Node(-1)); // Delimiter</text>
+    <text x="20" y="85" fill="#e2e8f0" font-size="13" font-family="monospace">while (!q.isEmpty()) {</text>
+    <text x="40" y="105" fill="#e2e8f0" font-size="13" font-family="monospace">Node curr = q.poll();</text>
+    <text x="40" y="125" fill="#34d399" font-size="13" font-family="monospace">if (curr.data == -1) { // Found level boundary</text>
+    <text x="60" y="145" fill="#fbbf24" font-size="13" font-family="monospace">println();</text>
+    <text x="60" y="165" fill="#34d399" font-size="13" font-family="monospace">if (!q.isEmpty()) q.add(new Node(-1));</text>
+    <text x="40" y="185" fill="#e2e8f0" font-size="13" font-family="monospace">} else {</text>
+    <text x="60" y="205" fill="#e2e8f0" font-size="13" font-family="monospace">print(curr.data + " ");</text>
+    <text x="60" y="225" fill="#94a3b8" font-size="13" font-family="monospace">if (curr.left != null) q.add(curr.left);</text>
+    <text x="60" y="245" fill="#94a3b8" font-size="13" font-family="monospace">if (curr.right != null) q.add(curr.right);</text>
+    <text x="40" y="260" fill="#e2e8f0" font-size="13" font-family="monospace">}</text>
+    <text x="20" y="275" fill="#e2e8f0" font-size="13" font-family="monospace">}</text>
+    
+    <rect x="20" y="280" width="465" height="25" rx="6" fill="#065f46" fill-opacity="0.2" stroke="#34d399" stroke-dasharray="4"/>
+    <text x="30" y="297" fill="#e2e8f0" font-size="11" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">✔ Sentinel acts as end-of-level marker</text>
+  </g>
+
+  <!-- Card 4: Pair / Level Tracker -->
+  <g transform="translate(565, 435)" filter="url(#shadow)">
+    <rect width="505" height="315" rx="12" fill="url(#cardGrad1)" stroke="#d97706" stroke-width="1.5"/>
+    <rect x="0" y="0" width="505" height="40" rx="12" fill="#d97706" fill-opacity="0.2"/>
+    <text x="20" y="26" fill="#fbbf24" font-size="16" font-weight="bold" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">4. Pair (Node + Level) — Critical for Graph BFS</text>
+    
+    <text x="20" y="65" fill="#e2e8f0" font-size="13" font-family="monospace">class Pair { Node node; int level; }</text>
+    <text x="20" y="85" fill="#e2e8f0" font-size="13" font-family="monospace">q.add(new Pair(root, 1)); int currLevel = 1;</text>
+    <text x="20" y="105" fill="#e2e8f0" font-size="13" font-family="monospace">while (!q.isEmpty()) {</text>
+    <text x="40" y="125" fill="#e2e8f0" font-size="13" font-family="monospace">Pair p = q.poll();</text>
+    <text x="40" y="145" fill="#fbbf24" font-size="13" font-family="monospace">if (p.level &gt; currLevel) {</text>
+    <text x="60" y="165" fill="#fbbf24" font-size="13" font-family="monospace">currLevel = p.level; println();</text>
+    <text x="40" y="185" fill="#e2e8f0" font-size="13" font-family="monospace">}</text>
+    <text x="40" y="205" fill="#e2e8f0" font-size="13" font-family="monospace">print(p.node.data + " ");</text>
+    <text x="40" y="225" fill="#94a3b8" font-size="13" font-family="monospace">if (p.node.left != null) q.add(new Pair(..., p.lvl+1));</text>
+    <text x="40" y="245" fill="#94a3b8" font-size="13" font-family="monospace">if (p.node.right != null) q.add(new Pair(..., p.lvl+1));</text>
+    <text x="20" y="265" fill="#e2e8f0" font-size="13" font-family="monospace">}</text>
+    
+    <rect x="20" y="275" width="465" height="30" rx="6" fill="#78350f" fill-opacity="0.2" stroke="#fbbf24" stroke-dasharray="4"/>
+    <text x="30" y="294" fill="#fbbf24" font-size="11" font-weight="bold" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">★ Foundation for multi-source BFS, Dijkstra &amp; Graph Level Traversal</text>
+  </g>
+</svg>

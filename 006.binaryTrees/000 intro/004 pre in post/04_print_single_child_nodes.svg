@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 780" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #181825; }
+      .card { fill: #1e1e2e; stroke: #313244; stroke-width: 1.5; rx: 12px; }
+      .header-title { font-family: system-ui, -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #cdd6f4; }
+      .subtitle { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; fill: #a6adc8; }
+      .section-title { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 600; fill: #89b4fa; }
+      .text-main { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; fill: #cdd6f4; }
+      .text-sub { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; fill: #bac2de; }
+      .text-code { font-family: 'Consolas', 'Courier New', monospace; font-size: 12px; fill: #f5e0dc; }
+      .node-norm { fill: #313244; stroke: #89b4fa; stroke-width: 2.2; }
+      .node-single { fill: #45475a; stroke: #fab387; stroke-width: 3; filter: drop-shadow(0 0 6px #fab387); }
+      .node-text { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; font-weight: 700; fill: #cdd6f4; text-anchor: middle; dominant-baseline: central; }
+      .tree-edge { stroke: #585b70; stroke-width: 2.2; }
+      .edge-single { stroke: #fab387; stroke-width: 2.8; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1050" height="780" class="bg" rx="16" />
+
+  <!-- Header -->
+  <g transform="translate(40, 35)">
+    <text class="header-title" x="0" y="0">Print Single Child Nodes</text>
+    <text class="subtitle" x="0" y="24">Identify and print all nodes in a binary tree that have exactly ONE child (not 0, not 2)</text>
+  </g>
+
+  <!-- Left Card: Tree Visualization -->
+  <g transform="translate(40, 80)">
+    <rect width="460" height="660" class="card" />
+    <text class="section-title" x="24" y="32">1. Visual Tree Example</text>
+
+    <!-- Tree -->
+    <g transform="translate(230, 130)">
+      <!-- Edges -->
+      <line x1="0" y1="0" x2="-80" y2="70" class="tree-edge" />
+      <line x1="0" y1="0" x2="80" y2="70" class="tree-edge" />
+      <line x1="-80" y1="70" x2="-120" y2="140" class="edge-single" />
+      <!-- Node 2 right is null -->
+      <line x1="-120" y1="140" x2="-80" y2="210" class="edge-single" />
+      <!-- Node 4 left is null -->
+      <line x1="80" y1="70" x2="50" y2="140" class="edge-single" />
+      <!-- Node 3 right is null -->
+
+      <!-- Nodes -->
+      <!-- Node 1 (has 2 children: 2, 3) -->
+      <circle cx="0" cy="0" r="19" class="node-norm" />
+      <text x="0" y="0" class="node-text">1</text>
+      <text x="32" y="2" class="text-sub" fill="#6c7086">(2 children)</text>
+
+      <!-- Node 2 (has ONLY LEFT: 4) -->
+      <circle cx="-80" cy="70" r="19" class="node-norm" />
+      <text x="-80" y="70" class="node-text">2</text>
+      <text x="-165" y="70" class="text-sub" fill="#a6adc8">Parent of 4</text>
+
+      <!-- Node 3 (has ONLY LEFT: 6) -->
+      <circle cx="80" cy="70" r="19" class="node-norm" />
+      <text x="80" y="70" class="node-text">3</text>
+      <text x="110" y="70" class="text-sub" fill="#a6adc8">Parent of 6</text>
+
+      <!-- Node 4 (Single Child, and has ONLY RIGHT: 5) -->
+      <circle cx="-120" cy="140" r="19" class="node-single" />
+      <text x="-120" y="140" class="node-text" fill="#fab387">4</text>
+      <text x="-195" y="140" class="text-sub" font-weight="bold" fill="#fab387">Single Child ★</text>
+
+      <!-- Node 6 (Single Child of 3, leaf) -->
+      <circle cx="50" cy="140" r="19" class="node-single" />
+      <text x="50" y="140" class="node-text" fill="#fab387">6</text>
+      <text x="80" y="140" class="text-sub" font-weight="bold" fill="#fab387">Single Child ★</text>
+
+      <!-- Node 5 (Single Child of 4, leaf) -->
+      <circle cx="-80" cy="210" r="19" class="node-single" />
+      <text x="-80" y="210" class="node-text" fill="#fab387">5</text>
+      <text x="-155" y="210" class="text-sub" font-weight="bold" fill="#fab387">Single Child ★</text>
+    </g>
+
+    <!-- Output Box -->
+    <g transform="translate(24, 460)">
+      <rect width="412" height="170" fill="#181825" stroke="#fab387" rx="8" />
+      <text x="16" y="28" class="text-main" font-weight="bold" fill="#fab387">Printed Single Child Output:</text>
+      <text x="16" y="55" class="text-code" font-size="16px" fill="#fab387">4, 5, 6</text>
+      
+      <text x="16" y="85" class="text-sub" fill="#bac2de"><tspan font-weight="bold" fill="#89b4fa">Why?</tspan></text>
+      <text x="16" y="105" class="text-sub" fill="#cdd6f4">• Node 4 is the only child of Node 2 (right is null)</text>
+      <text x="16" y="125" class="text-sub" fill="#cdd6f4">• Node 5 is the only child of Node 4 (left is null)</text>
+      <text x="16" y="145" class="text-sub" fill="#cdd6f4">• Node 6 is the only child of Node 3 (right is null)</text>
+    </g>
+  </g>
+
+  <!-- Right Card: 2 Implementation Strategies -->
+  <g transform="translate(520, 80)">
+    <rect width="490" height="660" class="card" />
+    <text class="section-title" x="24" y="32">2. Implementation Strategies</text>
+
+    <!-- Approach 1: Check Children from Parent (Cleanest) -->
+    <g transform="translate(24, 50)">
+      <rect width="442" height="260" fill="#181825" stroke="#a6e3a1" rx="8" stroke-width="1.5" />
+      <text x="16" y="26" class="text-main" font-weight="bold" fill="#a6e3a1">Approach 1: Inspect Children from Parent (Recommended)</text>
+      
+      <text x="16" y="52" class="text-code" fill="#89b4fa">public static void printSingleChild(Node node) {</text>
+      <text x="32" y="72" class="text-code" fill="#a6adc8">if (node == null) return;</text>
+      <text x="32" y="96" class="text-code" fill="#fab387">if (node.left != null &amp;&amp; node.right == null) {</text>
+      <text x="48" y="116" class="text-code" fill="#a6e3a1">System.out.println(node.left.data);</text>
+      <text x="32" y="136" class="text-code" fill="#fab387">} else if (node.left == null &amp;&amp; node.right != null) {</text>
+      <text x="48" y="156" class="text-code" fill="#a6e3a1">System.out.println(node.right.data);</text>
+      <text x="32" y="176" class="text-code" fill="#fab387">}</text>
+      <text x="32" y="200" class="text-code" fill="#cdd6f4">printSingleChild(node.left);</text>
+      <text x="32" y="220" class="text-code" fill="#cdd6f4">printSingleChild(node.right);</text>
+      <text x="16" y="240" class="text-code" fill="#89b4fa">}</text>
+    </g>
+
+    <!-- Approach 2: Pass Parent Reference -->
+    <g transform="translate(24, 330)">
+      <rect width="442" height="290" fill="#181825" stroke="#313244" rx="8" />
+      <text x="16" y="26" class="text-main" font-weight="bold" fill="#89b4fa">Approach 2: Passing Parent as Parameter</text>
+      
+      <text x="16" y="52" class="text-code" fill="#89b4fa">public static void printSingleChild(Node node, Node parent) {</text>
+      <text x="32" y="72" class="text-code" fill="#a6adc8">if (node == null) return;</text>
+      <text x="32" y="96" class="text-code" fill="#fab387">if (parent != null) {</text>
+      <text x="48" y="116" class="text-code" fill="#bac2de">// If parent has node as only child</text>
+      <text x="48" y="136" class="text-code" fill="#fab387">if (parent.left == node &amp;&amp; parent.right == null)</text>
+      <text x="64" y="156" class="text-code" fill="#a6e3a1">System.out.println(node.data);</text>
+      <text x="48" y="176" class="text-code" fill="#fab387">else if (parent.right == node &amp;&amp; parent.left == null)</text>
+      <text x="64" y="196" class="text-code" fill="#a6e3a1">System.out.println(node.data);</text>
+      <text x="32" y="216" class="text-code" fill="#fab387">}</text>
+      <text x="32" y="240" class="text-code" fill="#cdd6f4">printSingleChild(node.left, node);</text>
+      <text x="32" y="260" class="text-code" fill="#cdd6f4">printSingleChild(node.right, node);</text>
+      <text x="16" y="280" class="text-code" fill="#89b4fa">}</text>
+    </g>
+  </g>
+</svg>
