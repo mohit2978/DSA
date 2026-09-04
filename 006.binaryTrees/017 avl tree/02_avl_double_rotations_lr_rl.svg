@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 560" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#11111b" />
+      <stop offset="100%" stop-color="#181825" />
+    </linearGradient>
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#89b4fa" />
+      <stop offset="100%" stop-color="#74c7ec" />
+    </linearGradient>
+    <linearGradient id="childGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fab387" />
+      <stop offset="100%" stop-color="#f9e2af" />
+    </linearGradient>
+    <linearGradient id="grandChildGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a6e3a1" />
+      <stop offset="100%" stop-color="#94e2d5" />
+    </linearGradient>
+    <linearGradient id="cardGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1e2e" />
+      <stop offset="100%" stop-color="#24273a" />
+    </linearGradient>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#89b4fa" />
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#a6e3a1" />
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="940" height="560" rx="16" fill="url(#bgGrad2)" stroke="#313244" stroke-width="1.5" />
+
+  <!-- Header -->
+  <text x="470" y="38" fill="#cdd6f4" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" text-anchor="middle">AVL Tree: Double Rotations (LR and RL Cases)</text>
+  <text x="470" y="62" fill="#a6adc8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" text-anchor="middle">A zig-zag imbalance is first converted into a straight line (LL or RR), then balanced with a single root rotation</text>
+
+  <!-- ==================== TOP HALF: LR CASE ==================== -->
+  <rect x="25" y="80" width="890" height="225" rx="12" fill="url(#cardGrad2)" stroke="#313244" stroke-width="1" />
+  
+  <rect x="40" y="92" width="80" height="24" rx="5" fill="#313244" stroke="#89b4fa" stroke-width="1" />
+  <text x="80" y="108" fill="#89b4fa" font-family="sans-serif" font-size="12" font-weight="700" text-anchor="middle">3. LR Case</text>
+  <text x="135" y="108" fill="#bac2de" font-family="sans-serif" font-size="12">Inserted into Right child of Left child (Zig-Zag)</text>
+
+  <!-- Stage 1: Initial LR -->
+  <text x="95" y="138" fill="#f38ba8" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">Initial LR (BF = +2)</text>
+  <line x1="95" y1="155" x2="60" y2="200" stroke="#45475a" stroke-width="2" />
+  <line x1="60" y1="200" x2="95" y2="245" stroke="#45475a" stroke-width="2" />
+
+  <circle cx="95" cy="155" r="15" fill="url(#nodeGrad)" filter="url(#shadow)" />
+  <text x="95" y="159" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">1</text>
+  <circle cx="60" cy="200" r="15" fill="url(#childGrad)" filter="url(#shadow)" />
+  <text x="60" y="204" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">2</text>
+  <circle cx="95" cy="245" r="15" fill="url(#grandChildGrad)" filter="url(#shadow)" />
+  <text x="95" y="249" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">3</text>
+
+  <!-- Transition 1: Left Rotate Child -->
+  <line x1="140" y1="195" x2="195" y2="195" stroke="#fab387" stroke-width="2.5" marker-end="url(#arrowBlue)" />
+  <text x="168" y="178" fill="#fab387" font-family="sans-serif" font-size="10" font-weight="700" text-anchor="middle">Step 1</text>
+  <text x="168" y="215" fill="#bac2de" font-family="sans-serif" font-size="9" text-anchor="middle">leftRotate(child)</text>
+
+  <!-- Stage 2: Converted to LL -->
+  <text x="255" y="138" fill="#fab387" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">Transformed to LL</text>
+  <line x1="255" y1="155" x2="225" y2="200" stroke="#45475a" stroke-width="2" />
+  <line x1="225" y1="200" x2="195" y2="245" stroke="#45475a" stroke-width="2" />
+
+  <circle cx="255" cy="155" r="15" fill="url(#nodeGrad)" filter="url(#shadow)" />
+  <text x="255" y="159" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">1</text>
+  <circle cx="225" cy="200" r="15" fill="url(#grandChildGrad)" filter="url(#shadow)" />
+  <text x="225" y="204" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">3</text>
+  <circle cx="195" cy="245" r="15" fill="url(#childGrad)" filter="url(#shadow)" />
+  <text x="195" y="249" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">2</text>
+
+  <!-- Transition 2: Right Rotate Root -->
+  <line x1="295" y1="195" x2="350" y2="195" stroke="#a6e3a1" stroke-width="2.5" marker-end="url(#arrowGreen)" />
+  <text x="323" y="178" fill="#a6e3a1" font-family="sans-serif" font-size="10" font-weight="700" text-anchor="middle">Step 2</text>
+  <text x="323" y="215" fill="#bac2de" font-family="sans-serif" font-size="9" text-anchor="middle">rightRotate(root)</text>
+
+  <!-- Stage 3: Final Balanced -->
+  <text x="410" y="138" fill="#a6e3a1" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">Balanced Result</text>
+  <line x1="410" y1="165" x2="375" y2="215" stroke="#45475a" stroke-width="2" />
+  <line x1="410" y1="165" x2="445" y2="215" stroke="#45475a" stroke-width="2" />
+
+  <circle cx="410" cy="165" r="15" fill="url(#grandChildGrad)" filter="url(#shadow)" />
+  <text x="410" y="169" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">3</text>
+  <circle cx="375" cy="215" r="15" fill="url(#childGrad)" filter="url(#shadow)" />
+  <text x="375" y="219" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">2</text>
+  <circle cx="445" cy="215" r="15" fill="url(#nodeGrad)" filter="url(#shadow)" />
+  <text x="445" y="219" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">1</text>
+
+  <!-- LR Explanation Box -->
+  <rect x="490" y="125" width="410" height="160" rx="8" fill="#181825" stroke="#45475a" stroke-width="1" />
+  <text x="505" y="148" fill="#89b4fa" font-family="sans-serif" font-size="12" font-weight="700">LR Algorithm Strategy:</text>
+  <text x="505" y="170" fill="#bac2de" font-family="sans-serif" font-size="11">• Condition: node.balance &gt; 1 &amp;&amp; node.left.balance &lt; 0</text>
+  <text x="505" y="190" fill="#fab387" font-family="sans-serif" font-size="11">1. node.left = leftRotate(node.left);</text>
+  <text x="520" y="208" fill="#a6adc8" font-family="sans-serif" font-size="10">→ Aligns the child nodes into a straight line (converts LR into LL)</text>
+  <text x="505" y="228" fill="#a6e3a1" font-family="sans-serif" font-size="11">2. return rightRotate(node);</text>
+  <text x="520" y="246" fill="#a6adc8" font-family="sans-serif" font-size="10">→ Re-uses standard LL rotation function to balance the subtree</text>
+  <text x="505" y="268" fill="#f9e2af" font-family="sans-serif" font-size="10" font-weight="600">BST Inorder Maintained: 2 &lt; 3 &lt; 1</text>
+
+
+  <!-- ==================== BOTTOM HALF: RL CASE ==================== -->
+  <rect x="25" y="315" width="890" height="225" rx="12" fill="url(#cardGrad2)" stroke="#313244" stroke-width="1" />
+  
+  <rect x="40" y="327" width="80" height="24" rx="5" fill="#313244" stroke="#89b4fa" stroke-width="1" />
+  <text x="80" y="343" fill="#89b4fa" font-family="sans-serif" font-size="12" font-weight="700" text-anchor="middle">4. RL Case</text>
+  <text x="135" y="343" fill="#bac2de" font-family="sans-serif" font-size="12">Inserted into Left child of Right child (Zig-Zag)</text>
+
+  <!-- Stage 1: Initial RL -->
+  <text x="95" y="373" fill="#f38ba8" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">Initial RL (BF = -2)</text>
+  <line x1="95" y1="390" x2="130" y2="435" stroke="#45475a" stroke-width="2" />
+  <line x1="130" y1="435" x2="95" y2="480" stroke="#45475a" stroke-width="2" />
+
+  <circle cx="95" cy="390" r="15" fill="url(#nodeGrad)" filter="url(#shadow)" />
+  <text x="95" y="394" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">1</text>
+  <circle cx="130" cy="435" r="15" fill="url(#childGrad)" filter="url(#shadow)" />
+  <text x="130" y="439" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">2</text>
+  <circle cx="95" cy="480" r="15" fill="url(#grandChildGrad)" filter="url(#shadow)" />
+  <text x="95" y="484" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">3</text>
+
+  <!-- Transition 1: Right Rotate Child -->
+  <line x1="155" y1="430" x2="210" y2="430" stroke="#fab387" stroke-width="2.5" marker-end="url(#arrowBlue)" />
+  <text x="183" y="413" fill="#fab387" font-family="sans-serif" font-size="10" font-weight="700" text-anchor="middle">Step 1</text>
+  <text x="183" y="450" fill="#bac2de" font-family="sans-serif" font-size="9" text-anchor="middle">rightRotate(child)</text>
+
+  <!-- Stage 2: Converted to RR -->
+  <text x="255" y="373" fill="#fab387" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">Transformed to RR</text>
+  <line x1="255" y1="390" x2="285" y2="435" stroke="#45475a" stroke-width="2" />
+  <line x1="285" y1="435" x2="315" y2="480" stroke="#45475a" stroke-width="2" />
+
+  <circle cx="255" cy="390" r="15" fill="url(#nodeGrad)" filter="url(#shadow)" />
+  <text x="255" y="394" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">1</text>
+  <circle cx="285" cy="435" r="15" fill="url(#grandChildGrad)" filter="url(#shadow)" />
+  <text x="285" y="439" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">3</text>
+  <circle cx="315" cy="480" r="15" fill="url(#childGrad)" filter="url(#shadow)" />
+  <text x="315" y="484" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">2</text>
+
+  <!-- Transition 2: Left Rotate Root -->
+  <line x1="335" y1="430" x2="390" y2="430" stroke="#a6e3a1" stroke-width="2.5" marker-end="url(#arrowGreen)" />
+  <text x="363" y="413" fill="#a6e3a1" font-family="sans-serif" font-size="10" font-weight="700" text-anchor="middle">Step 2</text>
+  <text x="363" y="450" fill="#bac2de" font-family="sans-serif" font-size="9" text-anchor="middle">leftRotate(root)</text>
+
+  <!-- Stage 3: Final Balanced -->
+  <text x="440" y="373" fill="#a6e3a1" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">Balanced Result</text>
+  <line x1="440" y1="400" x2="405" y2="450" stroke="#45475a" stroke-width="2" />
+  <line x1="440" y1="400" x2="475" y2="450" stroke="#45475a" stroke-width="2" />
+
+  <circle cx="440" cy="400" r="15" fill="url(#grandChildGrad)" filter="url(#shadow)" />
+  <text x="440" y="404" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">3</text>
+  <circle cx="405" cy="450" r="15" fill="url(#nodeGrad)" filter="url(#shadow)" />
+  <text x="405" y="454" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">1</text>
+  <circle cx="475" cy="450" r="15" fill="url(#childGrad)" filter="url(#shadow)" />
+  <text x="475" y="454" fill="#11111b" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">2</text>
+
+  <!-- RL Explanation Box -->
+  <rect x="490" y="360" width="410" height="160" rx="8" fill="#181825" stroke="#45475a" stroke-width="1" />
+  <text x="505" y="383" fill="#89b4fa" font-family="sans-serif" font-size="12" font-weight="700">RL Algorithm Strategy:</text>
+  <text x="505" y="405" fill="#bac2de" font-family="sans-serif" font-size="11">• Condition: node.balance &lt; -1 &amp;&amp; node.right.balance &gt; 0</text>
+  <text x="505" y="425" fill="#fab387" font-family="sans-serif" font-size="11">1. node.right = rightRotate(node.right);</text>
+  <text x="520" y="443" fill="#a6adc8" font-family="sans-serif" font-size="10">→ Aligns the child nodes into a straight line (converts RL into RR)</text>
+  <text x="505" y="463" fill="#a6e3a1" font-family="sans-serif" font-size="11">2. return leftRotate(node);</text>
+  <text x="520" y="481" fill="#a6adc8" font-family="sans-serif" font-size="10">→ Re-uses standard RR rotation function to balance the subtree</text>
+  <text x="505" y="503" fill="#f9e2af" font-family="sans-serif" font-size="10" font-weight="600">BST Inorder Maintained: 1 &lt; 3 &lt; 2</text>
+</svg>

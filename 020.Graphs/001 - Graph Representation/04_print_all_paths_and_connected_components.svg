@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f111a"/>
+      <stop offset="50%" stop-color="#161824"/>
+      <stop offset="100%" stop-color="#1a1c2e"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e2030"/>
+      <stop offset="100%" stop-color="#181a27"/>
+    </linearGradient>
+
+    <linearGradient id="comp1Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#89b4fa"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+
+    <linearGradient id="comp2Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a6e3a1"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+
+    <linearGradient id="comp3Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fab387"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1120" height="700" rx="16" fill="url(#bgGrad4)" stroke="#313244" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="560" y="42" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="700" text-anchor="middle">Advanced Traversal: Backtracking Paths &amp; Connected Components</text>
+  <text x="560" y="66" fill="#9399b2" font-family="'Segoe UI', Roboto, sans-serif" font-size="14" text-anchor="middle">Exploring All Simple Paths via Backtracking &amp; Component Forest Decomposition</text>
+
+  <!-- Left Card: Backtracking All Paths -->
+  <g transform="translate(30, 90)">
+    <rect width="530" height="580" rx="12" fill="url(#cardGrad4)" stroke="#313244" stroke-width="1.2"/>
+    <rect x="0" y="0" width="530" height="38" rx="12" fill="#1e1e2e"/>
+    <text x="20" y="25" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">1. Print All Paths (Backtracking)</text>
+
+    <!-- Code Block -->
+    <g transform="translate(20, 50)">
+      <rect width="490" height="230" rx="8" fill="#11111b" stroke="#313244" stroke-width="1"/>
+      <text x="15" y="25" fill="#fab387" font-family="'Courier New', monospace" font-size="11">public static void printAllPaths(ArrayList&lt;Edge&gt;[] graph,</text>
+      <text x="40" y="43" fill="#fab387" font-family="'Courier New', monospace" font-size="11">int src, int dest, boolean[] visited, String psf) {</text>
+
+      <text x="25" y="70" fill="#a6e3a1" font-family="'Courier New', monospace" font-size="11">if (src == dest) {</text>
+      <text x="45" y="88" fill="#a6e3a1" font-family="'Courier New', monospace" font-size="11">System.out.println(psf); return;</text>
+      <text x="25" y="106" fill="#a6e3a1" font-family="'Courier New', monospace" font-size="11">}</text>
+
+      <text x="25" y="130" fill="#f38ba8" font-family="'Courier New', monospace" font-size="11">visited[src] = true; // 1. MARK VISITED</text>
+      <text x="25" y="150" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="11">for (Edge e : graph[src]) {</text>
+      <text x="45" y="168" fill="#89b4fa" font-family="'Courier New', monospace" font-size="11">if (!visited[e.nbr])</text>
+      <text x="65" y="186" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="11">printAllPaths(graph, e.nbr, dest, visited, psf + e.nbr);</text>
+      <text x="25" y="204" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="11">}</text>
+      <text x="25" y="222" fill="#fab387" font-family="'Courier New', monospace" font-size="11">visited[src] = false; // 2. UNMARK (BACKTRACK!)</text>
+    </g>
+
+    <!-- Paths Generated Display -->
+    <g transform="translate(20, 295)">
+      <rect width="490" height="260" rx="8" fill="#11111b" stroke="#313244" stroke-width="1"/>
+      <text x="15" y="25" fill="#f9e2af" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700">All Paths Found from 0 to 6 on Standard Benchmark:</text>
+
+      <!-- Path 1 -->
+      <g transform="translate(15, 45)">
+        <rect width="460" height="34" rx="6" fill="#181825" stroke="#89b4fa" stroke-width="1"/>
+        <text x="15" y="22" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">Path 1:</text>
+        <text x="70" y="22" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="12">0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6</text>
+        <text x="360" y="22" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="11">wt: 38 (Shortest)</text>
+      </g>
+
+      <!-- Path 2 -->
+      <g transform="translate(15, 87)">
+        <rect width="460" height="34" rx="6" fill="#181825" stroke="#89b4fa" stroke-width="1"/>
+        <text x="15" y="22" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">Path 2:</text>
+        <text x="70" y="22" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="12">0 -> 1 -> 2 -> 3 -> 4 -> 6</text>
+        <text x="360" y="22" fill="#fab387" font-family="'Segoe UI', Roboto, sans-serif" font-size="11">wt: 40</text>
+      </g>
+
+      <!-- Path 3 -->
+      <g transform="translate(15, 129)">
+        <rect width="460" height="34" rx="6" fill="#181825" stroke="#89b4fa" stroke-width="1"/>
+        <text x="15" y="22" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">Path 3:</text>
+        <text x="70" y="22" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="12">0 -> 3 -> 4 -> 5 -> 6</text>
+        <text x="360" y="22" fill="#fab387" font-family="'Segoe UI', Roboto, sans-serif" font-size="11">wt: 48</text>
+      </g>
+
+      <!-- Path 4 -->
+      <g transform="translate(15, 171)">
+        <rect width="460" height="34" rx="6" fill="#181825" stroke="#89b4fa" stroke-width="1"/>
+        <text x="15" y="22" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">Path 4:</text>
+        <text x="70" y="22" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="12">0 -> 3 -> 4 -> 6</text>
+        <text x="360" y="22" fill="#f38ba8" font-family="'Segoe UI', Roboto, sans-serif" font-size="11">wt: 50 (Longest)</text>
+      </g>
+
+      <text x="230" y="235" fill="#fab387" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" text-anchor="middle">★ Unmarking visited[src] allows alternate routes to reuse vertices</text>
+    </g>
+  </g>
+
+  <!-- Right Card: Connected Components -->
+  <g transform="translate(580, 90)">
+    <rect width="510" height="580" rx="12" fill="url(#cardGrad4)" stroke="#313244" stroke-width="1.2"/>
+    <rect x="0" y="0" width="510" height="38" rx="12" fill="#1e1e2e"/>
+    <text x="20" y="25" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">2. Connected Components (`getConnectedComponents`)</text>
+
+    <!-- Disconnected Components Visualization -->
+    <g transform="translate(20, 50)">
+      <rect width="470" height="210" rx="8" fill="#11111b" stroke="#313244" stroke-width="1"/>
+
+      <!-- Component 1: {0, 1} -->
+      <rect x="15" y="20" width="130" height="150" rx="8" fill="#181825" stroke="#89b4fa" stroke-dasharray="4,4"/>
+      <text x="80" y="40" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Comp 1: [0, 1]</text>
+      <line x1="50" y1="90" x2="110" y2="90" stroke="#89b4fa" stroke-width="2"/>
+      <circle cx="50" cy="90" r="14" fill="url(#comp1Grad)"/>
+      <text x="50" y="95" fill="#11111b" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">0</text>
+      <circle cx="110" cy="90" r="14" fill="url(#comp1Grad)"/>
+      <text x="110" y="95" fill="#11111b" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">1</text>
+      <text x="80" y="145" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" text-anchor="middle">DFS from 0</text>
+
+      <!-- Component 2: {2, 3} -->
+      <rect x="165" y="20" width="130" height="150" rx="8" fill="#181825" stroke="#a6e3a1" stroke-dasharray="4,4"/>
+      <text x="230" y="40" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Comp 2: [2, 3]</text>
+      <line x1="200" y1="90" x2="260" y2="90" stroke="#a6e3a1" stroke-width="2"/>
+      <circle cx="200" cy="90" r="14" fill="url(#comp2Grad)"/>
+      <text x="200" y="95" fill="#11111b" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">2</text>
+      <circle cx="260" cy="90" r="14" fill="url(#comp2Grad)"/>
+      <text x="260" y="95" fill="#11111b" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">3</text>
+      <text x="230" y="145" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" text-anchor="middle">DFS from 2</text>
+
+      <!-- Component 3: {4, 5, 6} -->
+      <rect x="315" y="20" width="140" height="150" rx="8" fill="#181825" stroke="#fab387" stroke-dasharray="4,4"/>
+      <text x="385" y="40" fill="#fab387" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Comp 3: [4, 5, 6]</text>
+      <line x1="350" y1="110" x2="385" y2="65" stroke="#fab387" stroke-width="2"/>
+      <line x1="385" y1="65" x2="420" y2="110" stroke="#fab387" stroke-width="2"/>
+      <line x1="350" y1="110" x2="420" y2="110" stroke="#fab387" stroke-width="2"/>
+      <circle cx="350" cy="110" r="13" fill="url(#comp3Grad)"/>
+      <text x="350" y="114" fill="#11111b" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" text-anchor="middle">4</text>
+      <circle cx="385" cy="65" r="13" fill="url(#comp3Grad)"/>
+      <text x="385" y="69" fill="#11111b" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" text-anchor="middle">5</text>
+      <circle cx="420" cy="110" r="13" fill="url(#comp3Grad)"/>
+      <text x="420" y="114" fill="#11111b" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" text-anchor="middle">6</text>
+      <text x="385" y="145" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" text-anchor="middle">DFS from 4</text>
+
+      <text x="235" y="195" fill="#f9e2af" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" text-anchor="middle">Total Components = comps.size() = 3</text>
+    </g>
+
+    <!-- Outer Loop Pattern Code -->
+    <g transform="translate(20, 275)">
+      <rect width="470" height="280" rx="8" fill="#11111b" stroke="#313244" stroke-width="1"/>
+      <text x="15" y="25" fill="#f9e2af" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700">Outer Loop Algorithm Pattern:</text>
+
+      <text x="20" y="55" fill="#89b4fa" font-family="'Courier New', monospace" font-size="11">ArrayList&lt;ArrayList&lt;Integer&gt;&gt; comps = new ArrayList&lt;&gt;();</text>
+      <text x="20" y="75" fill="#89b4fa" font-family="'Courier New', monospace" font-size="11">boolean[] visited = new boolean[V];</text>
+
+      <text x="20" y="105" fill="#fab387" font-family="'Courier New', monospace" font-size="11">// Outer loop handles disconnected graphs</text>
+      <text x="20" y="125" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="11">for (int v = 0; v &lt; V; v++) {</text>
+      <text x="40" y="145" fill="#a6e3a1" font-family="'Courier New', monospace" font-size="11">if (!visited[v]) {</text>
+      <text x="60" y="165" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="11">ArrayList&lt;Integer&gt; comp = new ArrayList&lt;&gt;();</text>
+      <text x="60" y="185" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="11">drawTreeAndGenerateComp(graph, v, comp, visited);</text>
+      <text x="60" y="205" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="11">comps.add(comp);</text>
+      <text x="40" y="225" fill="#a6e3a1" font-family="'Courier New', monospace" font-size="11">}</text>
+      <text x="20" y="245" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="11">}</text>
+      <text x="20" y="265" fill="#fab387" font-family="'Courier New', monospace" font-size="11">boolean isConnected = (comps.size() == 1);</text>
+    </g>
+  </g>
+</svg>

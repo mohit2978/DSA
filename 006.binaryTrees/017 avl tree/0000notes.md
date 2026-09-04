@@ -839,10 +839,77 @@ The inorder-rebuild method is therefore shorter, easier to prove, and usually pr
 | Carefully implemented rotations | depends on implementation | `O(h)` stack plus height storage if needed | yes |
 
 ---
-![alt text](Scanned_20260724-2359-01.jpg)
- ![alt text](Scanned_20260724-2359-02.jpg) 
- ![alt text](Scanned_20260724-2359-03.jpg) 
- ![alt text](Scanned_20260724-2359-04.jpg)
+
+# AVL Tree Rotations & Imbalance Resolution
+
+An AVL tree maintains height balance ($\text{Balance Factor} \in \{-1, 0, +1\}$) after insertions and deletions by applying **rotations**.
+
+$$\text{Balance Factor}(u) = \text{Height}(u.\text{left}) - \text{Height}(u.\text{right})$$
+
+There are **4 fundamental imbalance cases**, classified by which subtrees caused the imbalance:
+
+---
+
+### 1. Single Rotations: LL and RR Cases
+
+When the newly inserted node is on the **outer** subtree of the heavy child (straight line), a single rotation restores balance in $\mathcal{O}(1)$ time.
+
+![AVL Tree Single Rotations](01_avl_single_rotations_ll_rr.svg)
+
+#### A. Left-Left (LL) Case
+- **Condition**: $\text{Balance}(\text{node}) > 1$ and $\text{Balance}(\text{node.left}) \ge 0$.
+- **Cause**: Left child's left subtree is heavier.
+- **Resolution**: **Right Rotation** (`rightRotate(root)`).
+  - The left child rises to become the new subtree root.
+  - The old root is rotated down to become the right child of the new root.
+  - Inorder traversal order is strictly preserved.
+
+#### B. Right-Right (RR) Case
+- **Condition**: $\text{Balance}(\text{node}) < -1$ and $\text{Balance}(\text{node.right}) \le 0$.
+- **Cause**: Right child's right subtree is heavier.
+- **Resolution**: **Left Rotation** (`leftRotate(root)`).
+  - The right child rises to become the new subtree root.
+  - The old root is rotated down to become the left child of the new root.
+
+---
+
+### 2. Double Rotations: LR and RL Cases
+
+When the insertion creates a **zig-zag** shape on the inner subtree, a single rotation cannot balance the tree directly. We perform a **double rotation**:
+1. **Step 1**: Rotate the child to straighten the zig-zag into a line ($\text{LR} \rightarrow \text{LL}$ or $\text{RL} \rightarrow \text{RR}$).
+2. **Step 2**: Rotate the root using the existing single rotation function.
+
+![AVL Tree Double Rotations](02_avl_double_rotations_lr_rl.svg)
+
+#### A. Left-Right (LR) Case
+- **Condition**: $\text{Balance}(\text{node}) > 1$ and $\text{Balance}(\text{node.left}) < 0$.
+- **Cause**: Left child's right subtree is heavier.
+- **Resolution**:
+  1. `node.left = leftRotate(node.left)` $\rightarrow$ Converts LR into LL.
+  2. `return rightRotate(node)` $\rightarrow$ Balances the resulting LL tree.
+
+#### B. Right-Left (RL) Case
+- **Condition**: $\text{Balance}(\text{node}) < -1$ and $\text{Balance}(\text{node.right}) > 0$.
+- **Cause**: Right child's left subtree is heavier.
+- **Resolution**:
+  1. `node.right = rightRotate(node.right)` $\rightarrow$ Converts RL into RR.
+  2. `return leftRotate(node)` $\rightarrow$ Balances the resulting RR tree.
+
+---
+
+### 3. Rotation Decision Matrix & Detection Logic
+
+![AVL Rotation Decision Matrix](03_avl_rotation_decision_matrix.svg)
+
+| Case | Parent Balance | Child Balance | Step 1 (Child) | Step 2 (Root) | Total Rotations |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **LL** | $> +1$ | $\ge 0$ | — | `rightRotate(node)` | 1 (Single) |
+| **LR** | $> +1$ | $< 0$ | `leftRotate(node.left)` | `rightRotate(node)` | 2 (Double) |
+| **RR** | $< -1$ | $\le 0$ | — | `leftRotate(node)` | 1 (Single) |
+| **RL** | $< -1$ | $> 0$ | `rightRotate(node.right)` | `leftRotate(node)` | 2 (Double) |
+
+---
+
 
 
  

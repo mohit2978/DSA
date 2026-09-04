@@ -1,0 +1,244 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 720" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f111a"/>
+      <stop offset="50%" stop-color="#161824"/>
+      <stop offset="100%" stop-color="#1a1c2e"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e2030"/>
+      <stop offset="100%" stop-color="#181a27"/>
+    </linearGradient>
+
+    <marker id="ptrArrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#89b4fa"/>
+    </marker>
+    <marker id="ptrArrowGreen" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a6e3a1"/>
+    </marker>
+  </defs>
+
+  <rect width="1120" height="720" rx="16" fill="url(#bgGrad2)" stroke="#313244" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="560" y="42" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="700" text-anchor="middle">Graph Representation: Adjacency List &amp; Java Memory Layout</text>
+  <text x="560" y="66" fill="#9399b2" font-family="'Segoe UI', Roboto, sans-serif" font-size="14" text-anchor="middle">How `ArrayList&lt;Edge&gt;[] graph = new ArrayList[V]` maps from Stack to Heap</text>
+
+  <!-- Left Card: Java Heap / Stack Memory Hierarchy -->
+  <g transform="translate(30, 90)">
+    <rect width="660" height="600" rx="12" fill="url(#cardGrad2)" stroke="#313244" stroke-width="1.2"/>
+    <rect x="0" y="0" width="660" height="38" rx="12" fill="#1e1e2e"/>
+    <text x="20" y="25" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">Adjacency List in Java (Array of ArrayList of Edge Objects)</text>
+
+    <!-- Stack Section -->
+    <g transform="translate(20, 50)">
+      <rect width="120" height="80" rx="8" fill="#181825" stroke="#89b4fa" stroke-width="1.5"/>
+      <rect width="120" height="24" rx="8" fill="#313244"/>
+      <text x="60" y="17" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">STACK FRAME</text>
+      <text x="60" y="45" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" text-anchor="middle">graph</text>
+      <text x="60" y="65" fill="#fab387" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" text-anchor="middle">ref @0x4F00</text>
+    </g>
+
+    <!-- Arrow from Stack to Heap Array -->
+    <path d="M 140 100 L 195 100" fill="none" stroke="#89b4fa" stroke-width="2" marker-end="url(#ptrArrow)"/>
+
+    <!-- Heap: Array of ArrayList references -->
+    <g transform="translate(200, 50)">
+      <text x="35" y="-6" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" text-anchor="middle">HEAP ARRAY</text>
+      <text x="35" y="8" fill="#9399b2" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" text-anchor="middle">`ArrayList[7]`</text>
+
+      <!-- 7 Array slots: 0 to 6 -->
+      <!-- Slot 0 -->
+      <rect x="0" y="15" width="70" height="32" fill="#181825" stroke="#313244" stroke-width="1.2"/>
+      <text x="15" y="36" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">0</text>
+      <circle cx="50" cy="31" r="5" fill="#fab387"/>
+
+      <!-- Slot 1 -->
+      <rect x="0" y="47" width="70" height="32" fill="#181825" stroke="#313244" stroke-width="1.2"/>
+      <text x="15" y="68" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">1</text>
+      <circle cx="50" cy="63" r="5" fill="#fab387"/>
+
+      <!-- Slot 2 -->
+      <rect x="0" y="79" width="70" height="32" fill="#181825" stroke="#313244" stroke-width="1.2"/>
+      <text x="15" y="100" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">2</text>
+      <circle cx="50" cy="95" r="5" fill="#fab387"/>
+
+      <!-- Slot 3 -->
+      <rect x="0" y="111" width="70" height="32" fill="#181825" stroke="#313244" stroke-width="1.2"/>
+      <text x="15" y="132" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">3</text>
+      <circle cx="50" cy="127" r="5" fill="#fab387"/>
+
+      <!-- Slot 4 -->
+      <rect x="0" y="143" width="70" height="32" fill="#181825" stroke="#313244" stroke-width="1.2"/>
+      <text x="15" y="164" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">4</text>
+      <circle cx="50" cy="159" r="5" fill="#fab387"/>
+
+      <!-- Slot 5 -->
+      <rect x="0" y="175" width="70" height="32" fill="#181825" stroke="#313244" stroke-width="1.2"/>
+      <text x="15" y="196" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">5</text>
+      <circle cx="50" cy="191" r="5" fill="#fab387"/>
+
+      <!-- Slot 6 -->
+      <rect x="0" y="207" width="70" height="32" fill="#181825" stroke="#313244" stroke-width="1.2"/>
+      <text x="15" y="228" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">6</text>
+      <circle cx="50" cy="223" r="5" fill="#fab387"/>
+    </g>
+
+    <!-- Pointers & Lists & Edge Objects -->
+    <g transform="translate(300, 50)">
+      <!-- Row 0 -->
+      <line x1="-30" y1="31" x2="0" y2="31" stroke="#fab387" stroke-width="1.5" marker-end="url(#ptrArrow)"/>
+      <rect x="5" y="17" width="135" height="28" rx="5" fill="#1e1e2e" stroke="#cba6f7" stroke-width="1"/>
+      <text x="72" y="35" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" text-anchor="middle">Edge(src:0, nbr:1, wt:10)</text>
+      <rect x="145" y="17" width="135" height="28" rx="5" fill="#1e1e2e" stroke="#cba6f7" stroke-width="1"/>
+      <text x="212" y="35" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" text-anchor="middle">Edge(src:0, nbr:3, wt:40)</text>
+
+      <!-- Row 1 -->
+      <line x1="-30" y1="63" x2="0" y2="63" stroke="#fab387" stroke-width="1.5" marker-end="url(#ptrArrow)"/>
+      <rect x="5" y="49" width="135" height="28" rx="5" fill="#1e1e2e" stroke="#cba6f7" stroke-width="1"/>
+      <text x="72" y="67" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" text-anchor="middle">Edge(src:1, nbr:0, wt:10)</text>
+      <rect x="145" y="49" width="135" height="28" rx="5" fill="#1e1e2e" stroke="#cba6f7" stroke-width="1"/>
+      <text x="212" y="67" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" text-anchor="middle">Edge(src:1, nbr:2, wt:10)</text>
+
+      <!-- Row 2 -->
+      <line x1="-30" y1="95" x2="0" y2="95" stroke="#fab387" stroke-width="1.5" marker-end="url(#ptrArrow)"/>
+      <rect x="5" y="81" width="135" height="28" rx="5" fill="#1e1e2e" stroke="#cba6f7" stroke-width="1"/>
+      <text x="72" y="99" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" text-anchor="middle">Edge(src:2, nbr:1, wt:10)</text>
+      <rect x="145" y="81" width="135" height="28" rx="5" fill="#1e1e2e" stroke="#cba6f7" stroke-width="1"/>
+      <text x="212" y="99" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" text-anchor="middle">Edge(src:2, nbr:3, wt:10)</text>
+
+      <!-- Row 3 -->
+      <line x1="-30" y1="127" x2="0" y2="127" stroke="#fab387" stroke-width="1.5" marker-end="url(#ptrArrow)"/>
+      <rect x="5" y="113" width="110" height="28" rx="5" fill="#1e1e2e" stroke="#cba6f7" stroke-width="1"/>
+      <text x="60" y="131" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" text-anchor="middle">Edge(3, 0, 40)</text>
+      <rect x="120" y="113" width="110" height="28" rx="5" fill="#1e1e2e" stroke="#cba6f7" stroke-width="1"/>
+      <text x="175" y="131" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" text-anchor="middle">Edge(3, 2, 10)</text>
+      <rect x="235" y="113" width="110" height="28" rx="5" fill="#1e1e2e" stroke="#a6e3a1" stroke-width="1"/>
+      <text x="290" y="131" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" text-anchor="middle">Edge(3, 4, 2)</text>
+
+      <!-- Row 4 -->
+      <line x1="-30" y1="159" x2="0" y2="159" stroke="#fab387" stroke-width="1.5" marker-end="url(#ptrArrow)"/>
+      <rect x="5" y="145" width="110" height="28" rx="5" fill="#1e1e2e" stroke="#a6e3a1" stroke-width="1"/>
+      <text x="60" y="163" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" text-anchor="middle">Edge(4, 3, 2)</text>
+      <rect x="120" y="145" width="110" height="28" rx="5" fill="#1e1e2e" stroke="#cba6f7" stroke-width="1"/>
+      <text x="175" y="163" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" text-anchor="middle">Edge(4, 5, 3)</text>
+      <rect x="235" y="145" width="110" height="28" rx="5" fill="#1e1e2e" stroke="#cba6f7" stroke-width="1"/>
+      <text x="290" y="163" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" text-anchor="middle">Edge(4, 6, 8)</text>
+
+      <!-- Row 5 -->
+      <line x1="-30" y1="191" x2="0" y2="191" stroke="#fab387" stroke-width="1.5" marker-end="url(#ptrArrow)"/>
+      <rect x="5" y="177" width="135" height="28" rx="5" fill="#1e1e2e" stroke="#cba6f7" stroke-width="1"/>
+      <text x="72" y="195" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" text-anchor="middle">Edge(src:5, nbr:4, wt:3)</text>
+      <rect x="145" y="177" width="135" height="28" rx="5" fill="#1e1e2e" stroke="#cba6f7" stroke-width="1"/>
+      <text x="212" y="195" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" text-anchor="middle">Edge(src:5, nbr:6, wt:3)</text>
+
+      <!-- Row 6 -->
+      <line x1="-30" y1="223" x2="0" y2="223" stroke="#fab387" stroke-width="1.5" marker-end="url(#ptrArrow)"/>
+      <rect x="5" y="209" width="135" height="28" rx="5" fill="#1e1e2e" stroke="#cba6f7" stroke-width="1"/>
+      <text x="72" y="227" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" text-anchor="middle">Edge(src:6, nbr:5, wt:3)</text>
+      <rect x="145" y="209" width="135" height="28" rx="5" fill="#1e1e2e" stroke="#cba6f7" stroke-width="1"/>
+      <text x="212" y="227" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" text-anchor="middle">Edge(src:6, nbr:4, wt:8)</text>
+    </g>
+
+    <!-- Edge Class Code Box -->
+    <g transform="translate(20, 310)">
+      <rect width="620" height="260" rx="8" fill="#11111b" stroke="#313244" stroke-width="1"/>
+      <text x="15" y="25" fill="#f9e2af" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700">Core Java Edge Class &amp; Graph Construction:</text>
+      
+      <text x="20" y="55" fill="#89b4fa" font-family="'Courier New', monospace" font-size="12">static class Edge {</text>
+      <text x="40" y="75" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="12">int src, nbr, wt;</text>
+      <text x="40" y="95" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="12">Edge(int src, int nbr, int wt) { this.src=src; this.nbr=nbr; this.wt=wt; }</text>
+      <text x="20" y="115" fill="#89b4fa" font-family="'Courier New', monospace" font-size="12">}</text>
+
+      <text x="20" y="145" fill="#a6e3a1" font-family="'Courier New', monospace" font-size="12">// Step 1: Allocate array of references</text>
+      <text x="20" y="165" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="12">ArrayList&lt;Edge&gt;[] graph = new ArrayList[V];</text>
+
+      <text x="20" y="195" fill="#a6e3a1" font-family="'Courier New', monospace" font-size="12">// Step 2: Initialize each index to avoid NullPointerException</text>
+      <text x="20" y="215" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="12">for(int i = 0; i &lt; V; i++) graph[i] = new ArrayList&lt;&gt;();</text>
+
+      <text x="20" y="245" fill="#fab387" font-family="'Courier New', monospace" font-size="12">graph[0].add(new Edge(0, 1, 10));  graph[1].add(new Edge(1, 0, 10));</text>
+    </g>
+  </g>
+
+  <!-- Right Card: Representation Comparison Matrix -->
+  <g transform="translate(710, 90)">
+    <rect width="380" height="600" rx="12" fill="url(#cardGrad2)" stroke="#313244" stroke-width="1.2"/>
+    <rect x="0" y="0" width="380" height="38" rx="12" fill="#1e1e2e"/>
+    <text x="20" y="25" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">Representation Trade-offs</text>
+
+    <!-- Matrix diagram -->
+    <g transform="translate(20, 50)">
+      <text x="170" y="15" fill="#cba6f7" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" text-anchor="middle">Adjacency Matrix (V × V)</text>
+
+      <rect x="40" y="30" width="260" height="150" rx="6" fill="#11111b" stroke="#313244"/>
+      <!-- Header -->
+      <text x="65" y="48" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">0</text>
+      <text x="100" y="48" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">1</text>
+      <text x="135" y="48" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">2</text>
+      <text x="170" y="48" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">3</text>
+      <text x="205" y="48" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">4</text>
+      <text x="240" y="48" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">5</text>
+      <text x="275" y="48" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">6</text>
+
+      <line x1="40" y1="55" x2="300" y2="55" stroke="#313244"/>
+
+      <text x="50" y="75" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">0</text>
+      <text x="65" y="75" fill="#585b70" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">0</text>
+      <text x="97" y="75" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">10</text>
+      <text x="135" y="75" fill="#585b70" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">0</text>
+      <text x="167" y="75" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">40</text>
+      <text x="205" y="75" fill="#585b70" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">0</text>
+      <text x="240" y="75" fill="#585b70" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">0</text>
+      <text x="275" y="75" fill="#585b70" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">0</text>
+
+      <text x="50" y="100" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">1</text>
+      <text x="62" y="100" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">10</text>
+      <text x="100" y="100" fill="#585b70" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">0</text>
+      <text x="132" y="100" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">10</text>
+      <text x="170" y="100" fill="#585b70" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">0</text>
+      <text x="205" y="100" fill="#585b70" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">0</text>
+      <text x="240" y="100" fill="#585b70" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">0</text>
+      <text x="275" y="100" fill="#585b70" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">0</text>
+
+      <text x="50" y="125" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">2</text>
+      <text x="65" y="125" fill="#585b70" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">0</text>
+      <text x="97" y="125" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">10</text>
+      <text x="135" y="125" fill="#585b70" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">0</text>
+      <text x="167" y="125" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">10</text>
+      <text x="205" y="125" fill="#585b70" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">0</text>
+      <text x="240" y="125" fill="#585b70" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">0</text>
+      <text x="275" y="125" fill="#585b70" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">0</text>
+
+      <text x="170" y="160" fill="#9399b2" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" text-anchor="middle">... [Symmetric for Undirected] ...</text>
+    </g>
+
+    <!-- Comparison Table -->
+    <g transform="translate(15, 255)">
+      <rect width="350" height="300" rx="8" fill="#11111b" stroke="#313244" stroke-width="1"/>
+      <text x="175" y="25" fill="#f9e2af" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" text-anchor="middle">Complexity Comparison</text>
+
+      <!-- Rows -->
+      <line x1="10" y1="40" x2="340" y2="40" stroke="#313244"/>
+
+      <!-- Metric 1: Space -->
+      <text x="20" y="65" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600">Space Complexity:</text>
+      <text x="30" y="85" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11">• Adj List: O(V + E) — Optimal for Sparse</text>
+      <text x="30" y="103" fill="#f38ba8" font-family="'Segoe UI', Roboto, sans-serif" font-size="11">• Adj Matrix: O(V²) — Wastes memory</text>
+
+      <!-- Metric 2: Edge Existence Query -->
+      <text x="20" y="130" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600">Edge Query (u, v):</text>
+      <text x="30" y="150" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="11">• Adj Matrix: O(1) Fast lookup</text>
+      <text x="30" y="168" fill="#fab387" font-family="'Segoe UI', Roboto, sans-serif" font-size="11">• Adj List: O(deg(u)) Scan neighbour list</text>
+
+      <!-- Metric 3: Find All Neighbours -->
+      <text x="20" y="195" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600">Find Neighbours of u:</text>
+      <text x="30" y="215" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="11">• Adj List: O(deg(u)) Optimal for DFS/BFS</text>
+      <text x="30" y="233" fill="#f38ba8" font-family="'Segoe UI', Roboto, sans-serif" font-size="11">• Adj Matrix: O(V) Must scan entire row</text>
+
+      <!-- Metric 4: Traversal Overall -->
+      <text x="20" y="260" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600">Full Graph Traversal:</text>
+      <text x="30" y="280" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="11">• Adj List: O(V + E) vs Matrix: O(V²)</text>
+    </g>
+  </g>
+</svg>

@@ -1,15 +1,50 @@
-# Notes
+# Graph Representation & Traversal Notes
 
+![Graph vs Tree and Types](01_graph_vs_tree_and_types.svg)
 
+## 1. Graph Fundamentals & Classification
 
-![alt text](<001 intro_231018_213446(1).jpg>) ![alt text](<001 intro_231018_213446(2).jpg>) ![alt text](<001 intro_231018_213446(3).jpg>) ![alt text](<001 intro_231018_213446(4).jpg>) ![alt text](<001 intro_231018_213446(5).jpg>) ![alt text](<001 intro_231018_213446(6).jpg>) ![alt text](<001 intro_231018_213446(7).jpg>) ![alt text](<001 intro_231018_213446(8).jpg>) ![alt text](<001 intro_231018_213446(9).jpg>) ![alt text](<001 intro_231018_213446(10).jpg>) ![alt text](<001 intro_231018_213446(11).jpg>) ![alt text](<001 intro_231018_213446(12).jpg>) ![alt text](<001 intro_231018_213446(13).jpg>) ![alt text](<001 intro_231018_213446(14).jpg>) ![alt text](<001 intro_231018_213446(15).jpg>) ![alt text](<001 intro_231018_213446(16).jpg>) ![alt text](<001 intro_231018_213446(17).jpg>) ![alt text](<001 intro_231018_213446(18).jpg>) ![alt text](<001 intro_231018_213446(19).jpg>) ![alt text](<001 intro_231018_213446(20).jpg>)
+A **Graph** $G = (V, E)$ is a non-linear data structure consisting of a set of **Vertices** (Nodes) $V$ and a set of **Edges** (Connections) $E$.
 
+### Tree vs General Graph
+- **Tree**: A connected acyclic undirected graph.
+  - Exactly **$V - 1$ edges** for $V$ vertices.
+  - Exactly **one simple path** between any two nodes.
+  - Hierarchical structure with a designated root node.
+- **Graph**: Can contain multiple paths between vertices, cycles, or disconnected components.
+  - Number of edges $E$ can range from $0$ (isolated vertices) up to $\frac{V(V-1)}{2}$ (complete undirected graph).
 
+### Types of Graphs
+1. **Undirected Graph**: Edges are bidirectional pairs $\{u, v\}$. If $u$ connects to $v$, then $v$ automatically connects to $u$.
+2. **Directed Graph (Digraph)**: Edges are ordered pairs $(u \to v)$ with direction.
+3. **Unweighted Graph**: Every edge has equal unit cost ($1$).
+4. **Weighted Graph**: Every edge $(u, v)$ carries an associated weight/cost $w$ (e.g., road distance, latency, network cost).
 
+---
 
+![Adjacency List Memory Layout](02_adjacency_list_memory_layout.svg)
 
+## 2. Graph Representations & Memory Layout
 
-![alt text](<001 intro_231018_213446(21).jpg>) ![alt text](<001 intro_231018_213446(22).jpg>) ![alt text](<001 intro_231018_213446(23).jpg>) ![alt text](<001 intro_231018_213446(24).jpg>) ![alt text](<001 intro_231018_213446(25).jpg>) ![alt text](<001 intro_231018_213446(26).jpg>) ![alt text](<001 intro_231018_213446(27).jpg>) 
+### Standard 7-Vertex Benchmark Graph (Used Across the Course)
+- **Vertices**: $0, 1, 2, 3, 4, 5, 6$ ($V = 7$)
+- **Edges**: $8$ undirected weighted edges:
+  - $(0, 1, 10)$, $(1, 2, 10)$, $(2, 3, 10)$, $(0, 3, 40)$
+  - $(3, 4, 2)$
+  - $(4, 5, 3)$, $(5, 6, 3)$, $(4, 6, 8)$
+
+### The Handshaking Theorem
+In any undirected graph, each edge is incident to two vertices. Thus:
+$$\sum_{v \in V} \text{deg}(v) = 2E$$
+For our 7-vertex graph with 8 undirected edges, the adjacency list stores $2 \times 8 = 16$ directed `Edge` object references across all array buckets.
+
+### Java Memory Architecture for `ArrayList<Edge>[] graph`
+1. **Stack Frame**: Contains the local variable `graph` (reference to the array on the Heap).
+2. **Heap (Array of References)**: An array `new ArrayList[V]` of size $V=7$. Each cell initially holds `null`.
+3. **Heap (ArrayList Instances)**: We must initialize each `graph[i] = new ArrayList<>()` to prevent `NullPointerException`.
+4. **Heap (Edge Objects)**: Each `Edge(src, nbr, wt)` is instantiated and stored in the respective `ArrayList`.
+
+---
 
 
 
@@ -62,19 +97,17 @@ public class adj_list_01{
     public static void main(String[] args){
         Graph g = new Graph(6);
 
-        g.addEdge(0,1, true);
-        g.addEdge(0,4, true);
-        g.addEdge(2,1, true);
-        g.addEdge(3,4, true);
-        g.addEdge(4,5, true);
-        g.addEdge(2,3, true);
-        g.addEdge(3,5, true);
+        g.addEdge(0, 1, true);
+        g.addEdge(0, 4, true);
+        g.addEdge(2, 1, true);
+        g.addEdge(3, 4, true);
+        g.addEdge(4, 5, true);
+        g.addEdge(2, 3, true);
+        g.addEdge(3, 5, true);
         g.printAdjList();
-
     }
 }
 /* Output:
-
 0 --> 1, 4, 
 1 --> 0, 2, 
 2 --> 1, 3, 
@@ -82,7 +115,6 @@ public class adj_list_01{
 4 --> 0, 3, 5, 
 5 --> 4, 3, 
 */
-
 ```
 ---
 
@@ -167,14 +199,17 @@ Paris --> Delhi, New York,
 
 ```
 
-As graph as represented as adjajaency list then For traversal whether BFS or DFS it is `O(V+E)` because V size array each index store edges and we travel every vertex then every edge of that!!
+## Time Complexity: Why $O(V + E)$ and NOT $O(V \cdot E)$?
 
+In an **Adjacency List**:
+- We visit each vertex at most once $\to O(V)$.
+- For each vertex $u$, we iterate through only its incident edges $(\text{deg}(u))$.
+- Total edge iterations across the entire traversal:
+  $$\sum_{u \in V} \text{deg}(u) = 2E \implies O(E)$$
+- Hence, the total time complexity is **$O(V + E)$**.
 
-## Why not `O(VE)`?
+> **Note:** $O(V \cdot E)$ would only happen if for *every* single vertex, we scanned all $E$ edges in the entire graph (which is what happens in an unindexed Edge List, not an Adjacency List).
 
-`VE` means for every vertex we are scannning whole edges in graph and thats not the case!!
-
-![alt text](image.png)
 
 
 
@@ -209,79 +244,69 @@ int main() {
     return 0;
 }
 ```
+
 ---
 
 ```cpp
-
-#include<bits/stdc++.h>
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
-class Graph{
-
-	int V;
-	// array of list<int>
-	vector<int>*l;
+class Graph {
+    int V;
+    vector<int>* l;
 
 public:
-	Graph(int v){
-		V = v;
-		l = new vector<int>[V];
-	}
+    Graph(int v) {
+        V = v;
+        l = new vector<int>[V];
+    }
 
-	void addEdge(int i,int j,bool undir=true){
-		l[i].push_back(j);
-		if(undir){
-			l[j].push_back(i);
-		}
-	}
+    void addEdge(int i, int j, bool undir = true) {
+        l[i].push_back(j);
+        if (undir) {
+            l[j].push_back(i);
+        }
+    }
 
-	void printAdjList(){
-		
-		for(int i=0;i<V;i++){
-			cout<<i<<"-->";
-			
-			for(auto node:l[i]){
-				cout << node <<",";
-			}
-			cout <<endl;
+    void printAdjList() {
+        for (int i = 0; i < V; i++) {
+            cout << i << " --> ";
+            for (auto node : l[i]) {
+                cout << node << ", ";
+            }
+            cout << endl;
+        }
+    }
 
-		}
-
-
-	}
-
+    ~Graph() {
+        delete[] l;
+    }
 };
 
-int main(){
-	Graph g(6);
-	g.addEdge(0,1);
-	g.addEdge(0,4);
-	g.addEdge(2,1);
-	g.addEdge(3,4);
-	g.addEdge(4,5);
-	g.addEdge(2,3);
-	g.addEdge(3,5);
-	g.printAdjList();
-	return 0;
+int main() {
+    Graph g(6);
+    g.addEdge(0, 1, true);
+    g.addEdge(0, 4, true);
+    g.addEdge(2, 1, true);
+    g.addEdge(3, 4, true);
+    g.addEdge(4, 5, true);
+    g.addEdge(2, 3, true);
+    g.addEdge(3, 5, true);
+    g.printAdjList();
+    return 0;
 }
-
-
-/*Output:
-0-->1,4,
-1-->0,2,
-2-->1,3,
-3-->4,2,5,
-4-->0,3,5,
-5-->4,3,
-
+/* Output:
+0 --> 1, 4, 
+1 --> 0, 2, 
+2 --> 1, 3, 
+3 --> 4, 2, 5, 
+4 --> 0, 3, 5, 
+5 --> 4, 3, 
 */
-
-
-
 ```
 
----
 
 ```cpp
 #include<bits/stdc++.h>
@@ -501,7 +526,577 @@ class Solution {
 
 
 
-![alt text](<001 intro_231018_213446(28).jpg>) ![alt text](<001 intro_231018_213446(29).jpg>) ![alt text](<001 intro_231018_213446(30).jpg>) ![alt text](<001 intro_231018_213446(31).jpg>) ![alt text](<001 intro_231018_213446(32).jpg>) ![alt text](<001 intro_231018_213446(33).jpg>) ![alt text](<001 intro_231018_213446(34).jpg>) ![alt text](<001 intro_231018_213446(35).jpg>) ![alt text](<001 intro_231018_213446(36).jpg>) ![alt text](<001 intro_231018_213446(37).jpg>) ![alt text](<001 intro_231018_213446(38).jpg>) ![alt text](<001 intro_231018_213446(39).jpg>) 
+---
+
+![DFS Traversal hasPath](03_graph_traversal_has_path_dfs.svg)
+
+## 3. Graph Traversal: `hasPath` (DFS)
+
+### Problem Statement
+Given a graph, a source vertex `src`, and a destination vertex `dest`, determine if there exists at least one valid path from `src` to `dest`.
+
+### Algorithm & Mechanism
+1. **Base Case**: If `src == dest`, a path is found; return `true`.
+2. **Mark Visited**: Set `visited[src] = true` before exploring neighbors.
+   - **Why `visited[]` is mandatory**: In an undirected or cyclic graph, neighbor $u$ points back to $v$. Without marking $src$ visited, recursion ping-pongs infinitely ($0 \to 1 \to 0 \to 1 \dots$), resulting in a `StackOverflowError`.
+3. **Recursive Step**: For every unvisited neighbor `edge.nbr`, make a recursive call `hasPath(graph, edge.nbr, dest, visited)`. If any call returns `true`, immediately return `true`.
+4. If all incident edges are explored and no path reaches `dest`, return `false`.
+
+#### Java Implementation
+```java
+import java.util.ArrayList;
+
+public class HasPath {
+    static class Edge {
+        int src, nbr, wt;
+        Edge(int src, int nbr, int wt) {
+            this.src = src;
+            this.nbr = nbr;
+            this.wt = wt;
+        }
+    }
+
+    public static boolean hasPath(ArrayList<Edge>[] graph, int src, int dest, boolean[] visited) {
+        if (src == dest) {
+            return true;
+        }
+
+        visited[src] = true;
+        for (Edge edge : graph[src]) {
+            if (!visited[edge.nbr]) {
+                boolean hasNbrPath = hasPath(graph, edge.nbr, dest, visited);
+                if (hasNbrPath) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        int vtces = 7;
+        ArrayList<Edge>[] graph = new ArrayList[vtces];
+        for (int i = 0; i < vtces; i++) {
+            graph[i] = new ArrayList<>();
+        }
+
+        // Standard 7-vertex benchmark graph
+        int[][] edges = {
+            {0, 1, 10}, {1, 2, 10}, {2, 3, 10}, {0, 3, 40},
+            {3, 4, 2}, {4, 5, 3}, {5, 6, 3}, {4, 6, 8}
+        };
+        for (int[] e : edges) {
+            graph[e[0]].add(new Edge(e[0], e[1], e[2]));
+            graph[e[1]].add(new Edge(e[1], e[0], e[2]));
+        }
+
+        boolean[] visited = new boolean[vtces];
+        System.out.println("Has path 0 -> 6: " + hasPath(graph, 0, 6, visited)); // true
+    }
+}
+```
+
+#### C++ Implementation
+```cpp
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct Edge {
+    int src, nbr, wt;
+    Edge(int src, int nbr, int wt) : src(src), nbr(nbr), wt(wt) {}
+};
+
+bool hasPath(const vector<vector<Edge>>& graph, int src, int dest, vector<bool>& visited) {
+    if (src == dest) return true;
+
+    visited[src] = true;
+    for (const auto& edge : graph[src]) {
+        if (!visited[edge.nbr]) {
+            if (hasPath(graph, edge.nbr, dest, visited)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+int main() {
+    int vtces = 7;
+    vector<vector<Edge>> graph(vtces);
+
+    vector<vector<int>> edges = {
+        {0, 1, 10}, {1, 2, 10}, {2, 3, 10}, {0, 3, 40},
+        {3, 4, 2}, {4, 5, 3}, {5, 6, 3}, {4, 6, 8}
+    };
+
+    for (const auto& e : edges) {
+        graph[e[0]].emplace_back(e[0], e[1], e[2]);
+        graph[e[1]].emplace_back(e[1], e[0], e[2]);
+    }
+
+    vector<bool> visited(vtces, false);
+    cout << boolalpha << "Has path 0 -> 6: " << hasPath(graph, 0, 6, visited) << endl; // true
+    return 0;
+}
+```
+
+---
+
+![Print All Paths and Connected Components](04_print_all_paths_and_connected_components.svg)
+
+## 4. Advanced Traversals: All Paths (Backtracking) & Connected Components
+
+### Print All Paths (Backtracking)
+Unlike `hasPath` (which stops at the first path found), **Print All Paths** must find *every* simple path from `src` to `dest`.
+- **The Backtracking Technique**:
+  1. `visited[src] = true;` (mark current node visited for this branch).
+  2. Recursively visit all unvisited neighbors, passing path-so-far `psf + edge.nbr`.
+  3. `visited[src] = false;` (**unmark / backtrack** so subsequent alternate paths can reuse this vertex).
+
+#### Java Implementation
+```java
+import java.util.ArrayList;
+
+public class PrintAllPaths {
+    static class Edge {
+        int src, nbr, wt;
+        Edge(int src, int nbr, int wt) {
+            this.src = src;
+            this.nbr = nbr;
+            this.wt = wt;
+        }
+    }
+
+    public static void printAllPaths(ArrayList<Edge>[] graph, int src, int dest, boolean[] visited, String psf) {
+        if (src == dest) {
+            System.out.println(psf);
+            return;
+        }
+
+        visited[src] = true;
+        for (Edge edge : graph[src]) {
+            if (!visited[edge.nbr]) {
+                printAllPaths(graph, edge.nbr, dest, visited, psf + edge.nbr);
+            }
+        }
+        visited[src] = false; // Backtrack!
+    }
+
+    public static void main(String[] args) {
+        int vtces = 7;
+        ArrayList<Edge>[] graph = new ArrayList[vtces];
+        for (int i = 0; i < vtces; i++) graph[i] = new ArrayList<>();
+
+        int[][] edges = {
+            {0, 1, 10}, {1, 2, 10}, {2, 3, 10}, {0, 3, 40},
+            {3, 4, 2}, {4, 5, 3}, {5, 6, 3}, {4, 6, 8}
+        };
+        for (int[] e : edges) {
+            graph[e[0]].add(new Edge(e[0], e[1], e[2]));
+            graph[e[1]].add(new Edge(e[1], e[0], e[2]));
+        }
+
+        boolean[] visited = new boolean[vtces];
+        System.out.println("All Paths from 0 to 6:");
+        printAllPaths(graph, 0, 6, visited, "0");
+    }
+}
+```
+
+#### C++ Implementation
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+struct Edge {
+    int src, nbr, wt;
+    Edge(int src, int nbr, int wt) : src(src), nbr(nbr), wt(wt) {}
+};
+
+void printAllPaths(const vector<vector<Edge>>& graph, int src, int dest, vector<bool>& visited, string psf) {
+    if (src == dest) {
+        cout << psf << "\n";
+        return;
+    }
+
+    visited[src] = true;
+    for (const auto& edge : graph[src]) {
+        if (!visited[edge.nbr]) {
+            printAllPaths(graph, edge.nbr, dest, visited, psf + to_string(edge.nbr));
+        }
+    }
+    visited[src] = false; // Backtrack!
+}
+
+int main() {
+    int vtces = 7;
+    vector<vector<Edge>> graph(vtces);
+    vector<vector<int>> edges = {
+        {0, 1, 10}, {1, 2, 10}, {2, 3, 10}, {0, 3, 40},
+        {3, 4, 2}, {4, 5, 3}, {5, 6, 3}, {4, 6, 8}
+    };
+    for (const auto& e : edges) {
+        graph[e[0]].emplace_back(e[0], e[1], e[2]);
+        graph[e[1]].emplace_back(e[1], e[0], e[2]);
+    }
+
+    vector<bool> visited(vtces, false);
+    cout << "All Paths from 0 to 6:\n";
+    printAllPaths(graph, 0, 6, visited, "0");
+    return 0;
+}
+```
+
+---
+
+### Connected Components (`getConnectedComponents` & `isGraphConnected`)
+A graph may not be fully connected; it can consist of multiple disjoint subgraphs (a forest of components).
+- **Algorithm**:
+  1. Maintain a global `boolean[] visited = new boolean[V]`.
+  2. Outer loop from `v = 0` to `V - 1`:
+     - If `!visited[v]`, launch a DFS/BFS starting at `v`.
+     - Collect all vertices reachable in this DFS into a list `comp`.
+     - Add `comp` to `comps`.
+  3. **Graph Connectivity**: A graph is connected if and only if `comps.size() == 1`.
+
+#### Java Implementation
+```java
+import java.util.ArrayList;
+
+public class ConnectedComponents {
+    static class Edge {
+        int src, nbr;
+        Edge(int src, int nbr) { this.src = src; this.nbr = nbr; }
+    }
+
+    public static void drawTreeAndGenerateComp(ArrayList<Edge>[] graph, int src, ArrayList<Integer> comp, boolean[] visited) {
+        visited[src] = true;
+        comp.add(src);
+        for (Edge e : graph[src]) {
+            if (!visited[e.nbr]) {
+                drawTreeAndGenerateComp(graph, e.nbr, comp, visited);
+            }
+        }
+    }
+
+    public static ArrayList<ArrayList<Integer>> getConnectedComponents(ArrayList<Edge>[] graph, int vtces) {
+        ArrayList<ArrayList<Integer>> comps = new ArrayList<>();
+        boolean[] visited = new boolean[vtces];
+
+        for (int v = 0; v < vtces; v++) {
+            if (!visited[v]) {
+                ArrayList<Integer> comp = new ArrayList<>();
+                drawTreeAndGenerateComp(graph, v, comp, visited);
+                comps.add(comp);
+            }
+        }
+        return comps;
+    }
+
+    public static boolean isGraphConnected(ArrayList<Edge>[] graph, int vtces) {
+        return getConnectedComponents(graph, vtces).size() == 1;
+    }
+}
+```
+
+#### C++ Implementation
+```cpp
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct Edge {
+    int src, nbr;
+    Edge(int src, int nbr) : src(src), nbr(nbr) {}
+};
+
+void drawTreeAndGenerateComp(const vector<vector<Edge>>& graph, int src, vector<int>& comp, vector<bool>& visited) {
+    visited[src] = true;
+    comp.push_back(src);
+    for (const auto& e : graph[src]) {
+        if (!visited[e.nbr]) {
+            drawTreeAndGenerateComp(graph, e.nbr, comp, visited);
+        }
+    }
+}
+
+vector<vector<int>> getConnectedComponents(const vector<vector<Edge>>& graph, int vtces) {
+    vector<vector<int>> comps;
+    vector<bool> visited(vtces, false);
+
+    for (int v = 0; v < vtces; v++) {
+        if (!visited[v]) {
+            vector<int> comp;
+            drawTreeAndGenerateComp(graph, v, comp, visited);
+            comps.push_back(comp);
+        }
+    }
+    return comps;
+}
+
+bool isGraphConnected(const vector<vector<Edge>>& graph, int vtces) {
+    return getConnectedComponents(graph, vtces).size() == 1;
+}
+```
+
+---
+
+## 5. Multisolver: Smallest, Longest, Ceil, Floor, & K-th Largest Path
+
+### Problem Statement
+Given a weighted undirected/directed graph, a source `src`, a destination `dest`, a `criteria` weight, and an integer `k`, find:
+1. **Smallest Path** (Minimum total weight path) and its weight.
+2. **Longest Path** (Maximum total weight path) and its weight.
+3. **Ceil Path** (Path with the minimum weight strictly greater than `criteria`).
+4. **Floor Path** (Path with the maximum weight strictly smaller than `criteria`).
+5. **K-th Largest Path** (Path with the $k$-th largest weight among all simple paths).
+
+### Algorithm & Data Structures
+- Perform a **Backtracking DFS** traversal to generate all simple paths from `src` to `dest`.
+- Track path weight so far `wsf` and path so far `psf`.
+- When reaching `dest` (`src == dest`):
+  - **Smallest**: If `wsf < spathwt`, update `spathwt = wsf`, `spath = psf`.
+  - **Longest**: If `wsf > lpathwt`, update `lpathwt = wsf`, `lpath = psf`.
+  - **Ceil** ($> \text{criteria}$): If `wsf > criteria && wsf < cpathwt`, update `cpathwt = wsf`, `cpath = psf`.
+  - **Floor** ($< \text{criteria}$): If `wsf < criteria && wsf > fpathwt`, update `fpathwt = wsf`, `fpath = psf`.
+  - **K-th Largest Path** using a **Min-PriorityQueue (Min-Heap) of size $k$**:
+    - If `pq.size() < k`: `pq.add(new Pair(wsf, psf))`.
+    - Else if `wsf > pq.peek().wsf`: `pq.remove(); pq.add(new Pair(wsf, psf));`.
+    - At the end of the entire search, the top of the Min-Heap is precisely the $k$-th largest path!
+
+#### Java Implementation
+```java
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+
+public class MultiSolver {
+    static class Edge {
+        int src, nbr, wt;
+        Edge(int src, int nbr, int wt) {
+            this.src = src;
+            this.nbr = nbr;
+            this.wt = wt;
+        }
+    }
+
+    static class Pair implements Comparable<Pair> {
+        int wsf;
+        String psf;
+
+        Pair(int wsf, String psf) {
+            this.wsf = wsf;
+            this.psf = psf;
+        }
+
+        public int compareTo(Pair o) {
+            return this.wsf - o.wsf; // Min-Heap based on weight
+        }
+    }
+
+    static String spath;
+    static Integer spathwt = Integer.MAX_VALUE;
+    static String lpath;
+    static Integer lpathwt = Integer.MIN_VALUE;
+    static String cpath;
+    static Integer cpathwt = Integer.MAX_VALUE;
+    static String fpath;
+    static Integer fpathwt = Integer.MIN_VALUE;
+    static PriorityQueue<Pair> pq = new PriorityQueue<>();
+
+    public static void multisolver(ArrayList<Edge>[] graph, int src, int dest, boolean[] visited,
+                                   int criteria, int k, String psf, int wsf) {
+        if (src == dest) {
+            // 1. Smallest path
+            if (wsf < spathwt) {
+                spathwt = wsf;
+                spath = psf;
+            }
+
+            // 2. Longest path
+            if (wsf > lpathwt) {
+                lpathwt = wsf;
+                lpath = psf;
+            }
+
+            // 3. Ceil path (> criteria and minimum among them)
+            if (wsf > criteria && wsf < cpathwt) {
+                cpathwt = wsf;
+                cpath = psf;
+            }
+
+            // 4. Floor path (< criteria and maximum among them)
+            if (wsf < criteria && wsf > fpathwt) {
+                fpathwt = wsf;
+                fpath = psf;
+            }
+
+            // 5. K-th Largest path (using Min-Heap of size k)
+            if (pq.size() < k) {
+                pq.add(new Pair(wsf, psf));
+            } else if (wsf > pq.peek().wsf) {
+                pq.remove();
+                pq.add(new Pair(wsf, psf));
+            }
+            return;
+        }
+
+        visited[src] = true;
+        for (Edge e : graph[src]) {
+            if (!visited[e.nbr]) {
+                multisolver(graph, e.nbr, dest, visited, criteria, k, psf + e.nbr, wsf + e.wt);
+            }
+        }
+        visited[src] = false; // Backtrack
+    }
+
+    public static void main(String[] args) {
+        int vtces = 7;
+        ArrayList<Edge>[] graph = new ArrayList[vtces];
+        for (int i = 0; i < vtces; i++) graph[i] = new ArrayList<>();
+
+        int[][] edges = {
+            {0, 1, 10}, {1, 2, 10}, {2, 3, 10}, {0, 3, 40},
+            {3, 4, 2}, {4, 5, 3}, {5, 6, 3}, {4, 6, 8}
+        };
+        for (int[] e : edges) {
+            graph[e[0]].add(new Edge(e[0], e[1], e[2]));
+            graph[e[1]].add(new Edge(e[1], e[0], e[2]));
+        }
+
+        int src = 0, dest = 6, criteria = 40, k = 3;
+        boolean[] visited = new boolean[vtces];
+
+        multisolver(graph, src, dest, visited, criteria, k, "0", 0);
+
+        System.out.println("Smallest Path = " + spath + "@" + spathwt);
+        System.out.println("Largest Path = " + lpath + "@" + lpathwt);
+        System.out.println("Just Larger Path than " + criteria + " = " + cpath + "@" + cpathwt);
+        System.out.println("Just Smaller Path than " + criteria + " = " + fpath + "@" + fpathwt);
+        System.out.println(k + "th largest path = " + pq.peek().psf + "@" + pq.peek().wsf);
+    }
+}
+```
+
+#### C++ Implementation
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <queue>
+#include <climits>
+
+using namespace std;
+
+struct Edge {
+    int src, nbr, wt;
+    Edge(int src, int nbr, int wt) : src(src), nbr(nbr), wt(wt) {}
+};
+
+struct Pair {
+    int wsf;
+    string psf;
+    Pair(int wsf, string psf) : wsf(wsf), psf(psf) {}
+
+    // Operator for Min-Heap
+    bool operator>(const Pair& other) const {
+        return this->wsf > other.wsf;
+    }
+};
+
+string spath;
+int spathwt = INT_MAX;
+string lpath;
+int lpathwt = INT_MIN;
+string cpath;
+int cpathwt = INT_MAX;
+string fpath;
+int fpathwt = INT_MIN;
+
+// Min-Heap of Pairs
+priority_queue<Pair, vector<Pair>, greater<Pair>> pq;
+
+void multisolver(const vector<vector<Edge>>& graph, int src, int dest, vector<bool>& visited,
+                 int criteria, int k, string psf, int wsf) {
+    if (src == dest) {
+        // 1. Smallest
+        if (wsf < spathwt) {
+            spathwt = wsf;
+            spath = psf;
+        }
+
+        // 2. Largest
+        if (wsf > lpathwt) {
+            lpathwt = wsf;
+            lpath = psf;
+        }
+
+        // 3. Ceil (> criteria)
+        if (wsf > criteria && wsf < cpathwt) {
+            cpathwt = wsf;
+            cpath = psf;
+        }
+
+        // 4. Floor (< criteria)
+        if (wsf < criteria && wsf > fpathwt) {
+            fpathwt = wsf;
+            fpath = psf;
+        }
+
+        // 5. K-th Largest (Min-Heap of size k)
+        if ((int)pq.size() < k) {
+            pq.push(Pair(wsf, psf));
+        } else if (wsf > pq.top().wsf) {
+            pq.pop();
+            pq.push(Pair(wsf, psf));
+        }
+        return;
+    }
+
+    visited[src] = true;
+    for (const auto& e : graph[src]) {
+        if (!visited[e.nbr]) {
+            multisolver(graph, e.nbr, dest, visited, criteria, k, psf + to_string(e.nbr), wsf + e.wt);
+        }
+    }
+    visited[src] = false; // Backtrack
+}
+
+int main() {
+    int vtces = 7;
+    vector<vector<Edge>> graph(vtces);
+    vector<vector<int>> edges = {
+        {0, 1, 10}, {1, 2, 10}, {2, 3, 10}, {0, 3, 40},
+        {3, 4, 2}, {4, 5, 3}, {5, 6, 3}, {4, 6, 8}
+    };
+    for (const auto& e : edges) {
+        graph[e[0]].emplace_back(e[0], e[1], e[2]);
+        graph[e[1]].emplace_back(e[1], e[0], e[2]);
+    }
+
+    int src = 0, dest = 6, criteria = 40, k = 3;
+    vector<bool> visited(vtces, false);
+
+    multisolver(graph, src, dest, visited, criteria, k, "0", 0);
+
+    cout << "Smallest Path = " << spath << "@" << spathwt << "\n";
+    cout << "Largest Path = " << lpath << "@" << lpathwt << "\n";
+    cout << "Just Larger Path than " << criteria << " = " << cpath << "@" << cpathwt << "\n";
+    cout << "Just Smaller Path than " << criteria << " = " << fpath << "@" << fpathwt << "\n";
+    cout << k << "th largest path = " << pq.top().psf << "@" << pq.top().wsf << "\n";
+
+    return 0;
+}
+```
+
+---
+
+
 
 
 
@@ -647,10 +1242,9 @@ The central idea is that a representation is chosen by the operations an algorit
 
 ---
 
-# Question 3 — How Do We Implement a Weighted Undirected Graph in Java?
+# Question 3 — How Do We Implement a Weighted Undirected Graph (Adjacency Map)?
 
-
-The lecture represents every vertex by a name. Its neighbour map stores both adjacency and edge weight:
+The lecture represents every vertex by a name/key. Its neighbour map stores both adjacency and edge weight:
 
 ```text
 vertices
@@ -660,6 +1254,7 @@ vertices
 
 An undirected edge must be written in **both** neighbour maps.
 
+#### Java Implementation
 ```java
 import java.util.*;
 
@@ -708,6 +1303,70 @@ final class WeightedGraph {
         }
     }
 }
+```
+
+#### C++ Implementation
+```cpp
+#include <iostream>
+#include <unordered_map>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class WeightedGraph {
+private:
+    unordered_map<string, unordered_map<string, int>> graph;
+
+public:
+    void addVertex(const string& name) {
+        if (graph.find(name) == graph.end()) {
+            graph[name] = unordered_map<string, int>();
+        }
+    }
+
+    void addEdge(const string& u, const string& v, int weight) {
+        addVertex(u);
+        addVertex(v);
+        graph[u][v] = weight;
+        graph[v][u] = weight; // omit for directed graph
+    }
+
+    bool containsEdge(const string& u, const string& v) {
+        return graph.find(u) != graph.end() && graph[u].find(v) != graph[u].end();
+    }
+
+    void removeEdge(const string& u, const string& v) {
+        if (graph.find(u) != graph.end()) graph[u].erase(v);
+        if (graph.find(v) != graph.end()) graph[v].erase(u);
+    }
+
+    void removeVertex(const string& vertex) {
+        if (graph.find(vertex) == graph.end()) return;
+        for (auto& pair : graph[vertex]) {
+            graph[pair.first].erase(vertex);
+        }
+        graph.erase(vertex);
+    }
+
+    int numberOfEdges() {
+        int degreeSum = 0;
+        for (const auto& pair : graph) {
+            degreeSum += pair.second.size();
+        }
+        return degreeSum / 2;
+    }
+
+    void display() {
+        for (const auto& entry : graph) {
+            cout << entry.first << " -> { ";
+            for (const auto& nbr : entry.second) {
+                cout << nbr.first << ": " << nbr.second << " ";
+            }
+            cout << "}\n";
+        }
+    }
+};
 ```
 
 ## Why divide the degree sum by two?

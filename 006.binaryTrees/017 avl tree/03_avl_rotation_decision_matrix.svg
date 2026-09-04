@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 560" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#11111b" />
+      <stop offset="100%" stop-color="#181825" />
+    </linearGradient>
+    <linearGradient id="cardGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1e2e" />
+      <stop offset="100%" stop-color="#24273a" />
+    </linearGradient>
+    <linearGradient id="blueBadge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#89b4fa" />
+      <stop offset="100%" stop-color="#74c7ec" />
+    </linearGradient>
+    <linearGradient id="peachBadge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fab387" />
+      <stop offset="100%" stop-color="#f9e2af" />
+    </linearGradient>
+    <linearGradient id="greenBadge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a6e3a1" />
+      <stop offset="100%" stop-color="#94e2d5" />
+    </linearGradient>
+    <linearGradient id="redBadge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f38ba8" />
+      <stop offset="100%" stop-color="#eba0ac" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="940" height="560" rx="16" fill="url(#bgGrad3)" stroke="#313244" stroke-width="1.5" />
+
+  <!-- Header -->
+  <text x="470" y="38" fill="#cdd6f4" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" text-anchor="middle">How to Detect Imbalance: LL vs LR vs RR vs RL</text>
+  <text x="470" y="62" fill="#a6adc8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" text-anchor="middle">Balance Factor = Height(Left Subtree) - Height(Right Subtree)  •  Acceptable Range: [-1, 0, +1]</text>
+
+  <!-- Formula Banner -->
+  <rect x="30" y="80" width="880" height="42" rx="8" fill="#181825" stroke="#89b4fa" stroke-width="1.2" />
+  <text x="470" y="106" fill="#89b4fa" font-family="monospace" font-size="14" font-weight="700" text-anchor="middle">balanceFactor(node) = height(node.left) - height(node.right)</text>
+
+  <!-- 2x2 Grid of Cases -->
+
+  <!-- CARD 1: LL CASE -->
+  <rect x="30" y="135" width="425" height="185" rx="10" fill="url(#cardGrad3)" stroke="#89b4fa" stroke-width="1.2" />
+  <rect x="45" y="148" width="90" height="24" rx="5" fill="url(#blueBadge)" />
+  <text x="90" y="164" fill="#11111b" font-family="sans-serif" font-size="12" font-weight="700" text-anchor="middle">1. LL Case</text>
+  <text x="145" y="164" fill="#a6adc8" font-family="sans-serif" font-size="11">Left-Heavy &amp; Left Child Left-Heavy</text>
+
+  <rect x="45" y="180" width="395" height="45" rx="6" fill="#181825" stroke="#45475a" stroke-width="1" />
+  <text x="55" y="198" fill="#fab387" font-family="monospace" font-size="11" font-weight="600">IF balance(node) &gt; 1 &amp;&amp; balance(node.left) &gt;= 0</text>
+  <text x="55" y="215" fill="#a6e3a1" font-family="sans-serif" font-size="10">Left child has positive balance (or 0 during deletion)</text>
+
+  <text x="55" y="248" fill="#cdd6f4" font-family="sans-serif" font-size="11" font-weight="700">Required Operation:</text>
+  <text x="55" y="270" fill="#89b4fa" font-family="monospace" font-size="12" font-weight="700">return rightRotate(node);</text>
+  <text x="55" y="295" fill="#bac2de" font-family="sans-serif" font-size="10">• Single rotation: Left child becomes new root</text>
+
+
+  <!-- CARD 2: LR CASE -->
+  <rect x="485" y="135" width="425" height="185" rx="10" fill="url(#cardGrad3)" stroke="#fab387" stroke-width="1.2" />
+  <rect x="500" y="148" width="90" height="24" rx="5" fill="url(#peachBadge)" />
+  <text x="545" y="164" fill="#11111b" font-family="sans-serif" font-size="12" font-weight="700" text-anchor="middle">2. LR Case</text>
+  <text x="600" y="164" fill="#a6adc8" font-family="sans-serif" font-size="11">Left-Heavy &amp; Left Child Right-Heavy (Zig-Zag)</text>
+
+  <rect x="500" y="180" width="395" height="45" rx="6" fill="#181825" stroke="#45475a" stroke-width="1" />
+  <text x="510" y="198" fill="#fab387" font-family="monospace" font-size="11" font-weight="600">IF balance(node) &gt; 1 &amp;&amp; balance(node.left) &lt; 0</text>
+  <text x="510" y="215" fill="#f38ba8" font-family="sans-serif" font-size="10">Left child has negative balance (right child heavier)</text>
+
+  <text x="510" y="248" fill="#cdd6f4" font-family="sans-serif" font-size="11" font-weight="700">Required Operation:</text>
+  <text x="510" y="270" fill="#fab387" font-family="monospace" font-size="12" font-weight="700">node.left = leftRotate(node.left);</text>
+  <text x="510" y="292" fill="#89b4fa" font-family="monospace" font-size="12" font-weight="700">return rightRotate(node);</text>
+
+
+  <!-- CARD 3: RR CASE -->
+  <rect x="30" y="335" width="425" height="185" rx="10" fill="url(#cardGrad3)" stroke="#a6e3a1" stroke-width="1.2" />
+  <rect x="45" y="348" width="90" height="24" rx="5" fill="url(#greenBadge)" />
+  <text x="90" y="364" fill="#11111b" font-family="sans-serif" font-size="12" font-weight="700" text-anchor="middle">3. RR Case</text>
+  <text x="145" y="364" fill="#a6adc8" font-family="sans-serif" font-size="11">Right-Heavy &amp; Right Child Right-Heavy</text>
+
+  <rect x="45" y="380" width="395" height="45" rx="6" fill="#181825" stroke="#45475a" stroke-width="1" />
+  <text x="55" y="398" fill="#a6e3a1" font-family="monospace" font-size="11" font-weight="600">IF balance(node) &lt; -1 &amp;&amp; balance(node.right) &lt;= 0</text>
+  <text x="55" y="415" fill="#a6e3a1" font-family="sans-serif" font-size="10">Right child has negative balance (or 0 during deletion)</text>
+
+  <text x="55" y="448" fill="#cdd6f4" font-family="sans-serif" font-size="11" font-weight="700">Required Operation:</text>
+  <text x="55" y="470" fill="#a6e3a1" font-family="monospace" font-size="12" font-weight="700">return leftRotate(node);</text>
+  <text x="55" y="495" fill="#bac2de" font-family="sans-serif" font-size="10">• Single rotation: Right child becomes new root</text>
+
+
+  <!-- CARD 4: RL CASE -->
+  <rect x="485" y="335" width="425" height="185" rx="10" fill="url(#cardGrad3)" stroke="#f38ba8" stroke-width="1.2" />
+  <rect x="500" y="348" width="90" height="24" rx="5" fill="url(#redBadge)" />
+  <text x="545" y="364" fill="#11111b" font-family="sans-serif" font-size="12" font-weight="700" text-anchor="middle">4. RL Case</text>
+  <text x="600" y="364" fill="#a6adc8" font-family="sans-serif" font-size="11">Right-Heavy &amp; Right Child Left-Heavy (Zig-Zag)</text>
+
+  <rect x="500" y="380" width="395" height="45" rx="6" fill="#181825" stroke="#45475a" stroke-width="1" />
+  <text x="510" y="398" fill="#f38ba8" font-family="monospace" font-size="11" font-weight="600">IF balance(node) &lt; -1 &amp;&amp; balance(node.right) &gt; 0</text>
+  <text x="510" y="415" fill="#f38ba8" font-family="sans-serif" font-size="10">Right child has positive balance (left child heavier)</text>
+
+  <text x="510" y="448" fill="#cdd6f4" font-family="sans-serif" font-size="11" font-weight="700">Required Operation:</text>
+  <text x="510" y="470" fill="#fab387" font-family="monospace" font-size="12" font-weight="700">node.right = rightRotate(node.right);</text>
+  <text x="510" y="492" fill="#a6e3a1" font-family="monospace" font-size="12" font-weight="700">return leftRotate(node);</text>
+</svg>

@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 680" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f111a"/>
+      <stop offset="50%" stop-color="#161824"/>
+      <stop offset="100%" stop-color="#1a1c2e"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e2030"/>
+      <stop offset="100%" stop-color="#181a27"/>
+    </linearGradient>
+
+    <marker id="dfsArrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#89b4fa"/>
+    </marker>
+    <marker id="dfsArrowGreen" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a6e3a1"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="680" rx="16" fill="url(#bgGrad3)" stroke="#313244" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="550" y="42" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="700" text-anchor="middle">DFS Traversal: `hasPath` Algorithm &amp; Visited Array Mechanics</text>
+  <text x="550" y="66" fill="#9399b2" font-family="'Segoe UI', Roboto, sans-serif" font-size="14" text-anchor="middle">Preventing Infinite Recursion in Cyclic Graphs via State Tracking</text>
+
+  <!-- Left: Algorithm Code & Visited Array Box -->
+  <g transform="translate(30, 90)">
+    <rect width="480" height="560" rx="12" fill="url(#cardGrad3)" stroke="#313244" stroke-width="1.2"/>
+    <rect x="0" y="0" width="480" height="38" rx="12" fill="#1e1e2e"/>
+    <text x="20" y="25" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">1. DFS Implementation: `hasPath`</text>
+
+    <!-- Code Display -->
+    <g transform="translate(20, 50)">
+      <rect width="440" height="250" rx="8" fill="#11111b" stroke="#313244" stroke-width="1"/>
+      <text x="15" y="25" fill="#fab387" font-family="'Courier New', monospace" font-size="11.5">public static boolean hasPath(ArrayList&lt;Edge&gt;[] graph,</text>
+      <text x="50" y="45" fill="#fab387" font-family="'Courier New', monospace" font-size="11.5">int src, int dest, boolean[] visited) {</text>
+
+      <text x="25" y="75" fill="#a6e3a1" font-family="'Courier New', monospace" font-size="11.5">if (src == dest) return true; // Base case</text>
+
+      <text x="25" y="105" fill="#f38ba8" font-family="'Courier New', monospace" font-size="11.5">visited[src] = true; // Mark visited</text>
+
+      <text x="25" y="135" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="11.5">for (Edge edge : graph[src]) {</text>
+      <text x="45" y="155" fill="#89b4fa" font-family="'Courier New', monospace" font-size="11.5">if (!visited[edge.nbr]) {</text>
+      <text x="65" y="175" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="11.5">boolean hasNbrPath =</text>
+      <text x="85" y="195" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="11.5">hasPath(graph, edge.nbr, dest, visited);</text>
+      <text x="65" y="215" fill="#a6e3a1" font-family="'Courier New', monospace" font-size="11.5">if (hasNbrPath) return true;</text>
+      <text x="45" y="235" fill="#89b4fa" font-family="'Courier New', monospace" font-size="11.5">}</text>
+      <text x="25" y="245" fill="#cdd6f4" font-family="'Courier New', monospace" font-size="11.5">}</text>
+    </g>
+
+    <!-- Visited Array State Table -->
+    <g transform="translate(20, 315)">
+      <rect width="440" height="225" rx="8" fill="#11111b" stroke="#313244" stroke-width="1"/>
+      <text x="15" y="25" fill="#f9e2af" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700">Visited Array State during Query (src:0 → dest:6):</text>
+
+      <!-- Indices -->
+      <g transform="translate(20, 45)">
+        <text x="30" y="15" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">Index:</text>
+        <rect x="75" y="0" width="38" height="22" fill="#181825" stroke="#313244"/>
+        <text x="94" y="15" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">0</text>
+        <rect x="115" y="0" width="38" height="22" fill="#181825" stroke="#313244"/>
+        <text x="134" y="15" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">1</text>
+        <rect x="155" y="0" width="38" height="22" fill="#181825" stroke="#313244"/>
+        <text x="174" y="15" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">2</text>
+        <rect x="195" y="0" width="38" height="22" fill="#181825" stroke="#313244"/>
+        <text x="214" y="15" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">3</text>
+        <rect x="235" y="0" width="38" height="22" fill="#181825" stroke="#313244"/>
+        <text x="254" y="15" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">4</text>
+        <rect x="275" y="0" width="38" height="22" fill="#181825" stroke="#313244"/>
+        <text x="294" y="15" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">5</text>
+        <rect x="315" y="0" width="38" height="22" fill="#181825" stroke="#313244"/>
+        <text x="334" y="15" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">6</text>
+
+        <!-- Values -->
+        <text x="30" y="42" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">Value:</text>
+        <rect x="75" y="27" width="38" height="22" fill="#313244" stroke="#a6e3a1"/>
+        <text x="94" y="42" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">T</text>
+        <rect x="115" y="27" width="38" height="22" fill="#313244" stroke="#a6e3a1"/>
+        <text x="134" y="42" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">T</text>
+        <rect x="155" y="27" width="38" height="22" fill="#313244" stroke="#a6e3a1"/>
+        <text x="174" y="42" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">T</text>
+        <rect x="195" y="27" width="38" height="22" fill="#313244" stroke="#a6e3a1"/>
+        <text x="214" y="42" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">T</text>
+        <rect x="235" y="27" width="38" height="22" fill="#313244" stroke="#a6e3a1"/>
+        <text x="254" y="42" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">T</text>
+        <rect x="275" y="27" width="38" height="22" fill="#313244" stroke="#a6e3a1"/>
+        <text x="294" y="42" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">T</text>
+        <rect x="315" y="27" width="38" height="22" fill="#313244" stroke="#a6e3a1"/>
+        <text x="334" y="42" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" text-anchor="middle">T</text>
+      </g>
+
+      <text x="20" y="125" fill="#fab387" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600">Why Visited Array is CRITICAL:</text>
+      <text x="25" y="145" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="11">• In Undirected Graph, 0 connects to 1 and 1 connects to 0.</text>
+      <text x="25" y="163" fill="#f38ba8" font-family="'Segoe UI', Roboto, sans-serif" font-size="11">• Without `visited[src]=true`, 0 calls 1, 1 calls 0 → StackOverflowError!</text>
+      <text x="25" y="181" fill="#cdd6f4" font-family="'Segoe UI', Roboto, sans-serif" font-size="11">• Ensures every vertex is processed at most once: Time O(V + E).</text>
+    </g>
+  </g>
+
+  <!-- Right: Recursion Tree / Call Flow Diagram -->
+  <g transform="translate(540, 90)">
+    <rect width="530" height="560" rx="12" fill="url(#cardGrad3)" stroke="#313244" stroke-width="1.2"/>
+    <rect x="0" y="0" width="530" height="38" rx="12" fill="#1e1e2e"/>
+    <text x="20" y="25" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">2. Recursion Call Stack Trace (0 → 6)</text>
+
+    <!-- Tree Flow Diagram -->
+    <g transform="translate(40, 50)">
+      <!-- Level 0: hasPath(0) -->
+      <rect x="140" y="10" width="170" height="34" rx="6" fill="#181825" stroke="#89b4fa" stroke-width="1.5"/>
+      <text x="225" y="32" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" text-anchor="middle">hasPath(src:0, dest:6)</text>
+
+      <!-- Down to 1 -->
+      <line x1="225" y1="44" x2="225" y2="75" stroke="#a6e3a1" stroke-width="2" marker-end="url(#dfsArrowGreen)"/>
+
+      <!-- Level 1: hasPath(1) -->
+      <rect x="140" y="75" width="170" height="34" rx="6" fill="#181825" stroke="#89b4fa" stroke-width="1.5"/>
+      <text x="225" y="97" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" text-anchor="middle">hasPath(src:1, dest:6)</text>
+
+      <!-- Down to 2 -->
+      <line x1="225" y1="109" x2="225" y2="140" stroke="#a6e3a1" stroke-width="2" marker-end="url(#dfsArrowGreen)"/>
+
+      <!-- Level 2: hasPath(2) -->
+      <rect x="140" y="140" width="170" height="34" rx="6" fill="#181825" stroke="#89b4fa" stroke-width="1.5"/>
+      <text x="225" y="162" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" text-anchor="middle">hasPath(src:2, dest:6)</text>
+
+      <!-- Down to 3 -->
+      <line x1="225" y1="174" x2="225" y2="205" stroke="#a6e3a1" stroke-width="2" marker-end="url(#dfsArrowGreen)"/>
+
+      <!-- Level 3: hasPath(3) -->
+      <rect x="140" y="205" width="170" height="34" rx="6" fill="#181825" stroke="#89b4fa" stroke-width="1.5"/>
+      <text x="225" y="227" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" text-anchor="middle">hasPath(src:3, dest:6)</text>
+
+      <!-- Branch from 3: 0 is visited, 2 is visited, so visits 4 -->
+      <!-- Pruned branch: 0 (Already visited) -->
+      <line x1="170" y1="239" x2="80" y2="280" stroke="#f38ba8" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <rect x="10" y="280" width="140" height="28" rx="4" fill="#181825" stroke="#f38ba8" stroke-width="1"/>
+      <text x="80" y="298" fill="#f38ba8" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600" text-anchor="middle">0 (Visited ✗ Skips)</text>
+
+      <!-- Branch to 4 -->
+      <line x1="260" y1="239" x2="330" y2="280" stroke="#a6e3a1" stroke-width="2" marker-end="url(#dfsArrowGreen)"/>
+
+      <!-- Level 4: hasPath(4) -->
+      <rect x="250" y="280" width="170" height="34" rx="6" fill="#181825" stroke="#89b4fa" stroke-width="1.5"/>
+      <text x="335" y="302" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" text-anchor="middle">hasPath(src:4, dest:6)</text>
+
+      <!-- Down to 5 -->
+      <line x1="335" y1="314" x2="335" y2="350" stroke="#a6e3a1" stroke-width="2" marker-end="url(#dfsArrowGreen)"/>
+
+      <!-- Level 5: hasPath(5) -->
+      <rect x="250" y="350" width="170" height="34" rx="6" fill="#181825" stroke="#89b4fa" stroke-width="1.5"/>
+      <text x="335" y="372" fill="#89b4fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" text-anchor="middle">hasPath(src:5, dest:6)</text>
+
+      <!-- Down to 6 -->
+      <line x1="335" y1="384" x2="335" y2="420" stroke="#a6e3a1" stroke-width="2" marker-end="url(#dfsArrowGreen)"/>
+
+      <!-- Level 6: hasPath(6) -> Base Case Matched! -->
+      <rect x="250" y="420" width="170" height="36" rx="6" fill="#313244" stroke="#a6e3a1" stroke-width="2"/>
+      <text x="335" y="438" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">src==dest (6==6)</text>
+      <text x="335" y="450" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" text-anchor="middle">RETURNS TRUE ✓</text>
+    </g>
+
+    <text x="265" y="530" fill="#a6e3a1" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Result propagates upwards: returns TRUE to original caller!</text>
+  </g>
+</svg>

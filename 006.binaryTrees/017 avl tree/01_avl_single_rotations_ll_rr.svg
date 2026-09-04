@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#11111b" />
+      <stop offset="100%" stop-color="#181825" />
+    </linearGradient>
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#89b4fa" />
+      <stop offset="100%" stop-color="#74c7ec" />
+    </linearGradient>
+    <linearGradient id="pivotGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fab387" />
+      <stop offset="100%" stop-color="#f9e2af" />
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a6e3a1" />
+      <stop offset="100%" stop-color="#94e2d5" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1e2e" />
+      <stop offset="100%" stop-color="#24273a" />
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#89b4fa" />
+    </marker>
+    <marker id="arrowPeach" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#fab387" />
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="920" height="500" rx="16" fill="url(#bgGrad)" stroke="#313244" stroke-width="1.5" />
+
+  <!-- Header -->
+  <text x="460" y="38" fill="#cdd6f4" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" text-anchor="middle">AVL Tree: Single Rotations (LL and RR Cases)</text>
+  <text x="460" y="62" fill="#a6adc8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" text-anchor="middle">A single rotation restores balance whenever the insertion is entirely on the outer subtree</text>
+
+  <!-- ==================== LEFT: LL CASE ==================== -->
+  <rect x="25" y="85" width="425" height="390" rx="12" fill="url(#cardGrad)" stroke="#313244" stroke-width="1" />
+  <rect x="40" y="100" width="80" height="26" rx="6" fill="#313244" stroke="#89b4fa" stroke-width="1" />
+  <text x="80" y="117" fill="#89b4fa" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">1. LL Case</text>
+  <text x="135" y="117" fill="#bac2de" font-family="sans-serif" font-size="12">Left child's Left subtree heavy</text>
+
+  <!-- Before LL Rotation -->
+  <text x="120" y="155" fill="#f38ba8" font-family="sans-serif" font-size="12" font-weight="600" text-anchor="middle">Imbalanced Tree</text>
+  <line x1="120" y1="185" x2="80" y2="245" stroke="#45475a" stroke-width="2.5" />
+  <line x1="80" y1="245" x2="45" y2="305" stroke="#45475a" stroke-width="2.5" />
+
+  <!-- Nodes (1 -> 2 -> 3) -->
+  <circle cx="120" cy="185" r="18" fill="url(#nodeGrad)" filter="url(#shadow)" />
+  <text x="120" y="190" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">1</text>
+  <text x="145" y="185" fill="#f38ba8" font-family="monospace" font-size="11" font-weight="600">BF=+2</text>
+
+  <circle cx="80" cy="245" r="18" fill="url(#pivotGrad)" filter="url(#shadow)" />
+  <text x="80" y="250" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">2</text>
+  <text x="105" y="245" fill="#fab387" font-family="monospace" font-size="11" font-weight="600">BF=+1</text>
+
+  <circle cx="45" cy="305" r="18" fill="url(#leafGrad)" filter="url(#shadow)" />
+  <text x="45" y="310" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">3</text>
+  <text x="70" y="305" fill="#a6e3a1" font-family="monospace" font-size="11">BF=0</text>
+
+  <!-- Right Rotation Action Arc & Arrow -->
+  <path d="M 130 205 Q 165 240 145 275" fill="none" stroke="#fab387" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowPeach)" />
+  <text x="180" y="245" fill="#fab387" font-family="sans-serif" font-size="11" font-weight="700">Right Rotate</text>
+  <text x="180" y="260" fill="#bac2de" font-family="sans-serif" font-size="10">Root (1) goes down-right</text>
+
+  <!-- Transition Arrow -->
+  <line x1="205" y1="280" x2="250" y2="280" stroke="#89b4fa" stroke-width="3" marker-end="url(#arrow)" />
+
+  <!-- After LL Rotation (Balanced) -->
+  <text x="330" y="155" fill="#a6e3a1" font-family="sans-serif" font-size="12" font-weight="600" text-anchor="middle">Balanced Result</text>
+  <line x1="330" y1="200" x2="280" y2="265" stroke="#45475a" stroke-width="2.5" />
+  <line x1="330" y1="200" x2="380" y2="265" stroke="#45475a" stroke-width="2.5" />
+
+  <circle cx="330" cy="200" r="18" fill="url(#pivotGrad)" filter="url(#shadow)" />
+  <text x="330" y="205" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">2</text>
+  <text x="330" y="175" fill="#a6e3a1" font-family="monospace" font-size="11" font-weight="600" text-anchor="middle">New Root (BF=0)</text>
+
+  <circle cx="280" cy="265" r="18" fill="url(#leafGrad)" filter="url(#shadow)" />
+  <text x="280" y="270" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">3</text>
+
+  <circle cx="380" cy="265" r="18" fill="url(#nodeGrad)" filter="url(#shadow)" />
+  <text x="380" y="270" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">1</text>
+
+  <!-- LL Summary Box -->
+  <rect x="40" y="360" width="395" height="95" rx="8" fill="#181825" stroke="#45475a" stroke-width="1" />
+  <text x="55" y="382" fill="#89b4fa" font-family="sans-serif" font-size="12" font-weight="700">Action: rightRotate(root)</text>
+  <text x="55" y="402" fill="#bac2de" font-family="sans-serif" font-size="11">• Left child (2) becomes new root of this subtree</text>
+  <text x="55" y="420" fill="#bac2de" font-family="sans-serif" font-size="11">• Original root (1) is pulled down as the right child of 2</text>
+  <text x="55" y="438" fill="#a6e3a1" font-family="sans-serif" font-size="11">• Inorder preserved: 3 &lt; 2 &lt; 1</text>
+
+
+  <!-- ==================== RIGHT: RR CASE ==================== -->
+  <rect x="470" y="85" width="425" height="390" rx="12" fill="url(#cardGrad)" stroke="#313244" stroke-width="1" />
+  <rect x="485" y="100" width="80" height="26" rx="6" fill="#313244" stroke="#89b4fa" stroke-width="1" />
+  <text x="525" y="117" fill="#89b4fa" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">2. RR Case</text>
+  <text x="580" y="117" fill="#bac2de" font-family="sans-serif" font-size="12">Right child's Right subtree heavy</text>
+
+  <!-- Before RR Rotation -->
+  <text x="560" y="155" fill="#f38ba8" font-family="sans-serif" font-size="12" font-weight="600" text-anchor="middle">Imbalanced Tree</text>
+  <line x1="560" y1="185" x2="600" y2="245" stroke="#45475a" stroke-width="2.5" />
+  <line x1="600" y1="245" x2="635" y2="305" stroke="#45475a" stroke-width="2.5" />
+
+  <!-- Nodes (1 -> 2 -> 3) -->
+  <circle cx="560" cy="185" r="18" fill="url(#nodeGrad)" filter="url(#shadow)" />
+  <text x="560" y="190" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">1</text>
+  <text x="515" y="185" fill="#f38ba8" font-family="monospace" font-size="11" font-weight="600">BF=-2</text>
+
+  <circle cx="600" cy="245" r="18" fill="url(#pivotGrad)" filter="url(#shadow)" />
+  <text x="600" y="250" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">2</text>
+  <text x="635" y="245" fill="#fab387" font-family="monospace" font-size="11" font-weight="600">BF=-1</text>
+
+  <circle cx="635" cy="305" r="18" fill="url(#leafGrad)" filter="url(#shadow)" />
+  <text x="635" y="310" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">3</text>
+  <text x="665" y="305" fill="#a6e3a1" font-family="monospace" font-size="11">BF=0</text>
+
+  <!-- Left Rotation Action Arc & Arrow -->
+  <path d="M 545 205 Q 515 240 535 275" fill="none" stroke="#fab387" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowPeach)" />
+  <text x="535" y="255" fill="#fab387" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="end">Left Rotate</text>
+  <text x="535" y="270" fill="#bac2de" font-family="sans-serif" font-size="10" text-anchor="end">Root (1) down-left</text>
+
+  <!-- Transition Arrow -->
+  <line x1="645" y1="280" x2="690" y2="280" stroke="#89b4fa" stroke-width="3" marker-end="url(#arrow)" />
+
+  <!-- After RR Rotation (Balanced) -->
+  <text x="770" y="155" fill="#a6e3a1" font-family="sans-serif" font-size="12" font-weight="600" text-anchor="middle">Balanced Result</text>
+  <line x1="770" y1="200" x2="720" y2="265" stroke="#45475a" stroke-width="2.5" />
+  <line x1="770" y1="200" x2="820" y2="265" stroke="#45475a" stroke-width="2.5" />
+
+  <circle cx="770" cy="200" r="18" fill="url(#pivotGrad)" filter="url(#shadow)" />
+  <text x="770" y="205" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">2</text>
+  <text x="770" y="175" fill="#a6e3a1" font-family="monospace" font-size="11" font-weight="600" text-anchor="middle">New Root (BF=0)</text>
+
+  <circle cx="720" cy="265" r="18" fill="url(#nodeGrad)" filter="url(#shadow)" />
+  <text x="720" y="270" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">1</text>
+
+  <circle cx="820" cy="265" r="18" fill="url(#leafGrad)" filter="url(#shadow)" />
+  <text x="820" y="270" fill="#11111b" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">3</text>
+
+  <!-- RR Summary Box -->
+  <rect x="485" y="360" width="395" height="95" rx="8" fill="#181825" stroke="#45475a" stroke-width="1" />
+  <text x="500" y="382" fill="#89b4fa" font-family="sans-serif" font-size="12" font-weight="700">Action: leftRotate(root)</text>
+  <text x="500" y="402" fill="#bac2de" font-family="sans-serif" font-size="11">• Right child (2) becomes new root of this subtree</text>
+  <text x="500" y="420" fill="#bac2de" font-family="sans-serif" font-size="11">• Original root (1) is pulled down as the left child of 2</text>
+  <text x="500" y="438" fill="#a6e3a1" font-family="sans-serif" font-size="11">• Inorder preserved: 1 &lt; 2 &lt; 3</text>
+</svg>
