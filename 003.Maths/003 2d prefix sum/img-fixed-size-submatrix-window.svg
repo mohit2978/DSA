@@ -1,0 +1,19 @@
+<svg viewBox="0 0 460 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="15">
+  <rect x="0" y="0" width="460" height="320" fill="#1e1e1e"/>
+  <g stroke="#5b9bd5" stroke-width="1.5">
+    <line x1="40" y1="20" x2="40" y2="260"/><line x1="100" y1="20" x2="100" y2="260"/>
+    <line x1="160" y1="20" x2="160" y2="260"/><line x1="220" y1="20" x2="220" y2="260"/>
+    <line x1="280" y1="20" x2="280" y2="260"/><line x1="340" y1="20" x2="340" y2="260"/>
+    <line x1="400" y1="20" x2="400" y2="260"/>
+    <line x1="40" y1="20" x2="400" y2="20"/><line x1="40" y1="80" x2="400" y2="80"/>
+    <line x1="40" y1="140" x2="400" y2="140"/><line x1="40" y1="200" x2="400" y2="200"/>
+    <line x1="40" y1="260" x2="400" y2="260"/>
+  </g>
+  <!-- window of size (m,n) ending at (x,y) -->
+  <rect x="220" y="80" width="120" height="120" fill="#e06c75" fill-opacity="0.2" stroke="#e06c75" stroke-width="3"/>
+  <circle cx="340" cy="200" r="5" fill="#e06c75"/>
+  <text x="300" y="222" fill="#e06c75">(x,y)</text>
+  <circle cx="220" cy="80" r="5" fill="#f2c14e"/>
+  <text x="120" y="72" fill="#f2c14e">(x-m+1, y-n+1)</text>
+  <text x="20" y="290" fill="#d4d4d4" font-size="16">fixed (m x n) window ending at (x,y) &#8594; Area(x, y, x-m+1, y-n+1)</text>
+</svg>

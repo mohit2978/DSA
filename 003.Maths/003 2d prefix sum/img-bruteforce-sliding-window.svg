@@ -1,0 +1,37 @@
+<svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">
+  <rect x="0" y="0" width="620" height="300" fill="#1e1e1e"/>
+  <!-- grid -->
+  <g stroke="#5b9bd5" stroke-width="1.5">
+    <line x1="40" y1="30" x2="40" y2="230"/>
+    <line x1="100" y1="30" x2="100" y2="230"/>
+    <line x1="160" y1="30" x2="160" y2="230"/>
+    <line x1="220" y1="30" x2="220" y2="230"/>
+    <line x1="280" y1="30" x2="280" y2="230"/>
+    <line x1="340" y1="30" x2="340" y2="230"/>
+    <line x1="40" y1="30" x2="340" y2="30"/>
+    <line x1="40" y1="70" x2="340" y2="70"/>
+    <line x1="40" y1="110" x2="340" y2="110"/>
+    <line x1="40" y1="150" x2="340" y2="150"/>
+    <line x1="40" y1="190" x2="340" y2="190"/>
+    <line x1="40" y1="230" x2="340" y2="230"/>
+  </g>
+  <g fill="#d4d4d4" text-anchor="middle">
+    <text x="20" y="55">1</text><text x="20" y="95">2</text><text x="20" y="135">3</text>
+    <text x="20" y="175">4</text><text x="20" y="215">5</text><text x="20" y="255">6</text>
+  </g>
+  <!-- a couple of dots (points) -->
+  <circle cx="130" cy="90" r="4" fill="#f2c14e"/>
+  <circle cx="190" cy="110" r="4" fill="#f2c14e"/>
+  <circle cx="190" cy="150" r="4" fill="#f2c14e"/>
+  <!-- window position 1 (red) -->
+  <rect x="100" y="70" width="120" height="80" fill="none" stroke="#e06c75" stroke-width="3"/>
+  <!-- window position 2 (purple), slid right -->
+  <rect x="220" y="30" width="120" height="80" fill="none" stroke="#c586c0" stroke-width="3"/>
+  <path d="M 220 60 L 270 60" stroke="#e06c75" stroke-width="2" marker-end="url(#arrow)"/>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#e06c75"/>
+    </marker>
+  </defs>
+  <text x="330" y="270" fill="#d4d4d4" text-anchor="end">move window &amp; check how many points lie inside it</text>
+</svg>

@@ -1,0 +1,81 @@
+<svg viewBox="0 0 900 440" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="15">
+  <rect x="0" y="0" width="900" height="440" fill="#1e1e1e"/>
+
+  <!-- 5 rows x 7 cols grid, cell size 55, origin (80,40) -->
+  <!-- Y region = whole rectangle (0,0) to (row-1, col) = pre(row-1,col): rows 0..2, cols 0..4 -->
+  <rect x="80" y="40" width="275" height="165" fill="#56c98d" fill-opacity="0.30"/>
+  <!-- Z region = whole rectangle (0,0) to (row, col-1) = pre(row,col-1): rows 0..3, cols 0..3 -->
+  <rect x="80" y="40" width="220" height="220" fill="#5b9bd5" fill-opacity="0.30"/>
+  <!-- W region = overlap of Y and Z = pre(row-1,col-1): rows 0..2, cols 0..3 -->
+  <rect x="80" y="40" width="220" height="165" fill="none" stroke="#e06c75" stroke-width="3" stroke-dasharray="8 5"/>
+
+  <!-- grid lines -->
+  <g stroke="#3a3a3a" stroke-width="1">
+    <line x1="80" y1="40" x2="465" y2="40"/>
+    <line x1="80" y1="95" x2="465" y2="95"/>
+    <line x1="80" y1="150" x2="465" y2="150"/>
+    <line x1="80" y1="205" x2="465" y2="205"/>
+    <line x1="80" y1="260" x2="465" y2="260"/>
+    <line x1="80" y1="315" x2="465" y2="315"/>
+    <line x1="80" y1="40" x2="80" y2="315"/>
+    <line x1="135" y1="40" x2="135" y2="315"/>
+    <line x1="190" y1="40" x2="190" y2="315"/>
+    <line x1="245" y1="40" x2="245" y2="315"/>
+    <line x1="300" y1="40" x2="300" y2="315"/>
+    <line x1="355" y1="40" x2="355" y2="315"/>
+    <line x1="410" y1="40" x2="410" y2="315"/>
+    <line x1="465" y1="40" x2="465" y2="315"/>
+  </g>
+
+  <!-- row indices (0..4) on the left -->
+  <g fill="#888" text-anchor="end" font-size="13">
+    <text x="70" y="72">0</text>
+    <text x="70" y="127">1</text>
+    <text x="70" y="182">2</text>
+    <text x="70" y="237">3</text>
+    <text x="70" y="292">4</text>
+  </g>
+  <!-- col indices (0..6) on top -->
+  <g fill="#888" text-anchor="middle" font-size="13">
+    <text x="107" y="30">0</text>
+    <text x="162" y="30">1</text>
+    <text x="217" y="30">2</text>
+    <text x="272" y="30">3</text>
+    <text x="327" y="30">4</text>
+    <text x="382" y="30">5</text>
+    <text x="437" y="30">6</text>
+  </g>
+
+  <!-- x: target cell (row, col) = (3,4) — a single cell -->
+  <rect x="300" y="205" width="55" height="55" fill="#f2c14e" fill-opacity="0.45" stroke="#f2c14e" stroke-width="3"/>
+  <text x="327" y="237" text-anchor="middle" font-weight="bold" fill="#f2c14e">x</text>
+
+  <!-- region labels, placed inside each region (not at a single cell) -->
+  <text x="327" y="115" text-anchor="middle" font-weight="bold" fill="#56c98d" font-size="20">y</text>
+  <text x="190" y="290" text-anchor="middle" font-weight="bold" fill="#5b9bd5" font-size="20">z</text>
+  <text x="190" y="115" text-anchor="middle" font-weight="bold" fill="#e06c75" font-size="20">w</text>
+
+  <!-- defining bottom-right corner of each region: this is the (row,col) each region's prefix sum is "of" -->
+  <circle cx="355" cy="205" r="5" fill="#56c98d"/>
+  <text x="360" y="200" fill="#56c98d" font-size="12">(2,4)</text>
+  <circle cx="300" cy="260" r="5" fill="#5b9bd5"/>
+  <text x="230" y="278" fill="#5b9bd5" font-size="12">(3,3)</text>
+  <circle cx="300" cy="205" r="5" fill="#e06c75"/>
+  <text x="230" y="198" fill="#e06c75" font-size="12">(2,3)</text>
+
+  <!-- legend -->
+  <g font-size="14">
+    <rect x="480" y="45" width="16" height="16" fill="#56c98d" fill-opacity="0.5"/>
+    <text x="502" y="58" fill="#d4d4d4">y = whole region (0,0)&#8594;(2,4)</text>
+    <rect x="480" y="70" width="16" height="16" fill="#5b9bd5" fill-opacity="0.5"/>
+    <text x="502" y="83" fill="#d4d4d4">z = whole region (0,0)&#8594;(3,3)</text>
+    <rect x="480" y="95" width="16" height="16" fill="none" stroke="#e06c75" stroke-width="2" stroke-dasharray="4 3"/>
+    <text x="502" y="108" fill="#d4d4d4">w = overlap (0,0)&#8594;(2,3)</text>
+    <rect x="480" y="120" width="16" height="16" fill="#f2c14e" fill-opacity="0.5"/>
+    <text x="502" y="133" fill="#d4d4d4">x = single target cell (3,4)</text>
+  </g>
+
+  <text x="20" y="355" fill="#d4d4d4" font-size="16">y, z and w are whole cumulative regions (prefix sums), not single cells:</text>
+  <text x="20" y="378" fill="#d4d4d4" font-size="16">prefix_sum(x) = prefix_sum(y) + prefix_sum(z) - prefix_sum(w) + arr[x]</text>
+  <text x="20" y="405" fill="#f2c14e" font-size="16">pre(3,4) = pre(2,4) + pre(3,3) - pre(2,3) + arr[3][4]</text>
+</svg>

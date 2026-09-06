@@ -1,4 +1,3 @@
-# Notes
 ## Prime Till N
 
 Print all primes till N
@@ -43,25 +42,13 @@ public:
     }
 };
 
-int main() {
-    int n = 7;
-    
-    /* Creating an instance of 
-    Solution class */
-    Solution sol; 
-    
-    // Function call to get all primes till N
-    vector<int> ans = sol.primeTillN(n);
-    
-    cout << "All primes till N are: " << endl;
-    for(int i=0; i < ans.size(); i++) {
-        cout << ans[i] << " ";
-    }
-    
-    return 0;
-}
 
 ```
+
+**Complexity:**
+- **Time:** `O(N * sqrt(N))` — `isPrime(i)` costs `O(sqrt(i))` (the loop runs `i` from `1` to `sqrt(n)`), and this check is repeated for every one of the `N` numbers from `2` to `n`, giving `O(N * sqrt(N))` overall.
+- **Space:** `O(1)` extra space (excluding the output `primes` vector) — `isPrime` only uses a `count` variable, no auxiliary array is built.
+
 ### seive
 
 ```cpp
@@ -91,6 +78,10 @@ vector<int> primeTillN(int n) {
 };
 
 ```
+
+**Complexity:**
+- **Time:** `O(N log log N)` — the outer loop runs to `sqrt(N)`, and for each prime `i` found, the inner loop marks its multiples starting from `i*i`, which happens `N/i` times; summing `N/p` over all primes `p <= N` converges to `N log log N` (full derivation later in this doc, under "Time Complexity Analysis").
+- **Space:** `O(N)` for the `isPrime` boolean array of size `n+1`, which dominates the `O(N)` used by the output `ans` vector.
 
 # Proof: Every Composite Number $C$ has a Prime Factor $p \le \sqrt{C}$
 
@@ -218,6 +209,10 @@ public:
 
 ```
 
+**Complexity:**
+- **Time:** `O(N log log N)` — identical marking work to the two-phase version above; merging the "collect primes" step into the same loop that does the marking doesn't change the asymptotic bound, since checking `isPrime[i]` and conditionally pushing `i` is `O(1)` extra work per outer-loop iteration (`N` iterations total, i.e. `O(N)` extra — dominated by the `O(N log log N)` marking cost).
+- **Space:** `O(N)` for the `isPrime` array, same as before. The practical win here is a smaller constant factor — avoiding a second full `O(N)` pass over the array — not a change in the Big-O class.
+
 ## Sieve of Eratosthenes — Complete Guide
 
 ### What Is It?
@@ -256,26 +251,47 @@ by their smaller factors.
 Example n=36: factors are 2×18, 3×12, 4×9, 6×6
 √36 = 6 → once we process 2,3,4,5,6 we're done
 ```
-![alt text](image.png)
 
-![alt text](image-1.png)
+### Interactive Walkthrough — Sieving 2 to 30 (step by step)
 
+**Step 0/7 — Initial state:** All numbers 2-30 marked as potentially prime. We will cross out non-primes one by one.
 
-![alt text](image-2.png)
+![Sieve of Eratosthenes — initial state, all numbers 2-30 marked as potentially prime](img-sieve-30-initial.svg)
 
-![alt text](image-3.png)
+**Step 1/7 — p = 2 is prime:** 2 is uncrossed → it's prime. Now cross out all multiples of 2 starting from 2×2 = 4.
 
-![alt text](image-4.png)
+![Sieve step 1 — 2 marked as the current prime, everything else still untouched](img-sieve-30-step1.svg)
 
-![alt text](image-5.png)
+**Step 2/7 — Cross out multiples of 2:** Mark 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30 as composite (multiples of 2). They have 2 as a factor so cannot be prime.
 
+![Sieve step 2 — all multiples of 2 being crossed out](img-sieve-30-step2.svg)
 
-![alt text](image-6.png)
+**Step 3/7 — p = 3 is prime:** 3 is uncrossed → it's prime. Now cross out all multiples of 3 starting from 3×3 = 9.
+*(primes found so far: 2)*
 
+![Sieve step 3 — 2 confirmed prime, 3 marked as the current prime, multiples of 2 now shown fully crossed out](img-sieve-30-step3.svg)
 
-![alt text](image-7.png)
+**Step 4/7 — Cross out multiples of 3:** Mark 9, 15, 21, 27 as composite (multiples of 3). They have 3 as a factor so cannot be prime.
+*(9, 15, 21, 27 are the only remaining uncrossed multiples of 3 — the rest, like 6, 12, 18, 24, 30, were already crossed out by 2.)*
 
+![Sieve step 4 — 9, 15, 21, 27 being crossed out as multiples of 3](img-sieve-30-step4.svg)
 
+**Step 5/7 — p = 5 is prime:** 5 is uncrossed → it's prime. Now cross out all multiples of 5 starting from 5×5 = 25.
+*(primes found so far: 2, 3)*
+
+![Sieve step 5 — 2 and 3 confirmed prime, 5 marked as the current prime](img-sieve-30-step5.svg)
+
+**Step 6/7 — Cross out multiples of 5:** Mark 25 as composite (multiples of 5). They have 5 as a factor so cannot be prime.
+*(25 is the only remaining uncrossed multiple of 5 in range — 10, 15, 20, 30 were already crossed out.)*
+*(primes found so far: 2, 3)*
+
+![Sieve step 6 — 25 being crossed out as the only remaining multiple of 5](img-sieve-30-step6.svg)
+
+**Step 7/7 — Sieve complete!** All numbers up to √30 ≈ 5.47 processed. Remaining unmarked numbers are all prime. We found 10 primes up to 30.
+
+![Sieve of Eratosthenes — final state after sieving, primes in green, composites crossed out in red](img-sieve-30-final.svg)
+
+**Primes found: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29**
 
 
 
@@ -378,7 +394,34 @@ Proof sketch:
 
 The sieve is essentially a **proof by elimination** — it doesn't guess, it rules out everything that can't be prime, leaving only what must be.
 
-![img.png](img.png)
+### TDPRIMES - Printing some primes
+
+`#sieve-of-eratosthenes`
+
+The problem statement is really simple. You are to write all primes less than 10^8.
+
+**Input:**
+
+There is no input.
+
+**Output:**
+
+To make the problem less output related write out only the 1st, 101st, 201st, ... 1st mod 100.
+
+**Example:**
+
+```
+Input:
+
+Output:
+2
+547
+1229
+...
+99995257
+99996931
+99998953
+```
 
 ```cpp
 //https://www.spoj.com/problems/TDPRIMES/
@@ -424,6 +467,10 @@ int main(int argc, char const *argv[]) {
 
 
 ```
+
+**Complexity:**
+- **Time:** `O(N log log N)` where `N = 10^8` — the standard sieve marking cost; printing is a single extra `O(N)` pass that only prints every 100th prime.
+- **Space:** `O(N)` — the `bool seive[1e8]` array takes roughly **100 MB** (1 byte per `bool` in a raw array), which is exactly the motivation for the `std::bitset`-based version covered later in this doc (same sieve, 8x less memory since a bitset packs 1 bit per element instead of 1 byte).
 
 # Count Primes in Range L to R
 
@@ -494,6 +541,11 @@ class Solution{
         }
 };
 ```
+
+**Complexity:**
+- **Time:** `O(MAXN log log MAXN + Q)` — the one-time sieve + prefix sum precomputation costs `O(MAXN log log MAXN)` (sieve) + `O(MAXN)` (prefix sum pass), and each of the `Q` queries is then answered in `O(1)` by subtracting two prefix-sum lookups (`isPrime[r] - isPrime[l-1]`), for `O(Q)` total across all queries.
+- **Space:** `O(MAXN)` for the `isPrime` array (reused in-place to hold the running prefix-sum counts), where `MAXN = 100001` per the constraints.
+
 ## Bitset seive
 
 ```cpp
@@ -529,6 +581,11 @@ int main() {
     cout << "Is 10 prime? " << isPrime[10] << endl;
 }
 ```
+
+**Complexity:**
+- **Time:** `O(N log log N)` — identical algorithm/marking pattern to the array-based sieve; swapping `vector<bool>`/`bool[]` for `bitset` changes memory layout and cache behavior, not the asymptotic number of operations.
+- **Space:** `O(N)` bits = `O(N/8)` bytes — for `MAX_N = 10^6` that's about **125 KB**, versus **~4 MB** for a plain `int` array or **~1 MB** for a raw `bool` array of the same size (see comparison table below).
+
 ###  Comparison Table
 
 | Feature | `vector<int>` | `vector<bool>` | `std::bitset` |
@@ -1351,3 +1408,7 @@ int countTotalDivisors(int n) {
     return totalDivisors;
 }
 ```
+
+**Complexity:**
+- **Time:** `O(log N)` per call — each iteration of the outer `while` fully exhausts one distinct prime factor of `n` (via the inner `while`), and `n` has at most `O(log N)` distinct prime factors combined with repetitions, since every division by a prime factor at least halves `n` in the worst case (smallest possible prime factor is `2`). This assumes the SPF (`spf[]`) array was already precomputed via the `O(MAXN log log MAXN)` sieve shown earlier in this doc.
+- **Space:** `O(1)` extra space for this function itself (just `totalDivisors`, `p`, `count`) — it relies on the already-built `spf[]` array from the earlier sieve, which is `O(MAXN)` space shared across all calls.
