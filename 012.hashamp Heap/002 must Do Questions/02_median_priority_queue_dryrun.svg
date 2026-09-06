@@ -1,0 +1,376 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+
+    <!-- Card Background -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <!-- Max Heap (Left) Gradient -->
+    <linearGradient id="maxHeapGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0369a1"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+
+    <!-- Min Heap (Right) Gradient -->
+    <linearGradient id="minHeapGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b45309"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <!-- Median Emerald Gradient -->
+    <linearGradient id="medianGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#15803d"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="glowGreen" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#22c55e" flood-opacity="0.6"/>
+    </filter>
+
+    <marker id="arrowRight" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowRebalance" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f43f5e" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="850" rx="16" fill="url(#bgGrad)" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Top Title Header -->
+  <g transform="translate(600, 38)">
+    <text text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#f8fafc" letter-spacing="0.5">
+      Median Priority Queue (Two-Heap Pattern)
+    </text>
+    <text y="24" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#94a3b8">
+      LeetCode 295 / GfG • Left Max-Heap + Right Min-Heap • O(log N) Add/Remove, O(1) Median Peek
+    </text>
+  </g>
+
+  <!-- Section 1: Visual Two-Heap Architecture Diagram (Top Section) -->
+  <rect x="35" y="75" width="1130" height="180" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.2" filter="url(#shadow)"/>
+
+  <!-- Left Half: Max-Heap Container -->
+  <g transform="translate(60, 95)">
+    <rect width="460" height="140" rx="10" fill="#082f49" fill-opacity="0.4" stroke="#0284c7" stroke-width="1.5"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#38bdf8">
+      LEFT: Max-Heap (Smaller Half of Numbers)
+    </text>
+    <text x="20" y="48" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">
+      Stores all elements &#8804; Median • Root holds the <tspan fill="#38bdf8" font-weight="700">MAXIMUM</tspan> of this half
+    </text>
+
+    <!-- Heap Visual Elements -->
+    <g transform="translate(20, 68)">
+      <rect x="0" y="0" width="70" height="50" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+      <text x="35" y="30" text-anchor="middle" font-family="Consolas" font-size="16" fill="#94a3b8">5</text>
+      
+      <rect x="85" y="0" width="70" height="50" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+      <text x="120" y="30" text-anchor="middle" font-family="Consolas" font-size="16" fill="#94a3b8">10</text>
+
+      <rect x="170" y="0" width="105" height="50" rx="8" fill="#0369a1" stroke="#38bdf8" stroke-width="2"/>
+      <text x="222" y="24" text-anchor="middle" font-family="Consolas" font-size="16" font-weight="800" fill="#ffffff">20</text>
+      <text x="222" y="42" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="700" fill="#7dd3fc">PEEK (MAX)</text>
+
+      <text x="300" y="32" font-family="Consolas" font-size="13" font-weight="600" fill="#38bdf8">
+        left.peek() = 20
+      </text>
+    </g>
+  </g>
+
+  <!-- Center Median Bridge -->
+  <g transform="translate(540, 140)">
+    <circle cx="60" cy="25" r="28" fill="#052e16" stroke="#22c55e" stroke-width="2" filter="url(#glowGreen)"/>
+    <text x="60" y="24" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="800" fill="#86efac">MEDIAN</text>
+    <text x="60" y="38" text-anchor="middle" font-family="Consolas" font-size="14" font-weight="800" fill="#f0fdf4">20</text>
+    
+    <!-- Comparison arrows -->
+    <path d="M -10 25 L 25 25" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrowRight)"/>
+    <path d="M 95 25 L 130 25" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrowRight)"/>
+    <text x="60" y="-12" text-anchor="middle" font-family="system-ui" font-size="11" font-weight="700" fill="#cbd5e1">
+      left.peek() &#8804; right.peek()
+    </text>
+  </g>
+
+  <!-- Right Half: Min-Heap Container -->
+  <g transform="translate(680, 95)">
+    <rect width="460" height="140" rx="10" fill="#451a03" fill-opacity="0.4" stroke="#d97706" stroke-width="1.5"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#fbbf24">
+      RIGHT: Min-Heap (Larger Half of Numbers)
+    </text>
+    <text x="20" y="48" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">
+      Stores all elements &#8805; Median • Root holds the <tspan fill="#fbbf24" font-weight="700">MINIMUM</tspan> of this half
+    </text>
+
+    <!-- Heap Visual Elements -->
+    <g transform="translate(20, 68)">
+      <rect x="0" y="0" width="105" height="50" rx="8" fill="#b45309" stroke="#f59e0b" stroke-width="2"/>
+      <text x="52" y="24" text-anchor="middle" font-family="Consolas" font-size="16" font-weight="800" fill="#ffffff">30</text>
+      <text x="52" y="42" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="700" fill="#fde68a">PEEK (MIN)</text>
+
+      <rect x="120" y="0" width="70" height="50" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+      <text x="155" y="30" text-anchor="middle" font-family="Consolas" font-size="16" fill="#94a3b8">40</text>
+      
+      <rect x="205" y="0" width="70" height="50" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+      <text x="240" y="30" text-anchor="middle" font-family="Consolas" font-size="16" fill="#94a3b8">50</text>
+
+      <text x="295" y="32" font-family="Consolas" font-size="13" font-weight="600" fill="#fbbf24">
+        right.peek() = 30
+      </text>
+    </g>
+  </g>
+
+  <!-- Section 2: Core Invariants Banner (Middle) -->
+  <g transform="translate(35, 270)">
+    <rect width="1130" height="66" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1.2"/>
+
+    <!-- Rule 1: Placement -->
+    <g transform="translate(25, 14)">
+      <circle cx="15" cy="18" r="12" fill="#0284c7"/>
+      <text x="15" y="22" text-anchor="middle" font-family="system-ui" font-size="12" font-weight="800" fill="#ffffff">1</text>
+      <text x="36" y="14" font-family="system-ui, sans-serif" font-size="12.5" font-weight="700" fill="#7dd3fc">Placement Rule:</text>
+      <text x="36" y="30" font-family="Consolas, monospace" font-size="11.5" fill="#e2e8f0">
+        If val &gt; right.peek() &#8594; <tspan fill="#fbbf24">right.add(val)</tspan> ; Else &#8594; <tspan fill="#38bdf8">left.add(val)</tspan>
+      </text>
+    </g>
+
+    <!-- Rule 2: Size Balance -->
+    <g transform="translate(420, 14)">
+      <circle cx="15" cy="18" r="12" fill="#d97706"/>
+      <text x="15" y="22" text-anchor="middle" font-family="system-ui" font-size="12" font-weight="800" fill="#ffffff">2</text>
+      <text x="36" y="14" font-family="system-ui, sans-serif" font-size="12.5" font-weight="700" fill="#fde68a">Balance Invariant:</text>
+      <text x="36" y="30" font-family="Consolas, monospace" font-size="11.5" fill="#e2e8f0">
+        |left.size() - right.size()| &#8804; 1 (Rebalance if diff &gt; 1)
+      </text>
+    </g>
+
+    <!-- Rule 3: Peek Output -->
+    <g transform="translate(800, 14)">
+      <circle cx="15" cy="18" r="12" fill="#16a34a"/>
+      <text x="15" y="22" text-anchor="middle" font-family="system-ui" font-size="12" font-weight="800" fill="#ffffff">3</text>
+      <text x="36" y="14" font-family="system-ui, sans-serif" font-size="12.5" font-weight="700" fill="#86efac">Median Query:</text>
+      <text x="36" y="30" font-family="Consolas, monospace" font-size="11.5" fill="#e2e8f0">
+        left.size() &#8805; right.size() ? <tspan fill="#38bdf8">left.peek()</tspan> : <tspan fill="#fbbf24">right.peek()</tspan>
+      </text>
+    </g>
+  </g>
+
+  <!-- Section 3: Trace Table of Stream Operations (Bottom Left) -->
+  <rect x="35" y="350" width="790" height="475" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.2" filter="url(#shadow)"/>
+
+  <!-- Table Header -->
+  <g transform="translate(35, 350)">
+    <path d="M 0 12 Q 0 0 12 0 L 778 0 Q 790 0 790 12 L 790 38 L 0 38 Z" fill="#1e293b"/>
+    <line x1="0" y1="38" x2="790" y2="38" stroke="#334155" stroke-width="1"/>
+    
+    <text x="25" y="24" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#94a3b8">STEP</text>
+    <text x="75" y="24" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#f8fafc">STREAM OP</text>
+    <text x="190" y="24" font-family="Consolas, monospace" font-size="12" font-weight="700" fill="#38bdf8">LEFT (Max-Heap)</text>
+    <text x="360" y="24" font-family="Consolas, monospace" font-size="12" font-weight="700" fill="#fbbf24">RIGHT (Min-Heap)</text>
+    <text x="530" y="24" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#cbd5e1">BALANCE ACTION</text>
+    <text x="690" y="24" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#4ade80">MEDIAN</text>
+  </g>
+
+  <!-- Step 1: add(10) -->
+  <g transform="translate(35, 395)">
+    <rect width="790" height="52" fill="#0f172a" fill-opacity="0.5"/>
+    <text x="25" y="32" font-family="system-ui" font-size="12" font-weight="700" fill="#94a3b8">1</text>
+    <rect x="70" y="16" width="90" height="24" rx="4" fill="#0284c7" fill-opacity="0.2" stroke="#38bdf8" stroke-width="1"/>
+    <text x="115" y="32" text-anchor="middle" font-family="Consolas" font-size="12" font-weight="700" fill="#7dd3fc">add(10)</text>
+    
+    <text x="190" y="32" font-family="Consolas" font-size="13" font-weight="700" fill="#38bdf8">{ 10 }</text>
+    <text x="360" y="32" font-family="Consolas" font-size="13" fill="#64748b">{ }</text>
+    <text x="530" y="25" font-family="system-ui" font-size="11" fill="#94a3b8">Sizes: (1, 0) &#8594; diff = 1</text>
+    <text x="530" y="40" font-family="system-ui" font-size="11" font-weight="700" fill="#86efac">Balanced &#10003;</text>
+    <rect x="680" y="16" width="75" height="24" rx="4" fill="#14532d" stroke="#22c55e" stroke-width="1"/>
+    <text x="717" y="32" text-anchor="middle" font-family="Consolas" font-size="13" font-weight="800" fill="#86efac">10</text>
+  </g>
+
+  <!-- Step 2: add(20) -->
+  <g transform="translate(35, 452)">
+    <rect width="790" height="52" fill="#1e293b" fill-opacity="0.3"/>
+    <text x="25" y="32" font-family="system-ui" font-size="12" font-weight="700" fill="#94a3b8">2</text>
+    <rect x="70" y="16" width="90" height="24" rx="4" fill="#0284c7" fill-opacity="0.2" stroke="#38bdf8" stroke-width="1"/>
+    <text x="115" y="32" text-anchor="middle" font-family="Consolas" font-size="12" font-weight="700" fill="#7dd3fc">add(20)</text>
+    
+    <text x="190" y="25" font-family="Consolas" font-size="12.5" font-weight="700" fill="#38bdf8">{ 10 }</text>
+    <text x="190" y="42" font-family="system-ui" font-size="10" fill="#94a3b8">right empty &#8594; to left &#8594; rebalance</text>
+    
+    <text x="360" y="25" font-family="Consolas" font-size="12.5" font-weight="700" fill="#fbbf24">{ 20 }</text>
+    <text x="360" y="42" font-family="system-ui" font-size="10" fill="#4ade80">&#8592; gained 20 via left.poll()</text>
+    <text x="530" y="25" font-family="system-ui" font-size="11" fill="#94a3b8">Sizes: (2, 0) &#8594; (1, 1)</text>
+    <text x="530" y="40" font-family="system-ui" font-size="11" font-weight="700" fill="#86efac">Rebalanced &#10003;</text>
+    <rect x="680" y="16" width="75" height="24" rx="4" fill="#14532d" stroke="#22c55e" stroke-width="1"/>
+    <text x="717" y="32" text-anchor="middle" font-family="Consolas" font-size="13" font-weight="800" fill="#86efac">10</text>
+  </g>
+
+  <!-- Step 3: add(30) -->
+  <g transform="translate(35, 509)">
+    <rect width="790" height="52" fill="#0f172a" fill-opacity="0.5"/>
+    <text x="25" y="32" font-family="system-ui" font-size="12" font-weight="700" fill="#94a3b8">3</text>
+    <rect x="70" y="16" width="90" height="24" rx="4" fill="#0284c7" fill-opacity="0.2" stroke="#38bdf8" stroke-width="1"/>
+    <text x="115" y="32" text-anchor="middle" font-family="Consolas" font-size="12" font-weight="700" fill="#7dd3fc">add(30)</text>
+    
+    <text x="190" y="32" font-family="Consolas" font-size="13" font-weight="700" fill="#38bdf8">{ 10 }</text>
+    
+    <text x="360" y="25" font-family="Consolas" font-size="13" font-weight="700" fill="#fbbf24">{ 20, 30 }</text>
+    <text x="360" y="42" font-family="system-ui" font-size="10.5" fill="#94a3b8">30 &gt; 20 &#8594; goes to right</text>
+
+    <text x="530" y="25" font-family="system-ui" font-size="11" fill="#94a3b8">Sizes: (1, 2) &#8594; diff = 1</text>
+    <text x="530" y="40" font-family="system-ui" font-size="11" font-weight="700" fill="#86efac">Balanced &#10003;</text>
+    <rect x="680" y="16" width="75" height="24" rx="4" fill="#14532d" stroke="#22c55e" stroke-width="1"/>
+    <text x="717" y="32" text-anchor="middle" font-family="Consolas" font-size="13" font-weight="800" fill="#86efac">20</text>
+  </g>
+
+  <!-- Step 4: add(40) with REBALANCE! -->
+  <g transform="translate(35, 566)">
+    <rect width="790" height="60" fill="#881337" fill-opacity="0.15" stroke="#f43f5e" stroke-width="1"/>
+    <text x="25" y="36" font-family="system-ui" font-size="12" font-weight="700" fill="#fb7185">4</text>
+    <rect x="70" y="18" width="90" height="24" rx="4" fill="#0284c7" fill-opacity="0.2" stroke="#38bdf8" stroke-width="1"/>
+    <text x="115" y="34" text-anchor="middle" font-family="Consolas" font-size="12" font-weight="700" fill="#7dd3fc">add(40)</text>
+    
+    <text x="190" y="28" font-family="Consolas" font-size="12.5" font-weight="700" fill="#38bdf8">{ 20, 10 }</text>
+    <text x="190" y="46" font-family="system-ui" font-size="10.5" fill="#4ade80">&#8592; gained 20 from right</text>
+    
+    <text x="360" y="28" font-family="Consolas" font-size="12.5" font-weight="700" fill="#fbbf24">{ 30, 40 }</text>
+    <text x="360" y="46" font-family="system-ui" font-size="10.5" fill="#f87171">diff was 2 (1, 3)!</text>
+
+    <text x="530" y="26" font-family="system-ui" font-size="11" font-weight="700" fill="#fb7185">REBALANCE:</text>
+    <text x="530" y="44" font-family="Consolas" font-size="11" fill="#fecdd3">left.add(right.poll())</text>
+    <rect x="680" y="18" width="75" height="24" rx="4" fill="#14532d" stroke="#22c55e" stroke-width="1"/>
+    <text x="717" y="34" text-anchor="middle" font-family="Consolas" font-size="13" font-weight="800" fill="#86efac">20</text>
+  </g>
+
+  <!-- Step 5: add(50) -->
+  <g transform="translate(35, 631)">
+    <rect width="790" height="52" fill="#0f172a" fill-opacity="0.5"/>
+    <text x="25" y="32" font-family="system-ui" font-size="12" font-weight="700" fill="#94a3b8">5</text>
+    <rect x="70" y="16" width="90" height="24" rx="4" fill="#0284c7" fill-opacity="0.2" stroke="#38bdf8" stroke-width="1"/>
+    <text x="115" y="32" text-anchor="middle" font-family="Consolas" font-size="12" font-weight="700" fill="#7dd3fc">add(50)</text>
+    
+    <text x="190" y="32" font-family="Consolas" font-size="13" font-weight="700" fill="#38bdf8">{ 20, 10 }</text>
+    
+    <text x="360" y="25" font-family="Consolas" font-size="13" font-weight="700" fill="#fbbf24">{ 30, 40, 50 }</text>
+    <text x="360" y="42" font-family="system-ui" font-size="10.5" fill="#94a3b8">50 &gt; 30 &#8594; goes to right</text>
+
+    <text x="530" y="25" font-family="system-ui" font-size="11" fill="#94a3b8">Sizes: (2, 3) &#8594; diff = 1</text>
+    <text x="530" y="40" font-family="system-ui" font-size="11" font-weight="700" fill="#86efac">Balanced &#10003;</text>
+    <rect x="680" y="16" width="75" height="24" rx="4" fill="#14532d" stroke="#22c55e" stroke-width="1"/>
+    <text x="717" y="32" text-anchor="middle" font-family="Consolas" font-size="13" font-weight="800" fill="#86efac">30</text>
+  </g>
+
+  <!-- Step 6: remove() -->
+  <g transform="translate(35, 688)">
+    <rect width="790" height="52" fill="#1e293b" fill-opacity="0.3"/>
+    <text x="25" y="32" font-family="system-ui" font-size="12" font-weight="700" fill="#94a3b8">6</text>
+    <rect x="70" y="16" width="90" height="24" rx="4" fill="#e11d48" fill-opacity="0.2" stroke="#f43f5e" stroke-width="1"/>
+    <text x="115" y="32" text-anchor="middle" font-family="Consolas" font-size="12" font-weight="700" fill="#fda4af">remove()</text>
+    
+    <text x="190" y="32" font-family="Consolas" font-size="13" font-weight="700" fill="#38bdf8">{ 20, 10 }</text>
+    
+    <text x="360" y="25" font-family="Consolas" font-size="13" font-weight="700" fill="#fbbf24">{ 40, 50 }</text>
+    <text x="360" y="42" font-family="system-ui" font-size="10.5" fill="#f43f5e">30 (median) removed</text>
+
+    <text x="530" y="25" font-family="system-ui" font-size="11" fill="#94a3b8">Sizes: (2, 2) &#8594; diff = 0</text>
+    <text x="530" y="40" font-family="system-ui" font-size="11" font-weight="700" fill="#86efac">Balanced &#10003;</text>
+    <rect x="680" y="16" width="75" height="24" rx="4" fill="#14532d" stroke="#22c55e" stroke-width="1"/>
+    <text x="717" y="32" text-anchor="middle" font-family="Consolas" font-size="13" font-weight="800" fill="#86efac">20</text>
+  </g>
+
+  <!-- Table Footer -->
+  <g transform="translate(35, 750)">
+    <rect width="790" height="60" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="26" font-family="system-ui" font-size="12" font-weight="700" fill="#38bdf8">Key Rule for remove():</text>
+    <text x="165" y="26" font-family="system-ui" font-size="12" fill="#cbd5e1">
+      Always pop from the heap that holds the median (<tspan fill="#86efac">larger heap</tspan>, or <tspan fill="#7dd3fc">left</tspan> if equal).
+    </text>
+    <text x="20" y="46" font-family="system-ui" font-size="11.5" fill="#94a3b8">
+      After removal, recheck <tspan fill="#fde68a">|left.size() - right.size()| &#8804; 1</tspan> and rebalance if necessary.
+    </text>
+  </g>
+
+  <!-- Section 4: Right Cards (Code & Complexity) -->
+  <!-- Card 1: Core Operations Complexity -->
+  <g transform="translate(845, 350)">
+    <rect width="320" height="215" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.2" filter="url(#shadow)"/>
+    <text x="20" y="30" font-family="system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#f8fafc">
+      Operation Complexity
+    </text>
+
+    <!-- add -->
+    <g transform="translate(20, 48)">
+      <rect width="70" height="24" rx="4" fill="#0284c7" fill-opacity="0.2" stroke="#38bdf8" stroke-width="1"/>
+      <text x="35" y="16" text-anchor="middle" font-family="Consolas" font-size="12" font-weight="700" fill="#7dd3fc">add(x)</text>
+      <text x="85" y="16" font-family="Consolas" font-size="13" font-weight="700" fill="#4ade80">O(log N)</text>
+      <text x="85" y="30" font-family="system-ui" font-size="10.5" fill="#94a3b8">Heap push + optional shift</text>
+    </g>
+
+    <!-- remove -->
+    <g transform="translate(20, 92)">
+      <rect width="70" height="24" rx="4" fill="#e11d48" fill-opacity="0.2" stroke="#f43f5e" stroke-width="1"/>
+      <text x="35" y="16" text-anchor="middle" font-family="Consolas" font-size="12" font-weight="700" fill="#fda4af">remove()</text>
+      <text x="85" y="16" font-family="Consolas" font-size="13" font-weight="700" fill="#4ade80">O(log N)</text>
+      <text x="85" y="30" font-family="system-ui" font-size="10.5" fill="#94a3b8">Heap poll + rebalance</text>
+    </g>
+
+    <!-- peek -->
+    <g transform="translate(20, 136)">
+      <rect width="70" height="24" rx="4" fill="#15803d" fill-opacity="0.2" stroke="#22c55e" stroke-width="1"/>
+      <text x="35" y="16" text-anchor="middle" font-family="Consolas" font-size="12" font-weight="700" fill="#86efac">peek()</text>
+      <text x="85" y="16" font-family="Consolas" font-size="13" font-weight="700" fill="#4ade80">O(1)</text>
+      <text x="85" y="30" font-family="system-ui" font-size="10.5" fill="#94a3b8">Inspect top of larger heap</text>
+    </g>
+
+    <!-- size -->
+    <g transform="translate(20, 180)">
+      <rect width="70" height="24" rx="4" fill="#334155" fill-opacity="0.4" stroke="#64748b" stroke-width="1"/>
+      <text x="35" y="16" text-anchor="middle" font-family="Consolas" font-size="12" font-weight="700" fill="#cbd5e1">size()</text>
+      <text x="85" y="16" font-family="Consolas" font-size="13" font-weight="700" fill="#4ade80">O(1)</text>
+      <text x="85" y="30" font-family="system-ui" font-size="10.5" fill="#94a3b8">left.size() + right.size()</text>
+    </g>
+  </g>
+
+  <!-- Card 2: Space & Tradeoffs -->
+  <g transform="translate(845, 580)">
+    <rect width="320" height="230" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.2" filter="url(#shadow)"/>
+    <text x="20" y="28" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#38bdf8">
+      Space &amp; Algorithm Properties
+    </text>
+
+    <g transform="translate(20, 48)">
+      <text x="0" y="16" font-family="system-ui" font-size="12" font-weight="700" fill="#f8fafc">
+        • Space Complexity: <tspan fill="#4ade80" font-family="Consolas">O(N)</tspan>
+      </text>
+      <text x="12" y="34" font-family="system-ui" font-size="11" fill="#94a3b8">
+        Every stream element is held in exactly one of the two heaps.
+      </text>
+
+      <text x="0" y="64" font-family="system-ui" font-size="12" font-weight="700" fill="#f8fafc">
+        • Why Not Sorted Array?
+      </text>
+      <text x="12" y="82" font-family="system-ui" font-size="11" fill="#94a3b8">
+        Insertion in sorted array takes <tspan fill="#f43f5e">O(N)</tspan> time due to shifting elements. Two heaps reduce this to <tspan fill="#4ade80">O(log N)</tspan>.
+      </text>
+
+      <text x="0" y="112" font-family="system-ui" font-size="12" font-weight="700" fill="#f8fafc">
+        • Java Heap Declarations:
+      </text>
+      <rect x="0" y="122" width="280" height="42" rx="4" fill="#090d16" stroke="#1e293b" stroke-width="1"/>
+      <text x="10" y="139" font-family="Consolas" font-size="10.5" fill="#7dd3fc">left = new PQ&lt;&gt;(reverseOrder());</text>
+      <text x="10" y="155" font-family="Consolas" font-size="10.5" fill="#fde68a">right = new PriorityQueue&lt;&gt;();</text>
+    </g>
+  </g>
+</svg>

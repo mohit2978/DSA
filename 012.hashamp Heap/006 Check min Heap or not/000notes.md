@@ -1,4 +1,4 @@
-## Notes
+
 
 Given an array check if it represents a min-heap or not.
 Print "Yes" if it represents a min-heap. Otherwise, print "No".
