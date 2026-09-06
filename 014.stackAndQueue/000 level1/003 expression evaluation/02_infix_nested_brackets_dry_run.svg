@@ -1,0 +1,473 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 1140" width="1240" height="1140">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070c18"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#0b1220"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#162238" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#0c1424" stop-opacity="0.98"/>
+    </linearGradient>
+
+    <!-- Node & Item Gradients -->
+    <linearGradient id="numGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+
+    <linearGradient id="numEvalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+
+    <linearGradient id="opGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <linearGradient id="opHighGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#7e22ce"/>
+    </linearGradient>
+
+    <linearGradient id="bracketGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#be123c"/>
+    </linearGradient>
+
+    <linearGradient id="finalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#15803d"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <filter id="glowGreen" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#22c55e" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1240" height="1140" rx="18" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Subtle Grid Pattern -->
+  <g opacity="0.03" stroke="#ffffff" stroke-width="1">
+    <line x1="0" y1="114" x2="1240" y2="114"/>
+    <line x1="0" y1="228" x2="1240" y2="228"/>
+    <line x1="0" y1="342" x2="1240" y2="342"/>
+    <line x1="0" y1="456" x2="1240" y2="456"/>
+    <line x1="0" y1="570" x2="1240" y2="570"/>
+    <line x1="0" y1="684" x2="1240" y2="684"/>
+    <line x1="0" y1="798" x2="1240" y2="798"/>
+    <line x1="0" y1="912" x2="1240" y2="912"/>
+    <line x1="0" y1="1026" x2="1240" y2="1026"/>
+  </g>
+
+  <!-- ================= HEADER ================= -->
+  <g transform="translate(620, 36)" text-anchor="middle">
+    <rect x="-160" y="-18" width="320" height="24" rx="12" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="0" y="-2" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#38bdf8" letter-spacing="1.2">NESTED BRACKETS INFIX EVALUATION</text>
+
+    <text x="0" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#f8fafc">
+      Dry Run Trace: <tspan fill="#38bdf8">30 / (6 - (2 + 10) / 3) * 4</tspan>
+    </text>
+    <text x="0" y="44" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" font-weight="400" fill="#94a3b8">
+      '(' acts as a barrier | Inner-most bracket resolves first, then outer bracket, then pre-bracket operators
+    </text>
+  </g>
+
+  <!-- ================= EXPRESSION SCAN CHIPS ================= -->
+  <g transform="translate(80, 92)">
+    <rect width="1080" height="46" rx="10" fill="#0c1324" stroke="#2a3b56" stroke-width="1.2" filter="url(#shadow)"/>
+    <text x="14" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#64748b" letter-spacing="0.5">EXPR:</text>
+
+    <!-- Tokens -->
+    <g transform="translate(60, 8)">
+      <!-- 30 -->
+      <rect x="0" y="0" width="36" height="30" rx="5" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+      <text x="18" y="20" font-family="monospace" font-size="13" font-weight="700" fill="#38bdf8" text-anchor="middle">30</text>
+      <!-- / -->
+      <rect x="42" y="0" width="30" height="30" rx="5" fill="#2e1047" stroke="#c084fc" stroke-width="1.2"/>
+      <text x="57" y="20" font-family="monospace" font-size="15" font-weight="800" fill="#c084fc" text-anchor="middle">/</text>
+      <!-- ( -->
+      <rect x="78" y="0" width="30" height="30" rx="5" fill="#380d19" stroke="#f43f5e" stroke-width="1.2"/>
+      <text x="93" y="20" font-family="monospace" font-size="15" font-weight="800" fill="#f43f5e" text-anchor="middle">(</text>
+      <!-- 6 -->
+      <rect x="114" y="0" width="30" height="30" rx="5" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+      <text x="129" y="20" font-family="monospace" font-size="13" font-weight="700" fill="#38bdf8" text-anchor="middle">6</text>
+      <!-- - -->
+      <rect x="150" y="0" width="30" height="30" rx="5" fill="#2d1b06" stroke="#fbbf24" stroke-width="1.2"/>
+      <text x="165" y="20" font-family="monospace" font-size="15" font-weight="800" fill="#fbbf24" text-anchor="middle">-</text>
+      <!-- ( -->
+      <rect x="186" y="0" width="30" height="30" rx="5" fill="#380d19" stroke="#f43f5e" stroke-width="1.2"/>
+      <text x="201" y="20" font-family="monospace" font-size="15" font-weight="800" fill="#f43f5e" text-anchor="middle">(</text>
+      <!-- 2 -->
+      <rect x="222" y="0" width="30" height="30" rx="5" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+      <text x="237" y="20" font-family="monospace" font-size="13" font-weight="700" fill="#38bdf8" text-anchor="middle">2</text>
+      <!-- + -->
+      <rect x="258" y="0" width="30" height="30" rx="5" fill="#2d1b06" stroke="#fbbf24" stroke-width="1.2"/>
+      <text x="273" y="20" font-family="monospace" font-size="15" font-weight="800" fill="#fbbf24" text-anchor="middle">+</text>
+      <!-- 10 -->
+      <rect x="294" y="0" width="36" height="30" rx="5" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+      <text x="312" y="20" font-family="monospace" font-size="13" font-weight="700" fill="#38bdf8" text-anchor="middle">10</text>
+      <!-- ) -->
+      <rect x="336" y="0" width="30" height="30" rx="5" fill="#380d19" stroke="#f43f5e" stroke-width="1.2"/>
+      <text x="351" y="20" font-family="monospace" font-size="15" font-weight="800" fill="#f43f5e" text-anchor="middle">)</text>
+      <!-- / -->
+      <rect x="372" y="0" width="30" height="30" rx="5" fill="#2e1047" stroke="#c084fc" stroke-width="1.2"/>
+      <text x="387" y="20" font-family="monospace" font-size="15" font-weight="800" fill="#c084fc" text-anchor="middle">/</text>
+      <!-- 3 -->
+      <rect x="408" y="0" width="30" height="30" rx="5" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+      <text x="423" y="20" font-family="monospace" font-size="13" font-weight="700" fill="#38bdf8" text-anchor="middle">3</text>
+      <!-- ) -->
+      <rect x="444" y="0" width="30" height="30" rx="5" fill="#380d19" stroke="#f43f5e" stroke-width="1.2"/>
+      <text x="459" y="20" font-family="monospace" font-size="15" font-weight="800" fill="#f43f5e" text-anchor="middle">)</text>
+      <!-- * -->
+      <rect x="480" y="0" width="30" height="30" rx="5" fill="#2e1047" stroke="#c084fc" stroke-width="1.2"/>
+      <text x="495" y="20" font-family="monospace" font-size="15" font-weight="800" fill="#c084fc" text-anchor="middle">*</text>
+      <!-- 4 -->
+      <rect x="516" y="0" width="30" height="30" rx="5" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+      <text x="531" y="20" font-family="monospace" font-size="13" font-weight="700" fill="#38bdf8" text-anchor="middle">4</text>
+      <!-- END -->
+      <rect x="556" y="0" width="50" height="30" rx="5" fill="#14532d" stroke="#22c55e" stroke-width="1.2"/>
+      <text x="581" y="19" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#86efac" text-anchor="middle">END</text>
+    </g>
+
+    <text x="960" y="28" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#94a3b8">Scan Left → Right</text>
+  </g>
+
+  <!-- ================= 5 SEQUENTIAL PHASES ================= -->
+
+  <!-- ====== PHASE 1: Push Into Nested Brackets ====== -->
+  <g transform="translate(30, 152)">
+    <rect width="1180" height="175" rx="12" fill="url(#cardGrad)" stroke="#23354f" stroke-width="1.2" filter="url(#shadow)"/>
+
+    <rect width="1180" height="32" rx="12" fill="#0284c7" fill-opacity="0.12"/>
+    <rect x="14" y="6" width="90" height="20" rx="5" fill="#0284c7" fill-opacity="0.3" stroke="#38bdf8" stroke-width="1"/>
+    <text x="59" y="19" font-family="system-ui, sans-serif" font-size="10.5" font-weight="800" fill="#7dd3fc" text-anchor="middle">PHASE 1</text>
+    <text x="115" y="20" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#f8fafc">Push through nested levels: '30', '/', '(', '6', '-', '(', '2', '+', '10'</text>
+
+    <!-- Description -->
+    <g transform="translate(18, 42)">
+      <text x="0" y="16" font-family="system-ui, sans-serif" font-size="11.5" fill="#cbd5e1">• Operands push directly: <tspan font-family="monospace" fill="#38bdf8">30</tspan>, <tspan font-family="monospace" fill="#38bdf8">6</tspan>, <tspan font-family="monospace" fill="#38bdf8">2</tspan>, <tspan font-family="monospace" fill="#38bdf8">10</tspan></text>
+      <text x="0" y="38" font-family="system-ui, sans-serif" font-size="11.5" fill="#cbd5e1">• Each <tspan font-family="monospace" font-weight="700" fill="#f43f5e">'('</tspan> is pushed unconditionally as an isolation barrier.</text>
+      <text x="0" y="60" font-family="system-ui, sans-serif" font-size="11.5" fill="#cbd5e1">• Next operators <tspan font-family="monospace" fill="#fbbf24">'-'</tspan> and <tspan font-family="monospace" fill="#fbbf24">'+'</tspan> see <tspan font-family="monospace" fill="#f43f5e">'('</tspan> on top → never pop past <tspan font-family="monospace" fill="#f43f5e">'('</tspan>, pushed directly!</text>
+
+      <rect x="0" y="80" width="460" height="42" rx="6" fill="#1e1022" stroke="#86198f" stroke-width="1"/>
+      <text x="12" y="98" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#f0abfc">BARRIER PRINCIPLE:</text>
+      <text x="12" y="114" font-family="system-ui, sans-serif" font-size="10.5" fill="#e879f9">Precedence comparison stops at '('. Each bracket level executes in isolation.</text>
+    </g>
+
+    <!-- Dual Stacks Visual -->
+    <g transform="translate(560, 40)">
+      <!-- Operand Stack -->
+      <text x="60" y="14" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8" text-anchor="middle">OPERAND STACK</text>
+      <path d="M 15 24 L 15 120 Q 15 124 19 124 L 101 124 Q 105 124 105 120 L 105 24" fill="#090f1d" stroke="#334155" stroke-width="1.8"/>
+      <rect x="21" y="98" width="78" height="22" rx="4" fill="url(#numGrad)"/>
+      <text x="60" y="114" font-family="monospace" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">30</text>
+      <rect x="21" y="74" width="78" height="22" rx="4" fill="url(#numGrad)"/>
+      <text x="60" y="90" font-family="monospace" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">6</text>
+      <rect x="21" y="50" width="78" height="22" rx="4" fill="url(#numGrad)"/>
+      <text x="60" y="66" font-family="monospace" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">2</text>
+      <rect x="21" y="26" width="78" height="22" rx="4" fill="url(#numGrad)"/>
+      <text x="60" y="42" font-family="monospace" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">10</text>
+      <text x="112" y="41" font-family="system-ui, sans-serif" font-size="9.5" font-weight="800" fill="#38bdf8">← TOP</text>
+
+      <!-- Operator Stack -->
+      <g transform="translate(180, 0)">
+        <text x="60" y="14" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fbbf24" text-anchor="middle">OPERATOR STACK</text>
+        <path d="M 15 24 L 15 120 Q 15 124 19 124 L 101 124 Q 105 124 105 120 L 105 24" fill="#090f1d" stroke="#334155" stroke-width="1.8"/>
+        <rect x="21" y="100" width="78" height="20" rx="3" fill="url(#opHighGrad)"/>
+        <text x="60" y="115" font-family="monospace" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">/</text>
+        <rect x="21" y="78" width="78" height="20" rx="3" fill="url(#bracketGrad)"/>
+        <text x="60" y="93" font-family="monospace" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">(</text>
+        <rect x="21" y="56" width="78" height="20" rx="3" fill="url(#opGrad)"/>
+        <text x="60" y="71" font-family="monospace" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">-</text>
+        <rect x="21" y="34" width="78" height="20" rx="3" fill="url(#bracketGrad)"/>
+        <text x="60" y="49" font-family="monospace" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">(</text>
+        <rect x="21" y="12" width="78" height="20" rx="3" fill="url(#opGrad)"/>
+        <text x="60" y="27" font-family="monospace" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">+</text>
+        <text x="112" y="26" font-family="system-ui, sans-serif" font-size="9.5" font-weight="800" fill="#fbbf24">← TOP</text>
+      </g>
+    </g>
+
+    <!-- State Summary -->
+    <g transform="translate(930, 48)">
+      <rect width="220" height="78" rx="8" fill="#08101e" stroke="#1e293b" stroke-width="1"/>
+      <text x="12" y="22" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#64748b">STACKS STATE:</text>
+      <text x="12" y="42" font-family="monospace" font-size="11.5" font-weight="700" fill="#38bdf8">operand:  [30, 6, 2, 10]</text>
+      <text x="12" y="62" font-family="monospace" font-size="11.5" font-weight="700" fill="#fbbf24">operator: [/, (, -, (, +]</text>
+    </g>
+  </g>
+
+  <!-- ====== PHASE 2: First ')' Resolves Inner (2 + 10 = 12), then '/' & '3' ====== -->
+  <g transform="translate(30, 337)">
+    <rect width="1180" height="185" rx="12" fill="url(#cardGrad)" stroke="#23354f" stroke-width="1.2" filter="url(#shadow)"/>
+
+    <rect width="1180" height="32" rx="12" fill="#d97706" fill-opacity="0.15"/>
+    <rect x="14" y="6" width="90" height="20" rx="5" fill="#b45309" fill-opacity="0.3" stroke="#fbbf24" stroke-width="1"/>
+    <text x="59" y="19" font-family="system-ui, sans-serif" font-size="10.5" font-weight="800" fill="#fde68a" text-anchor="middle">PHASE 2</text>
+    <text x="115" y="20" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#f8fafc">Encounter first ')' → pop inner bracket, evaluate '2 + 10 = 12', then push '/' and '3'</text>
+
+    <!-- Description -->
+    <g transform="translate(18, 42)">
+      <text x="0" y="16" font-family="monospace" font-size="12" font-weight="700" fill="#f43f5e">• see 1st ')'</text>
+      <text x="90" y="16" font-family="system-ui, sans-serif" font-size="11.5" fill="#cbd5e1">→ Pop &amp; evaluate until matching '(':</text>
+
+      <!-- Eval Box 1 -->
+      <g transform="translate(0, 24)">
+        <rect width="470" height="40" rx="5" fill="#042013" stroke="#059669" stroke-width="1"/>
+        <text x="10" y="18" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#34d399">INNER EVALUATION 1:</text>
+        <text x="145" y="18" font-family="monospace" font-size="12" font-weight="800" fill="#ffffff">op='+', v2=10, v1=2 → 2 + 10 = 12</text>
+        <text x="10" y="32" font-family="system-ui, sans-serif" font-size="9.5" fill="#a7f3d0">Push 12. Pop inner '(' and discard. Stack now: [30, 6, 12]</text>
+      </g>
+
+      <text x="0" y="86" font-family="monospace" font-size="12" font-weight="700" fill="#c084fc">• see /</text>
+      <text x="60" y="86" font-family="system-ui, sans-serif" font-size="11.5" fill="#cbd5e1">Top is '-' : <tspan font-weight="700" fill="#e9d5ff">prec('/')=2 &gt; prec('-')=1</tspan> → Push '/' directly!</text>
+      
+      <text x="0" y="108" font-family="monospace" font-size="12" font-weight="700" fill="#38bdf8">• push 3</text>
+      <text x="60" y="108" font-family="system-ui, sans-serif" font-size="11.5" fill="#94a3b8">→ operand stack: [30, 6, 12, 3]</text>
+
+      <text x="0" y="128" font-family="system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748b">
+        Outer bracket expression now stands as: (6 - 12 / 3)
+      </text>
+    </g>
+
+    <!-- Dual Stacks Visual -->
+    <g transform="translate(560, 40)">
+      <!-- Operand Stack -->
+      <text x="60" y="14" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8" text-anchor="middle">OPERAND STACK</text>
+      <path d="M 15 24 L 15 120 Q 15 124 19 124 L 101 124 Q 105 124 105 120 L 105 24" fill="#090f1d" stroke="#334155" stroke-width="1.8"/>
+      <rect x="21" y="98" width="78" height="22" rx="4" fill="url(#numGrad)"/>
+      <text x="60" y="114" font-family="monospace" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">30</text>
+      <rect x="21" y="74" width="78" height="22" rx="4" fill="url(#numGrad)"/>
+      <text x="60" y="90" font-family="monospace" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">6</text>
+      <rect x="21" y="50" width="78" height="22" rx="4" fill="url(#numEvalGrad)"/>
+      <text x="60" y="66" font-family="monospace" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">12</text>
+      <rect x="21" y="26" width="78" height="22" rx="4" fill="url(#numGrad)"/>
+      <text x="60" y="42" font-family="monospace" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">3</text>
+      <text x="112" y="41" font-family="system-ui, sans-serif" font-size="9.5" font-weight="800" fill="#38bdf8">← TOP</text>
+
+      <!-- Operator Stack -->
+      <g transform="translate(180, 0)">
+        <text x="60" y="14" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fbbf24" text-anchor="middle">OPERATOR STACK</text>
+        <path d="M 15 24 L 15 120 Q 15 124 19 124 L 101 124 Q 105 124 105 120 L 105 24" fill="#090f1d" stroke="#334155" stroke-width="1.8"/>
+        <rect x="21" y="98" width="78" height="22" rx="4" fill="url(#opHighGrad)"/>
+        <text x="60" y="114" font-family="monospace" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">/</text>
+        <rect x="21" y="74" width="78" height="22" rx="4" fill="url(#bracketGrad)"/>
+        <text x="60" y="90" font-family="monospace" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">(</text>
+        <rect x="21" y="50" width="78" height="22" rx="4" fill="url(#opGrad)"/>
+        <text x="60" y="66" font-family="monospace" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">-</text>
+        <rect x="21" y="26" width="78" height="22" rx="4" fill="url(#opHighGrad)"/>
+        <text x="60" y="42" font-family="monospace" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">/</text>
+        <text x="112" y="41" font-family="system-ui, sans-serif" font-size="9.5" font-weight="800" fill="#c084fc">← TOP</text>
+      </g>
+    </g>
+
+    <!-- State Summary -->
+    <g transform="translate(930, 48)">
+      <rect width="220" height="78" rx="8" fill="#08101e" stroke="#1e293b" stroke-width="1"/>
+      <text x="12" y="22" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#64748b">STACKS STATE:</text>
+      <text x="12" y="42" font-family="monospace" font-size="11.5" font-weight="700" fill="#38bdf8">operand:  [30, 6, 12, 3]</text>
+      <text x="12" y="62" font-family="monospace" font-size="11.5" font-weight="700" fill="#c084fc">operator: [/, (, -, /]</text>
+    </g>
+  </g>
+
+  <!-- ====== PHASE 3: Second ')' Resolves Outer (12/3=4 then 6-4=2) ====== -->
+  <g transform="translate(30, 532)">
+    <rect width="1180" height="215" rx="12" fill="url(#cardGrad)" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1.3" filter="url(#shadow)"/>
+
+    <rect width="1180" height="32" rx="12" fill="#ea580c" fill-opacity="0.15"/>
+    <rect x="14" y="6" width="90" height="20" rx="5" fill="#c2410c" fill-opacity="0.3" stroke="#fb923c" stroke-width="1"/>
+    <text x="59" y="19" font-family="system-ui, sans-serif" font-size="10.5" font-weight="800" fill="#ffedd5" text-anchor="middle">PHASE 3</text>
+    <text x="115" y="20" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#f8fafc">Encounter second ')' → pop until outer '(': evaluate '12 / 3 = 4' then '6 - 4 = 2'</text>
+
+    <!-- Description -->
+    <g transform="translate(18, 40)">
+      <text x="0" y="16" font-family="monospace" font-size="12" font-weight="700" fill="#f43f5e">• see 2nd ')'</text>
+      <text x="90" y="16" font-family="system-ui, sans-serif" font-size="11.5" fill="#cbd5e1">→ Loop pops until matching outer '(' is reached:</text>
+
+      <!-- Eval Box 2A -->
+      <g transform="translate(0, 24)">
+        <rect width="470" height="34" rx="5" fill="#042013" stroke="#059669" stroke-width="1"/>
+        <text x="10" y="16" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#34d399">EVALUATION 2A:</text>
+        <text x="120" y="16" font-family="monospace" font-size="11.5" font-weight="800" fill="#ffffff">op='/', v2=3, v1=12 → 12 / 3 = 4</text>
+        <text x="10" y="28" font-family="system-ui, sans-serif" font-size="9.5" fill="#a7f3d0">Push 4. Operator top is now '-'. Operand stack is: [30, 6, 4]</text>
+      </g>
+
+      <!-- Eval Box 2B -->
+      <g transform="translate(0, 64)">
+        <rect width="470" height="34" rx="5" fill="#042013" stroke="#059669" stroke-width="1"/>
+        <text x="10" y="16" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#34d399">EVALUATION 2B:</text>
+        <text x="120" y="16" font-family="monospace" font-size="11.5" font-weight="800" fill="#ffffff">op='-', v2=4, v1=6  → 6 - 4 = 2</text>
+        <text x="10" y="28" font-family="system-ui, sans-serif" font-size="9.5" fill="#a7f3d0">Push 2. Operator top is outer '('. Operand stack is: [30, 2]</text>
+      </g>
+
+      <text x="0" y="118" font-family="system-ui, sans-serif" font-size="11" fill="#fca5a5">
+        • Pop outer <tspan font-family="monospace" font-weight="700" fill="#f43f5e">'('</tspan> and discard! Entire bracket expression evaluated to <tspan font-weight="800" fill="#ffffff">2</tspan>.
+      </text>
+      <text x="0" y="136" font-family="system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#94a3b8">
+        Remaining in operator stack: only the initial pre-bracket operator <tspan font-family="monospace" fill="#c084fc">'/'</tspan>!
+      </text>
+    </g>
+
+    <!-- Dual Stacks Visual -->
+    <g transform="translate(560, 40)">
+      <!-- Operand Stack -->
+      <text x="60" y="14" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8" text-anchor="middle">OPERAND STACK</text>
+      <path d="M 15 24 L 15 120 Q 15 124 19 124 L 101 124 Q 105 124 105 120 L 105 24" fill="#090f1d" stroke="#334155" stroke-width="1.8"/>
+      <rect x="21" y="96" width="78" height="24" rx="4" fill="url(#numGrad)"/>
+      <text x="60" y="113" font-family="monospace" font-size="13" font-weight="800" fill="#ffffff" text-anchor="middle">30</text>
+      <rect x="21" y="68" width="78" height="24" rx="4" fill="url(#numEvalGrad)"/>
+      <text x="60" y="85" font-family="monospace" font-size="13" font-weight="800" fill="#ffffff" text-anchor="middle">2</text>
+      <text x="112" y="84" font-family="system-ui, sans-serif" font-size="9.5" font-weight="800" fill="#38bdf8">← TOP</text>
+
+      <!-- Operator Stack -->
+      <g transform="translate(180, 0)">
+        <text x="60" y="14" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fbbf24" text-anchor="middle">OPERATOR STACK</text>
+        <path d="M 15 24 L 15 120 Q 15 124 19 124 L 101 124 Q 105 124 105 120 L 105 24" fill="#090f1d" stroke="#334155" stroke-width="1.8"/>
+        <rect x="21" y="96" width="78" height="24" rx="4" fill="url(#opHighGrad)"/>
+        <text x="60" y="113" font-family="monospace" font-size="16" font-weight="800" fill="#ffffff" text-anchor="middle">/</text>
+        <text x="112" y="112" font-family="system-ui, sans-serif" font-size="9.5" font-weight="800" fill="#c084fc">← TOP</text>
+      </g>
+    </g>
+
+    <!-- State Summary -->
+    <g transform="translate(930, 48)">
+      <rect width="220" height="78" rx="8" fill="#08101e" stroke="#1e293b" stroke-width="1"/>
+      <text x="12" y="22" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#64748b">STACKS STATE:</text>
+      <text x="12" y="42" font-family="monospace" font-size="11.5" font-weight="700" fill="#38bdf8">operand:  [30, 2]</text>
+      <text x="12" y="62" font-family="monospace" font-size="11.5" font-weight="700" fill="#c084fc">operator: [/]</text>
+    </g>
+  </g>
+
+  <!-- ====== PHASE 4: See '*', Triggers Evaluation of pre-existing '/' (30 / 2 = 15) ====== -->
+  <g transform="translate(30, 757)">
+    <rect width="1180" height="175" rx="12" fill="url(#cardGrad)" stroke="#23354f" stroke-width="1.2" filter="url(#shadow)"/>
+
+    <rect width="1180" height="32" rx="12" fill="#7e22ce" fill-opacity="0.15"/>
+    <rect x="14" y="6" width="90" height="20" rx="5" fill="#581c87" fill-opacity="0.4" stroke="#c084fc" stroke-width="1"/>
+    <text x="59" y="19" font-family="system-ui, sans-serif" font-size="10.5" font-weight="800" fill="#e9d5ff" text-anchor="middle">PHASE 4</text>
+    <text x="115" y="20" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#f8fafc">See '*': equal priority to pre-bracket '/' triggers '30 / 2 = 15', then push '*' and '4'</text>
+
+    <!-- Description -->
+    <g transform="translate(18, 42)">
+      <text x="0" y="16" font-family="monospace" font-size="12" font-weight="700" fill="#c084fc">• see *</text>
+      <rect x="65" y="2" width="220" height="20" rx="4" fill="#2e1047" stroke="#9333ea" stroke-width="1"/>
+      <text x="175" y="16" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#e9d5ff" text-anchor="middle">
+        prec('*') = 2 == prec('/') = 2 → POP!
+      </text>
+
+      <!-- Eval Box 3 -->
+      <g transform="translate(0, 24)">
+        <rect width="470" height="38" rx="5" fill="#042013" stroke="#059669" stroke-width="1"/>
+        <text x="10" y="18" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#34d399">EVALUATION 3:</text>
+        <text x="115" y="18" font-family="monospace" font-size="12" font-weight="800" fill="#ffffff">op='/', v2=2, v1=30 → 30 / 2 = 15</text>
+        <text x="10" y="31" font-family="system-ui, sans-serif" font-size="9.5" fill="#a7f3d0">Push 15. Operator stack becomes empty. Now push '*'!</text>
+      </g>
+
+      <text x="0" y="82" font-family="monospace" font-size="12" font-weight="700" fill="#38bdf8">• push 4</text>
+      <text x="75" y="82" font-family="system-ui, sans-serif" font-size="11.5" fill="#94a3b8">→ operand stack: [15, 4]</text>
+
+      <rect x="0" y="96" width="470" height="22" rx="4" fill="#0c182c" stroke="#1e293b" stroke-width="1"/>
+      <text x="10" y="111" font-family="system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#94a3b8">
+        Left-to-right rule: The '/' before the brackets evaluated with the bracket's result '2'!
+      </text>
+    </g>
+
+    <!-- Dual Stacks Visual -->
+    <g transform="translate(560, 40)">
+      <!-- Operand Stack -->
+      <text x="60" y="14" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8" text-anchor="middle">OPERAND STACK</text>
+      <path d="M 15 24 L 15 110 Q 15 114 19 114 L 101 114 Q 105 114 105 110 L 105 24" fill="#090f1d" stroke="#334155" stroke-width="1.8"/>
+      <rect x="21" y="86" width="78" height="24" rx="4" fill="url(#numEvalGrad)"/>
+      <text x="60" y="103" font-family="monospace" font-size="13" font-weight="800" fill="#ffffff" text-anchor="middle">15</text>
+      <rect x="21" y="58" width="78" height="24" rx="4" fill="url(#numGrad)"/>
+      <text x="60" y="75" font-family="monospace" font-size="13" font-weight="800" fill="#ffffff" text-anchor="middle">4</text>
+      <text x="112" y="74" font-family="system-ui, sans-serif" font-size="9.5" font-weight="800" fill="#38bdf8">← TOP</text>
+
+      <!-- Operator Stack -->
+      <g transform="translate(180, 0)">
+        <text x="60" y="14" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fbbf24" text-anchor="middle">OPERATOR STACK</text>
+        <path d="M 15 24 L 15 110 Q 15 114 19 114 L 101 114 Q 105 114 105 110 L 105 24" fill="#090f1d" stroke="#334155" stroke-width="1.8"/>
+        <rect x="21" y="86" width="78" height="24" rx="4" fill="url(#opHighGrad)"/>
+        <text x="60" y="103" font-family="monospace" font-size="16" font-weight="800" fill="#ffffff" text-anchor="middle">*</text>
+        <text x="112" y="102" font-family="system-ui, sans-serif" font-size="9.5" font-weight="800" fill="#c084fc">← TOP</text>
+      </g>
+    </g>
+
+    <!-- State Summary -->
+    <g transform="translate(930, 48)">
+      <rect width="220" height="78" rx="8" fill="#08101e" stroke="#1e293b" stroke-width="1"/>
+      <text x="12" y="22" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#64748b">STACKS STATE:</text>
+      <text x="12" y="42" font-family="monospace" font-size="11.5" font-weight="700" fill="#38bdf8">operand:  [15, 4]</text>
+      <text x="12" y="62" font-family="monospace" font-size="11.5" font-weight="700" fill="#c084fc">operator: [*]</text>
+    </g>
+  </g>
+
+  <!-- ====== PHASE 5: End of String Flush & Final Result ====== -->
+  <g transform="translate(30, 942)">
+    <rect width="1180" height="125" rx="12" fill="url(#cardGrad)" stroke="#22c55e" stroke-width="1.5" filter="url(#glowGreen)"/>
+
+    <rect width="1180" height="32" rx="12" fill="#15803d" fill-opacity="0.2"/>
+    <rect x="14" y="6" width="90" height="20" rx="5" fill="#166534" fill-opacity="0.5" stroke="#22c55e" stroke-width="1"/>
+    <text x="59" y="19" font-family="system-ui, sans-serif" font-size="10.5" font-weight="800" fill="#bbf7d0" text-anchor="middle">PHASE 5</text>
+    <text x="115" y="20" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#86efac">End of String: Flush Remaining Operator '*' → Final Result 60</text>
+
+    <!-- Actions Description -->
+    <g transform="translate(18, 42)">
+      <text x="0" y="16" font-family="system-ui, sans-serif" font-size="11.5" fill="#cbd5e1">
+        String ended. Flush remaining operator stack while <tspan font-family="monospace" fill="#fbbf24">ostack.size() &gt; 0</tspan>:
+      </text>
+
+      <!-- Final Eval Box -->
+      <g transform="translate(0, 24)">
+        <rect width="470" height="42" rx="6" fill="#052e16" stroke="#22c55e" stroke-width="1.2"/>
+        <text x="12" y="18" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#4ade80">FINAL EVALUATION 4:</text>
+        <text x="150" y="18" font-family="monospace" font-size="13" font-weight="800" fill="#ffffff">op='*', v2=4, v1=15 → 15 * 4 = 60</text>
+        <text x="12" y="34" font-family="system-ui, sans-serif" font-size="10.5" fill="#bbf7d0">Push 60 to operand stack. Operator stack is empty → STOP!</text>
+      </g>
+    </g>
+
+    <!-- Final Result Badge Box -->
+    <g transform="translate(560, 40)">
+      <!-- Final operand stack -->
+      <path d="M 15 14 L 15 70 Q 15 74 19 74 L 101 74 Q 105 74 105 70 L 105 14" fill="#090f1d" stroke="#22c55e" stroke-width="2"/>
+      <rect x="21" y="46" width="78" height="24" rx="4" fill="url(#finalGrad)"/>
+      <text x="60" y="63" font-family="monospace" font-size="15" font-weight="800" fill="#ffffff" text-anchor="middle">60</text>
+      <text x="60" y="10" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#4ade80" text-anchor="middle">vstack.peek()</text>
+
+      <g transform="translate(140, 6)">
+        <rect width="210" height="58" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+        <text x="105" y="24" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#86efac" text-anchor="middle">FINAL EVALUATION RESULT</text>
+        <text x="105" y="48" font-family="monospace" font-size="22" font-weight="800" fill="#ffffff" text-anchor="middle">60</text>
+      </g>
+    </g>
+
+    <!-- Result Callout -->
+    <g transform="translate(930, 48)">
+      <rect width="220" height="58" rx="8" fill="#042013" stroke="#16a34a" stroke-width="1"/>
+      <text x="110" y="24" font-family="system-ui, sans-serif" font-size="11.5" font-weight="800" fill="#4ade80" text-anchor="middle">EVALUATION COMPLETE</text>
+      <text x="110" y="44" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1" text-anchor="middle">30 / 2 * 4 = 15 * 4 = 60</text>
+    </g>
+  </g>
+
+  <!-- ================= BOTTOM RULES BANNER ================= -->
+  <g transform="translate(30, 1076)">
+    <rect width="1180" height="52" rx="10" fill="#0b1324" stroke="#1e293b" stroke-width="1.2"/>
+    <circle cx="28" cy="26" r="14" fill="#38bdf8" fill-opacity="0.15"/>
+    <text x="28" y="31" font-family="system-ui, sans-serif" font-size="14" font-weight="800" fill="#38bdf8" text-anchor="middle">⚡</text>
+
+    <text x="56" y="22" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#e2e8f0">
+      BRACKET EVALUATION RULE:
+    </text>
+    <text x="56" y="39" font-family="monospace" font-size="11" font-weight="600" fill="#94a3b8">
+      else if (ch == ')') { while (ostack.peek() != '(') { pop op, v2, v1; push operation(v1, v2, op); } ostack.pop(); /* discard '(' */ }
+    </text>
+  </g>
+</svg>

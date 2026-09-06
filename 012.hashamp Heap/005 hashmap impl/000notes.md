@@ -1,4 +1,4 @@
-# Notes
+
 # HashMap Physics: Load Factors & Collisions
 
 ### 1. The Workflow

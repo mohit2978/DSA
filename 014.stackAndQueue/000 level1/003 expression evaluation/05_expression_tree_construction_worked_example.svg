@@ -1,0 +1,349 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 1160" width="1240" height="1160">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070c18"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#0b1220"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#162238" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#0c1424" stop-opacity="0.98"/>
+    </linearGradient>
+
+    <!-- Node Gradients -->
+    <linearGradient id="rootGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#be123c"/>
+    </linearGradient>
+
+    <linearGradient id="opNodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+
+    <linearGradient id="addrGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <filter id="glowRoot" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#f43f5e" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1240" height="1160" rx="18" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Subtle Grid Pattern -->
+  <g opacity="0.03" stroke="#ffffff" stroke-width="1">
+    <line x1="0" y1="116" x2="1240" y2="116"/>
+    <line x1="0" y1="232" x2="1240" y2="232"/>
+    <line x1="0" y1="348" x2="1240" y2="348"/>
+    <line x1="0" y1="464" x2="1240" y2="464"/>
+    <line x1="0" y1="580" x2="1240" y2="580"/>
+    <line x1="0" y1="696" x2="1240" y2="696"/>
+    <line x1="0" y1="812" x2="1240" y2="812"/>
+    <line x1="0" y1="928" x2="1240" y2="928"/>
+    <line x1="0" y1="1044" x2="1240" y2="1044"/>
+  </g>
+
+  <!-- ================= HEADER ================= -->
+  <g transform="translate(620, 36)" text-anchor="middle">
+    <rect x="-175" y="-18" width="350" height="24" rx="12" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="0" y="-2" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#38bdf8" letter-spacing="1.2">EXPRESSION TREE CONSTRUCTION</text>
+
+    <text x="0" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#f8fafc">
+      Building Expression Tree: <tspan fill="#38bdf8">a + b * c / d - e</tspan>
+    </text>
+    <text x="0" y="44" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" font-weight="400" fill="#94a3b8">
+      Value stack stores Node references (pointers) | On pop: new Node(op, left=v1, right=v2)
+    </text>
+  </g>
+
+  <!-- ================= TOP SECTION: 3 STEP-BY-STEP NODE ALLOCATIONS ================= -->
+  <g transform="translate(30, 88)">
+    <!-- Sub-card 1: Node 4K(*) -->
+    <g transform="translate(0, 0)">
+      <rect width="380" height="210" rx="12" fill="url(#cardGrad)" stroke="#23354f" stroke-width="1.2" filter="url(#shadow)"/>
+      <rect width="380" height="28" rx="12" fill="#0284c7" fill-opacity="0.15"/>
+      <text x="14" y="19" font-family="system-ui, sans-serif" font-size="11.5" font-weight="800" fill="#38bdf8">STEP 1 • ON SEEING '/'</text>
+      <text x="365" y="19" font-family="monospace" font-size="11" fill="#94a3b8" text-anchor="end">prec('/') == prec('*')</text>
+
+      <g transform="translate(14, 38)">
+        <text x="0" y="14" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">• Pop op='*', v2=c, v1=b</text>
+        <text x="0" y="32" font-family="monospace" font-size="11" font-weight="700" fill="#34d399">• Allocate Node at Address 4K:</text>
+
+        <!-- Mini Node Preview -->
+        <g transform="translate(110, 48)">
+          <circle cx="60" cy="20" r="18" fill="url(#opNodeGrad)"/>
+          <text x="60" y="26" font-family="monospace" font-size="16" font-weight="800" fill="#ffffff" text-anchor="middle">*</text>
+          <text x="60" y="-3" font-family="monospace" font-size="9.5" font-weight="700" fill="#34d399" text-anchor="middle">4K</text>
+
+          <line x1="47" y1="32" x2="25" y2="52" stroke="#64748b" stroke-width="1.5"/>
+          <line x1="73" y1="32" x2="95" y2="52" stroke="#64748b" stroke-width="1.5"/>
+
+          <circle cx="20" cy="62" r="14" fill="url(#leafGrad)"/>
+          <text x="20" y="67" font-family="monospace" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">b</text>
+
+          <circle cx="100" cy="62" r="14" fill="url(#leafGrad)"/>
+          <text x="100" y="67" font-family="monospace" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">c</text>
+        </g>
+
+        <text x="0" y="152" font-family="system-ui, sans-serif" font-size="10.5" fill="#94a3b8">
+          Push pointer <tspan font-family="monospace" font-weight="700" fill="#34d399">4K</tspan> to value stack. Push '/'.
+        </text>
+      </g>
+    </g>
+
+    <!-- Sub-card 2: Node 5K(/) -->
+    <g transform="translate(400, 0)">
+      <rect width="380" height="210" rx="12" fill="url(#cardGrad)" stroke="#23354f" stroke-width="1.2" filter="url(#shadow)"/>
+      <rect width="380" height="28" rx="12" fill="#d97706" fill-opacity="0.15"/>
+      <text x="14" y="19" font-family="system-ui, sans-serif" font-size="11.5" font-weight="800" fill="#fbbf24">STEP 2 • ON SEEING '-'</text>
+      <text x="365" y="19" font-family="monospace" font-size="11" fill="#94a3b8" text-anchor="end">prec('-') &lt; prec('/')</text>
+
+      <g transform="translate(14, 38)">
+        <text x="0" y="14" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">• Pop op='/', v2=d, v1=4K</text>
+        <text x="0" y="32" font-family="monospace" font-size="11" font-weight="700" fill="#34d399">• Allocate Node at Address 5K:</text>
+
+        <!-- Mini Node Preview -->
+        <g transform="translate(110, 48)">
+          <circle cx="60" cy="20" r="18" fill="url(#opNodeGrad)"/>
+          <text x="60" y="26" font-family="monospace" font-size="16" font-weight="800" fill="#ffffff" text-anchor="middle">/</text>
+          <text x="60" y="-3" font-family="monospace" font-size="9.5" font-weight="700" fill="#34d399" text-anchor="middle">5K</text>
+
+          <line x1="47" y1="32" x2="25" y2="52" stroke="#64748b" stroke-width="1.5"/>
+          <line x1="73" y1="32" x2="95" y2="52" stroke="#64748b" stroke-width="1.5"/>
+
+          <circle cx="20" cy="62" r="14" fill="url(#opNodeGrad)"/>
+          <text x="20" y="67" font-family="monospace" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">4K</text>
+
+          <circle cx="100" cy="62" r="14" fill="url(#leafGrad)"/>
+          <text x="100" y="67" font-family="monospace" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">d</text>
+        </g>
+
+        <text x="0" y="152" font-family="system-ui, sans-serif" font-size="10.5" fill="#94a3b8">
+          Subtree 4K(*) is now the <tspan font-weight="700" fill="#ffffff">left child</tspan> of 5K(/).
+        </text>
+      </g>
+    </g>
+
+    <!-- Sub-card 3: Node 6K(+) -->
+    <g transform="translate(800, 0)">
+      <rect width="380" height="210" rx="12" fill="url(#cardGrad)" stroke="#23354f" stroke-width="1.2" filter="url(#shadow)"/>
+      <rect width="380" height="28" rx="12" fill="#7e22ce" fill-opacity="0.15"/>
+      <text x="14" y="19" font-family="system-ui, sans-serif" font-size="11.5" font-weight="800" fill="#c084fc">STEP 3 • '-' POPPING '+'</text>
+      <text x="365" y="19" font-family="monospace" font-size="11" fill="#94a3b8" text-anchor="end">prec('-') == prec('+')</text>
+
+      <g transform="translate(14, 38)">
+        <text x="0" y="14" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">• Pop op='+', v2=5K, v1=a</text>
+        <text x="0" y="32" font-family="monospace" font-size="11" font-weight="700" fill="#34d399">• Allocate Node at Address 6K:</text>
+
+        <!-- Mini Node Preview -->
+        <g transform="translate(110, 48)">
+          <circle cx="60" cy="20" r="18" fill="url(#opNodeGrad)"/>
+          <text x="60" y="26" font-family="monospace" font-size="16" font-weight="800" fill="#ffffff" text-anchor="middle">+</text>
+          <text x="60" y="-3" font-family="monospace" font-size="9.5" font-weight="700" fill="#34d399" text-anchor="middle">6K</text>
+
+          <line x1="47" y1="32" x2="25" y2="52" stroke="#64748b" stroke-width="1.5"/>
+          <line x1="73" y1="32" x2="95" y2="52" stroke="#64748b" stroke-width="1.5"/>
+
+          <circle cx="20" cy="62" r="14" fill="url(#leafGrad)"/>
+          <text x="20" y="67" font-family="monospace" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">a</text>
+
+          <circle cx="100" cy="62" r="14" fill="url(#opNodeGrad)"/>
+          <text x="100" y="67" font-family="monospace" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">5K</text>
+        </g>
+
+        <text x="0" y="152" font-family="system-ui, sans-serif" font-size="10.5" fill="#94a3b8">
+          Push 6K, push '-', push 'e'. Ready for final root!
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= MIDDLE SECTION: FINAL FULL EXPRESSION TREE ================= -->
+  <g transform="translate(30, 318)">
+    <rect width="1180" height="570" rx="14" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+
+    <!-- Tree Header Banner -->
+    <rect width="1180" height="36" rx="14" fill="#0284c7" fill-opacity="0.12"/>
+    <text x="24" y="23" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#38bdf8">
+      COMPLETE EXPRESSION TREE DIAGRAM (FINAL SYNTAX TREE)
+    </text>
+    <text x="1156" y="23" font-family="monospace" font-size="12" font-weight="700" fill="#a5b4fc" text-anchor="end">
+      Root Node: '-' (allocated at end of string)
+    </text>
+
+    <!-- Visual Tree Structure -->
+    <g transform="translate(190, 60)">
+      <!-- Tree Connecting Lines -->
+      <g stroke="#64748b" stroke-width="2.5" stroke-linecap="round">
+        <!-- Root '-' to Left '+' and Right 'e' -->
+        <line x1="400" y1="40" x2="240" y2="130"/>
+        <line x1="400" y1="40" x2="560" y2="130"/>
+
+        <!-- Node '+' to Left 'a' and Right '/' -->
+        <line x1="240" y1="130" x2="130" y2="230"/>
+        <line x1="240" y1="130" x2="350" y2="230"/>
+
+        <!-- Node '/' to Left '*' and Right 'd' -->
+        <line x1="350" y1="230" x2="260" y2="330"/>
+        <line x1="350" y1="230" x2="440" y2="330"/>
+
+        <!-- Node '*' to Left 'b' and Right 'c' -->
+        <line x1="260" y1="330" x2="190" y2="430"/>
+        <line x1="260" y1="330" x2="330" y2="430"/>
+      </g>
+
+      <!-- Level 0: ROOT '-' -->
+      <g transform="translate(400, 40)">
+        <circle r="26" fill="url(#rootGrad)" filter="url(#glowRoot)"/>
+        <text y="9" font-family="monospace" font-size="26" font-weight="800" fill="#ffffff" text-anchor="middle">-</text>
+        <rect x="-35" y="-46" width="70" height="18" rx="4" fill="#881337" stroke="#f43f5e" stroke-width="1"/>
+        <text y="-33" font-family="system-ui, sans-serif" font-size="10" font-weight="800" fill="#fecdd3" text-anchor="middle">ROOT (7K)</text>
+      </g>
+
+      <!-- Level 1: Left '+' (6K) and Right 'e' -->
+      <!-- Node '+' -->
+      <g transform="translate(240, 130)">
+        <circle r="24" fill="url(#opNodeGrad)" filter="url(#shadow)"/>
+        <text y="8" font-family="monospace" font-size="24" font-weight="800" fill="#ffffff" text-anchor="middle">+</text>
+        <text x="-32" y="5" font-family="monospace" font-size="11" font-weight="700" fill="#34d399" text-anchor="end">6K</text>
+      </g>
+
+      <!-- Leaf 'e' -->
+      <g transform="translate(560, 130)">
+        <circle r="22" fill="url(#leafGrad)" filter="url(#shadow)"/>
+        <text y="7" font-family="monospace" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle">e</text>
+        <text x="30" y="5" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#94a3b8">leaf</text>
+      </g>
+
+      <!-- Level 2: Left 'a' and Right '/' (5K) -->
+      <!-- Leaf 'a' -->
+      <g transform="translate(130, 230)">
+        <circle r="22" fill="url(#leafGrad)" filter="url(#shadow)"/>
+        <text y="7" font-family="monospace" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle">a</text>
+        <text x="-28" y="5" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#94a3b8" text-anchor="end">leaf</text>
+      </g>
+
+      <!-- Node '/' -->
+      <g transform="translate(350, 230)">
+        <circle r="24" fill="url(#opNodeGrad)" filter="url(#shadow)"/>
+        <text y="8" font-family="monospace" font-size="24" font-weight="800" fill="#ffffff" text-anchor="middle">/</text>
+        <text x="32" y="5" font-family="monospace" font-size="11" font-weight="700" fill="#34d399">5K</text>
+      </g>
+
+      <!-- Level 3: Left '*' (4K) and Right 'd' -->
+      <!-- Node '*' -->
+      <g transform="translate(260, 330)">
+        <circle r="24" fill="url(#opNodeGrad)" filter="url(#shadow)"/>
+        <text y="8" font-family="monospace" font-size="24" font-weight="800" fill="#ffffff" text-anchor="middle">*</text>
+        <text x="-32" y="5" font-family="monospace" font-size="11" font-weight="700" fill="#34d399" text-anchor="end">4K</text>
+      </g>
+
+      <!-- Leaf 'd' -->
+      <g transform="translate(440, 330)">
+        <circle r="22" fill="url(#leafGrad)" filter="url(#shadow)"/>
+        <text y="7" font-family="monospace" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle">d</text>
+        <text x="30" y="5" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#94a3b8">leaf</text>
+      </g>
+
+      <!-- Level 4: Left 'b' and Right 'c' -->
+      <!-- Leaf 'b' -->
+      <g transform="translate(190, 430)">
+        <circle r="22" fill="url(#leafGrad)" filter="url(#shadow)"/>
+        <text y="7" font-family="monospace" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle">b</text>
+        <text x="-28" y="5" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#94a3b8" text-anchor="end">leaf</text>
+      </g>
+
+      <!-- Leaf 'c' -->
+      <g transform="translate(330, 430)">
+        <circle r="22" fill="url(#leafGrad)" filter="url(#shadow)"/>
+        <text y="7" font-family="monospace" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle">c</text>
+        <text x="30" y="5" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#94a3b8">leaf</text>
+      </g>
+    </g>
+
+    <!-- Right Side Explanatory Card -->
+    <g transform="translate(850, 60)">
+      <rect width="300" height="480" rx="10" fill="#08101e" stroke="#1e293b" stroke-width="1.2"/>
+      <text x="20" y="30" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#f8fafc">WHY EXPRESSIONS ARE TREES</text>
+
+      <text x="20" y="60" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">• Leaves are always <tspan font-weight="700" fill="#38bdf8">operands</tspan>.</text>
+      <text x="20" y="80" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">• Internal nodes are <tspan font-weight="700" fill="#fbbf24">operators</tspan>.</text>
+      <text x="20" y="100" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">• Root is the <tspan font-weight="700" fill="#f43f5e">lowest precedence</tspan></text>
+      <text x="30" y="116" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">operator evaluated last.</text>
+
+      <line x1="20" y1="135" x2="280" y2="135" stroke="#334155" stroke-width="1"/>
+
+      <!-- Traversals mapping -->
+      <text x="20" y="160" font-family="system-ui, sans-serif" font-size="11.5" font-weight="800" fill="#38bdf8">1. INORDER TRAVERSAL:</text>
+      <rect x="20" y="170" width="260" height="30" rx="4" fill="#0a1b33" stroke="#0284c7" stroke-width="1"/>
+      <text x="30" y="190" font-family="monospace" font-size="11.5" font-weight="700" fill="#7dd3fc">a + b * c / d - e</text>
+      <text x="20" y="215" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">⇒ Recovers original INFIX notation</text>
+
+      <text x="20" y="245" font-family="system-ui, sans-serif" font-size="11.5" font-weight="800" fill="#a855f7">2. PREORDER TRAVERSAL:</text>
+      <rect x="20" y="255" width="260" height="30" rx="4" fill="#200d36" stroke="#7e22ce" stroke-width="1"/>
+      <text x="30" y="275" font-family="monospace" font-size="11.5" font-weight="700" fill="#d8b4fe">- + a / * b c d e</text>
+      <text x="20" y="300" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">⇒ Produces PREFIX notation</text>
+
+      <text x="20" y="330" font-family="system-ui, sans-serif" font-size="11.5" font-weight="800" fill="#34d399">3. POSTORDER TRAVERSAL:</text>
+      <rect x="20" y="340" width="260" height="30" rx="4" fill="#052416" stroke="#059669" stroke-width="1"/>
+      <text x="30" y="360" font-family="monospace" font-size="11.5" font-weight="700" fill="#86efac">a b c * d / + e -</text>
+      <text x="20" y="385" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">⇒ Produces POSTFIX notation</text>
+
+      <line x1="20" y1="405" x2="280" y2="405" stroke="#334155" stroke-width="1"/>
+
+      <text x="20" y="425" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#fbbf24">KEY TAKEAWAY:</text>
+      <text x="20" y="445" font-family="system-ui, sans-serif" font-size="10" fill="#cbd5e1">The same unique expression tree is</text>
+      <text x="20" y="460" font-family="system-ui, sans-serif" font-size="10" fill="#cbd5e1">formed from infix, prefix, or postfix!</text>
+    </g>
+  </g>
+
+  <!-- ================= BOTTOM FINAL SUMMARY BAR ================= -->
+  <g transform="translate(30, 908)">
+    <rect width="1180" height="98" rx="12" fill="url(#cardGrad)" stroke="#22c55e" stroke-width="1.5" filter="url(#glowGreen)"/>
+    <rect width="1180" height="26" rx="12" fill="#15803d" fill-opacity="0.2"/>
+    <text x="20" y="18" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#86efac">
+      NODE CREATION CODE EQUIVALENCE IN JAVA:
+    </text>
+
+    <g transform="translate(20, 36)">
+      <text x="0" y="16" font-family="monospace" font-size="11.5" font-weight="600" fill="#ffffff">
+        Node v2 = valStack.pop();  Node v1 = valStack.pop();  char op = opStack.pop();
+      </text>
+      <text x="0" y="36" font-family="monospace" font-size="11.5" font-weight="600" fill="#34d399">
+        Node root = new Node(op);  root.left = v1;  root.right = v2;  valStack.push(root);
+      </text>
+      <text x="0" y="52" font-family="system-ui, sans-serif" font-size="10.5" fill="#94a3b8">
+        Identical to arithmetic evaluation, except creating tree nodes instead of computing integer values!
+      </text>
+    </g>
+  </g>
+
+  <!-- ================= FOOTER BANNER ================= -->
+  <g transform="translate(30, 1020)">
+    <rect width="1180" height="48" rx="10" fill="#0b1324" stroke="#1e293b" stroke-width="1.2"/>
+    <circle cx="28" cy="24" r="13" fill="#38bdf8" fill-opacity="0.15"/>
+    <text x="28" y="29" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#38bdf8" text-anchor="middle">💡</text>
+
+    <text x="54" y="20" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#e2e8f0">
+      COMPLEXITY:
+    </text>
+    <text x="54" y="36" font-family="system-ui, sans-serif" font-size="10.5" fill="#94a3b8">
+      Time: O(n) single pass (O(1) allocation per operator/operand) | Space: O(n) for stacks and expression tree nodes.
+    </text>
+  </g>
+</svg>
