@@ -1,4 +1,4 @@
-# Dijkstra
+# Q1. Dijkstra
 
 ## Relax edge code
 ```cpp
@@ -35,6 +35,40 @@ public:
 
 ```
 
+### Java: Edge Relaxation
+
+This matches the preceding C++ relaxation method: update the distance before insertion and ignore stale entries on removal. Each adjacency entry contains `[neighbour, weight]`. As in the existing C++ code, the `1_000_000_000` sentinel and integer arithmetic assume all required path costs fit below that sentinel without overflow.
+
+```java
+import java.util.*;
+
+class DijkstraRelaxation {
+    public int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S) {
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> Integer.compare(a[0], b[0]));
+        int[] dist = new int[V];
+        Arrays.fill(dist, 1_000_000_000);
+        dist[S] = 0;
+        pq.add(new int[]{0, S});
+
+        while (!pq.isEmpty()) {
+            int[] entry = pq.remove();
+            int d = entry[0];
+            int node = entry[1];
+            if (d > dist[node]) continue;
+
+            for (ArrayList<Integer> edge : adj.get(node)) {
+                int adjNode = edge.get(0);
+                int edgeWeight = edge.get(1);
+                if (d + edgeWeight < dist[adjNode]) {
+                    dist[adjNode] = d + edgeWeight;
+                    pq.add(new int[]{dist[adjNode], adjNode});
+                }
+            }
+        }
+        return dist;
+    }
+}
+```
 ## simple pq with vis code
 
 ```cpp
@@ -43,19 +77,19 @@ public:
     vector<int> dijkstra(int V, vector<vector<vector<int>>> &adj, int S) {
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
         pq.push({0, S});
-        
+
         vector<int> res(V, 1e9);
         vector<bool> vis(V, false);
-        
+
         while(!pq.empty()) {
             int wt = pq.top().first;
             int v = pq.top().second;
             pq.pop();
-            
+
             if(vis[v]) continue;
             vis[v] = true;
             res[v] = wt;
-            
+
             for(auto &it : adj[v]) {
                 int nbr = it[0];
                 int w = it[1];
@@ -69,7 +103,202 @@ public:
 };
 ```
 
-![alt text](<004dijsktra bipartite_240205_000336(18).jpg>) ![alt text](<004dijsktra bipartite_240205_000336(19).jpg>) ![alt text](<004dijsktra bipartite_240205_000336(20).jpg>) ![alt text](<004dijsktra bipartite_240205_000336(21).jpg>) ![alt text](<004dijsktra bipartite_240205_000336(22).jpg>) ![alt text](<004dijsktra bipartite_240205_000336(23).jpg>) ![alt text](<004dijsktra bipartite_240205_000336(24).jpg>)
+### Dijkstra with a Priority Queue of Triplets
+
+The traversal resembles BFS, but replaces the FIFO queue with a min-priority queue ordered by total path weight. Each entry contains `(vertex, path-so-far, weight-so-far)`.
+
+1. Insert the source with its own label as the path and weight zero.
+2. Remove the entry with the smallest accumulated weight.
+3. If its vertex was already visited, skip the entry.
+4. Mark the vertex visited and print its path and weight.
+5. For each unvisited neighbour, append that neighbour to the path and add the edge weight before inserting the new triplet.
+
+Mark on removal, not on insertion: an expensive entry may be inserted before a cheaper route to the same vertex is discovered. The first non-skipped removal finalizes that vertex's distance. A later entry for the same vertex is ignored.
+
+### Worked Example: Source `0`
+
+Use this undirected weighted graph:
+
+| Edge | Weight |
+| --- | ---: |
+| `0–1` | 10 |
+| `0–3` | 40 |
+| `1–2` | 10 |
+| `2–3` | 10 |
+| `3–4` | 2 |
+| `4–5` | 3 |
+| `4–6` | 8 |
+| `5–6` | 3 |
+
+The table lists heap entries in increasing weight order for readability; a binary heap's internal array is not fully sorted. An entry is shown as `(vertex, path, weight)`.
+
+| Removal | Action | Heap after adding neighbours |
+| --- | --- | --- |
+| Initial state | Insert `(0, 0, 0)` | `(0, 0, 0)` |
+| `(0, 0, 0)` | Finalize `0`; add `1` and `3` | `(1, 01, 10)`, `(3, 03, 40)` |
+| `(1, 01, 10)` | Finalize `1`; skip visited `0`; add `2` | `(2, 012, 20)`, `(3, 03, 40)` |
+| `(2, 012, 20)` | Finalize `2`; add the cheaper route to `3` | `(3, 0123, 30)`, `(3, 03, 40)` |
+| `(3, 0123, 30)` | Finalize `3`; add `4` | `(4, 01234, 32)`, `(3, 03, 40)` |
+| `(4, 01234, 32)` | Finalize `4`; add `5` and `6` | `(5, 012345, 35)`, `(3, 03, 40)`, `(6, 012346, 40)` |
+| `(5, 012345, 35)` | Finalize `5`; add a cheaper route to `6` | `(6, 0123456, 38)`, `(3, 03, 40)`, `(6, 012346, 40)` |
+| `(6, 0123456, 38)` | Finalize `6` | Two entries of weight `40` remain |
+| The two weight-`40` entries | Both vertices are already visited; skip both | Empty |
+
+The two entries of equal weight may be removed in either order without changing the answer. The shortest distance from `0` to `6` is `38`, using `0 → 1 → 2 → 3 → 4 → 5 → 6`.
+
+```text
+0 via 0 @ 0
+1 via 01 @ 10
+2 via 012 @ 20
+3 via 0123 @ 30
+4 via 01234 @ 32
+5 via 012345 @ 35
+6 via 0123456 @ 38
+```
+
+### Initializing the Path Correctly
+
+The starting path must contain the actual source. In Java, use `new Trip(src, src + "", 0)`, not `new Trip(src, "0", 0)`. Hard-coding `"0"` gives the wrong printed path when the source is not zero, even though the stored source vertex and computed weights can still be correct.
+
+An edge can be read using an index (`graph.get(v).get(i)`) or an enhanced loop (`for (Edge e : graph.get(v))`). Both use the same neighbour and weight. The triplet comparison orders entries by `wt`: return positive, negative, or zero according to whether this entry is heavier, lighter, or equal.
+
+### Java: Print Shortest Paths and Weights
+
+This complete example uses the triplet and visited-on-removal logic. The compact path strings match the single-digit vertex labels in the example; use separators when labels can contain multiple digits.
+
+```java
+import java.util.*;
+
+class DijkstraPaths {
+    static class Edge {
+        int nbr;
+        int wt;
+
+        Edge(int nbr, int wt) {
+            this.nbr = nbr;
+            this.wt = wt;
+        }
+    }
+
+    static class Trip implements Comparable<Trip> {
+        int v;
+        String psf;
+        int wt;
+
+        Trip(int v, String psf, int wt) {
+            this.v = v;
+            this.psf = psf;
+            this.wt = wt;
+        }
+
+        public int compareTo(Trip other) {
+            if (this.wt > other.wt) return 1;
+            else if (this.wt < other.wt) return -1;
+            else return 0;
+        }
+    }
+
+    static void printShortestPaths(List<List<Edge>> graph, int src) {
+        PriorityQueue<Trip> pq = new PriorityQueue<>();
+        pq.add(new Trip(src, src + "", 0));
+        boolean[] vis = new boolean[graph.size()];
+
+        while (!pq.isEmpty()) {
+            Trip removed = pq.remove();
+            if (vis[removed.v]) continue;
+            vis[removed.v] = true;
+            System.out.println(removed.v + " via " + removed.psf + " @ " + removed.wt);
+
+            for (Edge e : graph.get(removed.v)) {
+                if (!vis[e.nbr]) {
+                    pq.add(new Trip(e.nbr, removed.psf + e.nbr, removed.wt + e.wt));
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int[][] edges = {
+            {0, 1, 10}, {0, 3, 40}, {1, 2, 10}, {2, 3, 10},
+            {3, 4, 2}, {4, 5, 3}, {4, 6, 8}, {5, 6, 3}
+        };
+        List<List<Edge>> graph = new ArrayList<>();
+        for (int i = 0; i < 7; i++) graph.add(new ArrayList<>());
+        for (int[] e : edges) {
+            graph.get(e[0]).add(new Edge(e[1], e[2]));
+            graph.get(e[1]).add(new Edge(e[0], e[2]));
+        }
+        printShortestPaths(graph, 0);
+    }
+}
+```
+
+### C++: Print Shortest Paths and Weights
+
+```cpp
+#include <iostream>
+#include <queue>
+#include <string>
+#include <vector>
+using namespace std;
+
+struct Edge {
+    int nbr;
+    int wt;
+};
+
+struct Trip {
+    int v;
+    string psf;
+    int wt;
+};
+
+struct CompareTrip {
+    bool operator()(const Trip& a, const Trip& b) const {
+        return a.wt > b.wt;
+    }
+};
+
+void printShortestPaths(const vector<vector<Edge>>& graph, int src) {
+    priority_queue<Trip, vector<Trip>, CompareTrip> pq;
+    pq.push({src, to_string(src), 0});
+    vector<bool> vis(graph.size(), false);
+
+    while (!pq.empty()) {
+        Trip removed = pq.top();
+        pq.pop();
+        if (vis[removed.v]) continue;
+        vis[removed.v] = true;
+        cout << removed.v << " via " << removed.psf << " @ " << removed.wt << '\n';
+
+        for (const Edge& e : graph[removed.v]) {
+            if (!vis[e.nbr]) {
+                pq.push({e.nbr, removed.psf + to_string(e.nbr), removed.wt + e.wt});
+            }
+        }
+    }
+}
+
+int main() {
+    vector<vector<int>> edges = {
+        {0, 1, 10}, {0, 3, 40}, {1, 2, 10}, {2, 3, 10},
+        {3, 4, 2}, {4, 5, 3}, {4, 6, 8}, {5, 6, 3}
+    };
+    vector<vector<Edge>> graph(7);
+    for (const auto& e : edges) {
+        graph[e[0]].push_back({e[1], e[2]});
+        graph[e[1]].push_back({e[0], e[2]});
+    }
+    printShortestPaths(graph, 0);
+    return 0;
+}
+```
+
+These examples print reachable vertices only. Without storing path strings, this lazy-heap traversal uses `O(V + E)` auxiliary storage and `O(V + E log(E + 1))` time. Copying a path string into every queued entry adds work and storage proportional to the copied path lengths; parent pointers avoid that duplication when reconstructing paths later.
+
+### Java: Distances with Visited-on-Removal
+
+The existing Java implementation below returns distances instead of printing full paths.      
 
 ```java
 class Solution
@@ -102,7 +331,7 @@ class Solution
                 }
             }
         }
-        
+
        return res;
     }
 }
@@ -116,19 +345,19 @@ public:
     vector<int> dijkstra(int V, vector<vector<vector<int>>> &adj, int S) {
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
         pq.push({0, S});
-        
+
         vector<int> res(V, 1e9);
         vector<bool> vis(V, false);
-        
+
         while(!pq.empty()) {
             int wt = pq.top().first;
             int v = pq.top().second;
             pq.pop();
-            
+
             if(vis[v]) continue;
             vis[v] = true;
             res[v] = wt;
-            
+
             for(auto &it : adj[v]) {
                 int nbr = it[0];
                 int w = it[1];
@@ -256,186 +485,6 @@ For the standard **Adjacency List + Min-Priority Queue (Binary Heap)** implement
 
 
 
-
-## Dijkstra
-
-
-
-## Dijkstra's Algorithm — Complete Guide
-
-### What Problem Does It Solve?
-
-```
-Given a weighted graph
-Find shortest path from ONE source to ALL other nodes
-Edge weights must be NON-NEGATIVE
-```
-
-### The Core Idea — Always Expand Cheapest First
-
-Think of it like **water flowing** from the source:
-
-```
-Water always takes the path of least resistance
-It reaches nearby nodes first
-Then gradually spreads to farther nodes
-The first time water reaches a node = shortest path ✅
-```
-
----
-
-### The Data Structures
-
-```
-dist[]   → shortest distance found so far to each node
-           initially INF for all, 0 for source
-
-visited[] → whether node's shortest distance is FINALISED
-            once popped from heap = finalised forever
-
-min-heap  → always gives the node with minimum distance next
-            {distance, node}
-```
-
-
----
-
-### The Algorithm Steps
-
-```
-1. dist[source] = 0, push {0, source} to heap
-2. pop minimum {d, u} from heap
-3. if u already visited → skip (stale entry)
-4. mark u visited
-5. for each neighbour v of u:
-      if dist[u] + weight(u,v) < dist[v]:
-          dist[v] = dist[u] + weight(u,v)
-          push {dist[v], v} to heap
-6. repeat until heap empty
-```
-![alt text](image-10.png)
-
-![alt text](image-11.png)
-
-![alt text](image-12.png)
-
-
-## Q--> in dry runn in step 3 how u can say  dist[1]=4 is final?? it an be changed later?
-
-Excellent question — this is the **core proof** of why Dijkstra works.
-
----
-
-### Your Doubt
-
-```
-Step 3: we pop {4, node=1}
-You ask: how do we KNOW dist[1]=4 is final?
-         what if some other path gives dist[1] < 4 later?
-```
-
----
-
-### The Proof — Why It Cannot Be Improved
-
-When we pop node 1 with dist=4, look at what's left in the heap:
-
-```
-heap = [{4, node=1}, {8, node=2}]
-
-Everything remaining in heap has distance >= 4
-```
-
-Now ask: **can any future path reach node 1 with distance < 4?**
-
-```
-Any path to node 1 must go THROUGH some node in the heap
-The cheapest node in heap right now = dist 4
-
-To reach node 1 via any other route:
-  must pass through heap node first  (dist >= 4)
-  then travel more edges             (weight >= 0)
-
-total = dist of heap node + edge weights
-      >= 4 + 0
-      >= 4
-```
-
-So no future path can give dist[1] < 4. **4 is already optimal.**
-
----
-
-### The Key Assumption Hidden Here
-
-```
-edge weights >= 0
-```
-
-This is EVERYTHING. If weights are non-negative:
-
-```
-going through more edges NEVER decreases distance
-so the minimum in heap RIGHT NOW = globally optimal
-```
-
-If weights could be negative:
-
-```
-dist of heap node = 4
-edge weight = -10
-total = 4 + (-10) = -6 < 4  ← could improve!
-
-→ Dijkstra breaks with negative weights
-→ use Bellman Ford instead
-```
-
----
-
-### Visualising Why Finality Works
-
-```
-Source = 0,  dist[1] = 4 just popped
-
-All undiscovered paths to node 1 look like:
-
-0 ──?──► X ──?──► ... ──?──► 1
-          ↑
-     must pass through
-     some node in heap
-     cheapest = dist 4
-
-path cost = dist[X] + remaining edges
-          ≥ 4       + 0
-          ≥ 4
-
-Cannot be less than 4  ✅
-So 4 is FINAL the moment it's popped
-```
-
----
-
-### One Line Summary
-
-```
-Popped node = final  because:
-
-  all other paths to it cost >= current heap minimum
-  + non-negative edges on top of that
-  = can never be cheaper than what we already found
-```
-
-This is the **entire correctness proof of Dijkstra** in one paragraph. The non-negative weight constraint is not optional — it is what makes the greedy choice safe at every step.
-
-![alt text](image-13.png)
-
-![alt text](image-14.png)
-
-![alt text](image-15.png)
-
-![alt text](image-16.png)
----
-
-
 ## Relax edge code
 ```cpp
 
@@ -471,38 +520,12 @@ public:
 
 ```
 
----
 
-### Full Dry Run Table
-
-| Step | Pop | Neighbour | Old dist | New dist | Action |
-|---|---|---|---|---|---|
-| 1 | init | — | all ∞ | dist[0]=0 | push {0,0} |
-| 2 | {0,0} | 1 (w=4) | ∞ | 4 | update ✅ |
-| 2 | {0,0} | 2 (w=8) | ∞ | 8 | update ✅ |
-| 3 | {4,1} | 3 (w=7) | ∞ | 11 | update ✅ |
-| 3 | {4,1} | 2 (w=9) | 8 | 13 | skip ❌ |
-| 4 | {8,2} | 3 (w=2) | 11 | 10 | update ✅ improved! |
-| 5 | {10,3} | 4 (w=5) | ∞ | 15 | update ✅ |
-| 6 | {11,3} | — | 10 | — | stale, skip |
-| 7 | {15,4} | — | — | — | done ✅ |
-
-**Final distances from node 0:**
-
-```
-node 0 → 0
-node 1 → 4
-node 2 → 8
-node 3 → 10   (via 0→2→3, not 0→1→3)
-node 4 → 15
-```
-
----
 
 ### The Stale Entry — Most Asked Interview Question
 
 ```cpp
-if (d > dist[u]) continue;   // why is this needed?
+if (d > dist[u]) continue;
 ```
 
 When we updated `dist[3]` from 11 to 10, the old entry `{11, 3}` is **still sitting in the heap**. We cannot remove it. So when it gets popped:
@@ -555,19 +578,19 @@ public:
     vector<int> dijkstra(int V, vector<vector<vector<int>>> &adj, int S) {
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
         pq.push({0, S});
-        
+
         vector<int> res(V, 1e9);
         vector<bool> vis(V, false);
-        
+
         while(!pq.empty()) {
             int wt = pq.top().first;
             int v = pq.top().second;
             pq.pop();
-            
+
             if(vis[v]) continue;
             vis[v] = true;
             res[v] = wt;
-            
+
             for(auto &it : adj[v]) {
                 int nbr = it[0];
                 int w = it[1];
@@ -580,7 +603,7 @@ public:
     }
 };
 ```
-This is also dijsktsra we have seen in level 1 ,which to use??
+This is also dijsktsra we have seen  ,which to use??
 
 
 
@@ -609,18 +632,15 @@ Both are correct. Both are O((V+E) log V).
 ### Your Code Flow
 
 ```cpp
-// 1. pop minimum
+
 int wt = pq.top().first;
 int v  = pq.top().second;
 
-// 2. if already visited → skip
 if(vis[v]) continue;
 
-// 3. NOW finalise — mark visited and set distance
 vis[v] = true;
-res[v] = wt;        // ← distance set at POP time, not push time
+res[v] = wt;
 
-// 4. push unvisited neighbours
 if(!vis[nbr])
     pq.push({wt + w, nbr});
 ```
@@ -631,22 +651,20 @@ if(!vis[nbr])
 
 **My approach — distance set at PUSH time:**
 ```cpp
-// when pushing:
-dist[v] = newDist;          // set immediately
+
+dist[v] = newDist;
 pq.push({newDist, v});
 
-// stale check at pop:
-if(d > dist[u]) continue;   // skip old entries
+if(d > dist[u]) continue;
 ```
 
 **Your approach — distance set at POP time:**
 ```cpp
-// when pushing:
-pq.push({wt + w, nbr});     // just push, don't update dist
 
-// finalise at pop:
+pq.push({wt + w, nbr});
+
 vis[v] = true;
-res[v] = wt;                // set distance only when popped
+res[v] = wt;
 ```
 
 ---
@@ -717,8 +735,8 @@ So node 1 reachable two ways:
 ### My Code — dist[] updated at PUSH time
 
 ```cpp
-dist[v] = newDist;       // update immediately
-pq.push({newDist, v});   // then push
+dist[v] = newDist;
+pq.push({newDist, v});
 ```
 
 **Trace:**
@@ -760,9 +778,9 @@ Final dist = [0, 3, 2, 8]
 
 ```cpp
 if(!vis[nbr])
-    pq.push({wt+w, nbr});   // push without updating dist[]
+    pq.push({wt+w, nbr});
 vis[v]=true;
-res[v]=wt;                  // set dist only when popped
+res[v]=wt;
 ```
 
 **Trace:**
@@ -904,29 +922,25 @@ My approach (dist[] based):
 
 ```cpp
 vector<int> res(V, 1e9);
-//               ^^^
-//        1e9 is a double → implicit conversion to int
-//        = 999999999 or 1000000000 depending on precision
+
 ```
 
 Safer to write:
 
 ```cpp
-vector<int> res(V, INT_MAX);   // explicit integer max
-// or
-vector<int> res(V, 1e9);       // works but imprecise
+vector<int> res(V, INT_MAX);
+
+vector<int> res(V, 1e9);
 ```
 
 Also if you do `wt + w` where `wt` is near `INT_MAX`:
 
 ```cpp
-// overflow risk:
+
 int wt = INT_MAX;
 int w  = 5;
 wt + w = overflow ❌
 
-// but since you use 1e9 not INT_MAX, this is fine here ✅
-// 1e9 + 1e4 < INT_MAX (2.1e9)
 ```
 
 ---
@@ -946,156 +960,7 @@ The only real difference is heap size
 
 
 
-In L1 we have seen
-
-
-### Comparison of Implementations
-
-| Implementation | Time Complexity | Best Use Case |
-| :--- | :--- | :--- |
-| **Binary Heap (Priority Queue)** | $O(E \log V)$ | **Sparse Graphs** (Most Interview Problems) |
-| **Array (Naive)** | $O(V^2)$ | **Dense Graphs** (where $E \approx V^2$) |
-| **Fibonacci Heap** | $O(E + V \log V)$ | Theoretical best (Often too complex for interviews) |
-
-## Claude explained
-
-
-
-
-
-
-
-Exactly right! But let me add one important nuance — the difference is **smaller than it looks**.
-
----
-
-### The Nuance — Both Have Same Worst Case
-
-```
-Blind Push (your code):
-  pushes neighbour if !vis[nbr]
-  a node can be pushed MULTIPLE times
-  once per incoming edge
-
-Edge Relaxation (my code):
-  pushes only if newDist < dist[v]
-  still can push multiple times
-  (old entry becomes stale when dist improves)
-```
-
-**Both have same worst case heap size:**
-
-```
-Worst case = every edge causes a push
-           = O(E) total entries in heap
-           = O(E log E) time
-
-This is the SAME for both approaches ❌ not truly different
-```
-
----
-
-### Where They Actually Differ
-
-```
-Dense graph with many equal-cost paths:
-
-Blind Push:
-  pushes neighbour even if same cost already in heap
-  → more duplicate entries
-
-Edge Relaxation:
-  only pushes if STRICTLY better
-  → fewer entries when costs are equal
-```
-
-```
-Example:
-Node 3 reachable via 5 paths all costing 10
-
-Blind Push    → pushes {10,3} five times
-Edge Relaxation → pushes {10,3} once (rest are not < dist[3])
-```
-
----
-
-### The Complete Honest Table
-
-| Feature | Blind Push | Edge Relaxation |
-|---|---|---|
-| Heap size worst case | O(E) | O(E) |
-| Heap size avg case | larger | smaller |
-| Equal cost paths | pushes duplicates | pushes only first |
-| Strictly better path | pushes | pushes |
-| Stale detection | `vis[]` check | `d > dist[]` check |
-| Code simplicity | ✅ simpler | slightly more complex |
-| dist[] available mid-run | ❌ not maintained | ✅ always current |
-| Interview preference | ✅ clean to explain | ✅ standard textbook |
-| Production preference | ✅ fine for sparse | ✅ better for dense |
-
----
-
-### When the Difference Actually Matters
-
-```
-Sparse graph (E ≈ V):
-  both are nearly identical
-  use whichever is cleaner to write
-
-Dense graph (E ≈ V²):
-  edge relaxation wins
-  significantly fewer heap operations
-
-Competitive programming:
-  dense graphs with tight time limits
-  → edge relaxation preferred
-
-Interviews:
-  either is fine
-  explain your choice → shows depth
-```
-
----
-
-### The One Real Advantage of Edge Relaxation
-
-```cpp
-// dist[] is always up to date during the run
-// useful when you need current best distance
-// for conditional logic MID algorithm
-
-// Example: "minimum effort" problem
-if (newEffort < dist[ni][nj]) {
-    dist[ni][nj] = newEffort;   // dist[] reflects truth always
-    pq.push({newEffort, ni, nj});
-}
-```
-
-```
-Blind push has no dist[] maintained
-Can't query "what's current best to node X?"
-during the algorithm without extra tracking
-```
-
----
-
-### TL;DR
-
-```
-Worst case time:  SAME      O(E log E) both
-Average case:     Edge relaxation slightly better for dense graphs
-Code clarity:     Blind push simpler
-Interview:        Both acceptable — explain the tradeoff
-Production:       Edge relaxation for dense graphs
-
-The gap is smaller than most people think
-The real difference is equal-cost duplicate entries
-not fundamentally different complexity class
-```
-
-
-
-# Q Get shortest path from 1 to n,given edge list
+# Q3. Get shortest path from 1 to n,given edge list
 
 ## My code
 
@@ -1147,12 +1012,64 @@ public:
         path.push_back(1);
         reverse(path.begin(), path.end());
         path.insert(path.begin(), dist[n]);
-        
+
         return path;
     }
 };
 ```
 
+### Java counterpart: Reconstruct the Path
+
+Maintain a parent whenever a shorter route is found, then follow parents backward from `n`, reverse the result, and insert the total distance at the beginning. The returned format is `[distance, 1, ..., n]`, or `[-1]` if no path exists. This version follows the preceding C++ code exactly, including `par[n] == n` as its unreachable test; that test assumes `n > 1` and returns `[-1]` for `n == 1`.
+
+```java
+import java.util.*;
+
+class WeightedShortestPath {
+    public List<Integer> shortestPath(int n, int m, int[][] edges) {
+        List<List<int[]>> adj = new ArrayList<>();
+        for (int i = 0; i <= n; i++) adj.add(new ArrayList<>());
+        for (int[] edge : edges) {
+            adj.get(edge[0]).add(new int[]{edge[1], edge[2]});
+            adj.get(edge[1]).add(new int[]{edge[0], edge[2]});
+        }
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> Integer.compare(a[0], b[0]));
+        pq.add(new int[]{0, 1});
+        int[] dist = new int[n + 1];
+        Arrays.fill(dist, 1_000_000_000);
+        int[] par = new int[n + 1];
+        for (int i = 1; i <= n; i++) par[i] = i;
+        dist[1] = 0;
+
+        while (!pq.isEmpty()) {
+            int[] entry = pq.remove();
+            int d = entry[0];
+            int node = entry[1];
+            if (d > dist[node]) continue;
+            for (int[] edge : adj.get(node)) {
+                int nbr = edge[0];
+                int w = edge[1];
+                if (d + w < dist[nbr]) {
+                    dist[nbr] = d + w;
+                    par[nbr] = node;
+                    pq.add(new int[]{d + w, nbr});
+                }
+            }
+        }
+        if (par[n] == n) return new ArrayList<>(Arrays.asList(-1));
+        List<Integer> path = new ArrayList<>();
+        int node = n;
+        while (par[node] != node) {
+            path.add(node);
+            node = par[node];
+        }
+        path.add(1);
+        Collections.reverse(path);
+        path.add(0, dist[n]);
+        return path;
+    }
+}
+```
 If all have unit weight then no need of Dijkstara or all edges are of same weight just simple bfs
 
 here we have 0 to n-1 nodes
@@ -1162,81 +1079,101 @@ here we have 0 to n-1 nodes
 class Solution {
 private:
 
-    // Function to perform BFS traversal
     void bfs(int src, vector<int> adj[],
              vector<int> &dist) {
-        
-        // Distance of source node from itself is zero
-        dist[src] = 0; 
-        
-        // Queue to facilitate BFS traversal
+
+        dist[src] = 0;
+
         queue<int> q;
-        
-        // Adding source node to queue
-        q.push(src); 
-        
-        // Until the queue is empty
+
+        q.push(src);
+
         while(!q.empty()) {
-            
-            // Get the node from queue
-            int node = q.front(); 
-            q.pop(); 
-            
-            // Traverse all its neighbors
+
+            int node = q.front();
+            q.pop();
+
             for(auto adjNode : adj[node]) {
-                
-                // If a shorter distance is found
+
                 if(dist[node] + 1 < dist[adjNode]) {
-                    
-                    // Update the distance
-                    dist[adjNode] = 1 + dist[node]; 
-                    
-                    // Add the node to the queue
-                    q.push(adjNode); 
+
+                    dist[adjNode] = 1 + dist[node];
+
+                    q.push(adjNode);
                 }
             }
         }
     }
-    
+
 public:
 
-    /* Function to get the shortest path 
-    for every node from source node 0 */
-    vector<int> shortestPath(vector<vector<int>>& edges, 
+    vector<int> shortestPath(vector<vector<int>>& edges,
                              int N, int M){
 
-        // To store the graph
         vector<int> adj[N];
-        
-        // Add edges to the graph
+
         for(auto it : edges) {
-            int u = it[0]; // first node
-            int v = it[1]; // second node
-            
-            // Add the edge
+            int u = it[0];
+            int v = it[1];
+
             adj[u].push_back(v);
             adj[v].push_back(u);
         }
-        
-        // Distance array to store the shortest paths
+
         vector <int> dist(N, 1e9);
-        
-        // Start the BFS traversal from source node
+
         bfs(0, adj, dist);
-        
-        /* If a node is unreachable, 
-        updating its distance to -1 */
+
         for(int i = 0; i < N; i++) {
-            if (dist[i] == 1e9) 
+            if (dist[i] == 1e9)
                 dist[i] = -1;
         }
-        
-        // Return the result
+
         return dist;
     }
 };
 ```
 
+### Java counterpart: Unit-Weight BFS (Code 1)
+
+Vertices are numbered `0..N-1`, and the source is `0`. Updating a distance before enqueueing prevents duplicate discovery. Unreachable vertices return `-1`. Time is `O(V + E)` and space is `O(V + E)` including the adjacency list.
+
+```java
+import java.util.*;
+
+class UnitWeightBfs {
+    void bfs(int src, List<List<Integer>> adj, int[] dist) {
+        dist[src] = 0;
+        Queue<Integer> q = new ArrayDeque<>();
+        q.add(src);
+        while (!q.isEmpty()) {
+            int node = q.remove();
+            for (int adjNode : adj.get(node)) {
+                if (dist[node] + 1 < dist[adjNode]) {
+                    dist[adjNode] = 1 + dist[node];
+                    q.add(adjNode);
+                }
+            }
+        }
+    }
+
+    public int[] shortestPath(int[][] edges, int N, int M) {
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < N; i++) adj.add(new ArrayList<>());
+        for (int[] edge : edges) {
+            adj.get(edge[0]).add(edge[1]);
+            adj.get(edge[1]).add(edge[0]);
+        }
+        int[] dist = new int[N];
+        Arrays.fill(dist, 1_000_000_000);
+        bfs(0, adj, dist);
+        for (int i = 0; i < N; i++) {
+            if (dist[i] == 1_000_000_000) dist[i] = -1;
+        }
+        return dist;
+    }
+}
+```
 ## My code(code 2)
 
 ```cpp
@@ -1271,6 +1208,44 @@ class Solution {
 };
 
 ```
+### Java counterpart: Distance Updated on Removal (Code 2)
+
+This preserves the preceding C++ logic for comparison, including repeated queue entries. The discussion below explains its performance problem; the Code 1 approach is the standard implementation.
+
+```java
+import java.util.*;
+
+class UnitWeightBfsPop {
+    public int[] shortestPath(int[][] edges, int n, int M) {
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
+        for (int[] edge : edges) {
+            adj.get(edge[0]).add(edge[1]);
+            adj.get(edge[1]).add(edge[0]);
+        }
+        int[] dist = new int[n];
+        Arrays.fill(dist, 1_000_000_000);
+        Queue<int[]> q = new ArrayDeque<>();
+        q.add(new int[]{0, 0});
+        while (!q.isEmpty()) {
+            int[] vertex = q.remove();
+            int wt = vertex[0];
+            int v = vertex[1];
+            dist[v] = Math.min(wt, dist[v]);
+            for (int k = 0; k < adj.get(v).size(); k++) {
+                int nbr = adj.get(v).get(k);
+                if (dist[nbr] == 1_000_000_000) {
+                    q.add(new int[]{wt + 1, nbr});
+                }
+            }
+        }
+        for (int i = 0; i < dist.length; i++) {
+            if (dist[i] == 1_000_000_000) dist[i] = -1;
+        }
+        return dist;
+    }
+}
+```
 # BFS: Marking Visited on Push vs. Pop
 
 This is a classic example of **"Marking Visited on Push"** vs. **"Marking Visited on Pop."**
@@ -1284,10 +1259,10 @@ Here is the "Senior Engineer" breakdown of why Code 2 is dangerous.
 The critical error in the second snippet is here:
 
 ```cpp
-// Inside the neighbor loop
+
 if(dist[adj[v][k]] == 1e9) {
-    q.push({wt+1, adj[v][k]}); 
-    // ERROR: You pushed it, but you didn't mark it as visited/updated dist!
+    q.push({wt+1, adj[v][k]});
+
 }
 ```
 Because you don't update `dist` immediately, the neighbor remains "Unvisited" ($1e9$) even though it is already sitting in the queue.
@@ -1305,8 +1280,8 @@ Code 1 follows the **Golden Rule of BFS**: "Mark as visited the moment you see i
 
 ```cpp
 if(dist[node] + 1 < dist[adjNode]) {
-    dist[adjNode] = 1 + dist[node]; // UPDATE HAPPENS HERE
-    q.push(adjNode); 
+    dist[adjNode] = 1 + dist[node];
+    q.push(adjNode);
 }
 ```
 By updating `dist` before pushing, if another node tries to visit `adjNode` later in the same layer, the `if` condition will fail, and it won't be pushed again.
@@ -1322,12 +1297,12 @@ If you strictly want to fix Code 2, you must move the update logic inside the lo
 
 ```cpp
 while(!q.empty()){
-    int node = q.front().second; // Just store node, no need for weight in pair
+    int node = q.front().second;
     q.pop();
-    
+
     for(int neighbor : adj[node]){
-        if(dist[neighbor] == 1e9){ 
-            dist[neighbor] = dist[node] + 1; // Mark visited IMMEDIATELY
+        if(dist[neighbor] == 1e9){
+            dist[neighbor] = dist[node] + 1;
             q.push({dist[neighbor], neighbor});
         }
     }
@@ -1341,7 +1316,7 @@ while(!q.empty()){
 
 let us back to dijkstra
 
-# Why `if (d > dist[node]) continue;`??
+# Q4. Why `if (d > dist[node]) continue;`??
 
 ## Lazy Deletion in Dijkstra's Algorithm
 
@@ -1372,10 +1347,9 @@ Standard C++ `priority_queue` does not support the `decrease_key` operation.
 
 **With the Guard Clause:**
 ```cpp
-// Popped: d = 10, node = A
-// Current Best: dist[A] = 5
 
-if (10 > 5) continue; // TRUE! Skip this garbage.
+
+if (10 > 5) continue;
 ```
 
 ### Summary
@@ -1394,10 +1368,10 @@ if (10 > 5) continue; // TRUE! Skip this garbage.
 class Solution {
 public:
 
-    vector<int> shortestPath(int n, int m, 
+    vector<int> shortestPath(int n, int m,
                 vector<vector<int>> &edges) {
         vector<P> adj[n + 1];
-        
+
         for (auto it : edges) {
             adj[it[0]].push_back({it[1], it[2]});
             adj[it[1]].push_back({it[0], it[2]});
@@ -1408,26 +1382,23 @@ public:
         for (int i = 1; i <= n; i++)
             parent[i] = i;
         dist[1] = 0;
-        pq.push({0, 1});//0 is weight 1 is vertex
-        
+        pq.push({0, 1});
+
         while (!pq.empty())
         {
-           
+
             auto it = pq.top();
             pq.pop();
-            
-            int node = it.second; // node
-            int dis = it.first; // distance
 
-        
+            int node = it.second;
+            int dis = it.first;
+
             for (auto it : adj[node]) {
-                
-                int adjNode = it.first; // node
-                int edWt = it.second; // edge weight
 
+                int adjNode = it.first;
+                int edWt = it.second;
 
                 if (dis + edWt < dist[adjNode]) {
-                    
 
                     dist[adjNode] = dis + edWt;
                     pq.push({dis + edWt, adjNode});
@@ -1438,109 +1409,72 @@ public:
         if (dist[n] == 1e9)
             return {-1};
 
-
         vector<int> path;
         int node = n;
         while (parent[node] != node) {
 
-            path.push_back(node); 
+            path.push_back(node);
             node = parent[node];
         }
 
-        path.push_back(1);//as on 1 par[1]=1 so never push_backed  1 in loop
+        path.push_back(1);
         reverse(path.begin(), path.end());
-        path.insert(path.begin(), dist[n]);//added distance at first as ques demands
+        path.insert(path.begin(), dist[n]);
 
         return path;
     }
 };
 
 ```
-# The "Senior Engineer" Breakdown: Disadvantages of Dijkstra's Algorithm
+### Java counterpart: Parent Reconstruction without the Stale Check
 
-Here is the "Senior Engineer" breakdown of the disadvantages of Dijkstra's Algorithm, ranging from the obvious to the nuanced.
+This matches the preceding Striver version: it tests reachability using the distance sentinel and does not skip stale heap entries. The path format is unchanged. For a one-vertex graph it returns distance zero and path [1], giving [0,1] overall.
 
-### 1. The Critical Failure: Negative Edges
-This is the most famous limitation.
-* **The Issue:** Dijkstra assumes that adding an edge always increases (or keeps constant) the path length. This allows it to "finalize" a node once visited.
-* **The Consequence:** If you have negative weights, Dijkstra's "Greedy" approach settles on a suboptimal path because it never looks back to correct itself.
-* **The Fix:** Use **Bellman-Ford** ($O(V \cdot E)$) or **SPFA** (Shortest Path Faster Algorithm).
+```java
+import java.util.*;
 
-### 2. It is "Blind" (Uninformed Search)
-Dijkstra explores the graph like a expanding circle (or spilling water). It searches in all directions equally, even if the target is clearly to the East.
-* **The Waste:** If you are finding a path from New York to London, Dijkstra will waste time calculating paths to South Africa and Tokyo because it doesn't know where London is.
-* **The Fix:** Use **A* (A-Star) Search**. It uses a "Heuristic" (like Euclidean distance) to prioritize nodes that move towards the target, making it much faster for point-to-point pathfinding.
+class WeightedShortestPathNoSkip {
+    public List<Integer> shortestPath(int n, int m, int[][] edges) {
+        List<List<int[]>> adj = new ArrayList<>();
+        for (int i = 0; i <= n; i++) adj.add(new ArrayList<>());
+        for (int[] edge : edges) {
+            adj.get(edge[0]).add(new int[]{edge[1], edge[2]});
+            adj.get(edge[1]).add(new int[]{edge[0], edge[2]});
+        }
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> Integer.compare(a[0], b[0]));
+        pq.add(new int[]{0, 1});
+        int[] dist = new int[n + 1];
+        Arrays.fill(dist, 1_000_000_000);
+        int[] par = new int[n + 1];
+        for (int i = 1; i <= n; i++) par[i] = i;
+        dist[1] = 0;
 
-### 3. Overkill for Unweighted Graphs
-If all edge weights are 1 (or equal), Dijkstra is overkill.
-* **The Overhead:** Dijkstra uses a Priority Queue (Min-Heap), which adds a $\log V$ factor to every operation.
-* **The Fix:** Use standard **BFS (Breadth-First Search)**. It runs in $O(V + E)$ compared to Dijkstra's $O(E \log V)$.
+        while (!pq.isEmpty()) {
+            int[] entry = pq.remove();
+            int d = entry[0];
+            int node = entry[1];
 
-### 4. Overkill for DAGs (Directed Acyclic Graphs)
-If you know for a fact your graph has no cycles (e.g., a dependency graph or project schedule), Dijkstra is too slow.
-* **The Fix:** You can find the shortest path in a DAG using **Topological Sort + Linear Scan** in just $O(V + E)$ time.
-
-### Summary Table
-
-| Scenario | Dijkstra's Disadvantage | Better Alternative |
-| :--- | :--- | :--- |
-| **Negative Edges** | Returns wrong answer. | Bellman-Ford |
-| **Target Known** | Wastes time searching opposite directions. | A* (A-Star) |
-| **Unweighted Graph** | Unnecessary $\log V$ overhead. | BFS |
-| **No Cycles (DAG)** | Slower than linear time. | Topological Sort |
-
-
-# Why Dijkstra's Algorithm Fails with Negative Weights
-
-The core reason Dijkstra's algorithm fails with negative weights is because it is a **Greedy Algorithm** that makes a permanent decision based on local information.
-
-It assumes that once a node is processed (finalized), its shortest path is found and will never change. Negative weights break this assumption.
-
-### The "Greedy" Flaw
-Dijkstra follows this logic:
-1.  Pick the unvisited node with the smallest distance (let's call it $U$).
-2.  Mark $U$ as visited/finalized.
-3.  Relax its neighbors.
-
-**The Logic:** "Since $U$ is the closest node right now, and all edge weights are positive, there is no way I can go to a distant node $V$, take an edge back to $U$, and find a shorter path. Adding positive numbers only makes paths longer."
-
-**The Failure:** A negative edge allows a path to get shorter as you add more edges. Dijkstra doesn't account for this "time travel" effect where a longer path suddenly becomes cheaper.
-
----
-
-### A Concrete Counter-Example
-Imagine a graph with Nodes A, B, and C. Start at A.
-* **A → B** (Cost: 2)
-* **A → C** (Cost: 5)
-* **C → B** (Cost: -10)
-
-**Correct Shortest Path to B:**
-$A \to C \to B = 5 + (-10) = -5$.
-
-**How Dijkstra Fails:**
-1.  **Start at A:**
-    * Distance to A: 0
-    * PQ: `{ (A, 0) }`
-2.  **Pop A:**
-    * Relax neighbors:
-    * B: 2
-    * C: 5
-    * PQ: `{ (B, 2), (C, 5) }`
-3.  **Pop B (Cost 2):**
-    * **CRITICAL ERROR:** Dijkstra sees B has the smallest distance (2 vs 5). It pops B and marks it as **Visited**.
-    * Dijkstra declares: "The shortest path to B is 2."
-    * It will never check B again.
-4.  **Pop C (Cost 5):**
-    * C is visited.
-    * Relax neighbor B: New path $A \to C \to B$ is $5 + (-10) = -5$.
-    * Since B is already marked "Visited", Dijkstra (standard version) ignores this update.
-
-**Result:** Dijkstra returns **2**, but the answer is **-5**.
-
----
-
-### What algorithm should you use instead?
-If your graph has negative edges (but no negative cycles), you must use **Bellman-Ford**.
-
-* **Dijkstra:** $O(E \log V)$ — Fast, assumes non-negative weights.
-* **Bellman-Ford:** $O(V \cdot E)$ — Slower, works with negative weights, detects negative cycles.
+            for (int[] edge : adj.get(node)) {
+                int nbr = edge[0];
+                int w = edge[1];
+                if (d + w < dist[nbr]) {
+                    dist[nbr] = d + w;
+                    par[nbr] = node;
+                    pq.add(new int[]{d + w, nbr});
+                }
+            }
+        }
+        if (dist[n] == 1_000_000_000) return new ArrayList<>(Arrays.asList(-1));
+        List<Integer> path = new ArrayList<>();
+        int node = n;
+        while (par[node] != node) {
+            path.add(node);
+            node = par[node];
+        }
+        path.add(1);
+        Collections.reverse(path);
+        path.add(0, dist[n]);
+        return path;
+    }
+}
+```

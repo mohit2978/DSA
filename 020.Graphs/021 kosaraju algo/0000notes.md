@@ -1,11 +1,18 @@
-# Notes
+
+## Q1. Strongly Connected Components (Kosaraju's Algorithm)
+
+**Practice Question:** GfG — Strongly Connected Components (Kosaraju's Algo)
 
 
-Do not see code on left just start with Kosaraju!!
 
 
- ![alt text](004kosaraju_240112_103625(2).jpg) 
- 
+
+A directed graph is strongly connected if there is a path between all pairs of vertices. A strongly connected component (**SCC**) of a directed graph is a maximal strongly connected subgraph. For example, there are 3 SCCs in the following graph.
+
+![SCC definition example — 3 strongly connected components: {0,1,2}, {3}, {4}](img-scc-intro-example.svg)
+
+**TC of this is `O(V+E)`.**
+
  ### 1. The Core Concept: "The Round Trip"
 A **Strongly Connected Component (SCC)** is a group of nodes in a directed graph where you can get from any node to any other node within that group and get back.
 
@@ -35,15 +42,43 @@ Imagine a directed graph as a collection of **Islands** connected by **One-Way B
 * **Directed Graph:** Being "Strongly Connected" is strict (is there a round trip?).
 * **Key Property:** An SCC is the **largest possible** group of nodes that are all mutually reachable.
  
- ![alt text](004kosaraju_240112_103625(3).jpg) ![alt text](004kosaraju_240112_103625(4).jpg) ![alt text](004kosaraju_240112_103625(5).jpg) ![alt text](004kosaraju_240112_103625(6).jpg) ![alt text](004kosaraju_240112_103625(7).jpg) ![alt text](004kosaraju_240112_103625(8).jpg) ![alt text](004kosaraju_240112_103625(9).jpg) ![alt text](004kosaraju_240112_103625(10).jpg) ![alt text](004kosaraju_240112_103625(11).jpg) ![alt text](004kosaraju_240112_103625(12).jpg) ![alt text](004kosaraju_240112_103625(13).jpg)
+Undirected graph mein bhi chotay leke chota hi connected component; **Kosaraju is for Strongly Connected Component**.
 
+**Example** (10-node graph): We can reach `6,7,8` through `9`; `9,7,8` through `6`; `9,6,8` through `7`; `9,6,7` through `8`. So `{6,7,8,9}` is strongly connected component.
+
+Now see: `6` se `1` nahi ja sakte, `6` se `0` nahi ja sakte, toh unko strongly connected component nahi kahenge (`1` and `0` are not part of that SCC, even though there's an edge coming *into* `6` from `1` — the edge only goes one way).
+
+### GfG Problem — Strongly Connected Components (Kosaraju's Algo)
+
+**Difficulty:** Medium
+
+Given a Directed Graph with `V` vertices (Numbered from `0` to `V-1`) and `E` edges, Find the number of strongly connected components in the graph.
+
+**Example 1:**
+
+```
+Input: graph with edges 0->1, 1->2, 2->0, 0->3, 3->4
+
+Output: 3
+```
+
+**Explanation:** We can clearly see that there are 3 Strongly Connected Components in the Graph — `{0,1,2}`, `{3}`, `{4}`.
+
+**Expected Time Complexity:** `O(V+E)`.
+**Expected Auxiliary Space:** `O(V)`.
+
+**Constraints:**
+```
+1 <= V <= 5000
+0 <= E <= (V*(V-1))
+0 <= u, v <= N-1
+Sum of E over all testcases will not exceed 25*10^6
+```
+**Remember: Kosaraju is for SCC (Only in Directed Graph).**
+
+### Final Code (Java)
 
 ```java
-
-
-//User function Template for Java
-
-
 class Solution
 {
     private void dfs(int v,ArrayList<ArrayList<Integer>> adj,int[] vis,LinkedList<Integer>stk){
@@ -101,6 +136,70 @@ class Solution
     }
 }
 ```
+
+### Code (C++)
+
+```cpp
+class Solution {
+private:
+    void dfs(int v, vector<vector<int>>& adj, vector<int>& vis, list<int>& stk) {
+        vis[v] = 1;
+        for (int v1 : adj[v]) {
+            if (vis[v1] == 0) {
+                dfs(v1, adj, vis, stk);
+            }
+        }
+        stk.push_front(v);
+    }
+
+    void dfs2(int v, vector<vector<int>>& adj, vector<int>& vis) {
+        vis[v] = 2;
+        for (int v1 : adj[v]) {
+            if (vis[v1] == 1) {
+                dfs2(v1, adj, vis);
+            }
+        }
+    }
+
+    void transpose(vector<vector<int>>& adj, vector<vector<int>>& adj2) {
+        for (int i = 0; i < (int)adj.size(); i++) {
+            for (int n : adj[i]) {
+                adj2[n].push_back(i);
+            }
+        }
+    }
+
+public:
+    // Function to find number of strongly connected components in the graph.
+    int kosaraju(int V, vector<vector<int>>& adj) {
+        list<int> stk;
+        vector<int> vis(V + 1, 0);
+        for (int v = 0; v < V; v++) {
+            if (vis[v] == 0) {
+                dfs(v, adj, vis, stk);
+            }
+        }
+
+        vector<vector<int>> adj2(V);
+        transpose(adj, adj2);
+
+        int count = 0;
+        while (!stk.empty()) {
+            int el = stk.front();
+            stk.pop_front();
+            if (vis[el] == 1) {
+                dfs2(el, adj2, vis);
+                count++;
+            }
+        }
+        return count;
+    }
+};
+```
+
+**Complexity:**
+- **Time:** `O(V + E)` — Pass 1 (DFS + push to stack) visits every vertex and edge once: `O(V+E)`. Building the transpose is `O(V+E)` (one pass over every edge). Pass 2 (DFS on the transposed graph, popping from the stack) again visits every vertex and edge at most once across all the calls combined: `O(V+E)`. Total: `O(V+E)`.
+- **Space:** `O(V)` — the `vis` array and the stack both hold at most `V` entries; the transposed adjacency list `adj2` is `O(V+E)` but that's usually counted as part of the input/output representation rather than auxiliary space, matching the problem's stated `O(V)` expected auxiliary space.
 
 ### 1. The Problem: "The Leak"
 Imagine you have two castles, **Castle A** and **Castle B**.
@@ -241,8 +340,69 @@ Imagine a graph with just one node $A$ and no edges at all.
 > **Interview Tip:**
 > If an interviewer asks this, say: *"An SCC is a set of mutually reachable nodes. While it **contains** cycles (if size > 1), it is often a complex union of multiple overlapping cycles, not just a single ring."*
 
- ![alt text](004kosaraju_240112_103625(14).jpg) ![alt text](004kosaraju_240112_103625(15).jpg) ![alt text](004kosaraju_240112_103625(16).jpg) ![alt text](004kosaraju_240112_103625(17).jpg) ![alt text](004kosaraju_240112_103625(18).jpg) ![alt text](004kosaraju_240112_103625(19).jpg) ![alt text](004kosaraju_240112_103625(20).jpg) ![alt text](004kosaraju_240112_103625(21).jpg) ![alt text](004kosaraju_240112_103625(22).jpg) ![alt text](004kosaraju_240112_103625(23).jpg) ![alt text](004kosaraju_240112_103625(24).jpg) ![alt text](004kosaraju_240112_103625(25).jpg) ![alt text](004kosaraju_240112_103625(26).jpg) ![alt text](004kosaraju_240112_103625(27).jpg) ![alt text](004kosaraju_240112_103625(28).jpg) ![alt text](004kosaraju_240112_103625(29).jpg) ![alt text](004kosaraju_240112_103625(30).jpg) 
- 
+
+## Q2. Find a Mother Vertex
+
+**Practice Question:** GfG — Mother Vertex
+
+
+
+Given a Directed Graph, find a Mother Vertex in the Graph (if present). A Mother Vertex is a vertex through which we can reach all the other vertices of the Graph.
+
+**Example 1:**
+
+```
+Input: graph with edges 1->0, 0->2, 0->3, 2->1, 3->4
+
+Output: 0
+```
+
+**Explanation:** According to the given edges, all nodes can be reached from nodes 0, 1 and 2. But, since 0 is minimum among 0, 1 and 3, so 0 is the output.
+
+![Mother Vertex example — node 0 can reach every other node](img-mother-vertex-example.svg)
+
+**Example 2:**
+
+```
+Input: graph with edges 0->1, 2->1
+
+Output: -1
+```
+
+**Explanation:** According to the given edges, no vertices are there from where we can reach all vertices. So, output is -1.
+
+**Expected Time Complexity:** `O(V + E)`
+**Expected Space Complexity:** `O(V)`
+
+**Constraints:** `1 <= V <= 500`
+
+### Dry Run — "Last Man Standing"
+
+**No need of Stack!** 1st-ly, DFS mein jo last root visited, choose voh, use Mother Vertex ka candidate chuno.
+
+For a 6-node graph `0->1, 1->2, 2->0, 2->3, 3->4->5, 5->3`: at first we call `DFS(0)`, which visits `{0, 1, 2}`. `3` can be Mother Vertex, as none ek visited jo pehle se hai — use call karo, discover it as new, `visit(3)`.
+
+**Trace for GfG Example 1** (`1->0, 0->2, 0->3, 2->1, 3->4`):
+
+```
+i=0: not visited -> DFS(0). 0 reaches {0,2,1,3,4} — everyone.
+     Loop finishes without ever starting a fresh DFS again.
+     Candidate = 0.
+```
+
+**Trace for a different-order graph** (same edges, loop hits `2` before `0`):
+
+```
+i=0: 0 -> reach dekho (0's own neighbour) hai already visited hai — no, wait re-derive:
+     If node 2 is visited first: DFS(2) -> visits {2, 1, 0, 3, 4} since 2->1->0->{2,3}->3->4 (all reachable via 2's own chain)
+     Candidate = 2, and everyone else ends up visited too.
+```
+
+*(Regardless of which node the loop reaches first, whichever node's DFS ends up covering the whole graph becomes — and stays — the final candidate, since no later `i` can trigger a fresh DFS once everything is already visited.)*
+
+
+**Brute-force solution can be:** har vertex se DFS call karo, check karo ki sab visit ho rahe hain ya nahi. `O(V(V+E))`.
+
 ![alt text](image.png)
 
 ### 1. What is a "Strongly Connected Component" (SCC)?
@@ -453,7 +613,8 @@ If you condense the graph into a **DAG (Directed Acyclic Graph)** of SCCs:
 
 Q--> can i say source cant be reached by anyone and sink by everyone so source will be always on TOS at end of dfs and at last vertex visited in mother vertex??
 
-# Connecting the Dots: Topological Sort, SCCs, and Mother Vertex
+
+ Connecting the Dots: Topological Sort, SCCs, and Mother Vertex
 
 Yes, you can absolutely say that. You have correctly connected the dots between three different advanced concepts: **Topological Sort (Stack)**, **SCCs (Source/Sink)**, and the **Mother Vertex**.
 
@@ -492,9 +653,108 @@ Here is the "Senior Engineer" verification of your statement:
 
 > **Verdict:** Your mental model is now complete. You understand the "Flow" of directed graphs.
 
- ![alt text](004kosaraju_240112_103625(31).jpg) ![alt text](004kosaraju_240112_103625(32).jpg) ![alt text](004kosaraju_240112_103625(33).jpg) ![alt text](004kosaraju_240112_103625(34).jpg) ![alt text](004kosaraju_240112_103625(35).jpg) ![alt text](004kosaraju_240112_103625(36).jpg) ![alt text](004kosaraju_240112_103625(37).jpg) ![alt text](004kosaraju_240112_103625(38).jpg) ![alt text](004kosaraju_240112_103625(39).jpg) 
- 
- ```java
+### More Mother Vertex Q&A
+
+If stack like Kosaraju ki tarah DFS1 karte, stack ke top Mother Vertex hoga — stack ke top se hum DFS2 lagake check karenge ki can we visit whole graph from that? Done by Stack ki `O(V)` space ho jaati!!
+
+**Brute-force solution can be:** har Vertex se DFS call kare, check karo ki sab visit ho rahe hain ya nahi — `O(V(V+E))`.
+
+---
+
+## Q3. Clone Graph
+
+**Practice Question:** LeetCode 133 — Clone Graph
+
+### Dry Run — 7-node graph (`0-3-4`, `1-2`, `4-5-6`)
+
+We use a `HashMap<Node, Node>` to map original nodes to their clones.
+
+At `5`, so `5` ke liye new node `5'` & put in map. `6'` as neighbor of `4'` & `5'` — `4'` as neighbor of `5'` is already visited coming from host of `6`, but `6'`s neighbors [`4'` & `5'` are its neighbors] — both are already visited & put in `6'`.
+
+At `2`, in the tree we create its new node `2'`. `0'` — one dekhe `0` neighbour hai already visited hai — so it's like same `0'` deal. So: `0' -> `, `1' -> 0'`, `2' -> 1'`. At `2` in the tree we create its new node `2'`.
+
+### LeetCode 133 — Clone Graph
+
+**Difficulty:** Medium
+
+Given a reference of a node in a **connected** undirected graph.
+
+Return a **deep copy** (clone) of the graph.
+
+Each node in the graph contains a value (`int`) and a list (`List[Node]`) of its neighbors.
+
+```java
+class Node {
+    public int val;
+    public List<Node> neighbors;
+}
+```
+
+**Why can't we just return the same graph, or a shallow copy?**
+
+- **Returning the same graph:** you can't return the same graph object — it's not a copy at all.
+- **Naive/shallow clone:** "This looks like a clone. The nodes are NEW. Graph looks the same" — but if you don't rewire the neighbor lists correctly, "the nodes were cloned, but the graph is messed up — doesn't have the same connections."
+- **Correct clone:** brand-new node objects, with the exact same edge structure as the original.
+
+**Example 1:**
+
+```
+Input: adjList = [[2,4],[1,3],[2,4],[1,3]]
+Output: [[2,4],[1,3],[2,4],[1,3]]
+```
+
+**Explanation:** There are 4 nodes in the graph.
+```
+1st node (val = 1)'s neighbors are 2nd node (val = 2) and 4th node (val = 4).
+2nd node (val = 2)'s neighbors are 1st node (val = 1) and 3rd node (val = 3).
+3rd node (val = 3)'s neighbors are 2nd node (val = 2) and 4th node (val = 4).
+4th node (val = 4)'s neighbors are 1st node (val = 1) and 3rd node (val = 3).
+```
+
+![Clone Graph example — original graph and its deep-cloned copy](img-clone-graph-example.svg)
+
+**Example 2:** `adjList = [[]]` → Output: `[[]]`. The graph consists of only one node with `val = 1` and it does not have any neighbors.
+
+**Example 3:** `adjList = []` → Output: `[]`. This is an empty graph, it does not have any nodes.
+
+**Constraints:**
+- The number of nodes in the graph is in the range `[0, 100]`.
+- `1 <= Node.val <= 100`
+- `Node.val` is unique for each node.
+- There are no repeated edges and no self-loops in the graph.
+- The Graph is connected and all nodes can be visited starting from the given node.
+
+**Test case format:** For simplicity, each node's value is the same as the node's index (1-indexed). The graph is represented in the test case using an adjacency list. The given node will always be the first node with `val = 1`. You must return the copy of the given node as a reference to the cloned graph.
+
+### Node Definition
+
+```java
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> neighbors;
+    public Node() {
+        val = 0;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val) {
+        val = _val;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val, ArrayList<Node> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+}
+*/
+```
+
+### Accepted — Own Code (Java)
+
+HashMap is used to check whether we have visited node already or not — as here we are not given no. of `V` vertices, so we can't make a `visited` array; HashMap ki key node ke key address hai, jo next node hai uske liye.
+
+```java
  /*
 // Definition for a Node.
 class Node {
@@ -536,8 +796,39 @@ class Solution {
     }
 }
 ```
- 
- ![alt text](004kosaraju_240112_103625(40).jpg)
+
+### Accepted — Own Code (C++)
+
+```cpp
+class Solution {
+private:
+    Node* dfs(Node* node, unordered_map<Node*, Node*>& nodes) {
+        if (node == nullptr) return nullptr;
+        Node* cNode = new Node(node->val);
+        nodes[node] = cNode;
+        for (Node* ls : node->neighbors) {
+            if (nodes.find(ls) == nodes.end()) {
+                dfs(ls, nodes);
+            }
+            cNode->neighbors.push_back(nodes[ls]);
+        }
+        return cNode;
+    }
+
+public:
+    Node* cloneGraph(Node* node) {
+        unordered_map<Node*, Node*> nodes;
+        return dfs(node, nodes);
+    }
+};
+```
+
+**Complexity:**
+- **Time:** `O(V + E)` — each node is visited (and cloned) exactly once thanks to the `nodes` map check, and each edge is processed exactly once (to wire up `cNode->neighbors`).
+- **Space:** `O(V)` for the `nodes` map (one entry per original node) plus `O(V)` for the recursion stack in the worst case (a graph that's essentially a long chain) — the cloned graph itself (`O(V+E)`) is the required output, not auxiliary space.
+
+
+**Alternative approach:** Given nodes `<= 100`, so we can use an Array of nodes of size `101`, & then instead of HashMap we use that Array.
 
 
 

@@ -1,0 +1,42 @@
+<svg viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="620" height="260" fill="#1e1e1e"/>
+  <text x="20" y="26" fill="#d4d4d4" font-size="15">LeetCode 133 — Clone Graph, Example 1</text>
+
+  <!-- Original graph -->
+  <text x="130" y="55" fill="#9aa0a6" text-anchor="middle" font-size="13">Original</text>
+  <circle cx="90" cy="90" r="24" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="200" cy="90" r="24" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="90" cy="190" r="24" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="200" cy="190" r="24" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <g stroke="#9aa0a6" stroke-width="2">
+    <line x1="114" y1="90" x2="176" y2="90"/>
+    <line x1="90" y1="114" x2="90" y2="166"/>
+    <line x1="200" y1="114" x2="200" y2="166"/>
+    <line x1="114" y1="190" x2="176" y2="190"/>
+  </g>
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="16">
+    <text x="90" y="97">1</text><text x="200" y="97">2</text>
+    <text x="90" y="197">4</text><text x="200" y="197">3</text>
+  </g>
+
+  <text x="310" y="140" fill="#56c98d" font-size="22" text-anchor="middle">&#8594;</text>
+
+  <!-- Cloned graph (new nodes, same structure) -->
+  <text x="470" y="55" fill="#9aa0a6" text-anchor="middle" font-size="13">Clone (new node objects, same edges)</text>
+  <circle cx="430" cy="90" r="24" fill="#1f3a2c" stroke="#56c98d" stroke-width="2"/>
+  <circle cx="540" cy="90" r="24" fill="#1f3a2c" stroke="#56c98d" stroke-width="2"/>
+  <circle cx="430" cy="190" r="24" fill="#1f3a2c" stroke="#56c98d" stroke-width="2"/>
+  <circle cx="540" cy="190" r="24" fill="#1f3a2c" stroke="#56c98d" stroke-width="2"/>
+  <g stroke="#56c98d" stroke-width="2">
+    <line x1="454" y1="90" x2="516" y2="90"/>
+    <line x1="430" y1="114" x2="430" y2="166"/>
+    <line x1="540" y1="114" x2="540" y2="166"/>
+    <line x1="454" y1="190" x2="516" y2="190"/>
+  </g>
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="16">
+    <text x="430" y="97">1'</text><text x="540" y="97">2'</text>
+    <text x="430" y="197">4'</text><text x="540" y="197">3'</text>
+  </g>
+
+  <text x="20" y="240" fill="#d4d4d4" font-size="13">adjList = [[2,4],[1,3],[2,4],[1,3]] &#8212; deep copy must have brand-new node objects with the same connections.</text>
+</svg>
