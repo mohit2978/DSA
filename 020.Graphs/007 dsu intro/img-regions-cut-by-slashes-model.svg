@@ -1,0 +1,70 @@
+<svg viewBox="0 0 780 500" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="780" height="500" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">LC 959 Regions Cut By Slashes <tspan fill="#9aa0a6" font-weight="normal">— Sumeet Sir's DSU model: split every cell into 4 triangles</tspan></text>
+  <line x1="25" y1="38" x2="755" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- Cell model -->
+  <rect x="25" y="48" width="245" height="235" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="72" fill="#f2c14e" font-size="13.5" font-weight="bold">One cell &#8594; 4 parts</text>
+
+  <rect x="75" y="95" width="150" height="150" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <line x1="75" y1="95" x2="225" y2="245" stroke="#5b9bd5" stroke-width="1.5"/>
+  <line x1="225" y1="95" x2="75" y2="245" stroke="#5b9bd5" stroke-width="1.5"/>
+
+  <g text-anchor="middle" font-weight="bold" font-size="15">
+    <text x="150" y="125" fill="#f2c14e">a</text>
+    <text x="197" y="176" fill="#56c98d">b</text>
+    <text x="150" y="230" fill="#e06c75">c</text>
+    <text x="103" y="176" fill="#9ecbf0">d</text>
+  </g>
+
+  <text x="40" y="268" fill="#d4d4d4" font-family="monospace" font-size="12.5">a=top(0) b=right(1) c=bottom(2) d=left(3)</text>
+
+  <!-- Index formula -->
+  <rect x="290" y="48" width="465" height="235" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="305" y="72" fill="#f2c14e" font-size="13.5" font-weight="bold">Global index of a triangle</text>
+  <text x="305" y="98" fill="#d4d4d4" font-family="monospace" font-size="14">cellIndex = r * n + c</text>
+  <text x="305" y="122" fill="#d4d4d4" font-family="monospace" font-size="14">p1 = 4*cellIndex     (a &#8212; top)</text>
+  <text x="305" y="142" fill="#d4d4d4" font-family="monospace" font-size="14">p2 = 4*cellIndex + 1 (b &#8212; right)</text>
+  <text x="305" y="162" fill="#d4d4d4" font-family="monospace" font-size="14">p3 = 4*cellIndex + 2 (c &#8212; bottom)</text>
+  <text x="305" y="182" fill="#d4d4d4" font-family="monospace" font-size="14">p4 = 4*cellIndex + 3 (d &#8212; left)</text>
+  <line x1="305" y1="198" x2="740" y2="198" stroke="#333333" stroke-width="1"/>
+  <text x="305" y="222" fill="#56c98d" font-size="13.5" font-weight="bold">So an n &#215; n grid needs a DSU of size 4 &#215; n &#215; n</text>
+  <text x="305" y="246" fill="#9aa0a6" font-size="12.5">For a 3 &#215; 3 grid that is 3 &#215; 3 &#215; 4 = <tspan fill="#d4d4d4" font-family="monospace">36</tspan> cells (36 sets in the DSU).</text>
+  <text x="305" y="268" fill="#9aa0a6" font-size="12.5">The answer is then just "how many nodes are still their own parent" &#8212; the number of sets left.</text>
+
+  <!-- Inside-cell union rules -->
+  <rect x="25" y="297" width="365" height="188" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="321" fill="#f2c14e" font-size="13.5" font-weight="bold">Union rules INSIDE one cell</text>
+
+  <!-- '/' -->
+  <rect x="45" y="336" width="66" height="66" fill="#2b2b2b" stroke="#3a3a3a" stroke-width="1"/>
+  <line x1="45" y1="402" x2="111" y2="336" stroke="#e06c75" stroke-width="3"/>
+  <text x="78" y="422" fill="#d4d4d4" text-anchor="middle" font-family="monospace" font-size="14">'/'</text>
+  <text x="125" y="362" fill="#56c98d" font-family="monospace" font-size="13">union(a, d)</text>
+  <text x="125" y="382" fill="#56c98d" font-family="monospace" font-size="13">union(b, c)</text>
+
+  <!-- '\' -->
+  <rect x="45" y="436" width="0" height="0" fill="none"/>
+  <text x="255" y="362" fill="#56c98d" font-family="monospace" font-size="13">union(d, c)</text>
+  <text x="255" y="382" fill="#56c98d" font-family="monospace" font-size="13">union(a, b)</text>
+  <rect x="175" y="336" width="66" height="66" fill="#2b2b2b" stroke="#3a3a3a" stroke-width="1"/>
+  <line x1="175" y1="336" x2="241" y2="402" stroke="#e06c75" stroke-width="3"/>
+  <text x="208" y="422" fill="#d4d4d4" text-anchor="middle" font-family="monospace" font-size="14">'\'</text>
+
+  <text x="40" y="452" fill="#d4d4d4" font-family="monospace" font-size="13">' '  (blank)  &#8594;  union(a, b, c, d)  &#8212; all four merge</text>
+  <text x="40" y="474" fill="#9aa0a6" font-size="12">In code this is written as two guards: <tspan font-family="monospace">if(ch != '/')</tspan> do the '\' pair, <tspan font-family="monospace">if(ch != '\\')</tspan> do the '/' pair &#8212; a blank satisfies both.</text>
+
+  <!-- Neighbour union rules -->
+  <rect x="410" y="297" width="345" height="188" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="425" y="321" fill="#f2c14e" font-size="13.5" font-weight="bold">Union rules ACROSS neighbouring cells</text>
+  <text x="425" y="345" fill="#9aa0a6" font-size="12">Merge the two triangles that touch along the shared border:</text>
+
+  <g font-family="monospace" font-size="12.5">
+    <text x="425" y="374" fill="#9ecbf0">up   {&#8722;1, 0}</text>  <text x="565" y="374" fill="#d4d4d4">union(a, 4*newpos+2)</text>
+    <text x="425" y="398" fill="#9ecbf0">down {&#160;1, 0}</text>  <text x="565" y="398" fill="#d4d4d4">union(c, 4*newpos+0)</text>
+    <text x="425" y="422" fill="#9ecbf0">left {&#160;0,&#8722;1}</text>  <text x="565" y="422" fill="#d4d4d4">union(d, 4*newpos+1)</text>
+    <text x="425" y="446" fill="#9ecbf0">right{&#160;0, 1}</text>  <text x="565" y="446" fill="#d4d4d4">union(b, 4*newpos+3)</text>
+  </g>
+  <text x="425" y="472" fill="#9aa0a6" font-size="12">In practice only <tspan font-family="monospace">up</tspan> and <tspan font-family="monospace">left</tspan> are needed &#8212; scanning top-to-bottom, left-to-right</text>
+</svg>

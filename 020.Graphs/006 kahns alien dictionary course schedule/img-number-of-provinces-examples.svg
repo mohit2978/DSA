@@ -1,0 +1,38 @@
+<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="700" height="300" fill="#1e1e1e"/>
+  <text x="20" y="28" fill="#d4d4d4" font-size="15">LC 547 Number of Provinces — a province = one connected component</text>
+
+  <!-- Example 1 -->
+  <rect x="25" y="50" width="300" height="185" fill="none" stroke="#3a3a3a" stroke-width="1" stroke-dasharray="4 4"/>
+  <text x="35" y="72" fill="#5b9bd5" font-size="14">Example 1: isConnected = [[1,1,0],[1,1,0],[0,0,1]]</text>
+
+  <circle cx="100" cy="130" r="26" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="240" cy="130" r="26" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="170" cy="195" r="26" fill="#2b2b2b" stroke="#56c98d" stroke-width="2"/>
+  <line x1="126" y1="130" x2="214" y2="130" stroke="#9ecbf0" stroke-width="2"/>
+
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="17">
+    <text x="100" y="137">1</text>
+    <text x="240" y="137">2</text>
+    <text x="170" y="202">3</text>
+  </g>
+  <text x="35" y="228" fill="#f2c14e" font-size="14">Output: 2  &#8594; {1,2} and {3}</text>
+
+  <!-- Example 2 -->
+  <rect x="370" y="50" width="300" height="185" fill="none" stroke="#3a3a3a" stroke-width="1" stroke-dasharray="4 4"/>
+  <text x="380" y="72" fill="#5b9bd5" font-size="14">Example 2: isConnected = [[1,0,0],[0,1,0],[0,0,1]]</text>
+
+  <circle cx="445" cy="130" r="26" fill="#2b2b2b" stroke="#e06c75" stroke-width="2"/>
+  <circle cx="585" cy="130" r="26" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="515" cy="195" r="26" fill="#2b2b2b" stroke="#56c98d" stroke-width="2"/>
+
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="17">
+    <text x="445" y="137">1</text>
+    <text x="585" y="137">2</text>
+    <text x="515" y="202">3</text>
+  </g>
+  <text x="380" y="228" fill="#f2c14e" font-size="14">Output: 3  &#8594; no edges, so every city is its own province</text>
+
+  <text x="20" y="270" fill="#9aa0a6" font-size="13">Count = number of times the outer loop finds an unvisited node and has to fire a fresh DFS/BFS.</text>
+  <text x="20" y="290" fill="#9aa0a6" font-size="13">Same answer via DSU: union(i,j) for every 1 in the matrix, then count how many nodes are their own root.</text>
+</svg>

@@ -1,0 +1,47 @@
+<svg viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="700" height="340" fill="#1e1e1e"/>
+  <text x="20" y="28" fill="#d4d4d4" font-size="15">How Kahn's detects a cycle — edges: a&#8594;b, b&#8594;c, c&#8594;a (cycle), d&#8594;c</text>
+
+  <defs>
+    <marker id="r" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#e06c75"/></marker>
+    <marker id="b" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#9ecbf0"/></marker>
+  </defs>
+
+  <!-- cycle a,b,c in red; d in yellow -->
+  <circle cx="90"  cy="90"  r="26" fill="#3a2323" stroke="#e06c75" stroke-width="2"/>
+  <circle cx="90"  cy="210" r="26" fill="#3a2323" stroke="#e06c75" stroke-width="2"/>
+  <circle cx="230" cy="210" r="26" fill="#3a2323" stroke="#e06c75" stroke-width="2"/>
+  <circle cx="370" cy="210" r="26" fill="#3a331f" stroke="#f2c14e" stroke-width="3"/>
+
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="18">
+    <text x="90"  y="97">a</text>
+    <text x="90"  y="217">b</text>
+    <text x="230" y="217">c</text>
+    <text x="370" y="217">d</text>
+  </g>
+
+  <g stroke="#e06c75" stroke-width="2" fill="none" marker-end="url(#r)">
+    <path d="M 90 116 L 90 180"/>     <!-- a->b -->
+    <path d="M 116 210 L 200 210"/>   <!-- b->c -->
+    <path d="M 212 189 L 108 111"/>   <!-- c->a -->
+  </g>
+  <g stroke="#9ecbf0" stroke-width="2" fill="none" marker-end="url(#b)">
+    <path d="M 344 210 L 260 210"/>   <!-- d->c -->
+  </g>
+
+  <!-- trace -->
+  <rect x="430" y="55" width="250" height="205" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="4"/>
+  <text x="445" y="80" fill="#f2c14e" font-size="14" font-weight="bold">Indegree</text>
+  <text x="445" y="102" fill="#d4d4d4" font-family="monospace" font-size="13">a=1  b=1  c=2  d=0</text>
+
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="445" y="134">Q = [d]</text>
+    <text x="445" y="158">pop d &#8594; c: 2&#8594;1  (not 0)</text>
+    <text x="445" y="182">Q = []  &#8212; stuck!</text>
+  </g>
+  <text x="445" y="216" fill="#e06c75" font-size="14" font-weight="bold">count = 1  &#8800;  V = 4</text>
+  <text x="445" y="240" fill="#e06c75" font-size="14" font-weight="bold">&#8594; CYCLE EXISTS</text>
+
+  <text x="20" y="290" fill="#9aa0a6" font-size="13">a, b, c sit inside a cycle, so their indegree can never drain to 0 &#8212; they never enter the queue.</text>
+  <text x="20" y="312" fill="#9aa0a6" font-size="13">Rule: if (count != number of vertices) there is a cycle, else no cycle.</text>
+</svg>

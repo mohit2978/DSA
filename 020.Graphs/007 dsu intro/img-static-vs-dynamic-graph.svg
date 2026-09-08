@@ -1,0 +1,69 @@
+<svg viewBox="0 0 780 380" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="780" height="380" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Static graph vs Dynamic graph <tspan fill="#9aa0a6" font-weight="normal">— why DSU exists</tspan></text>
+  <line x1="25" y1="38" x2="755" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- Static -->
+  <rect x="25" y="48" width="355" height="150" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="72" fill="#5b9bd5" font-size="13.5" font-weight="bold">Graph STATIC &#8594; BFS / DFS</text>
+  <text x="40" y="96" fill="#d4d4d4" font-size="13">The whole graph is handed to you up front, already built.</text>
+  <text x="40" y="120" fill="#d4d4d4" font-size="13">One traversal answers the question.</text>
+  <text x="40" y="150" fill="#f2c14e" font-family="monospace" font-size="14">TC &#8594; O(V + E)</text>
+  <text x="40" y="178" fill="#9aa0a6" font-size="12">Connected or not / is-cyclic / no. of components on a static graph.</text>
+
+  <!-- Dynamic -->
+  <rect x="400" y="48" width="355" height="150" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="415" y="72" fill="#56c98d" font-size="13.5" font-weight="bold">Graph DYNAMIC &#8594; DSU</text>
+  <text x="415" y="96" fill="#d4d4d4" font-size="13">Vertices/edges arrive one by one, and after EVERY</text>
+  <text x="415" y="120" fill="#d4d4d4" font-size="13">addition you are asked a query (e.g. "how many components now?").</text>
+  <text x="415" y="150" fill="#f2c14e" font-family="monospace" font-size="14">TC &#8594; O(E) &#160;&#160;(vs O(E &#215; (V+E)) for re-running BFS/DFS)</text>
+  <text x="415" y="178" fill="#9aa0a6" font-size="12">union &#8594; O(1), find &#8594; O(1) amortised, so E edges cost O(E) total.</text>
+
+  <!-- Component example -->
+  <rect x="25" y="212" width="730" height="150" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="236" fill="#f2c14e" font-size="13.5" font-weight="bold">Example &#8212; adding 2 edges collapses 3 components into 1</text>
+
+  <!-- component 1 -->
+  <g stroke="#5b9bd5" stroke-width="2">
+    <line x1="90" y1="285" x2="90" y2="330"/>
+    <line x1="90" y1="285" x2="170" y2="285"/>
+  </g>
+  <circle cx="90"  cy="285" r="16" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="170" cy="285" r="16" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="90"  cy="330" r="16" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+
+  <!-- component 2 -->
+  <g stroke="#5b9bd5" stroke-width="2">
+    <line x1="290" y1="330" x2="370" y2="330"/>
+  </g>
+  <circle cx="290" cy="330" r="16" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="370" cy="330" r="16" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+
+  <!-- component 3 -->
+  <g stroke="#5b9bd5" stroke-width="2">
+    <line x1="490" y1="285" x2="570" y2="285"/>
+  </g>
+  <circle cx="490" cy="285" r="16" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="570" cy="285" r="16" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+
+  <!-- new red edges -->
+  <g stroke="#e06c75" stroke-width="3">
+    <line x1="184" y1="295" x2="276" y2="322"/>   <!-- 1-3 -->
+    <line x1="384" y1="322" x2="478" y2="295"/>   <!-- 4-5 -->
+  </g>
+
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="14">
+    <text x="90"  y="290">0</text>
+    <text x="170" y="290">1</text>
+    <text x="90"  y="335">2</text>
+    <text x="290" y="335">3</text>
+    <text x="370" y="335">4</text>
+    <text x="490" y="290">5</text>
+    <text x="570" y="290">6</text>
+  </g>
+
+  <text x="620" y="285" fill="#9aa0a6" font-size="12.5">Before: <tspan fill="#5b9bd5" font-weight="bold">3</tspan> components</text>
+  <text x="620" y="307" fill="#9aa0a6" font-size="12.5">{0,1,2} {3,4} {5,6}</text>
+  <text x="620" y="333" fill="#9aa0a6" font-size="12.5">Add <tspan fill="#e06c75">1&#8211;3</tspan> and <tspan fill="#e06c75">4&#8211;5</tspan>:</text>
+  <text x="620" y="352" fill="#56c98d" font-size="12.5" font-weight="bold">now 1 component</text>
+</svg>

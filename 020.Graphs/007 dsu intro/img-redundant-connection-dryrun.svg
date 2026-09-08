@@ -1,0 +1,70 @@
+<svg viewBox="0 0 780 430" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="780" height="430" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">LC 684 Redundant Connection <tspan fill="#9aa0a6" font-weight="normal">— edges = [[1,2],[2,3],[3,4],[1,4],[1,5]] &#8594; answer [1,4]</tspan></text>
+  <line x1="25" y1="38" x2="755" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- Graph card -->
+  <rect x="25" y="48" width="325" height="250" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="72" fill="#f2c14e" font-size="13.5" font-weight="bold">The input graph</text>
+
+  <g stroke="#9aa0a6" stroke-width="2">
+    <line x1="105" y1="130" x2="175" y2="130"/>   <!-- 2-1 -->
+    <line x1="205" y1="130" x2="275" y2="130"/>   <!-- 1-5 -->
+    <line x1="90"  y1="152" x2="90"  y2="220"/>   <!-- 2-3 -->
+    <line x1="112" y1="240" x2="168" y2="240"/>   <!-- 3-4 -->
+  </g>
+  <g stroke="#e06c75" stroke-width="3">
+    <line x1="190" y1="152" x2="190" y2="218"/>   <!-- 1-4 : the redundant one -->
+  </g>
+
+  <g>
+    <circle cx="90"  cy="130" r="22" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="190" cy="130" r="22" fill="#3a331f" stroke="#f2c14e" stroke-width="3"/>
+    <circle cx="290" cy="130" r="22" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="90"  cy="240" r="22" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="190" cy="240" r="22" fill="#3a2323" stroke="#e06c75" stroke-width="3"/>
+  </g>
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="15">
+    <text x="90"  y="136">2</text>
+    <text x="190" y="136">1</text>
+    <text x="290" y="136">5</text>
+    <text x="90"  y="246">3</text>
+    <text x="190" y="246">4</text>
+  </g>
+  <text x="215" y="190" fill="#e06c75" font-size="12.5" font-weight="bold">redundant</text>
+  <text x="40" y="285" fill="#9aa0a6" font-size="12.5">A tree of n nodes has exactly n&#8722;1 edges; one extra edge must close a cycle.</text>
+
+  <!-- Trace card -->
+  <rect x="370" y="48" width="385" height="250" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="385" y="72" fill="#f2c14e" font-size="13.5" font-weight="bold">DSU trace &#8212; process edges in the given order</text>
+  <line x1="385" y1="82" x2="740" y2="82" stroke="#333333" stroke-width="1"/>
+
+  <g font-family="monospace" font-size="12.5">
+    <text x="385" y="106" fill="#56c98d">[1,2]</text>
+    <text x="445" y="106" fill="#d4d4d4">par[1]=par[2]=&#8722;1 &#8594; makeset both</text>
+    <text x="445" y="124" fill="#9aa0a6">find(1)=1, find(2)=2 &#8594; different &#8594; union</text>
+
+    <text x="385" y="152" fill="#56c98d">[2,3]</text>
+    <text x="445" y="152" fill="#d4d4d4">3 is new &#8594; makeset(3)</text>
+    <text x="445" y="170" fill="#9aa0a6">find(2)=1, find(3)=3 &#8594; different &#8594; union</text>
+
+    <text x="385" y="198" fill="#56c98d">[3,4]</text>
+    <text x="445" y="198" fill="#d4d4d4">4 is new &#8594; makeset(4)</text>
+    <text x="445" y="216" fill="#9aa0a6">find(3)=1, find(4)=4 &#8594; different &#8594; union</text>
+
+    <text x="385" y="244" fill="#e06c75">[1,4]</text>
+    <text x="445" y="244" fill="#e06c75">find(1)=1, find(4)=1 &#8594; SAME SET</text>
+    <text x="445" y="262" fill="#e06c75" font-weight="bold">&#8594; cycle &#8594; return [1,4] immediately</text>
+  </g>
+  <text x="385" y="288" fill="#9aa0a6" font-size="12">[1,5] is never reached &#8212; we return as soon as the first repeat parent is found.</text>
+
+  <!-- DSU tree evolution -->
+  <rect x="25" y="312" width="730" height="100" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="334" fill="#f2c14e" font-size="13.5" font-weight="bold">DSU forest as it grows</text>
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="40" y="360">after [1,2]:  1 &#8594; {2}</text>
+    <text x="250" y="360">after [2,3]:  1 &#8594; {2, 3}</text>
+    <text x="490" y="360">after [3,4]:  1 &#8594; {2, 3, 4}</text>
+  </g>
+  <text x="40" y="390" fill="#9aa0a6" font-size="12.5">Note the code calls <tspan font-family="monospace">makeset</tspan> lazily (<tspan font-family="monospace">par[i]</tspan> starts at &#8722;1), so a node only joins the DSU when an edge first mentions it.</text>
+</svg>

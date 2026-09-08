@@ -1,6 +1,35 @@
-# Notes
 
-![alt text](<005kahns aliendisctionary courseschedule_240307_120321.jpg>)
+## Q1. Number of Provinces (LeetCode 547)
+
+
+There are `n` cities. Some of them are connected, while some are not. If city `a` is connected directly with city `b`, and city `b` is connected directly with city `c`, then city `a` is connected **indirectly** with city `c`.
+
+A **province** is a group of directly or indirectly connected cities and no other cities outside of the group.
+
+You are given an `n x n` matrix `isConnected` where `isConnected[i][j] = 1` if the `i`th city and the `j`th city are directly connected, and `isConnected[i][j] = 0` otherwise.
+
+Return *the total number of **provinces***.
+
+![Number of Provinces examples](img-number-of-provinces-examples.svg)
+
+### Example 1
+
+**Input:** `isConnected = [[1,1,0],[1,1,0],[0,0,1]]`
+**Output:** `2`
+
+### Example 2
+
+**Input:** `isConnected = [[1,0,0],[0,1,0],[0,0,1]]`
+**Output:** `3`
+
+### Constraints
+
+* `1 <= n <= 200`
+* `n == isConnected.length`
+* `n == isConnected[i].length`
+* `isConnected[i][j]` is `1` or `0`.
+* `isConnected[i][i] == 1`
+* `isConnected[i][j] == isConnected[j][i]`
 
 This problem is the classic **"Number of Connected Components"** graph problem. 
 
@@ -224,15 +253,235 @@ public:
 
 
   
+## Java code for Q1 (was missing — same logic as the C++ above)
+
+```java
+class Solution {
+    // Standard DFS to visit all nodes in the current component
+    private void dfs(int node, int[][] isConnected, boolean[] vis) {
+        vis[node] = true;
+        for (int neighbor = 0; neighbor < isConnected.length; neighbor++) {
+            if (isConnected[node][neighbor] == 1 && !vis[neighbor]) {
+                dfs(neighbor, isConnected, vis);
+            }
+        }
+    }
+
+    public int findCircleNum(int[][] isConnected) {
+        int n = isConnected.length;
+        boolean[] vis = new boolean[n];
+        int provinces = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (!vis[i]) {
+                provinces++;              // found the head of a new province
+                dfs(i, isConnected, vis); // mark the whole group visited
+            }
+        }
+        return provinces;
+    }
+}
+```
+
+## Java DSU code for Q1
+
+```java
+class Solution {
+    private int[] parent;
+    private int[] size;
+
+    private int find(int x) {
+        if (parent[x] == x) return x;
+        return parent[x] = find(parent[x]); // Path Compression
+    }
+
+    private void unionSets(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+        if (rootX != rootY) {
+            // Union by Size
+            if (size[rootX] < size[rootY]) {
+                int tmp = rootX; rootX = rootY; rootY = tmp;
+            }
+            parent[rootY] = rootX;
+            size[rootX] += size[rootY];
+        }
+    }
+
+    public int findCircleNum(int[][] isConnected) {
+        int n = isConnected.length;
+        parent = new int[n];
+        size = new int[n];
+        for (int i = 0; i < n; i++) { parent[i] = i; size[i] = 1; }
+
+        // Only the upper triangle, the matrix is symmetric
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (isConnected[i][j] == 1) unionSets(i, j);
+            }
+        }
+
+        int provinces = 0;
+        for (int i = 0; i < n; i++) {
+            if (parent[i] == i) provinces++;
+        }
+        return provinces;
+    }
+}
+```
+
+**Complexity (Q1):**
+
+* **Time — `O(N²)`.** The graph is handed to you as an adjacency **matrix**, so just to discover the neighbours of one city you must scan a whole row of `N` cells. You do that once for every city, hence `N × N`. The DSU version scans the upper triangle, which is `N²/2` cells — still `O(N²)`. You can never beat `O(N²)` here, because you have to *read* `N²` input cells at least once.
+* **Space — `O(N)`.** The `vis` array is `N` booleans, and the recursion stack can go `N` deep in the worst case (all cities in one long chain). For DSU it is the `parent` + `size` arrays, again `O(N)`. Note it is **not** `O(N²)` — you never build a copy of the matrix.
+* *(If you first convert the matrix into an adjacency list like in "My code" above, that conversion itself costs `O(N²)` time and `O(N + E)` extra space, so it does not improve the bound — it only makes the DFS itself cheaper.)*
+  
   ---
   
-  ![alt text](<005kahns aliendisctionary courseschedule_240307_120321(4).jpg>) ![alt text](<005kahns aliendisctionary courseschedule_240307_120321(5).jpg>) ![alt text](<005kahns aliendisctionary courseschedule_240307_120321(6).jpg>) ![alt text](<005kahns aliendisctionary courseschedule_240307_120321(7).jpg>) ![alt text](<005kahns aliendisctionary courseschedule_240307_120321(8).jpg>) ![alt text](<005kahns aliendisctionary courseschedule_240307_120321(9).jpg>) ![alt text](<005kahns aliendisctionary courseschedule_240307_120321(10).jpg>)
+## Q2. Alien Dictionary
 
 
+> You don't need competitive programming for Microsoft/Amazon; for Uber and Tower Research, CP is a must!
 
+### First, a revision of Topological Sort
 
-![alt text](<005kahns aliendisctionary courseschedule_240307_120321(11).jpg>) 
+1st revise topological sort. **Kosaraju algo's 1st DFS is also the topological sort algorithm.** Topo sort is always applied on a **DAG (Directed Acyclic Graph)**.
 
+> **Topological sort is just a permutation of all vertices such that for all edges `u → v`, `u` must appear before `v`.** Used in **task dependency**.
+
+![Topo sort task dependency example](img-topo-sort-task-dependency.svg)
+
+*"Topo sort ke ulte order mai task hote"* → **the tasks are actually performed in the reverse of the topological order.** Here the topo sort is `cloud, react, node, JS, CSS, HTML`, but the task order will be: first learn HTML, then CSS, then JS, after that React and Node, and after that Cloud.
+
+Here we put an element in the stack in **postorder**, because in postorder all of its dependencies (neighbours) are already satisfied (visited).
+
+### The new version: Kahn's Algorithm
+
+> Now we do **another version of Topological Sort which is based on `indegree`**. This algo is called **Kahn's Algorithm**.
+
+### The Problem (GFG — Alien Dictionary, Hard)
+
+Given a sorted dictionary of an alien language having `N` words and `K` starting alphabets of the standard dictionary. Find the order of characters in the alien language.
+
+**Note:** Many orders may be possible for a particular test case, thus you may return any valid order and the output will be `1` if the order of the string returned by the function is correct, else `0`.
+
+**Example 1**
+
+```text
+Input:  N = 5, K = 4
+        dict = {"baa","abcd","abca","cab","cad"}
+Output: 1
+Explanation: Here order of characters is 'b', 'd', 'a', 'c'.
+Note that words are sorted and in the given language "baa" comes
+before "abcd", therefore 'b' is before 'a' in output.
+```
+
+**Example 2**
+
+```text
+Input:  N = 3, K = 3
+        dict = {"caa","aaa","aab"}
+Output: 1
+Explanation: Here order of characters is 'c', 'a', 'b'.
+"caa" comes before "aaa", therefore 'c' is before 'a'.
+```
+
+**Your Task:** complete the function `findOrder()` which takes the string array `dict[]`, its size `N` and the integer `K` as input parameters and returns a string denoting the order of characters in the alien language.
+
+* **Expected Time Complexity:** `O(N * |S| + K)`, where `|S|` denotes maximum length.
+* **Expected Space Complexity:** `O(K)`
+* **Constraints:** `1 ≤ N, M ≤ 300`, `1 ≤ K ≤ 26`, `1 ≤ Length of words ≤ 50`
+
+### Building the graph (dry run)
+
+* `K` → number of characters
+* `N` → number of words in the dictionary
+
+**According to the question, the words are already in dictionary order.** So take **2 words at a time** (every adjacent pair) and find the **first position where they differ** — that single mismatch is the only rule you can extract from that pair.
+
+for adjacent words ,see 1st non matching character and for that mismatcching character draw edge from mismatching char of 1st word to mismatching char of 2nd word.
+
+![Alien Dictionary dry run](img-alien-dictionary-dryrun.svg)
+
+```text
+b a a          b, a do not match
+a b c d   →    so b comes before a   →   edge  b → a
+
+a b c d        d, a do not match
+a b c a   →    d > a, so d comes before a   →   edge  d → a
+
+a b c a        a, c do not match
+c a b     →    a > c, so a comes before c   →   edge  a → c
+
+c a b          b, d do not match
+c a d     →    b > d, so b comes before d   →   edge  b → d
+```
+
+*"Now hint: do topo sort of this graph, i.e. `b d a c`"* — and that is exactly a topological sort of the 4 edges above.
+
+**Important catch:** we are given `K` characters, so we must topologically sort **all `K` vertices**, not just the ones reachable from vertex `0`.
+
+### Why is this a Topological Sort problem at all?
+
+*"Kuch ordering ki baat ho rahi hai, isliye Topo sort lag raha hai."*
+→ There is some **ordering** being asked for, that is the signal for topological sort. It is not that you first put things in some order and then a state appears — **topo sort is: first solve the dependency, and then the thing itself gets solved automatically.**
+
+> **Pattern recognition shortcut:**
+> * **dependency / ordering** ⟹ **Topological Sort**
+> * **sub-sequence** ⟹ **Bit manipulation / Recursion (select — not select)**
+
+### My first (wrong) solution — 3 / 1102 test cases
+
+```java
+class Solution {
+  private void toposort(int i, ArrayList<Integer>[] graph, LinkedList<Integer> stk, boolean[] vis) {
+    vis[i] = true;
+    for (var val : graph[i]) {
+      if (vis[val] == false) {
+        toposort(val, graph, stk, vis);
+      }
+    }
+    stk.addFirst(i);
+  }
+
+  public String findOrder(String[] dict, int N, int K) {
+    ArrayList<Integer>[] graph = new ArrayList[K];
+    for (int i = 0; i < K; i++) graph[i] = new ArrayList<>();
+    for (int i = 1; i < dict.length; i++) {
+      String s1 = dict[i - 1];
+      String s2 = dict[i];
+      int lim = Math.min(s1.length(), s2.length());
+      for (int c = 0; c < lim; c++) {
+        if (s1.charAt(c) != s2.charAt(c)) {
+          int c1 = s1.charAt(c) - 'a';
+          int c2 = s2.charAt(c) - 'a';
+          graph[c1].add(c2);
+          break;
+        }
+      }
+    }
+    boolean[] vis = new boolean[K];
+    LinkedList<Integer> stk = new LinkedList<>();
+    toposort(0, graph, stk, vis);   // <-- BUG: only starts from vertex 0
+
+    StringBuilder sb = new StringBuilder("");
+    while (stk.size() > 0) {
+      int c = stk.removeFirst();
+      char ch = (char) (c + 'a');
+      sb.append(ch);
+    }
+    return sb.toString();
+  }
+}
+```
+
+**Verdict:** `Wrong — 3 / 1102 test cases`. Not passing the majority of TCs.
+
+**The bug:**  I needed the topological sort of **all** vertices, but I only fired the DFS from vertex `0`. Any character not reachable from `0` simply never made it into the stack.
+
+**The fix** is literally one loop — wrap the `toposort` call in `for (int i = 0; i < K; i++) if (!vis[i]) toposort(i, ...)`. After that: **1102 / 1102 test cases passed, 8/8 points**.
+
+### Fixed Code (Java, DFS + Stack)
 
 ```java
 class Solution {
@@ -417,9 +666,92 @@ int main() {
 ```
 
 
+## java code (Kahn's / BFS version — was missing, same logic as the C++ above)
+
+```java
+class Solution {
+
+    /* Function to return the topological sorting of the given graph */
+    private int[] topoSort(int V, ArrayList<Integer>[] adj) {
+        // To store the In-degrees of nodes
+        int[] inDegree = new int[V];
+
+        // Update the in-degrees of nodes
+        for (int i = 0; i < V; i++) {
+            for (int it : adj[i]) {
+                inDegree[it]++;
+            }
+        }
+
+        // To store the result
+        int[] ans = new int[V];
+        int idx = 0;
+
+        // Queue to facilitate BFS
+        Queue<Integer> q = new LinkedList<>();
+
+        // Add the nodes with no in-degree to queue
+        for (int i = 0; i < V; i++) {
+            if (inDegree[i] == 0) q.add(i);
+        }
+
+        // Until the queue is empty
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            ans[idx++] = node;
+
+            // Traverse the neighbours
+            for (int it : adj[node]) {
+                inDegree[it]--;
+                // Add the node to queue if its in-degree becomes zero
+                if (inDegree[it] == 0) q.add(it);
+            }
+        }
+
+        // If idx != V a cycle exists; caller decides what to do
+        return Arrays.copyOf(ans, idx);
+    }
+
+    /* Function to determine order of letters based on alien dictionary */
+    public String findOrder(String[] dict, int N, int K) {
+
+        // Initialise a graph of K nodes
+        ArrayList<Integer>[] adj = new ArrayList[K];
+        for (int i = 0; i < K; i++) adj[i] = new ArrayList<>();
+
+        // Compare the consecutive words
+        for (int i = 0; i < N - 1; i++) {
+            String s1 = dict[i];
+            String s2 = dict[i + 1];
+            int len = Math.min(s1.length(), s2.length());
+
+            /* Compare the pair of strings letter by letter
+               to identify the differentiating letter */
+            for (int ptr = 0; ptr < len; ptr++) {
+                if (s1.charAt(ptr) != s2.charAt(ptr)) {
+                    // Add the edge to the graph
+                    adj[s1.charAt(ptr) - 'a'].add(s2.charAt(ptr) - 'a');
+                    break;
+                }
+            }
+        }
+
+        // Get the topological sort of the graph formed
+        int[] topo = topoSort(K, adj);
+
+        // To store the answer
+        StringBuilder ans = new StringBuilder();
+        for (int i = 0; i < topo.length; i++) {
+            ans.append((char) ('a' + topo[i]));
+        }
+        return ans.toString();
+    }
+}
+```
+
 # Topological Sort: Alien Dictionary Showdown
 
-Welcome to Graph Theory! You have just stepped into the classic Topological Sort showdown. This problem involves mapping out an alien alphabet based on a sorted dictionary of words.
+
 
 You provided two distinct ways to solve the famous **Alien Dictionary** problem:
 * **The C++ Code:** Uses **BFS (Breadth-First Search)**, specifically known as **Kahn’s Algorithm**.
@@ -665,8 +997,192 @@ By combining the **Prefix Check** (to catch logical length errors) and **3-State
 // 2: Visited (Black)  -> Safe; already processed.
 ```
 
-![alt text](<005kahns aliendisctionary courseschedule_240307_120321(12).jpg>) ![alt text](<005kahns aliendisctionary courseschedule_240307_120321(13).jpg>) ![alt text](<005kahns aliendisctionary courseschedule_240307_120321(14).jpg>) ![alt text](<005kahns aliendisctionary courseschedule_240307_120321(15).jpg>) ![alt text](<005kahns aliendisctionary courseschedule_240307_120321(16).jpg>)  ![alt text](<005kahns aliendisctionary courseschedule_240307_120321(18).jpg>) 
+### C++ 3-state DFS solution for Q2 (was missing — same logic as the Java above)
 
+```cpp
+class Solution {
+private:
+    // Returns true if successful, false if a cycle is detected
+    bool toposort(int i, vector<vector<int>>& graph, list<int>& stk, vector<int>& vis) {
+        // TRAP CAUGHT: we hit a node that is currently in our active path. Cycle!
+        if (vis[i] == 1) return false;
+
+        // SAFE: we already fully processed this node in a previous path.
+        if (vis[i] == 2) return true;
+
+        // Mark as 'Visiting' (State 1)
+        vis[i] = 1;
+
+        for (int val : graph[i]) {
+            // If any child detects a cycle, bubble the failure all the way up
+            if (!toposort(val, graph, stk, vis)) return false;
+        }
+
+        // Mark as 'Visited/Done' (State 2)
+        vis[i] = 2;
+        stk.push_front(i);  // safely add to our Topological Sort stack
+        return true;
+    }
+
+public:
+    string findOrder(string dict[], int N, int K) {
+        vector<vector<int>> graph(K);
+
+        // 1. Build the Graph & catch the Prefix Trap
+        for (int i = 1; i < N; i++) {
+            string s1 = dict[i - 1];
+            string s2 = dict[i];
+            int lim = min(s1.size(), s2.size());
+            bool foundDifference = false;
+
+            for (int c = 0; c < lim; c++) {
+                if (s1[c] != s2[c]) {
+                    graph[s1[c] - 'a'].push_back(s2[c] - 'a');
+                    foundDifference = true;
+                    break;
+                }
+            }
+
+            // PREFIX TRAP: e.g. "abcd" comes before "abc". Invalid dictionary!
+            if (!foundDifference && s1.size() > s2.size()) return "";
+        }
+
+        // 2. The 3-State array
+        vector<int> vis(K, 0);
+        list<int> stk;
+
+        for (int i = 0; i < K; i++) {
+            if (vis[i] == 0) {
+                // If a cycle is detected anywhere, the whole dictionary is invalid
+                if (!toposort(i, graph, stk, vis)) return "";
+            }
+        }
+
+        // 3. Build the final string
+        string ans;
+        while (!stk.empty()) {
+            ans.push_back((char) (stk.front() + 'a'));
+            stk.pop_front();
+        }
+        return ans;
+    }
+};
+```
+
+**Complexity (Q2 — Alien Dictionary):**
+
+* **Time — `O(N * |S| + K + E)`.** Building the graph walks every adjacent pair of words and compares at most `|S|` characters per pair, giving `O(N * |S|)`. The topological sort itself — DFS-with-stack or Kahn's, it makes no difference — touches every one of the `K` letters once and every rule-edge `E` once, giving `O(K + E)`. Since `K ≤ 26`, `E ≤ K²` is a constant in practice, so the **string comparison dominates**.
+* **Space — `O(K + E)`.** The adjacency list holds `K` nodes and `E` edges. On top of that: the `vis` array (`K`), and the stack/queue (at most `K`). The **DFS version pays a hidden extra `O(K)`** for the recursion call stack in the worst case (a straight chain `a → b → c → d`), which the iterative Kahn's queue completely avoids — that is the one real difference between the two.
+
+---
+
+## Q3. Topological Sort via Kahn's Algorithm (indegree + BFS)
+
+
+
+![Kahn's Algorithm dry run](img-kahns-algo-dryrun.svg)
+
+### The Algorithm
+
+**Step 1 — First find the indegree of each and every vertex.** (Just loop over all the edges and, for every edge `u → v`, do `indegree[v]++`.)
+
+For the graph in the diagram (`f → d`, `f → c`, `d → e`, `d → b`, `c → b`, `c → g`, `e → a`, `b → a`, `g → a`):
+
+```text
+a → 3
+b → 2
+c → 1
+d → 1
+e → 1
+f → 0
+g → 1
+```
+
+**Step 2 — Put every 0-indegree vertex into the Queue.** Now just do a normal BFS: pop the front, print it, and decrement the indegree of each of its neighbours by 1. If a neighbour's degree becomes `0`, push it into the queue.
+
+### The Dry Run
+
+```text
+Queue = [f]                        (f is the only vertex with indegree 0)
+
+pop f   →  f is printed. f's neighbours are d and c, decrement both:
+           c: 1 → 0 ✔   d: 1 → 0 ✔        Queue = [c, d]
+
+pop c   →  c's neighbours are b and g:
+           b: 2 → 1     g: 1 → 0 ✔        Queue = [d, g]
+
+pop d   →  d's neighbours are e and b:
+           e: 1 → 0 ✔   b: 1 → 0 ✔        Queue = [g, e, b]
+
+pop g   →  g's neighbour is a:
+           a: 3 → 2                       Queue = [e, b]
+
+pop e   →  a: 2 → 1                       Queue = [b]
+
+pop b   →  a: 1 → 0 ✔                     Queue = [a]
+
+pop a   →  a has NO neighbours, so nothing to do.   Queue = []
+```
+
+**Topological order → `f c d g e b a`**
+
+### Verifying every edge
+
+Every edge `u → v` must have `u` appearing before `v` in the output:
+
+| Edge | Check |
+| :--- | :--- |
+| `f → d` | f comes before d ✔ |
+| `f → c` | f comes before c ✔ |
+| `d → e` | ✔ |
+| `d → b` | ✔ |
+| `c → b` | ✔ |
+| `c → g` | ✔ |
+| `e → a` | ✔ |
+| `b → a` | ✔ |
+| `g → a` | ✔ |
+
+**All verified.**
+
+### Java code (Kahn's)
+
+```java
+class Solution {
+    // Function to return list containing vertices in Topological order.
+    static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) {
+        int[] indegree = new int[V];
+        for (var list : adj) {
+            for (var el : list) {
+                indegree[el]++;
+            }
+        }
+        LinkedList<Integer> q = new LinkedList<>();
+        for (int i = 0; i < V; i++) {
+            if (indegree[i] == 0) {
+                q.addLast(i);
+            }
+        }
+        int[] res = new int[V];
+        int i = 0;
+        while (q.size() > 0) {
+            int v1 = q.removeFirst();
+            res[i] = v1;
+            i++;
+            for (var el : adj.get(v1)) {
+                indegree[el]--;
+                if (indegree[el] == 0) {
+                    q.addLast(el);
+                }
+            }
+        }
+        return res;
+    }
+}
+```
+
+> **To detect a cycle**, just put a check before returning: `if (i == V)` then return `res`, else return `new int[1]` (or an empty array) — just to throw the error.
+>
+> **This is Kahn's Algorithm. Easy no?**
 
 ### Kahns algo cpp code
  
@@ -701,7 +1217,44 @@ public:
 
 
 ```
-![alt text](<005kahns aliendisctionary courseschedule_240307_120321(17).jpg>)
+**Complexity (Q3 — Kahn's topological sort):**
+
+* **Time — `O(V + E)`.** Two separate passes, and neither one is nested. The first pass walks every adjacency list once just to build the `indegree` array, which costs `O(V + E)`. The second pass is the BFS: every vertex is pushed into the queue **exactly once** (a vertex is pushed only at the instant its indegree hits `0`, and it can only hit `0` once), and when it is popped we walk its adjacency list once. Summed over all vertices, that walks every edge exactly once. So `O(V) + O(E)` = `O(V + E)`.
+* **Space — `O(V)`.** The `indegree` array is `V`, the result array is `V`, and the queue holds at most `V` elements. The adjacency list itself is `O(V + E)` but that is the input, not extra space. **There is no recursion stack at all** — this is the whole reason Kahn's is preferred over DFS for large graphs.
+
+---
+
+## Q4. Detect a Cycle in a Directed Graph
+
+Let's see how this (Kahn's) helps to **detect a cycle**.
+
+![Kahn's cycle detection dry run](img-kahns-cycle-detection-dryrun.svg)
+
+Take the graph `a → b`, `b → c`, `c → a` (that trio is a cycle), plus one extra edge `d → c`:
+
+```text
+Indegree:
+a → 1      (from c)
+b → 1      (from a)
+c → 2      (from b and from d)
+d → 0
+```
+
+```text
+Queue = [d]                (d is the only 0-indegree vertex)
+
+pop d   →  d's neighbour is c, decrement it: c: 2 → 1
+           1 is not 0, so c does NOT go into the queue.
+
+Queue = []                 — and we are stuck.
+```
+
+**The rule:** now take the topological sort's count and check —
+
+> **`if (count != number of vertices)` then there IS a cycle, else NOT a cycle.**
+
+Here `count = 1` but `V = 4`, so a cycle exists. This works because `a`, `b`, `c` are all trapped inside the cycle: each of them is waiting on another one of them, so none of their indegrees can ever drain to `0`, and none of them can ever enter the queue.
+
 ### Dtetect a cycle in directed graph 
 
 ```cpp
@@ -962,9 +1515,129 @@ Both solutions exist because checking `if (visited[node])` is **NOT ENOUGH** for
 ### Final Verdict:
 Stick to **Code 1 (Two Arrays)** for your interviews. It is clearer, and explaining "Path Visited" is a great way to show you understand why Directed Cycle detection is different from Undirected.
 
-![alt text](<005kahns aliendisctionary courseschedule_240307_120321(19).jpg>) 
+### Java code for Q4 — DFS with `visited` + `pathVisited` (was missing)
 
-# Course Schedule I
+```java
+class Solution {
+    // Function to perform DFS traversal
+    private boolean dfs(int node, ArrayList<ArrayList<Integer>> adj,
+                        boolean[] visited, boolean[] pathVisited) {
+        visited[node] = true;
+        pathVisited[node] = true;
+
+        for (int it : adj.get(node)) {
+            if (pathVisited[it]) {
+                return true;                    // back edge → cycle
+            } else if (!visited[it]) {
+                if (dfs(it, adj, visited, pathVisited)) return true;
+            }
+        }
+
+        pathVisited[node] = false;              // backtrack: leave the active path
+        return false;
+    }
+
+    // Function to detect cycle in a directed graph.
+    public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
+        boolean[] visited = new boolean[V];
+        boolean[] pathVisited = new boolean[V];
+
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                if (dfs(i, adj, visited, pathVisited)) return true;
+            }
+        }
+        return false;
+    }
+}
+```
+
+### Java code for Q4 — 3-colour DFS (was missing)
+
+```java
+class Solution {
+    private boolean dfsCheck(int node, ArrayList<ArrayList<Integer>> adj, int[] vis) {
+        vis[node] = 1;                          // mark as "Visiting" (Gray)
+
+        for (int neighbor : adj.get(node)) {
+            if (vis[neighbor] == 1) {
+                return true;                    // Cycle detected! (Gray → Gray)
+            }
+            if (vis[neighbor] == 0) {
+                if (dfsCheck(neighbor, adj, vis)) return true;
+            }
+            // If vis[neighbor] == 2 (Black), ignore it.
+        }
+
+        vis[node] = 2;                          // mark as "Visited" (Black)
+        return false;
+    }
+
+    public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
+        int[] vis = new int[V];
+        for (int i = 0; i < V; i++) {
+            if (vis[i] == 0) {
+                if (dfsCheck(i, adj, vis)) return true;
+            }
+        }
+        return false;
+    }
+}
+```
+
+### Java code for Q4 — Kahn's / BFS (was missing)
+
+```java
+class Solution {
+    private boolean topoSort(int V, ArrayList<ArrayList<Integer>> adj) {
+        int[] indegree = new int[V];
+        for (int i = 0; i < V; i++) {
+            for (int el : adj.get(i)) {
+                indegree[el]++;
+            }
+        }
+        Queue<Integer> q = new LinkedList<>();
+        int cnt = 0;
+        for (int i = 0; i < V; i++) {
+            if (indegree[i] == 0) {
+                cnt++;
+                q.add(i);
+            }
+        }
+        while (!q.isEmpty()) {
+            int v = q.poll();
+            for (int el : adj.get(v)) {
+                indegree[el]--;
+                if (indegree[el] == 0) {
+                    q.add(el);
+                    cnt++;
+                }
+            }
+        }
+        return cnt < V;                         // fewer than V processed → cycle
+    }
+
+    public boolean isCyclic(int N, ArrayList<ArrayList<Integer>> adj) {
+        return topoSort(N, adj);
+    }
+}
+```
+
+**Complexity (Q4 — cycle detection in a directed graph):**
+
+* **Time — `O(V + E)` for every one of the three approaches.** In the DFS versions each vertex is entered exactly once (guarded by `visited` / `vis != 0`) and its adjacency list is scanned exactly once at that moment, so all `E` edges are inspected once in total. In Kahn's it is the same accounting: one pass over all lists to compute indegrees, then each vertex queued once and its list walked once. The `pathVisited` / 3-colour bookkeeping is `O(1)` per visit and does not change the bound.
+* **Space — `O(V)` for all three,** but the *kind* of space differs and that is what actually matters here:
+  * DFS (two arrays): `visited` + `pathVisited` = `2V`, **plus an `O(V)` recursion call stack** — and that stack lives in the few-MB system stack, so a straight-line graph of `10⁵` nodes can genuinely crash with a `StackOverflowError`.
+  * DFS (3-colour): one `int[]` of size `V` instead of two boolean arrays, same recursion risk.
+  * Kahn's: `indegree` array + queue = `O(V)`, all on the **heap** (gigabytes), so it never overflows. This is why Kahn's is the safer engineering choice at scale.
+
+---
+
+> **0 indegree ⟹ iske upar koi nahi hai** ("nothing sits above it"), which is exactly why Kahn's algorithm gives you the topological sort. **Quite obvious algorithm.**
+>
+> Let's see the question **Course Schedule**. Do it by Kahn's Algorithm, as we also need to **detect a cycle** here. So let's see the question on the next page.
+
+# Q5. Course Schedule I
 
 There are a total of **N** tasks, labeled from **0** to **N-1**.
 
@@ -1050,7 +1723,100 @@ class Solution {
 
 
 
-![alt text](<005kahns aliendisctionary courseschedule_240307_120321(20).jpg>) 
+## Java code for Q5 
+
+```java
+class Solution {
+    public boolean canFinish(int N, int[][] arr) {
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < N; i++) graph.add(new ArrayList<>());
+
+        for (int[] edge : arr) {
+            int u = edge[0];
+            int v = edge[1];
+            graph.get(v).add(u);            // must do v before u
+        }
+
+        int[] indegree = new int[N];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < graph.get(i).size(); j++) {
+                indegree[graph.get(i).get(j)]++;
+            }
+        }
+
+        int cnt = 0;
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < N; i++) {
+            if (indegree[i] == 0) {
+                q.add(i);
+                cnt++;
+            }
+        }
+
+        while (!q.isEmpty()) {
+            int rem = q.poll();
+            for (int j = 0; j < graph.get(rem).size(); j++) {
+                int nbr = graph.get(rem).get(j);
+                indegree[nbr]--;
+                if (indegree[nbr] == 0) {
+                    cnt++;
+                    q.add(nbr);
+                }
+            }
+        }
+
+        return cnt == N;
+    }
+}
+```
+
+**Complexity (Q5 — Course Schedule I):**
+
+* **Time — `O(N + E)`** where `E = arr.length`. Building the graph is one pass over the `E` prerequisite pairs. Computing indegrees is one pass over all adjacency lists, which is `O(N + E)` total. The BFS then queues each of the `N` courses at most once and walks each edge exactly once. Nothing is nested, so it stays linear. With `N ≤ 2000` and `E ≤ 5000` this is trivially fast.
+* **Space — `O(N + E)`.** The adjacency list is the dominant term (`N` lists holding `E` entries in total); the `indegree` array and the queue are each `O(N)`. No recursion, so no call-stack cost.
+
+---
+
+
+# Q6. Course Schedule II (LeetCode 210)
+
+**Difficulty:** Medium
+
+There are a total of `numCourses` courses you have to take, labeled from `0` to `numCourses - 1`. You are given an array `prerequisites` where `prerequisites[i] = [a, b]` indicates that you **must** take course `b` first if you want to take course `a`.
+
+* For example, the pair `[0, 1]` indicates that to take course `0` you have to first take course `1`.
+
+Return *the ordering of courses you should take to finish all courses*. If there are many valid answers, return **any** of them. If it is impossible to finish all courses, return **an empty array**.
+
+> *"→ tabhi cycle hai"* — that "return an empty array" clause is the hint that **a cycle may exist**, so Kahn's is the right tool.
+
+![Course Schedule II worked example](img-course-schedule-ii-example.svg)
+
+### Example 1
+
+**Input:** `numCourses = 2, prerequisites = [[1,0]]`
+**Output:** `[0,1]`
+**Explanation:** There are a total of 2 courses to take. To take course 1 you should have finished course 0. So the correct course order is `[0,1]`.
+
+### Example 2
+
+**Input:** `numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]`
+**Output:** `[0,2,1,3]`
+**Explanation:** To take course 3 you should have finished both courses 1 and 2. Both courses 1 and 2 should be taken after you finished course 0. So one correct course order is `[0,1,2,3]`. Another correct ordering is `[0,2,1,3]`.
+
+### Example 3
+
+**Input:** `numCourses = 1, prerequisites = []`
+**Output:** `[0]`
+
+### Constraints
+
+* `1 <= numCourses <= 2000`
+* `0 <= prerequisites.length <= numCourses * (numCourses - 1)`
+* `prerequisites[i].length == 2`
+* `0 <= a, b < numCourses`
+* `a != b`
+* All the pairs `[a, b]` are **distinct**.
 
 ```cpp
 class Solution {
@@ -1140,7 +1906,58 @@ public:
 };
 ````
 
-# Find Eventual Safe States
+## Java code for Q6
+
+```java
+class Solution {
+    public int[] findOrder(int N, int[][] prerequisites) {
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < N; i++) graph.add(new ArrayList<>());
+        int[] indegree = new int[N];
+
+        // 1. Build graph & indegree in ONE pass
+        // prereq[1] is the dependency, prereq[0] is the target
+        // Edge: dependency -> target
+        for (int[] edge : prerequisites) {
+            graph.get(edge[1]).add(edge[0]);
+            indegree[edge[0]]++;
+        }
+
+        // 2. Queue for 0-indegree nodes
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < N; i++) {
+            if (indegree[i] == 0) q.add(i);
+        }
+
+        // 3. Process
+        int[] ans = new int[N];
+        int idx = 0;
+        while (!q.isEmpty()) {
+            int curr = q.poll();
+            ans[idx++] = curr;
+
+            for (int neighbor : graph.get(curr)) {
+                indegree[neighbor]--;
+                if (indegree[neighbor] == 0) q.add(neighbor);
+            }
+        }
+
+        // 4. Cycle check (did we process everyone?)
+        if (idx == N) return ans;
+        return new int[0];
+    }
+}
+```
+
+**Complexity (Q6 — Course Schedule II):**
+
+* **Time — `O(N + E)`.** Identical accounting to Course Schedule I — the only difference is that instead of counting how many nodes came out, you record them in order. Building the graph and indegree array in the same loop is one pass over `E`; the BFS queues each course once and relaxes each edge once.
+* **Space — `O(N + E)`.** Adjacency list `O(N + E)`, `indegree` array `O(N)`, queue `O(N)`, answer array `O(N)`. Iterative, so no recursion stack.
+* **Why the size check at the end is not optional:** if a cycle exists, the queue drains early and `idx < N`. Returning `ans` unchecked would hand back a partially-filled, meaningless order — the exact bug flagged earlier in the C++ Alien Dictionary code.
+
+---
+
+# Q7. Find Eventual Safe States
 
 There is a directed graph of `n` nodes with each node labeled from `0` to `n - 1`. The graph is represented by a **0-indexed** 2D integer array `graph` where `graph[i]` is an integer array of nodes adjacent to node `i`, meaning there is an edge from node `i` to each node in `graph[i]`.
 
@@ -1240,7 +2057,6 @@ public:
 };
 ```
 
-## Ai review
 
 # Why Kosaraju's Algorithm Fails for "Eventual Safe States"
 
@@ -1509,7 +2325,6 @@ now for a node to be safe every path should lead to some terminal node.
 
 We know cycles never enter in queue in kahns algo ,not even self loop, so whatever enters in kahns of reverse graph is safe
 
-## Ai review
 
 # Kahn's Algorithm Correctness Proof (Reverse Graph)
 
@@ -1762,7 +2577,103 @@ They just come at the problem from opposite directions:
 ### Senior Engineer Verdict
 If the interview question is just **"Detect a cycle in a Directed Graph,"** most candidates use **DFS** because it requires less setup (no need to calculate indegrees for everyone first). However, **Kahn's** is often preferred in production systems because it is iterative and robust against stack overflow.
 
-# Shortest path in DAG
+## Java code for Q7
+
+```java
+class Solution {
+    public List<Integer> eventualSafeNodes(int V, List<List<Integer>> adj) {
+        List<List<Integer>> adjRev = new ArrayList<>();
+        for (int i = 0; i < V; i++) adjRev.add(new ArrayList<>());
+        int[] indegree = new int[V];
+
+        // 1. Reverse the graph
+        // Original: u -> v  (u depends on v to be safe)
+        // Reverse:  v -> u  (v contributes to u's safety)
+        for (int u = 0; u < V; u++) {
+            for (int v : adj.get(u)) {
+                adjRev.get(v).add(u);
+                indegree[u]++;      // in reverse graph, indegree = original outdegree
+            }
+        }
+
+        // 2. Queue for terminal nodes (safe nodes)
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < V; i++) {
+            if (indegree[i] == 0) q.add(i);
+        }
+
+        // 3. Process safe nodes
+        List<Integer> safeNodes = new ArrayList<>();
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            safeNodes.add(node);
+
+            for (int neighbor : adjRev.get(node)) {
+                indegree[neighbor]--;
+                if (indegree[neighbor] == 0) q.add(neighbor);
+            }
+        }
+
+        // 4. Sort result as required
+        Collections.sort(safeNodes);
+        return safeNodes;
+    }
+}
+```
+
+## Java code for Q7 — DFS with `pathVis` + `check` (was missing)
+
+```java
+class Solution {
+    private boolean dfsCheck(int node, List<List<Integer>> adj,
+                             int[] vis, int[] pathVis, int[] check) {
+        vis[node] = 1;
+        pathVis[node] = 1;   // mark as "currently in path"
+        check[node] = 0;     // assume unsafe until proven safe
+
+        for (int it : adj.get(node)) {
+            if (vis[it] == 0) {
+                if (dfsCheck(it, adj, vis, pathVis, check)) {
+                    return true;   // my child found a cycle, so I am part of the problem
+                }
+            } else if (pathVis[it] == 1) {
+                return true;       // neighbour is in the current path → CYCLE
+            }
+        }
+
+        // no child led to a cycle
+        check[node] = 1;     // mark safe
+        pathVis[node] = 0;   // remove from current path
+        return false;
+    }
+
+    public List<Integer> eventualSafeNodes(int V, List<List<Integer>> adj) {
+        int[] vis = new int[V];
+        int[] pathVis = new int[V];
+        int[] check = new int[V];   // 1 = safe, 0 = unsafe/unknown
+        List<Integer> safeNodes = new ArrayList<>();
+
+        for (int i = 0; i < V; i++) {
+            if (vis[i] == 0) dfsCheck(i, adj, vis, pathVis, check);
+        }
+
+        for (int i = 0; i < V; i++) {
+            if (check[i] == 1) safeNodes.add(i);
+        }
+        return safeNodes;
+    }
+}
+```
+
+**Complexity (Q7 — Find Eventual Safe States):**
+
+* **Time — `O(V + E)` for both approaches** (`+ O(V log V)` for the final sort in the Kahn's version, which is usually ignored since the constraint is `V ≤ 10⁴`).
+  * *Reverse Kahn's:* reversing the graph is one pass over all `E` edges. Then each node enters the queue at most once and each reversed edge is relaxed once → `O(V + E)`.
+  * *DFS:* each node is entered once (guarded by `vis`) and its adjacency list scanned once at that moment → `O(V + E)`. Note the DFS version does **not** need the sort at the end, because it collects answers by walking `check[]` from `0` to `V-1`, which is already ascending.
+* **Space — `O(V + E)`.** The reversed adjacency list is the big term for Kahn's. The DFS version avoids building a reversed graph (so just `O(V)` for its three arrays) **but pays an `O(V)` recursion stack instead** — and with `V ≤ 10⁴` that is roughly 1 MB of call stack, which is safe on most judges but would be gambling at `V = 10⁵`.
+* **Why "safe ≠ not in a cycle":** the reason Kosaraju failed here is a *reachability* problem, not a complexity one. A node outside every cycle can still point *into* one. Kahn's on the reversed graph handles this for free, because such a node's indegree never drains to zero.
+
+# Q8. Shortest path in DAG
 
 ## Striver code (code 1)
 
@@ -1975,6 +2886,150 @@ Here is the "Senior Engineer" breakdown of which one to use and why.
 
 **Final Verdict:**
 For an interview, if the problem says **"DAG"**, write **Code 1**. If the problem just says **"Shortest Path with positive weights"**, write **Code 2 (Dijkstra)** because it's less prone to edge-case failures if the graph turns out to have a cycle.
+
+## Java code for Q8 — Code 1, Topo Sort based (was missing — same logic as the C++ above)
+
+```java
+class Solution {
+
+    // Function to perform DFS traversal
+    private void topoSort(int node, List<List<int[]>> adj,
+                          boolean[] vis, Deque<Integer> st) {
+        // Mark the node as visited
+        vis[node] = true;
+
+        // Traverse all the neighbors
+        for (int[] it : adj.get(node)) {
+            int v = it[0];
+            if (!vis[v]) {
+                topoSort(v, adj, vis, st);
+            }
+        }
+
+        /* Add the current node to the stack once all the
+           nodes connected to it have been processed */
+        st.push(node);
+    }
+
+    /* Function to get the shortest path for every node from source node 0 */
+    public int[] shortestPath(int N, int M, int[][] edges) {
+
+        // To store the graph
+        List<List<int[]>> adj = new ArrayList<>();
+        for (int i = 0; i < N; i++) adj.add(new ArrayList<>());
+
+        // Add the weighted edges to the graph
+        for (int i = 0; i < M; i++) {
+            int u = edges[i][0];
+            int v = edges[i][1];
+            int wt = edges[i][2];
+            adj.get(u).add(new int[]{v, wt});
+        }
+
+        boolean[] vis = new boolean[N];
+
+        /* Stack to facilitate topological sorting using DFS traversal */
+        Deque<Integer> st = new ArrayDeque<>();
+
+        // Get the topological ordering
+        for (int i = 0; i < N; i++) {
+            if (!vis[i]) topoSort(i, adj, vis, st);
+        }
+
+        // Distance array to store the shortest paths
+        int[] dist = new int[N];
+        Arrays.fill(dist, (int) 1e9);
+
+        // Distance of source node to itself is zero
+        dist[0] = 0;
+
+        while (!st.isEmpty()) {
+            int node = st.pop();
+
+            // SAFETY CHECK: an unreachable node cannot help anyone else
+            if (dist[node] == (int) 1e9) continue;
+
+            // Update the distances of adjacent nodes
+            for (int[] it : adj.get(node)) {
+                int v = it[0];
+                int wt = it[1];
+
+                /* Relaxing the edge: if a shorter path is found,
+                   update its distance to the new shorter distance */
+                if (dist[node] + wt < dist[v]) {
+                    dist[v] = dist[node] + wt;
+                }
+            }
+        }
+
+        // If a node is unreachable, update its distance to -1
+        for (int i = 0; i < N; i++) {
+            if (dist[i] == (int) 1e9) dist[i] = -1;
+        }
+
+        return dist;
+    }
+}
+```
+
+## Java code for Q8 — Code 2, Dijkstra based (was missing — same logic as the C++ above)
+
+```java
+class Solution {
+    public int[] shortestPath(int N, int M, int[][] edges) {
+        List<List<int[]>> adj = new ArrayList<>();
+        for (int i = 0; i < N; i++) adj.add(new ArrayList<>());
+
+        for (int[] edge : edges) {
+            int u = edge[0];
+            int v = edge[1];
+            int wt = edge[2];
+            adj.get(u).add(new int[]{v, wt});
+        }
+
+        // min-heap ordered by distance
+        PriorityQueue<int[]> pq = new PriorityQueue<>((x, y) -> x[0] - y[0]);
+
+        int[] dist = new int[N];
+        Arrays.fill(dist, (int) 1e9);
+
+        dist[0] = 0;
+        pq.add(new int[]{0, 0});   // {distance, node}
+
+        while (!pq.isEmpty()) {
+            int[] top = pq.poll();
+            int d = top[0];
+            int node = top[1];
+
+            // stale entry, we already found a better path to this node
+            if (d > dist[node]) continue;
+
+            for (int[] it : adj.get(node)) {
+                int adjNode = it[0];
+                int edgeWeight = it[1];
+
+                if (d + edgeWeight < dist[adjNode]) {
+                    dist[adjNode] = d + edgeWeight;
+                    pq.add(new int[]{dist[adjNode], adjNode});
+                }
+            }
+        }
+
+        for (int i = 0; i < N; i++) {
+            if (dist[i] == (int) 1e9) dist[i] = -1;
+        }
+        return dist;
+    }
+}
+```
+
+**Complexity (Q8 — Shortest Path in a DAG):**
+
+* **Code 1 (Topo Sort) — Time `O(V + E)`.** The topological DFS visits each vertex once and each edge once. The relaxation loop then pops each vertex exactly once from the stack and relaxes each of its outgoing edges exactly once. **Crucially, no vertex is ever revisited or re-relaxed** — the topological order guarantees that when you reach `u`, every possible parent of `u` has already been finalised, so `dist[u]` is already correct. That is what buys you linear time and why this beats Dijkstra on a DAG.
+* **Code 1 — Space `O(V + E)`.** Adjacency list `O(V + E)`, `dist` array and stack `O(V)` each, **plus an `O(V)` recursion stack** for the DFS topological sort.
+* **Code 2 (Dijkstra) — Time `O(E log V)`.** Every edge can cause at most one push into the priority queue, so the heap holds up to `E` entries; each push/pop is `log E`, and since `E ≤ V²`, `log E ≤ log V² = 2 log V = O(log V)`. Hence `O(E log V)`. The extra `log V` factor is the price of the greedy "current cheapest first" ordering — work that a DAG makes unnecessary, because the topological order already tells you the correct processing sequence for free.
+* **Code 2 — Space `O(V + E)`.** Adjacency list `O(V + E)`, `dist` `O(V)`, and the priority queue can hold up to `O(E)` entries (because of the stale duplicates that the `if (d > dist[node]) continue;` guard later discards). Iterative, so no recursion stack.
+* **The trade-off in one line:** Topo Sort is **faster but fragile** (breaks the instant a cycle exists, though it does handle negative weights fine); Dijkstra is **slower but general** (handles cycles, but breaks on negative weights). If the graph has both cycles and negative weights, neither works — that is Bellman-Ford's job.
 
 
 

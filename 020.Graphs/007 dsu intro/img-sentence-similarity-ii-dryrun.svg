@@ -1,0 +1,55 @@
+<svg viewBox="0 0 780 420" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="780" height="420" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Sentence Similarity II <tspan fill="#9aa0a6" font-weight="normal">— DSU on WORDS instead of on integers</tspan></text>
+  <line x1="25" y1="38" x2="755" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- Input card -->
+  <rect x="25" y="48" width="330" height="200" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="72" fill="#f2c14e" font-size="13.5" font-weight="bold">Sample Input</text>
+  <g font-family="monospace" font-size="13.5" fill="#d4d4d4">
+    <text x="40" y="98">3</text>
+    <text x="40" y="118">treat fight miss</text>
+    <text x="40" y="138">like&#160; train lost</text>
+    <text x="40" y="164">4</text>
+    <text x="40" y="184">treat catch</text>
+    <text x="40" y="204">train fight</text>
+    <text x="40" y="224">like&#160; catch</text>
+  </g>
+  <text x="200" y="204" fill="#9aa0a6" font-size="12">&#8592; the similar-word pairs</text>
+  <text x="40" y="242" fill="#9aa0a6" font-family="monospace" font-size="13.5">miss&#160; lost</text>
+
+  <!-- DSU groups -->
+  <rect x="375" y="48" width="380" height="200" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="390" y="72" fill="#f2c14e" font-size="13.5" font-weight="bold">Sets after unioning every pair</text>
+  <line x1="390" y1="82" x2="740" y2="82" stroke="#333333" stroke-width="1"/>
+
+  <rect x="390" y="96" width="335" height="42" rx="6" fill="#1f3a2a" stroke="#56c98d" stroke-width="2"/>
+  <text x="405" y="122" fill="#d4d4d4" font-family="monospace" font-size="13.5">{ treat , catch , like }</text>
+
+  <rect x="390" y="148" width="335" height="42" rx="6" fill="#1c3040" stroke="#5b9bd5" stroke-width="2"/>
+  <text x="405" y="174" fill="#d4d4d4" font-family="monospace" font-size="13.5">{ train , fight }</text>
+
+  <rect x="390" y="200" width="335" height="42" rx="6" fill="#3a331f" stroke="#f2c14e" stroke-width="2"/>
+  <text x="405" y="226" fill="#d4d4d4" font-family="monospace" font-size="13.5">{ miss , lost }</text>
+
+  <!-- Comparison -->
+  <rect x="25" y="262" width="730" height="90" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="286" fill="#f2c14e" font-size="13.5" font-weight="bold">Now compare the two sentences word by word (same index)</text>
+  <g font-family="monospace" font-size="13.5">
+    <text x="40"  y="314" fill="#56c98d">treat</text><text x="120" y="314" fill="#9aa0a6">vs</text><text x="160" y="314" fill="#56c98d">like</text>
+    <text x="250" y="314" fill="#56c98d">&#10004; same set</text>
+
+    <text x="400" y="314" fill="#5b9bd5">fight</text><text x="480" y="314" fill="#9aa0a6">vs</text><text x="520" y="314" fill="#5b9bd5">train</text>
+    <text x="610" y="314" fill="#5b9bd5">&#10004; same set</text>
+
+    <text x="40"  y="340" fill="#f2c14e">miss</text><text x="120" y="340" fill="#9aa0a6">vs</text><text x="160" y="340" fill="#f2c14e">lost</text>
+    <text x="250" y="340" fill="#f2c14e">&#10004; same set</text>
+  </g>
+  <text x="400" y="340" fill="#56c98d" font-size="14" font-weight="bold">&#8594; Sample Output: true</text>
+
+  <!-- Cases you forget -->
+  <rect x="25" y="366" width="730" height="44" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="384" fill="#e06c75" font-size="12.5" font-weight="bold">Cases you forget:</text>
+  <text x="150" y="384" fill="#9aa0a6" font-size="12.5">(1) lengths differ &#8594; return false immediately. (2) A word may not be in the DSU at all &#8212;</text>
+  <text x="150" y="402" fill="#9aa0a6" font-size="12.5">if the two words are literally equal, <tspan font-family="monospace">continue</tspan>; otherwise a missing word means false.</text>
+</svg>

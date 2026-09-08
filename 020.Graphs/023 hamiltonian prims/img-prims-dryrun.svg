@@ -1,0 +1,82 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="500" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Prim's Algorithm dry run <tspan fill="#9aa0a6" font-weight="normal">— "minimum wire to connect all PCs"; start vertex = 0</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- Graph -->
+  <rect x="25" y="48" width="390" height="240" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The weighted graph &#8212; green edges = chosen for the MST</text>
+
+  <g stroke="#56c98d" stroke-width="5" opacity="0.9">
+    <line x1="85"  y1="120" x2="85"  y2="225"/>   <!-- 0-1 10 -->
+    <line x1="85"  y1="225" x2="185" y2="225"/>   <!-- 1-2 10 -->
+    <line x1="185" y1="225" x2="185" y2="120"/>   <!-- 2-3 10 -->
+    <line x1="185" y1="120" x2="275" y2="110"/>   <!-- 3-4 2 -->
+    <line x1="275" y1="110" x2="275" y2="225"/>   <!-- 4-5 3 -->
+    <line x1="275" y1="225" x2="365" y2="225"/>   <!-- 5-6 3 -->
+  </g>
+  <g stroke="#e06c75" stroke-width="2" stroke-dasharray="6 4">
+    <line x1="85"  y1="120" x2="185" y2="120"/>   <!-- 0-3 40 rejected -->
+    <line x1="275" y1="110" x2="365" y2="225"/>   <!-- 4-6 8 rejected -->
+  </g>
+
+  <g>
+    <circle cx="85"  cy="120" r="17" fill="#3a331f" stroke="#f2c14e" stroke-width="3"/>
+    <circle cx="185" cy="120" r="17" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="275" cy="110" r="17" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="85"  cy="225" r="17" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="185" cy="225" r="17" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="275" cy="225" r="17" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="365" cy="225" r="17" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  </g>
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="14">
+    <text x="85"  y="125">0</text>
+    <text x="185" y="125">3</text>
+    <text x="275" y="115">4</text>
+    <text x="85"  y="230">1</text>
+    <text x="185" y="230">2</text>
+    <text x="275" y="230">5</text>
+    <text x="365" y="230">6</text>
+  </g>
+
+  <g font-size="12" text-anchor="middle" font-weight="bold">
+    <rect x="120" y="110" width="30" height="19" rx="4" fill="#1e1e1e"/><text x="135" y="124" fill="#e06c75">40</text>
+    <rect x="70"  y="163" width="30" height="19" rx="4" fill="#1e1e1e"/><text x="85"  y="177" fill="#56c98d">10</text>
+    <rect x="120" y="216" width="30" height="19" rx="4" fill="#1e1e1e"/><text x="135" y="230" fill="#56c98d">10</text>
+    <rect x="170" y="163" width="30" height="19" rx="4" fill="#1e1e1e"/><text x="185" y="177" fill="#56c98d">10</text>
+    <rect x="218" y="100" width="22" height="19" rx="4" fill="#1e1e1e"/><text x="229" y="114" fill="#56c98d">2</text>
+    <rect x="264" y="158" width="22" height="19" rx="4" fill="#1e1e1e"/><text x="275" y="172" fill="#56c98d">3</text>
+    <rect x="308" y="216" width="22" height="19" rx="4" fill="#1e1e1e"/><text x="319" y="230" fill="#56c98d">3</text>
+    <rect x="332" y="150" width="22" height="19" rx="4" fill="#1e1e1e"/><text x="343" y="164" fill="#e06c75">8</text>
+  </g>
+  <text x="40" y="268" fill="#9aa0a6" font-size="11.5">Circled numbers are edge weights; plain numbers are the vertices.</text>
+
+  <!-- PQ trace -->
+  <rect x="430" y="48" width="345" height="240" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="445" y="70" fill="#f2c14e" font-size="13" font-weight="bold">PriorityQueue holds triplets (v, parent, weight)</text>
+  <line x1="445" y1="80" x2="760" y2="80" stroke="#333333" stroke-width="1"/>
+  <text x="445" y="100" fill="#9aa0a6" font-size="12">Pattern: <tspan fill="#d4d4d4" font-family="monospace">remove &#8594; mark* &#8594; work &#8594; add*</tspan></text>
+
+  <g font-family="monospace" font-size="12">
+    <text x="445" y="126" fill="#d4d4d4">pop (0,-1, 0)  add (1,0,10) (3,0,40)</text>
+    <text x="445" y="148" fill="#56c98d">pop (1, 0,10)  edge 0-1 taken; add (2,1,10)</text>
+    <text x="445" y="170" fill="#56c98d">pop (2, 1,10)  edge 1-2 taken; add (3,2,10)</text>
+    <text x="445" y="192" fill="#56c98d">pop (3, 2,10)  edge 2-3 taken; add (4,3,2)</text>
+    <text x="445" y="214" fill="#56c98d">pop (4, 3, 2)  edge 3-4 taken; add (5,4,3)(6,4,8)</text>
+    <text x="445" y="236" fill="#56c98d">pop (5, 4, 3)  edge 4-5 taken; add (6,5,3)</text>
+    <text x="445" y="258" fill="#56c98d">pop (6, 5, 3)  edge 5-6 taken</text>
+    <text x="445" y="280" fill="#e06c75">pop (3,0,40) (6,4,8) &#8594; already visited, skip</text>
+  </g>
+
+  <!-- Result -->
+  <rect x="25" y="302" width="750" height="90" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="326" fill="#f2c14e" font-size="13.5" font-weight="bold">Result</text>
+  <text x="40" y="350" fill="#56c98d" font-size="14" font-weight="bold">MST edges: 0&#8211;1(10), 1&#8211;2(10), 2&#8211;3(10), 3&#8211;4(2), 4&#8211;5(3), 5&#8211;6(3) &#8594; total weight 38, exactly V &#8722; 1 = 6 edges</text>
+  <text x="40" y="376" fill="#9aa0a6" font-size="12.5">The 40-weight edge 0&#8211;3 is never used: by the time 3 is popped it already arrived cheaper (cost 10) through 2.</text>
+
+  <!-- Key rule -->
+  <rect x="25" y="406" width="750" height="80" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="430" fill="#f2c14e" font-size="13.5" font-weight="bold">The one thing to remember</text>
+  <text x="40" y="454" fill="#d4d4d4" font-size="13">Prim's stores <tspan fill="#56c98d" font-weight="bold">only the edge weight</tspan> in the triplet, NOT the accumulated path cost.</text>
+  <text x="40" y="476" fill="#9aa0a6" font-size="12.5">Any vertex can be the starting point; the total MST weight comes out the same.</text>
+</svg>

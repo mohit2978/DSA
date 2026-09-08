@@ -1,0 +1,84 @@
+<svg viewBox="0 0 780 470" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="780" height="470" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Kruskal's Algorithm using DSU <tspan fill="#9aa0a6" font-weight="normal">— the worked example from the notes (V = 7)</tspan></text>
+  <line x1="25" y1="38" x2="755" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- Left card: the graph -->
+  <rect x="25" y="48" width="410" height="320" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="72" fill="#f2c14e" font-size="13.5" font-weight="bold">The graph — red edges = chosen for the MST</text>
+
+  <!-- MST edges (red/green highlight) drawn first, thick -->
+  <g stroke="#56c98d" stroke-width="5" opacity="0.9">
+    <line x1="110" y1="150" x2="110" y2="300"/>   <!-- 0-1  w10 -->
+    <line x1="110" y1="300" x2="255" y2="300"/>   <!-- 1-2  w10 -->
+    <line x1="255" y1="300" x2="255" y2="150"/>   <!-- 2-3  w10 -->
+    <line x1="255" y1="150" x2="345" y2="130"/>   <!-- 3-4  w2  -->
+    <line x1="345" y1="130" x2="345" y2="300"/>   <!-- 4-5  w3  -->
+    <line x1="345" y1="300" x2="410" y2="300"/>   <!-- 5-6  w3  -->
+  </g>
+  <!-- rejected edges -->
+  <g stroke="#e06c75" stroke-width="2" stroke-dasharray="6 4">
+    <line x1="110" y1="150" x2="255" y2="150"/>   <!-- 0-3  w40 rejected -->
+    <line x1="345" y1="130" x2="410" y2="300"/>   <!-- 4-6  w8  rejected -->
+  </g>
+
+  <!-- nodes -->
+  <g>
+    <circle cx="110" cy="150" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="255" cy="150" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="345" cy="130" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="110" cy="300" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="255" cy="300" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="345" cy="300" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="410" cy="300" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  </g>
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="15">
+    <text x="110" y="156">0</text>
+    <text x="255" y="156">3</text>
+    <text x="345" y="136">4</text>
+    <text x="110" y="306">1</text>
+    <text x="255" y="306">2</text>
+    <text x="345" y="306">5</text>
+    <text x="410" y="306">6</text>
+  </g>
+
+  <!-- weights -->
+  <g font-size="13" text-anchor="middle" font-weight="bold">
+    <rect x="167" y="139" width="30" height="20" rx="4" fill="#1e1e1e"/><text x="182" y="154" fill="#e06c75">40</text>
+    <rect x="95" y="215" width="30" height="20" rx="4" fill="#1e1e1e"/><text x="110" y="230" fill="#56c98d">10</text>
+    <rect x="167" y="290" width="30" height="20" rx="4" fill="#1e1e1e"/><text x="182" y="305" fill="#56c98d">10</text>
+    <rect x="240" y="215" width="30" height="20" rx="4" fill="#1e1e1e"/><text x="255" y="230" fill="#56c98d">10</text>
+    <rect x="288" y="125" width="24" height="20" rx="4" fill="#1e1e1e"/><text x="300" y="140" fill="#56c98d">2</text>
+    <rect x="333" y="205" width="24" height="20" rx="4" fill="#1e1e1e"/><text x="345" y="220" fill="#56c98d">3</text>
+    <rect x="366" y="290" width="24" height="20" rx="4" fill="#1e1e1e"/><text x="378" y="305" fill="#56c98d">3</text>
+    <rect x="378" y="200" width="24" height="20" rx="4" fill="#1e1e1e"/><text x="390" y="215" fill="#e06c75">8</text>
+  </g>
+
+  <text x="40" y="348" fill="#9aa0a6" font-size="12">solid green = in MST &#160;&#160;&#160; dashed red = rejected (both endpoints already in the same set &#8594; cycle)</text>
+
+  <!-- Right card: PQ / decisions -->
+  <rect x="450" y="48" width="305" height="320" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="465" y="72" fill="#f2c14e" font-size="13.5" font-weight="bold">PriorityQueue (edges sorted by weight)</text>
+  <line x1="465" y1="82" x2="740" y2="82" stroke="#333333" stroke-width="1"/>
+
+  <g font-family="monospace" font-size="13.5">
+    <text x="470" y="106" fill="#56c98d">3-4 @ 2</text>   <text x="580" y="106" fill="#56c98d">&#10004; take</text>
+    <text x="470" y="132" fill="#56c98d">4-5 @ 3</text>   <text x="580" y="132" fill="#56c98d">&#10004; take</text>
+    <text x="470" y="158" fill="#56c98d">5-6 @ 3</text>   <text x="580" y="158" fill="#56c98d">&#10004; take</text>
+    <text x="470" y="184" fill="#e06c75">4-6 @ 8</text>   <text x="580" y="184" fill="#e06c75">&#10007; same set</text>
+    <text x="470" y="210" fill="#56c98d">0-1 @ 10</text>  <text x="580" y="210" fill="#56c98d">&#10004; take</text>
+    <text x="470" y="236" fill="#56c98d">1-2 @ 10</text>  <text x="580" y="236" fill="#56c98d">&#10004; take</text>
+    <text x="470" y="262" fill="#56c98d">2-3 @ 10</text>  <text x="580" y="262" fill="#56c98d">&#10004; take</text>
+    <text x="470" y="288" fill="#e06c75">0-3 @ 40</text>  <text x="580" y="288" fill="#e06c75">&#10007; same set</text>
+  </g>
+
+  <line x1="465" y1="304" x2="740" y2="304" stroke="#333333" stroke-width="1"/>
+  <text x="465" y="326" fill="#d4d4d4" font-size="13">Edges taken = 6 = V &#8722; 1 &#10004;</text>
+  <text x="465" y="348" fill="#56c98d" font-size="13.5" font-weight="bold">MST weight = 2+3+3+10+10+10 = 38</text>
+
+  <!-- Bottom card -->
+  <rect x="25" y="380" width="730" height="70" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="404" fill="#f2c14e" font-size="13.5" font-weight="bold">The rule that makes Kruskal work:</text>
+  <text x="40" y="428" fill="#d4d4d4" font-size="13">If two vertices already belong to the SAME set (same parent), adding that edge would create a <tspan fill="#e06c75" font-weight="bold">cycle</tspan> — so skip it.</text>
+  <text x="40" y="444" fill="#9aa0a6" font-size="12">Note: union() is always called on the PARENTS (roots) returned by find(), never on the raw vertices.</text>
+</svg>

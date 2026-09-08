@@ -1,0 +1,82 @@
+<svg viewBox="0 0 800 540" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="540" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Prim's vs Dijkstra <tspan fill="#9aa0a6" font-weight="normal">— same graph, different answers; edge 0&#8211;3 is now 20 and 5&#8211;6 is now 6</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- Graph -->
+  <rect x="25" y="48" width="750" height="185" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The graph</text>
+
+  <g stroke="#9ecbf0" stroke-width="2">
+    <line x1="100" y1="105" x2="215" y2="105"/>   <!-- 0-3 20 -->
+    <line x1="100" y1="105" x2="100" y2="200"/>   <!-- 0-1 10 -->
+    <line x1="100" y1="200" x2="215" y2="200"/>   <!-- 1-2 10 -->
+    <line x1="215" y1="105" x2="215" y2="200"/>   <!-- 3-2 10 -->
+    <line x1="215" y1="105" x2="315" y2="95"/>    <!-- 3-4 2 -->
+    <line x1="315" y1="95"  x2="315" y2="200"/>   <!-- 4-5 3 -->
+    <line x1="315" y1="95"  x2="420" y2="200"/>   <!-- 4-6 8 -->
+    <line x1="315" y1="200" x2="420" y2="200"/>   <!-- 5-6 6 -->
+  </g>
+  <g>
+    <circle cx="100" cy="105" r="17" fill="#3a331f" stroke="#f2c14e" stroke-width="3"/>
+    <circle cx="215" cy="105" r="17" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="315" cy="95"  r="17" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="100" cy="200" r="17" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="215" cy="200" r="17" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="315" cy="200" r="17" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="420" cy="200" r="17" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  </g>
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="14">
+    <text x="100" y="110">0</text><text x="215" y="110">3</text><text x="315" y="100">4</text>
+    <text x="100" y="205">1</text><text x="215" y="205">2</text><text x="315" y="205">5</text><text x="420" y="205">6</text>
+  </g>
+  <g font-size="12" text-anchor="middle" font-weight="bold" fill="#f2c14e">
+    <rect x="143" y="95"  width="30" height="19" rx="4" fill="#1e1e1e"/><text x="158" y="109">20</text>
+    <rect x="85"  y="143" width="30" height="19" rx="4" fill="#1e1e1e"/><text x="100" y="157">10</text>
+    <rect x="143" y="191" width="30" height="19" rx="4" fill="#1e1e1e"/><text x="158" y="205">10</text>
+    <rect x="200" y="143" width="30" height="19" rx="4" fill="#1e1e1e"/><text x="215" y="157">10</text>
+    <rect x="254" y="85"  width="22" height="19" rx="4" fill="#1e1e1e"/><text x="265" y="99">2</text>
+    <rect x="304" y="138" width="22" height="19" rx="4" fill="#1e1e1e"/><text x="315" y="152">3</text>
+    <rect x="356" y="191" width="22" height="19" rx="4" fill="#1e1e1e"/><text x="367" y="205">6</text>
+    <rect x="382" y="130" width="22" height="19" rx="4" fill="#1e1e1e"/><text x="393" y="144">8</text>
+  </g>
+
+  <text x="470" y="100" fill="#d4d4d4" font-size="13">Prim's triplet: <tspan fill="#56c98d" font-family="monospace">(v, parent, cost)</tspan></text>
+  <text x="470" y="124" fill="#9aa0a6" font-size="12.5">cost = weight of THIS edge only</text>
+  <text x="470" y="158" fill="#d4d4d4" font-size="13">Dijkstra triplet: <tspan fill="#5b9bd5" font-family="monospace">(v, psf, cost)</tspan></text>
+  <text x="470" y="182" fill="#9aa0a6" font-size="12.5">cost = accumulated path so far</text>
+  <text x="470" y="212" fill="#e06c75" font-size="12.5" font-weight="bold">That single difference is the whole story.</text>
+
+  <!-- Prim's result -->
+  <rect x="25" y="247" width="365" height="200" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="270" fill="#56c98d" font-size="13.5" font-weight="bold">Prim's &#8212; what gets popped</text>
+  <line x1="40" y1="280" x2="375" y2="280" stroke="#333333" stroke-width="1"/>
+  <g font-family="monospace" font-size="12.5" fill="#d4d4d4">
+    <text x="42" y="302">(0, -1,  0)</text>
+    <text x="42" y="324">(1,  0, 10)   edge 0-1</text>
+    <text x="42" y="346">(2,  1, 10)   edge 1-2</text>
+    <text x="42" y="368">(3,  2, 10)   edge 2-3   &#8592; 10 &lt; 20</text>
+    <text x="42" y="390">(4,  3,  2)   edge 3-4</text>
+    <text x="42" y="412">(5,  4,  3)   edge 4-5</text>
+    <text x="42" y="434">(6,  5,  6)   edge 5-6   &#8592; 6 &lt; 8</text>
+  </g>
+
+  <!-- Dijkstra result -->
+  <rect x="410" y="247" width="365" height="200" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="425" y="270" fill="#5b9bd5" font-size="13.5" font-weight="bold">Dijkstra &#8212; what gets popped</text>
+  <line x1="425" y1="280" x2="760" y2="280" stroke="#333333" stroke-width="1"/>
+  <g font-family="monospace" font-size="12.5" fill="#d4d4d4">
+    <text x="427" y="302">(0, "0",       0)</text>
+    <text x="427" y="324">(1, "01",     10)</text>
+    <text x="427" y="346">(2, "012",    20)</text>
+    <text x="427" y="368">(3, "03",     20)   &#8592; uses edge 0-3!</text>
+    <text x="427" y="390">(4, "034",    22)</text>
+    <text x="427" y="412">(5, "0345",   25)</text>
+    <text x="427" y="434">(6, "03456",  31)</text>
+  </g>
+
+  <!-- Conclusion -->
+  <rect x="25" y="461" width="750" height="66" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="484" fill="#d4d4d4" font-size="13"><tspan fill="#56c98d" font-weight="bold">Prim's</tspan> did NOT take 0&#8211;3, because reaching 3 through 2 costs only <tspan font-family="monospace">10</tspan>, and Prim's compares single edges.</text>
+  <text x="40" y="508" fill="#d4d4d4" font-size="13"><tspan fill="#5b9bd5" font-weight="bold">Dijkstra</tspan> DID take 0&#8211;3, because the whole path 0&#8594;1&#8594;2&#8594;3 costs <tspan font-family="monospace">30</tspan>, which is worse than the direct <tspan font-family="monospace">20</tspan>.</text>
+</svg>

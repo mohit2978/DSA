@@ -1,0 +1,85 @@
+<svg viewBox="0 0 780 425" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="780" height="425" fill="#1e1e1e"/>
+  
+  <!-- Header Title -->
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Alien Dictionary dry run <tspan fill="#9aa0a6" font-weight="normal">— N = 5, K = 4, dict = {"baa", "abcd", "abca", "cab", "cad"}</tspan></text>
+  <line x1="25" y1="38" x2="755" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- Left Card: Word Pair Comparisons -->
+  <rect x="25" y="48" width="355" height="278" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  
+  <text x="40" y="73" fill="#f2c14e" font-size="13.5" font-weight="bold">Compare every ADJACENT pair:</text>
+  <text x="40" y="91" fill="#9aa0a6" font-size="12">Take FIRST mismatching character &#8594; directed edge</text>
+  <line x1="40" y1="101" x2="365" y2="101" stroke="#333333" stroke-width="1"/>
+
+  <!-- Pair Comparisons List -->
+  <g font-family="monospace">
+    <!-- Pair 1 -->
+    <text x="42" y="123" fill="#56c98d" font-size="14">b a a</text>
+    <text x="42" y="141" fill="#56c98d" font-size="14">a b c d</text>
+    <text x="155" y="133" fill="#e06c75" font-size="13.5">b &#8800; a  &#8594;  edge b &#8594; a</text>
+    <line x1="40" y1="152" x2="365" y2="152" stroke="#2e2e2e" stroke-width="1" stroke-dasharray="3,3"/>
+
+    <!-- Pair 2 -->
+    <text x="42" y="173" fill="#56c98d" font-size="14">a b c d</text>
+    <text x="42" y="191" fill="#56c98d" font-size="14">a b c a</text>
+    <text x="155" y="183" fill="#e06c75" font-size="13.5">d &#8800; a  &#8594;  edge d &#8594; a</text>
+    <line x1="40" y1="202" x2="365" y2="202" stroke="#2e2e2e" stroke-width="1" stroke-dasharray="3,3"/>
+
+    <!-- Pair 3 -->
+    <text x="42" y="223" fill="#56c98d" font-size="14">a b c a</text>
+    <text x="42" y="241" fill="#56c98d" font-size="14">c a b</text>
+    <text x="155" y="233" fill="#e06c75" font-size="13.5">a &#8800; c  &#8594;  edge a &#8594; c</text>
+    <line x1="40" y1="252" x2="365" y2="252" stroke="#2e2e2e" stroke-width="1" stroke-dasharray="3,3"/>
+
+    <!-- Pair 4 -->
+    <text x="42" y="273" fill="#56c98d" font-size="14">c a b</text>
+    <text x="42" y="291" fill="#56c98d" font-size="14">c a d</text>
+    <text x="155" y="283" fill="#e06c75" font-size="13.5">b &#8800; d  &#8594;  edge b &#8594; d</text>
+  </g>
+
+  <!-- Right Card: Resulting Graph -->
+  <rect x="400" y="48" width="355" height="278" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  
+  <text x="415" y="73" fill="#f2c14e" font-size="13.5" font-weight="bold">Resulting graph on K = 4 letters:</text>
+  <text x="415" y="91" fill="#9aa0a6" font-size="12">Vertices = {a, b, c, d}</text>
+  <line x1="415" y1="101" x2="740" y2="101" stroke="#333333" stroke-width="1"/>
+
+  <defs>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,1 L8,4.5 L0,8 z" fill="#9ecbf0"/>
+    </marker>
+  </defs>
+
+  <!-- Graph Nodes -->
+  <circle cx="475" cy="135" r="22" fill="#3a331f" stroke="#f2c14e" stroke-width="3"/>
+  <circle cx="475" cy="210" r="22" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="635" cy="155" r="22" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="635" cy="230" r="22" fill="#233a2c" stroke="#56c98d" stroke-width="3"/>
+
+  <!-- Node Labels -->
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="16">
+    <text x="475" y="141">b</text>
+    <text x="475" y="216">d</text>
+    <text x="635" y="161">a</text>
+    <text x="635" y="236">c</text>
+  </g>
+
+  <!-- Directed Edges -->
+  <g stroke="#9ecbf0" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M 497 138 L 611 152"/>   <!-- b->a -->
+    <path d="M 475 159 L 475 186"/>   <!-- b->d -->
+    <path d="M 496 203 L 612 163"/>   <!-- d->a -->
+    <path d="M 635 179 L 635 206"/>   <!-- a->c -->
+  </g>
+
+  <!-- Graph Metadata -->
+  <text x="415" y="274" fill="#9aa0a6" font-size="12.5">Edges: <tspan fill="#d4d4d4" font-family="monospace">b&#8594;a, b&#8594;d, d&#8594;a, a&#8594;c</tspan></text>
+  <text x="415" y="297" fill="#9aa0a6" font-size="12.5">Indegree: <tspan fill="#f2c14e" font-weight="bold">b=0</tspan>, <tspan fill="#d4d4d4">d=1</tspan>, <tspan fill="#d4d4d4">a=2</tspan>, <tspan fill="#56c98d" font-weight="bold">c=1</tspan></text>
+  <text x="735" y="297" fill="#f2c14e" font-size="11.5" text-anchor="end">(start at b)</text>
+
+  <!-- Bottom Card: Summary & Topological Order -->
+  <rect x="25" y="338" width="730" height="68" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="364" fill="#56c98d" font-size="14.5" font-weight="bold">Topological order = b, d, a, c  &#8594;  answer string "bdac"</text>
+  <text x="40" y="388" fill="#9aa0a6" font-size="12.5">Note: We are given K characters, so we must topo-sort ALL K vertices — not just start DFS from vertex 0.</text>
+</svg>

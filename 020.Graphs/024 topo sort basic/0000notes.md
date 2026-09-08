@@ -1,10 +1,3 @@
-# Notes
-
-## Q1. Topological Sort (DFS-based & Kahn's / BFS-based)
-
-**Practice Question:** GfG — Topological Sort
-
-*(Aside — leftover from the previous class's Prim's Algorithm recording, kept here as-is:)*
 
 **Implementation of Prim's Algo done in previous class.**
 
@@ -50,11 +43,14 @@ while (pq.size() > 0) {
 
 *(Jaise parent `-1` toh use print nahi karne — the use print vhi karne the as given in question & sample input & output.)*
 
-**Now we need to do Topological Sort → It is only applied to Directed Acyclic Graph. We will first see what is Directed Acyclic Graph.**
+
+## Q1. Topological Sort (DFS-based & Kahn's / BFS-based)
+
+
+**It is only applied to Directed Acyclic Graph. We will first see what is Directed Acyclic Graph.**
 
 **Prim's mein source nahi hota generally** (there's no fixed "source" concept in Prim's) — `0` se start hota hai as we have graph vertices from `0` to `n-1`.
 
-Abhi tak saare code directed & undirected donon ke liye chalte the — koi change nahi hota, abhi tak agar mein kisi directed hai ya undirected hai — jisne fark pata hai, use mode dijiye in Level 2. Directed mein sirf change hume aata hai jab ki kis input lene ka tarika badal jata hai. Directed mein ek vertex mein add hota `graph[v1].add(v1, v2, wt)`. Undirected mein donon `v1` & `v2` mein `graph[v1].add(v1, v2, wt)` & `graph[v2].add(v2, v1, wt)`.
 
 ### What is Topological Sort?
 

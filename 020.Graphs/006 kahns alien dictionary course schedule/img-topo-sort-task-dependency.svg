@@ -1,0 +1,47 @@
+<svg viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="640" height="400" fill="#1e1e1e"/>
+  <text x="20" y="28" fill="#d4d4d4" font-size="15">Task dependency — why topo sort order is the REVERSE of the learning order</text>
+
+  <defs>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#9ecbf0"/></marker>
+  </defs>
+
+  <!-- nodes -->
+  <ellipse cx="230" cy="70" rx="52" ry="24" fill="#3a331f" stroke="#f2c14e" stroke-width="3"/>
+  <ellipse cx="140" cy="150" rx="52" ry="24" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <ellipse cx="320" cy="150" rx="52" ry="24" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <ellipse cx="230" cy="230" rx="52" ry="24" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <ellipse cx="230" cy="300" rx="52" ry="24" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <ellipse cx="230" cy="365" rx="52" ry="24" fill="#233a2c" stroke="#56c98d" stroke-width="3"/>
+
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="15">
+    <text x="230" y="76">Cloud</text>
+    <text x="140" y="156">React</text>
+    <text x="320" y="156">Node</text>
+    <text x="230" y="236">JS</text>
+    <text x="230" y="306">CSS</text>
+    <text x="230" y="371">HTML</text>
+  </g>
+
+  <g stroke="#9ecbf0" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M 205 90 L 165 128"/>   <!-- Cloud->React -->
+    <path d="M 255 90 L 295 128"/>   <!-- Cloud->Node -->
+    <path d="M 160 172 L 205 209"/>  <!-- React->JS -->
+    <path d="M 300 172 L 255 209"/>  <!-- Node->JS -->
+    <path d="M 230 254 L 230 274"/>  <!-- JS->CSS -->
+    <path d="M 230 324 L 230 339"/>  <!-- CSS->HTML -->
+  </g>
+
+  <text x="400" y="150" fill="#f2c14e" font-size="14" font-weight="bold">Topological sort:</text>
+  <text x="400" y="174" fill="#d4d4d4" font-size="14">Cloud, React, Node, JS, CSS, HTML</text>
+
+  <text x="400" y="216" fill="#56c98d" font-size="14" font-weight="bold">Actual task order (reverse):</text>
+  <text x="400" y="240" fill="#d4d4d4" font-size="14">HTML &#8594; CSS &#8594; JS &#8594;</text>
+  <text x="400" y="260" fill="#d4d4d4" font-size="14">React / Node &#8594; Cloud</text>
+
+  <text x="400" y="302" fill="#9aa0a6" font-size="12">For every edge u&#8594;v, u must</text>
+  <text x="400" y="320" fill="#9aa0a6" font-size="12">appear before v in the topo sort.</text>
+  <text x="400" y="346" fill="#9aa0a6" font-size="12">We push in POST-order, because by</text>
+  <text x="400" y="364" fill="#9aa0a6" font-size="12">then all dependencies (neighbours)</text>
+  <text x="400" y="382" fill="#9aa0a6" font-size="12">are already satisfied (visited).</text>
+</svg>

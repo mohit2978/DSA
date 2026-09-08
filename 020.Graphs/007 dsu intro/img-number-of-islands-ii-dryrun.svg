@@ -1,0 +1,74 @@
+<svg viewBox="0 0 780 500" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="780" height="500" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Number of Islands II <tspan fill="#9aa0a6" font-weight="normal">— 3 &#215; 5 grid, queries (0,3) (1,2) (0,2) (1,4) (2,3) (1,3)</tspan></text>
+  <line x1="25" y1="38" x2="755" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- Grid card -->
+  <rect x="25" y="48" width="440" height="230" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="72" fill="#f2c14e" font-size="13.5" font-weight="bold">Flatten 2D &#8594; 1D:  <tspan font-family="monospace" fill="#d4d4d4">pos = r * cols + c</tspan></text>
+
+  <!-- column headers -->
+  <g fill="#9aa0a6" font-size="12" text-anchor="middle">
+    <text x="115" y="100">c=0</text><text x="180" y="100">c=1</text><text x="245" y="100">c=2</text><text x="310" y="100">c=3</text><text x="375" y="100">c=4</text>
+  </g>
+  <g fill="#9aa0a6" font-size="12">
+    <text x="52" y="135">r=0</text><text x="52" y="188">r=1</text><text x="52" y="241">r=2</text>
+  </g>
+
+  <!-- cells: 3 rows x 5 cols, land cells highlighted -->
+  <g stroke="#3a3a3a" stroke-width="1">
+    <!-- row 0 -->
+    <rect x="88"  y="110" width="54" height="42" fill="#2b2b2b"/>
+    <rect x="153" y="110" width="54" height="42" fill="#2b2b2b"/>
+    <rect x="218" y="110" width="54" height="42" fill="#1f3a2a" stroke="#56c98d" stroke-width="2"/>
+    <rect x="283" y="110" width="54" height="42" fill="#1f3a2a" stroke="#56c98d" stroke-width="2"/>
+    <rect x="348" y="110" width="54" height="42" fill="#2b2b2b"/>
+    <!-- row 1 -->
+    <rect x="88"  y="163" width="54" height="42" fill="#2b2b2b"/>
+    <rect x="153" y="163" width="54" height="42" fill="#2b2b2b"/>
+    <rect x="218" y="163" width="54" height="42" fill="#1f3a2a" stroke="#56c98d" stroke-width="2"/>
+    <rect x="283" y="163" width="54" height="42" fill="#1f3a2a" stroke="#56c98d" stroke-width="2"/>
+    <rect x="348" y="163" width="54" height="42" fill="#1f3a2a" stroke="#56c98d" stroke-width="2"/>
+    <!-- row 2 -->
+    <rect x="88"  y="216" width="54" height="42" fill="#2b2b2b"/>
+    <rect x="153" y="216" width="54" height="42" fill="#2b2b2b"/>
+    <rect x="218" y="216" width="54" height="42" fill="#2b2b2b"/>
+    <rect x="283" y="216" width="54" height="42" fill="#1f3a2a" stroke="#56c98d" stroke-width="2"/>
+    <rect x="348" y="216" width="54" height="42" fill="#2b2b2b"/>
+  </g>
+
+  <!-- 1D indices -->
+  <g fill="#d4d4d4" text-anchor="middle" font-family="monospace" font-size="14">
+    <text x="115" y="137">0</text><text x="180" y="137">1</text><text x="245" y="137">2</text><text x="310" y="137">3</text><text x="375" y="137">4</text>
+    <text x="115" y="190">5</text><text x="180" y="190">6</text><text x="245" y="190">7</text><text x="310" y="190">8</text><text x="375" y="190">9</text>
+    <text x="115" y="243">10</text><text x="180" y="243">11</text><text x="245" y="243">12</text><text x="310" y="243">13</text><text x="375" y="243">14</text>
+  </g>
+
+  <text x="40" y="270" fill="#56c98d" font-size="12.5">green = became land during the 6 queries &#160;&#8594;&#160; 2, 3, 7, 8, 9, 13</text>
+
+  <!-- Trace card -->
+  <rect x="480" y="48" width="275" height="230" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="495" y="72" fill="#f2c14e" font-size="13.5" font-weight="bold">Query &#8594; pos &#8594; count</text>
+  <line x1="495" y1="82" x2="740" y2="82" stroke="#333333" stroke-width="1"/>
+  <g font-family="monospace" font-size="12.5" fill="#d4d4d4">
+    <text x="495" y="106">(0,3) &#8594; 3   new set        count=1</text>
+    <text x="495" y="132">(1,2) &#8594; 7   new set        count=2</text>
+    <text x="495" y="158">(0,2) &#8594; 2   +1, then merge</text>
+    <text x="510" y="176">with 7 and 3      count=1</text>
+    <text x="495" y="202">(1,4) &#8594; 9   new set        count=2</text>
+    <text x="495" y="228">(2,3) &#8594; 13  new set        count=3</text>
+    <text x="495" y="254">(1,3) &#8594; 8   +1, merges 7,</text>
+  </g>
+  <text x="510" y="272" fill="#56c98d" font-family="monospace" font-size="12.5">9, 13         count=1</text>
+
+  <!-- Rule card -->
+  <rect x="25" y="292" width="730" height="112" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="316" fill="#f2c14e" font-size="13.5" font-weight="bold">The rule</text>
+  <text x="40" y="340" fill="#d4d4d4" font-size="13">1. As soon as you convert a cell into a set (makeset), do <tspan fill="#56c98d" font-family="monospace">count++</tspan> &#8212; a brand-new set IS a brand-new island.</text>
+  <text x="40" y="362" fill="#d4d4d4" font-size="13">2. Then check all 4 neighbours. If a neighbour is already land AND is in a <tspan fill="#e06c75">different</tspan> set, union them and do <tspan fill="#e06c75" font-family="monospace">count--</tspan>.</text>
+  <text x="40" y="384" fill="#d4d4d4" font-size="13">3. If the neighbour is already in the <tspan fill="#f2c14e">same</tspan> set (p1 == p2), do <tspan font-weight="bold">nothing</tspan> &#8212; no union, and crucially <tspan font-weight="bold">no count--</tspan>.</text>
+
+  <rect x="25" y="418" width="730" height="60" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="442" fill="#9aa0a6" font-size="12.5">Answer for the 6 queries: <tspan fill="#56c98d" font-family="monospace" font-weight="bold">[1, 2, 1, 2, 3, 1]</tspan></text>
+  <text x="40" y="466" fill="#9aa0a6" font-size="12.5">Redoing a full DFS after each query would cost <tspan font-family="monospace">O(q &#215; n &#215; m)</tspan>; DSU makes it <tspan font-family="monospace" fill="#56c98d">O(q + n &#215; m)</tspan>.</text>
+</svg>

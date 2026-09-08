@@ -1,0 +1,65 @@
+<svg viewBox="0 0 780 400" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="780" height="400" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Hamiltonian Path &amp; Hamiltonian Cycle <tspan fill="#9aa0a6" font-weight="normal">— visit ALL vertices, none twice</tspan></text>
+  <line x1="25" y1="38" x2="755" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- Graph card -->
+  <rect x="25" y="48" width="380" height="230" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="72" fill="#f2c14e" font-size="13.5" font-weight="bold">The example graph (7 vertices)</text>
+
+  <g stroke="#9ecbf0" stroke-width="2">
+    <line x1="85"  y1="115" x2="175" y2="115"/>   <!-- 0-3 -->
+    <line x1="85"  y1="115" x2="85"  y2="215"/>   <!-- 0-1 -->
+    <line x1="85"  y1="215" x2="175" y2="215"/>   <!-- 1-2 -->
+    <line x1="175" y1="115" x2="175" y2="215"/>   <!-- 3-2 -->
+    <line x1="175" y1="115" x2="265" y2="105"/>   <!-- 3-4 -->
+    <line x1="265" y1="105" x2="265" y2="215"/>   <!-- 4-5 -->
+    <line x1="175" y1="215" x2="265" y2="215"/>   <!-- 2-5 -->
+    <line x1="265" y1="105" x2="350" y2="215"/>   <!-- 4-6 -->
+    <line x1="265" y1="215" x2="350" y2="215"/>   <!-- 5-6 -->
+  </g>
+
+  <g>
+    <circle cx="85"  cy="115" r="18" fill="#3a331f" stroke="#f2c14e" stroke-width="3"/>
+    <circle cx="175" cy="115" r="18" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="265" cy="105" r="18" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="85"  cy="215" r="18" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="175" cy="215" r="18" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="265" cy="215" r="18" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="350" cy="215" r="18" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  </g>
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="14">
+    <text x="85"  y="120">0</text>
+    <text x="175" y="120">3</text>
+    <text x="265" y="110">4</text>
+    <text x="85"  y="220">1</text>
+    <text x="175" y="220">2</text>
+    <text x="265" y="220">5</text>
+    <text x="350" y="220">6</text>
+  </g>
+  <text x="40" y="258" fill="#9aa0a6" font-size="12">Edges: 0&#8211;1, 0&#8211;3, 1&#8211;2, 2&#8211;3, 2&#8211;5, 3&#8211;4, 4&#8211;5, 4&#8211;6, 5&#8211;6</text>
+
+  <!-- Definitions card -->
+  <rect x="425" y="48" width="330" height="230" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="440" y="72" fill="#f2c14e" font-size="13.5" font-weight="bold">Hamiltonian PATH</text>
+  <text x="440" y="94" fill="#d4d4d4" font-size="13">Visit every vertex without covering</text>
+  <text x="440" y="112" fill="#d4d4d4" font-size="13">any vertex twice.</text>
+  <text x="440" y="136" fill="#56c98d" font-family="monospace" font-size="14">0 1 2 3 4 5 6</text>
+  <text x="600" y="136" fill="#9aa0a6" font-size="12">is a H-path</text>
+
+  <line x1="440" y1="152" x2="740" y2="152" stroke="#333333" stroke-width="1"/>
+
+  <text x="440" y="176" fill="#f2c14e" font-size="13.5" font-weight="bold">Hamiltonian CYCLE</text>
+  <text x="440" y="198" fill="#d4d4d4" font-size="13">If the FIRST and LAST vertex of a</text>
+  <text x="440" y="216" fill="#d4d4d4" font-size="13">Hamiltonian path are connected by an</text>
+  <text x="440" y="234" fill="#d4d4d4" font-size="13">edge, it is a Hamiltonian cycle.</text>
+  <text x="440" y="262" fill="#56c98d" font-family="monospace" font-size="14">0 1 2 5 6 4 3</text>
+  <text x="600" y="262" fill="#9aa0a6" font-size="12">is a H-cycle (3&#8211;0 exists)</text>
+
+  <!-- Bottom -->
+  <rect x="25" y="292" width="730" height="94" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="316" fill="#f2c14e" font-size="13.5" font-weight="bold">More examples on the same graph</text>
+  <text x="40" y="340" fill="#d4d4d4" font-family="monospace" font-size="13.5">0 3 4 6 5 2 1</text>
+  <text x="220" y="340" fill="#9aa0a6" font-size="12.5">is also a H-cycle for this graph (1&#8211;0 exists)</text>
+  <text x="40" y="366" fill="#9aa0a6" font-size="12.5">Every Hamiltonian cycle is a Hamiltonian path, but not the reverse. A <tspan fill="#e06c75">disconnected</tspan> graph can have neither.</text>
+</svg>
