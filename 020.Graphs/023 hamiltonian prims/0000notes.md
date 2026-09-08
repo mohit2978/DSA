@@ -1,11 +1,4 @@
 
-
-# Hamiltonian Path & Cycle, Iterative DFS, MST and Prim's
-
-
-
----
-
 ## Q1. Hamiltonian Path & Hamiltonian Cycle
 
 ### The definitions
@@ -36,44 +29,10 @@ Solution notes:
   * this is `printAllPaths`-style code
   * **stop when all the vertices are visited**
 
-### First attempt — the non-working code
-
-```java
-public static void print_hp_and_c(ArrayList<Edge>[] graph, int src, boolean[] vis, String path) {
-    boolean allvis = true;
-    for (var bval : vis) {
-        if (bval == false)
-            allvis = false;
-    }
-    if (allvis == true) {
-        System.out.println(path);
-        return;
-    }
-
-    vis[src] = true;
-    for (Edge e : graph[src]) {
-        if (vis[e.nbr] == false) {
-            print_hp_and_c(graph, e.nbr, vis, path + e.nbr);
-        }
-    }
-    vis[src] = false;
-}
-```
-
-Called from `main()` as:
-
-```java
-int src = Integer.parseInt(br.readLine());
-
-boolean[] vis = new boolean[vtces];
-print_hp_and_c(graph, src, vis, src + "");
-```
-
-**Why it does not work:** scanning the whole `vis` array on every call to check "is everything visited" is both wasteful and wrong-timed — by the time the last vertex is reached, the check happens *before* that vertex is marked, so the base case never fires correctly.
 
 **The hint:** have a variable **`csf` (count so far)** which tells how many vertices are visited, and the **base case** will be `if (csf == graph.length)`, since we print our path when all of the vertices are visited.
 
-### Second attempt — with `csf` (this one is good)
+###  with `csf` (this one is good)
 
 ```java
 public static void print_hp_and_c(ArrayList<Edge>[] graph, int src,
@@ -275,7 +234,6 @@ At the base case we find out whether our last edge is connected to the 1st verte
 
 In a disconnected graph a Hamiltonian path is impossible, because the very definition of Hamiltonian is "travel all the vertices from `src`". If it is disconnected, how would a path even be found from one vertex to a vertex sitting outside its component?
 
-> *(A Java-language aside from the same page: the outer class you call `Main` must have the same name as the file — that is a rule. If you made two outer public classes, which one's name would the file take? That is why only one outer class can be public.)*
 
 ### C++ Code for Q1 (was missing — same logic as the Java above)
 
@@ -478,8 +436,8 @@ void iterativeDFS(vector<vector<Edge>>& graph, int src) {
 ```text
 Minimum wire to connect all PCs   →   Prim's Algorithm
 
-Minimum Spanning Tree  ─┬─→  Kruskal   (Level 2)
-                        └─→  Prim's    (Level 1)
+Minimum Spanning Tree  ─┬─→  Kruskal   
+                        └─→  Prim's    
 
 Shortest Path  ─┬─→  BFS               (Level 1)
                 ├─→  Dijkstra          (Level 1)
@@ -927,7 +885,7 @@ int main() {
 
 ```
 
-#### Cpp — path-printing version (was missing; this is the C++ of the "java2" code above)
+#### Cpp — path-printing version (was missing this is the C++ of the "java2" code above)
 
 ```cpp
 #include <bits/stdc++.h>
