@@ -1,0 +1,40 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="700" height="560" font-family="monospace" font-size="13">
+  <rect width="700" height="560" fill="#1e1e2e" rx="10"/>
+  <text x="20" y="30" fill="#cba6f7" font-size="17" font-weight="bold">Level Order Zigzag — Generic Tree</text>
+
+  <text x="20" y="57" fill="#cdd6f4">Two LinkedLists act as queue (que) and stack (st) to alternate direction.</text>
+  <text x="20" y="74" fill="#cdd6f4">que: addLast / removeFirst    |    st: addFirst / removeFirst</text>
+
+  <!-- note about LinkedList -->
+  <rect x="20" y="85" width="660" height="35" fill="#313244" rx="6" stroke="#f9e2af" stroke-width="1"/>
+  <text x="35" y="107" fill="#f9e2af">Java LinkedList key methods: addFirst(), addLast(), removeFirst(), removeLast()</text>
+
+  <!-- Algorithm -->
+  <rect x="20" y="130" width="660" height="270" fill="#181825" rx="8" stroke="#313244"/>
+  <text x="35" y="152" fill="#89dceb">public static void levelOrderLinewiseZZ(Node node) {</text>
+  <text x="55" y="170" fill="#cdd6f4">  LinkedList&lt;Node&gt; que = new LinkedList&lt;&gt;(); // addLast, removeFirst</text>
+  <text x="55" y="188" fill="#cdd6f4">  LinkedList&lt;Node&gt; st  = new LinkedList&lt;&gt;(); // addFirst, removeFirst</text>
+  <text x="55" y="207" fill="#cdd6f4">  que.addLast(node);</text>
+  <text x="55" y="224" fill="#cdd6f4">  int level = 0;</text>
+  <text x="55" y="242" fill="#cdd6f4">  while (que.size() != 0) {</text>
+  <text x="75" y="260" fill="#cdd6f4">    int currSize = que.size();</text>
+  <text x="75" y="277" fill="#cdd6f4">    while (currSize-- &gt; 0) {</text>
+  <text x="95" y="295" fill="#cdd6f4">      Node rnode = que.removeFirst();</text>
+  <text x="95" y="312" fill="#a6e3a1">      if (level % 2 == 0) // even level: add children left→right to st</text>
+  <text x="115" y="328" fill="#cdd6f4">        for (int i = 0; i &lt; rnode.children.size(); i++) st.addFirst(rnode.children.get(i));</text>
+  <text x="95" y="344" fill="#a6e3a1">      else               // odd level: add children right→left to st</text>
+  <text x="115" y="360" fill="#cdd6f4">        for (int i = rnode.children.size()-1; i &gt;= 0; i--) st.addFirst(rnode.children.get(i));</text>
+  <text x="75" y="376" fill="#cdd6f4">    }</text>
+  <text x="75" y="393" fill="#cdd6f4">    level++; System.out.println();</text>
+  <text x="75" y="408" fill="#a6e3a1">    LinkedList&lt;Node&gt; temp = que; que = st; st = temp; // swap</text>
+  <text x="55" y="423" fill="#cdd6f4">  }</text>
+  <text x="35" y="437" fill="#89dceb">}</text>
+
+  <!-- Pre/Post Order -->
+  <text x="20" y="468" fill="#f9e2af" font-size="14" font-weight="bold">Pre &amp; Post Order of Generic Tree:</text>
+  <rect x="20" y="478" width="660" height="70" fill="#313244" rx="8" stroke="#89b4fa" stroke-width="1.5"/>
+  <text x="35" y="498" fill="#89dceb">preorder(Node node) {</text>
+  <text x="55" y="515" fill="#cdd6f4">  print(node.data);                          // process BEFORE children</text>
+  <text x="55" y="532" fill="#cdd6f4">  for (Node child : node.children) preorder(child);</text>
+  <text x="35" y="545" fill="#89dceb">}  // postorder: process AFTER the for-loop</text>
+</svg>

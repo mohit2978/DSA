@@ -1,0 +1,106 @@
+<svg viewBox="0 0 800 620" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="620" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Range Minimum Query dry run <tspan fill="#9aa0a6" font-weight="normal">— arr = [3, 2, 4, 5, 1, 1, 5, 3]</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- BEFORE tree -->
+  <rect x="25" y="48" width="750" height="250" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The min-tree &#8212; parent = min(left child, right child)</text>
+
+  <g stroke="#5b7a8c" stroke-width="1.5">
+    <line x1="382" y1="106" x2="215" y2="142"/>
+    <line x1="418" y1="106" x2="585" y2="142"/>
+    <line x1="188" y1="162" x2="115" y2="198"/>
+    <line x1="222" y1="162" x2="295" y2="198"/>
+    <line x1="558" y1="162" x2="485" y2="198"/>
+    <line x1="612" y1="162" x2="685" y2="198"/>
+    <line x1="95"  y1="216" x2="65"  y2="248"/>
+    <line x1="115" y1="216" x2="150" y2="248"/>
+    <line x1="285" y1="216" x2="250" y2="248"/>
+    <line x1="305" y1="216" x2="340" y2="248"/>
+    <line x1="475" y1="216" x2="440" y2="248"/>
+    <line x1="495" y1="216" x2="530" y2="248"/>
+    <line x1="675" y1="216" x2="640" y2="248"/>
+    <line x1="695" y1="216" x2="730" y2="248"/>
+  </g>
+
+  <circle cx="400" cy="96"  r="21" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="205" cy="152" r="20" fill="#1f3a2a" stroke="#56c98d" stroke-width="3"/>
+  <circle cx="595" cy="152" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="105" cy="208" r="18" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="295" cy="208" r="18" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="485" cy="208" r="18" fill="#1f3a2a" stroke="#56c98d" stroke-width="3"/>
+  <circle cx="685" cy="208" r="18" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <g fill="#2b2b2b" stroke="#4a4a4a" stroke-width="1.5">
+    <circle cx="55"  cy="258" r="15"/><circle cx="158" cy="258" r="15"/>
+    <circle cx="242" cy="258" r="15"/><circle cx="348" cy="258" r="15"/>
+    <circle cx="432" cy="258" r="15"/><circle cx="538" cy="258" r="15"/>
+    <circle cx="632" cy="258" r="15"/><circle cx="738" cy="258" r="15"/>
+  </g>
+
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="14">
+    <text x="400" y="102">1</text>
+    <text x="205" y="158">2</text>
+    <text x="595" y="158">1</text>
+    <text x="105" y="214">2</text>
+    <text x="295" y="214">4</text>
+    <text x="485" y="214">1</text>
+    <text x="685" y="214">3</text>
+  </g>
+  <g fill="#9a9a9a" text-anchor="middle" font-weight="bold" font-size="12">
+    <text x="55"  y="263">3</text><text x="158" y="263">2</text>
+    <text x="242" y="263">4</text><text x="348" y="263">5</text>
+    <text x="432" y="263">1</text><text x="538" y="263">1</text>
+    <text x="632" y="263">5</text><text x="738" y="263">3</text>
+  </g>
+  <g fill="#9aa0a6" text-anchor="middle" font-size="11" font-family="monospace">
+    <text x="452" y="96">(0,7)</text>
+    <text x="205" y="130">(0,3)</text>
+    <text x="647" y="152">(4,7)</text>
+    <text x="105" y="188">(0,1)</text>
+    <text x="295" y="188">(2,3)</text>
+    <text x="485" y="240">(4,5)</text>
+    <text x="685" y="188">(6,7)</text>
+  </g>
+  <g fill="#9aa0a6" text-anchor="middle" font-size="10" font-family="monospace">
+    <text x="55"  y="284">0</text><text x="158" y="284">1</text>
+    <text x="242" y="284">2</text><text x="348" y="284">3</text>
+    <text x="432" y="284">4</text><text x="538" y="284">5</text>
+    <text x="632" y="284">6</text><text x="738" y="284">7</text>
+  </g>
+
+  <!-- Query 1 -->
+  <rect x="25" y="312" width="365" height="140" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="336" fill="#56c98d" font-size="13.5" font-weight="bold">Query [2, 1, 4] &#8594; min of arr[1..4] (1-based)</text>
+  <g font-family="monospace" font-size="12.5" fill="#d4d4d4">
+    <text x="42" y="360">0-based range = (0, 3)</text>
+    <text x="42" y="382" fill="#f2c14e">(0,7) partial &#8594; explore both</text>
+    <text x="42" y="404" fill="#56c98d">  (0,3) FULL overlap &#8594; return 2</text>
+    <text x="42" y="426" fill="#e06c75">  (4,7) NO overlap  &#8594; return INT_MAX</text>
+  </g>
+  <text x="42" y="446" fill="#56c98d" font-size="13" font-weight="bold">min(2, INT_MAX) = 2</text>
+
+  <!-- Query 2 -->
+  <rect x="410" y="312" width="365" height="140" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="425" y="336" fill="#56c98d" font-size="13.5" font-weight="bold">Query [2, 5, 6] &#8594; min of arr[5..6] (1-based)</text>
+  <g font-family="monospace" font-size="12.5" fill="#d4d4d4">
+    <text x="427" y="360">0-based range = (4, 5)</text>
+    <text x="427" y="382" fill="#f2c14e">(0,7) partial, (4,7) partial</text>
+    <text x="427" y="404" fill="#56c98d">  (4,5) FULL overlap &#8594; return 1</text>
+    <text x="427" y="426" fill="#e06c75">  (6,7) NO overlap  &#8594; INT_MAX</text>
+  </g>
+  <text x="427" y="446" fill="#56c98d" font-size="13" font-weight="bold">answer = 1</text>
+
+  <!-- Update + requery -->
+  <rect x="25" y="466" width="750" height="144" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="490" fill="#f2c14e" font-size="13.5" font-weight="bold">Update [1, 2, 3] &#8594; set position 2 (1-based) = index 1 to the value 3</text>
+  <text x="40" y="514" fill="#d4d4d4" font-size="13">Only the path <tspan font-family="monospace" fill="#f2c14e">(0,7) &#8594; (0,3) &#8594; (0,1) &#8594; (1,1)</tspan> is touched. Set the leaf, then recompute each ancestor while unwinding:</text>
+  <g font-family="monospace" font-size="12.5" fill="#d4d4d4">
+    <text x="42" y="540">leaf (1,1) : 2 &#8594; 3</text>
+    <text x="230" y="540">(0,1) = min(3, 3) = 3</text>
+    <text x="440" y="540">(0,3) = min(3, 4) = 3</text>
+    <text x="640" y="540">(0,7) = min(3, 1) = 1</text>
+  </g>
+  <text x="40" y="568" fill="#56c98d" font-size="13.5" font-weight="bold">Query [2, 1, 4] again &#8594; (0,3) is now 3, so the answer is 3</text>
+  <text x="40" y="592" fill="#9aa0a6" font-size="12.5">Final output for the four queries: <tspan font-family="monospace" fill="#d4d4d4">[2, 1, 3]</tspan> &#8212; the update query itself produces no output.</text>
+</svg>

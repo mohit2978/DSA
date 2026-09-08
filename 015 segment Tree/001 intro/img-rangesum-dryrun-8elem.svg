@@ -1,0 +1,84 @@
+<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="520" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Range Sum Query on 8 elements <tspan fill="#9aa0a6" font-weight="normal">— a = [3, 1, 2, 7, 2, 1, 2, 3], query = [2, 6]</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <rect x="25" y="48" width="750" height="300" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+
+  <g stroke="#5b7a8c" stroke-width="1.5">
+    <line x1="382" y1="98"  x2="215" y2="138"/>
+    <line x1="418" y1="98"  x2="585" y2="138"/>
+    <line x1="188" y1="158" x2="115" y2="198"/>
+    <line x1="222" y1="158" x2="295" y2="198"/>
+    <line x1="558" y1="158" x2="485" y2="198"/>
+    <line x1="612" y1="158" x2="685" y2="198"/>
+    <line x1="105" y1="216" x2="70"  y2="252"/>
+    <line x1="125" y1="216" x2="160" y2="252"/>
+    <line x1="285" y1="216" x2="250" y2="252"/>
+    <line x1="305" y1="216" x2="340" y2="252"/>
+    <line x1="475" y1="216" x2="440" y2="252"/>
+    <line x1="495" y1="216" x2="530" y2="252"/>
+    <line x1="675" y1="216" x2="640" y2="252"/>
+    <line x1="695" y1="216" x2="730" y2="252"/>
+  </g>
+
+  <circle cx="400" cy="88"  r="22" fill="#3a331f" stroke="#f2c14e" stroke-width="3"/>
+  <circle cx="205" cy="148" r="20" fill="#3a331f" stroke="#f2c14e" stroke-width="3"/>
+  <circle cx="595" cy="148" r="20" fill="#3a331f" stroke="#f2c14e" stroke-width="3"/>
+  <circle cx="105" cy="208" r="19" fill="#3a2323" stroke="#e06c75" stroke-width="2"/>
+  <circle cx="295" cy="208" r="19" fill="#1f3a2a" stroke="#56c98d" stroke-width="3"/>
+  <circle cx="485" cy="208" r="19" fill="#1f3a2a" stroke="#56c98d" stroke-width="3"/>
+  <circle cx="685" cy="208" r="19" fill="#3a331f" stroke="#f2c14e" stroke-width="3"/>
+  <g fill="#2b2b2b" stroke="#4a4a4a" stroke-width="1.5">
+    <circle cx="60"  cy="262" r="16"/><circle cx="165" cy="262" r="16"/>
+    <circle cx="245" cy="262" r="16"/><circle cx="345" cy="262" r="16"/>
+    <circle cx="435" cy="262" r="16"/><circle cx="535" cy="262" r="16"/>
+  </g>
+  <circle cx="635" cy="262" r="16" fill="#1f3a2a" stroke="#56c98d" stroke-width="3"/>
+  <circle cx="735" cy="262" r="16" fill="#3a2323" stroke="#e06c75" stroke-width="2"/>
+
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="14">
+    <text x="400" y="94">21</text>
+    <text x="205" y="154">13</text>
+    <text x="595" y="154">8</text>
+    <text x="105" y="214">4</text>
+    <text x="295" y="214">9</text>
+    <text x="485" y="214">3</text>
+    <text x="685" y="214">5</text>
+  </g>
+  <g fill="#8a8a8a" text-anchor="middle" font-weight="bold" font-size="12">
+    <text x="60"  y="267">3</text><text x="165" y="267">1</text>
+    <text x="245" y="267">2</text><text x="345" y="267">7</text>
+    <text x="435" y="267">2</text><text x="535" y="267">1</text>
+  </g>
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="12">
+    <text x="635" y="267">2</text><text x="735" y="267">3</text>
+  </g>
+
+  <g fill="#9aa0a6" text-anchor="middle" font-size="11" font-family="monospace">
+    <text x="452" y="88">(0,7)</text>
+    <text x="205" y="126">(0,3)</text>
+    <text x="647" y="148">(4,7)</text>
+    <text x="105" y="240">(0,1)</text>
+    <text x="295" y="240">(2,3)</text>
+    <text x="485" y="240">(4,5)</text>
+    <text x="685" y="186">(6,7)</text>
+    <text x="635" y="292">(6,6)</text>
+    <text x="735" y="292">(7,7)</text>
+  </g>
+
+  <text x="40" y="318" fill="#9aa0a6" font-size="12"><tspan fill="#f2c14e">Yellow</tspan> = partial overlap, go deeper &#160;&#183;&#160; <tspan fill="#56c98d">Green</tspan> = full overlap, return the stored value &#160;&#183;&#160; <tspan fill="#e06c75">Red</tspan> = no overlap, return 0</text>
+  <text x="40" y="338" fill="#9aa0a6" font-size="12">Grey leaves were never visited at all &#8212; that is exactly what makes the query O(log N) instead of O(N).</text>
+
+  <!-- Trace -->
+  <rect x="25" y="362" width="750" height="146" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="386" fill="#f2c14e" font-size="13.5" font-weight="bold">Walking it</text>
+  <g font-family="monospace" font-size="12.5" fill="#d4d4d4">
+    <text x="42" y="410">root (0,7) has extra elements beyond [2,6]  &#8594; partial, explore both sides</text>
+    <text x="42" y="430">(0,3) still has extras                      &#8594; partial, explore both</text>
+    <text x="42" y="450" fill="#e06c75">(0,1) is not part of [2,6]                  &#8594; no overlap, return 0</text>
+    <text x="42" y="470" fill="#56c98d">(2,3) sits fully inside [2,6]                &#8594; full overlap, return 9</text>
+    <text x="42" y="490" fill="#56c98d">(4,5) fully inside &#8594; 3 ; (6,7) partial &#8594; (6,6) &#8594; 2 , (7,7) &#8594; 0</text>
+  </g>
+  <text x="470" y="490" fill="#56c98d" font-size="14" font-weight="bold">Answer = 9 + 3 + 2 = 14</text>
+</svg>

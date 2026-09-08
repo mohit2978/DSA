@@ -1,0 +1,79 @@
+<svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="480" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Update Query dry run <tspan fill="#9aa0a6" font-weight="normal">— a = [3, 1, 2, 7], update index 1</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- Tree -->
+  <rect x="25" y="48" width="420" height="270" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">Only ONE path is touched &#8212; highlighted in yellow</text>
+
+  <g stroke="#5b7a8c" stroke-width="1.5">
+    <line x1="215" y1="122" x2="150" y2="162"/>
+    <line x1="255" y1="122" x2="325" y2="162"/>
+    <line x1="118" y1="182" x2="85"  y2="222"/>
+    <line x1="152" y1="182" x2="190" y2="222"/>
+    <line x1="322" y1="182" x2="290" y2="222"/>
+    <line x1="356" y1="182" x2="392" y2="222"/>
+  </g>
+  <g stroke="#f2c14e" stroke-width="3">
+    <line x1="215" y1="122" x2="150" y2="162"/>
+    <line x1="152" y1="182" x2="190" y2="222"/>
+  </g>
+
+  <circle cx="235" cy="112" r="22" fill="#3a331f" stroke="#f2c14e" stroke-width="3"/>
+  <circle cx="135" cy="172" r="20" fill="#3a331f" stroke="#f2c14e" stroke-width="3"/>
+  <circle cx="340" cy="172" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="75"  cy="232" r="19" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="200" cy="232" r="19" fill="#3a2323" stroke="#e06c75" stroke-width="3"/>
+  <circle cx="280" cy="232" r="19" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="402" cy="232" r="19" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="14">
+    <text x="235" y="118">13</text>
+    <text x="135" y="178">4</text>
+    <text x="340" y="178">9</text>
+    <text x="75"  y="238">3</text>
+    <text x="200" y="238">1</text>
+    <text x="280" y="238">2</text>
+    <text x="402" y="238">7</text>
+  </g>
+  <g fill="#9aa0a6" text-anchor="middle" font-size="11" font-family="monospace">
+    <text x="285" y="112">(0,3)</text>
+    <text x="135" y="150">(0,1)</text>
+    <text x="390" y="172">(2,3)</text>
+    <text x="75"  y="264">(0,0)</text>
+    <text x="200" y="264">(1,1)</text>
+    <text x="280" y="264">(2,2)</text>
+    <text x="402" y="264">(3,3)</text>
+  </g>
+  <text x="40" y="292" fill="#e06c75" font-size="12.5">Red node = the leaf we are actually changing (index 1)</text>
+  <text x="40" y="310" fill="#9aa0a6" font-size="12">Tree array indices: root = i, left child = 2i+1, right child = 2i+2</text>
+
+  <!-- Trace -->
+  <rect x="460" y="48" width="315" height="270" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="475" y="70" fill="#f2c14e" font-size="13" font-weight="bold">Going DOWN &#8212; find the leaf</text>
+  <line x1="475" y1="80" x2="760" y2="80" stroke="#333333" stroke-width="1"/>
+
+  <g font-family="monospace" font-size="12" fill="#d4d4d4">
+    <text x="475" y="102">at node 13, range (0,3), idx = 1</text>
+    <text x="490" y="122" fill="#9aa0a6">mid = (0+3)/2 = 1</text>
+    <text x="490" y="142" fill="#56c98d">idx &lt;= mid  &#8594;  go LEFT</text>
+
+    <text x="475" y="170">at node 4, range (0,1)</text>
+    <text x="490" y="190" fill="#9aa0a6">mid = (0+1)/2 = 0</text>
+    <text x="490" y="210" fill="#56c98d">idx &gt; mid   &#8594;  go RIGHT</text>
+
+    <text x="475" y="238">at node (1,1)  &#8212;  l == r</text>
+    <text x="490" y="258" fill="#e06c75">segtree[i] = val ; return</text>
+  </g>
+  <text x="475" y="292" fill="#9aa0a6" font-size="12">There is <tspan fill="#56c98d" font-weight="bold">no partial-overlap case</tspan> here &#8212; a single</text>
+  <text x="475" y="310" fill="#9aa0a6" font-size="12">index goes either fully left or fully right.</text>
+
+  <!-- Coming back up -->
+  <rect x="25" y="332" width="750" height="130" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="356" fill="#f2c14e" font-size="13.5" font-weight="bold">Going UP &#8212; repair the whole path</text>
+  <text x="40" y="380" fill="#d4d4d4" font-size="13">After the recursive call returns, every ancestor on the path is stale, so recompute it on the way out:</text>
+  <text x="42" y="406" fill="#56c98d" font-family="monospace" font-size="13.5" font-weight="bold">segTree[i] = segTree[2*i + 1] + segTree[2*i + 2];</text>
+  <text x="40" y="432" fill="#9aa0a6" font-size="12.5">Two approaches exist. <tspan fill="#d4d4d4">Approach 1:</tspan> take the difference (new value &#8722; old value) and add it to every node that overlaps the index.</text>
+  <text x="40" y="452" fill="#9aa0a6" font-size="12.5"><tspan fill="#d4d4d4">Approach 2 (used here):</tspan> set the leaf, then rebuild each parent from its two children while unwinding. Only <tspan fill="#56c98d">O(log N)</tspan> nodes change.</text>
+</svg>

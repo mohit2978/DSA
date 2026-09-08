@@ -1,0 +1,102 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="600" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Alternating OR / XOR by level <tspan fill="#9aa0a6" font-weight="normal">— a = (1, 2, 3, 4), so n = 4 = 2&#178; and k = 2</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- Tree -->
+  <rect x="25" y="48" width="450" height="260" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The tournament bracket</text>
+
+  <g stroke="#5b7a8c" stroke-width="1.5">
+    <line x1="230" y1="118" x2="160" y2="158"/>
+    <line x1="270" y1="118" x2="340" y2="158"/>
+    <line x1="135" y1="178" x2="100" y2="218"/>
+    <line x1="165" y1="178" x2="200" y2="218"/>
+    <line x1="335" y1="178" x2="300" y2="218"/>
+    <line x1="365" y1="178" x2="400" y2="218"/>
+  </g>
+
+  <circle cx="250" cy="108" r="24" fill="#3a331f" stroke="#f2c14e" stroke-width="3"/>
+  <circle cx="150" cy="168" r="22" fill="#1c3040" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="350" cy="168" r="22" fill="#1c3040" stroke="#5b9bd5" stroke-width="2"/>
+  <circle cx="90"  cy="228" r="20" fill="#233a2c" stroke="#56c98d" stroke-width="2"/>
+  <circle cx="210" cy="228" r="20" fill="#233a2c" stroke="#56c98d" stroke-width="2"/>
+  <circle cx="290" cy="228" r="20" fill="#233a2c" stroke="#56c98d" stroke-width="2"/>
+  <circle cx="410" cy="228" r="20" fill="#233a2c" stroke="#56c98d" stroke-width="2"/>
+
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="16">
+    <text x="250" y="114">4</text>
+    <text x="150" y="174">3</text>
+    <text x="350" y="174">7</text>
+    <text x="90"  y="234">1</text>
+    <text x="210" y="234">2</text>
+    <text x="290" y="234">3</text>
+    <text x="410" y="234">4</text>
+  </g>
+
+  <text x="440" y="112" fill="#f2c14e" font-size="12" font-family="monospace" text-anchor="end">level 0</text>
+  <text x="440" y="172" fill="#5b9bd5" font-size="12" font-family="monospace" text-anchor="end">level 1</text>
+  <text x="440" y="232" fill="#56c98d" font-size="12" font-family="monospace" text-anchor="end">level 2</text>
+
+  <text x="40" y="284" fill="#d4d4d4" font-size="13" font-family="monospace">(1, 2, 3, 4) &#8594; (1 or 2 = 3, 3 or 4 = 7) &#8594; (3 xor 7 = 4)</text>
+  <text x="40" y="302" fill="#56c98d" font-size="13" font-weight="bold">The result is v = 4</text>
+
+  <!-- Level rule -->
+  <rect x="490" y="48" width="285" height="260" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="505" y="70" fill="#f2c14e" font-size="13" font-weight="bold">Which level does which operation?</text>
+  <line x1="505" y1="80" x2="760" y2="80" stroke="#333333" stroke-width="1"/>
+
+  <text x="505" y="104" fill="#d4d4d4" font-size="13">k is given, so the array has <tspan font-family="monospace">2^k</tspan> elements</text>
+  <text x="505" y="122" fill="#d4d4d4" font-size="13">and the tree has <tspan font-family="monospace" fill="#56c98d">k levels</tspan> of merging.</text>
+
+  <text x="505" y="156" fill="#f2c14e" font-size="13" font-weight="bold">if k is EVEN</text>
+  <text x="520" y="178" fill="#d4d4d4" font-family="monospace" font-size="12.5">even level &#8594; XOR</text>
+  <text x="520" y="198" fill="#d4d4d4" font-family="monospace" font-size="12.5">odd  level &#8594; OR</text>
+
+  <text x="505" y="232" fill="#f2c14e" font-size="13" font-weight="bold">if k is ODD</text>
+  <text x="520" y="254" fill="#d4d4d4" font-family="monospace" font-size="12.5">even level &#8594; OR</text>
+  <text x="520" y="274" fill="#d4d4d4" font-family="monospace" font-size="12.5">odd  level &#8594; XOR</text>
+
+  <text x="505" y="298" fill="#9aa0a6" font-size="11.5">Both cases exist so the bottom-most merge is always OR.</text>
+
+  <!-- Worked level tables -->
+  <rect x="25" y="322" width="240" height="180" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="346" fill="#f2c14e" font-size="13" font-weight="bold">n = 4, k = 2 (even)</text>
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="42" y="374">0  &#8594;  XOR</text>
+    <text x="42" y="398">1  &#8594;  OR</text>
+    <text x="42" y="422">2  &#8594;  Single Elements</text>
+  </g>
+  <text x="42" y="456" fill="#9aa0a6" font-size="12">The leaves sit at level k. The merge into</text>
+  <text x="42" y="474" fill="#9aa0a6" font-size="12">level k&#8722;1 = 1 is OR &#8212; matching the</text>
+  <text x="42" y="492" fill="#9aa0a6" font-size="12">problem's "first iteration is OR".</text>
+
+  <rect x="280" y="322" width="240" height="180" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="295" y="346" fill="#f2c14e" font-size="13" font-weight="bold">n = 32, k = 5 (odd)</text>
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="297" y="372">0  &#8594;  OR</text>
+    <text x="297" y="394">1  &#8594;  XOR</text>
+    <text x="297" y="416">2  &#8594;  OR</text>
+    <text x="297" y="438">3  &#8594;  XOR</text>
+    <text x="297" y="460">4  &#8594;  OR</text>
+    <text x="297" y="482">5  &#8594;  Single</text>
+  </g>
+
+  <rect x="535" y="322" width="240" height="180" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="550" y="346" fill="#f2c14e" font-size="13" font-weight="bold">n = 256, k = 8 (even)</text>
+  <g font-family="monospace" font-size="12" fill="#d4d4d4">
+    <text x="552" y="370">0 &#8594; XOR</text><text x="660" y="370">4 &#8594; XOR</text>
+    <text x="552" y="390">1 &#8594; OR</text> <text x="660" y="390">5 &#8594; OR</text>
+    <text x="552" y="410">2 &#8594; XOR</text><text x="660" y="410">6 &#8594; XOR</text>
+    <text x="552" y="430">3 &#8594; OR</text> <text x="660" y="430">7 &#8594; OR</text>
+    <text x="552" y="456">8 &#8594; Single Elements</text>
+  </g>
+  <text x="552" y="482" fill="#9aa0a6" font-size="12">n = 8, k = 3 (odd): 0&#8594;OR, 1&#8594;XOR,</text>
+  <text x="552" y="498" fill="#9aa0a6" font-size="12">2&#8594;OR, 3&#8594;Single.</text>
+
+  <!-- Why segment tree -->
+  <rect x="25" y="516" width="750" height="72" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="540" fill="#f2c14e" font-size="13.5" font-weight="bold">Why this is a Segment Tree and not a Fenwick Tree</text>
+  <text x="40" y="562" fill="#d4d4d4" font-size="12.5">A Fenwick Tree has no consistent notion of "levels" (it jumps by trailing zeros), and <tspan fill="#e06c75" font-weight="bold">OR is not invertible</tspan> &#8212; knowing <tspan font-family="monospace">A|B = 7</tspan> and <tspan font-family="monospace">A = 4</tspan></text>
+  <text x="40" y="580" fill="#d4d4d4" font-size="12.5">tells you nothing about B. Without an inverse the <tspan font-family="monospace">Query(R) &#8722; Query(L&#8722;1)</tspan> trick is impossible, so only a Segment Tree works here.</text>
+</svg>

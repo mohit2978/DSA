@@ -1,0 +1,31 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="700" height="420" font-family="monospace" font-size="13">
+  <rect width="700" height="420" fill="#1e1e2e" rx="10"/>
+  <text x="20" y="30" fill="#cba6f7" font-size="17" font-weight="bold">Serialize a Generic Tree</text>
+
+  <text x="20" y="58" fill="#cdd6f4">Convert tree → array (same format used in construct). Traversal: Pre-order.</text>
+  <text x="20" y="75" fill="#cdd6f4">Add node.data before recursing into children, then add -1 after all children are done.</text>
+
+  <!-- Code -->
+  <rect x="20" y="88" width="660" height="130" fill="#181825" rx="8" stroke="#313244"/>
+  <text x="35" y="110" fill="#89dceb">public static void serialize(Node node, ArrayList&lt;Integer&gt; list) {</text>
+  <text x="55" y="130" fill="#cdd6f4">  list.add(node.data);  // node pre-order (before children)</text>
+  <text x="55" y="150" fill="#cdd6f4">  for (Node child : node.children) {</text>
+  <text x="75" y="168" fill="#a6e3a1">    serialize(child, list);  // recurse into subtrees</text>
+  <text x="55" y="185" fill="#cdd6f4">  }</text>
+  <text x="55" y="202" fill="#f38ba8">  list.add(-1);             // sentinel: signals end of children</text>
+  <text x="35" y="220" fill="#89dceb">}</text>
+
+  <!-- Dry Run -->
+  <text x="20" y="250" fill="#f9e2af" font-size="13" font-weight="bold">Dry Run (Tree: 10→[20→[50,60], 30]):</text>
+  <rect x="20" y="260" width="660" height="100" fill="#313244" rx="6" stroke="#6c7086"/>
+  <text x="35" y="280" fill="#cdd6f4">serialize(10): add 10 → recurse 20 → add 20 → recurse 50 → add 50 → add -1</text>
+  <text x="35" y="297" fill="#cdd6f4">             → recurse 60 → add 60 → add -1 → add -1 (end of 20's children)</text>
+  <text x="35" y="314" fill="#cdd6f4">             → recurse 30 → add 30 → add -1 → add -1 (end of 10's children)</text>
+  <text x="35" y="340" fill="#a6e3a1">Result: [10, 20, 50, -1, 60, -1, -1, 30, -1, -1]</text>
+  <text x="35" y="357" fill="#6c7086">// This array can be passed back to construct() to rebuild the exact same tree!</text>
+
+  <!-- Complexity -->
+  <rect x="20" y="375" width="660" height="35" fill="#181825" rx="6" stroke="#cba6f7" stroke-width="1"/>
+  <text x="35" y="398" fill="#f9e2af">Time: O(N)  — one pass; each node adds 2 entries (data + -1)</text>
+  <text x="430" y="398" fill="#f9e2af">Space: O(N)  — output list + O(H) stack</text>
+</svg>

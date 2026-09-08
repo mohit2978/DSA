@@ -1,0 +1,30 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="700" height="420" font-family="monospace" font-size="13">
+  <rect width="700" height="420" fill="#1e1e2e" rx="10"/>
+  <text x="20" y="30" fill="#cba6f7" font-size="17" font-weight="bold">Generic Tree — Size, Maximum, Minimum</text>
+
+  <!-- Size -->
+  <text x="20" y="60" fill="#f9e2af" font-size="14" font-weight="bold">Size — Number of nodes in the tree</text>
+  <rect x="20" y="70" width="660" height="100" fill="#313244" rx="8" stroke="#89b4fa" stroke-width="1.5"/>
+  <text x="35" y="92" fill="#89dceb">int size(Node node) {</text>
+  <text x="55" y="112" fill="#cdd6f4">  int sz = 1;  // count current node</text>
+  <text x="55" y="130" fill="#cdd6f4">  for (Node child : node.children) {</text>
+  <text x="75" y="148" fill="#a6e3a1">    sz += size(child);  // add subtree sizes recursively</text>
+  <text x="55" y="163" fill="#cdd6f4">  }</text>
+  <text x="35" y="178" fill="#89dceb">  return sz;</text>
+  <text x="35" y="192" fill="#89dceb">}</text>
+
+  <!-- Max -->
+  <text x="20" y="225" fill="#f9e2af" font-size="14" font-weight="bold">Maximum — Largest value in tree</text>
+  <rect x="20" y="235" width="660" height="80" fill="#313244" rx="8" stroke="#89b4fa" stroke-width="1.5"/>
+  <text x="35" y="255" fill="#89dceb">int max(Node node) {</text>
+  <text x="55" y="273" fill="#cdd6f4">  int m = node.data;</text>
+  <text x="55" y="290" fill="#cdd6f4">  for (Node child : node.children) m = Math.max(m, max(child));</text>
+  <text x="35" y="308" fill="#89dceb">  return m;</text>
+  <text x="35" y="322" fill="#89dceb">}</text>
+
+  <!-- Complexity -->
+  <rect x="20" y="345" width="660" height="60" fill="#181825" rx="8" stroke="#cba6f7" stroke-width="1"/>
+  <text x="35" y="368" fill="#cba6f7" font-weight="bold">Complexity (for all three — size, max, min):</text>
+  <text x="35" y="390" fill="#f9e2af">Time: O(N) — visit every node once</text>
+  <text x="400" y="390" fill="#f9e2af">Space: O(H) — recursion stack depth = tree height</text>
+</svg>

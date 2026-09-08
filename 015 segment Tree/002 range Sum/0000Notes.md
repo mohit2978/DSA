@@ -1,4 +1,4 @@
-# Range Sum Query - Mutable
+# Q1. Range Sum Query - Mutable
 
 Link--> https://leetcode.com/problems/range-sum-query-mutable/
 
@@ -119,7 +119,95 @@ public:
  * int param_2 = obj->sumRange(left,right);
  */
  ```
-![alt text](Scanned_20250807-1558-03.jpg)
+
+### Java code for Q1 (was missing; same logic as the C++ above)
+
+```java
+class NumArray {
+    private int[] segtree;
+    private int n;
+
+    private void buildTree(int[] nums, int s, int e, int i) {
+        if (s == e) {
+            segtree[i] = nums[s];
+            return;
+        }
+        int mid = s + (e - s) / 2;
+        buildTree(nums, s, mid, 2 * i + 1);
+        buildTree(nums, mid + 1, e, 2 * i + 2);
+        segtree[i] = segtree[2 * i + 1] + segtree[2 * i + 2];
+    }
+
+    private void updateTree(int idx, int val, int s, int e, int i) {
+        if (s == e) {
+            segtree[i] = val;
+            return;
+        }
+        int mid = s + (e - s) / 2;
+        if (idx <= mid) updateTree(idx, val, s, mid, 2 * i + 1);
+        else updateTree(idx, val, mid + 1, e, 2 * i + 2);
+        segtree[i] = segtree[2 * i + 1] + segtree[2 * i + 2];
+    }
+
+    private int getSum(int qs, int qe, int s, int e, int i) {
+        if (qe < s || e < qs) return 0;              // No overlap
+        if (qs <= s && e <= qe) return segtree[i];   // Total overlap
+
+        int mid = s + (e - s) / 2;
+        return getSum(qs, qe, s, mid, 2 * i + 1) + getSum(qs, qe, mid + 1, e, 2 * i + 2);
+    }
+
+    public NumArray(int[] nums) {
+        n = nums.length;
+        if (n > 0) {
+            segtree = new int[4 * n];
+            buildTree(nums, 0, n - 1, 0);
+        }
+    }
+
+    public void update(int index, int val) {
+        if (n > 0) updateTree(index, val, 0, n - 1, 0);
+    }
+
+    public int sumRange(int left, int right) {
+        if (n == 0) return 0;
+        return getSum(left, right, 0, n - 1, 0);
+    }
+}
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * NumArray obj = new NumArray(nums);
+ * obj.update(index, val);
+ * int param_2 = obj.sumRange(left, right);
+ */
+```
+
+**Complexity — Q1 (Range Sum Query - Mutable):**
+
+* **Constructor — Time `O(N)`, Space `O(4N) = O(N)`.** `buildTree` touches every one of the roughly `2N` tree nodes exactly once, doing `O(1)` work each. It is *not* `O(N log N)` — the recurrence is `T(N) = 2T(N/2) + O(1)`, whose leaves dominate. The `4N` allocation is the safe upper bound for heap-style indexing (see the derivation in the intro notes).
+* **`update` — Time `O(log N)`, Space `O(log N)` stack.** A single index goes entirely left or entirely right at every node, so exactly one root-to-leaf path is walked. On the way back out each ancestor is recomputed in `O(1)`. This is precisely where a prefix-sum array loses: the same update costs it `O(N)`.
+* **`sumRange` — Time `O(log N)`, Space `O(log N)` stack.** At each level at most **2 nodes** can partially overlap the query, because a range is a line and a line has only 2 ends. Everything else terminates immediately (full overlap → return stored value, no overlap → return 0). Two chains of depth `log N` gives `O(log N)`.
+* **Why this passes the constraints:** with `N` and the call count both up to `3 × 10^4`, a naive `O(N)` `sumRange` would be about `9 × 10^8` operations and TLE. At `O(log N) ≈ 15` per call, the total is around `4.5 × 10^5` — trivially fast.
+### The three conditions, written out
+
+```text
+[qs, qe]  →  query index
+[s,  e ]  →  array index / segment tree index
+
+if (qe < s || e < qs)          →  Out of Range
+                                  return 0;
+
+if (qs <= s && e <= qe)        →  [s, e] is part of [qs, qe]
+                                  with NO extra elements
+                                  return segTree[i];
+
+else { ... }                   →  extra elements are also there
+                                  so explore left and right
+```
+
+**Time Complexity.** In the worst case there can be **at most 2 partial overlaps**, so only 2 times do we need to divide, and in such a case we need to go down to the leaf — giving **`O(log N)`**.
+
  ## Segment Tree Query: The "Search and Combine" Mission
 
 The `sumRange` query works by decomposing your target range $[L, R]$ into a few precomputed "blocks" (nodes) that already exist in the tree. Instead of summing every single index, you are just summing the values of a few strategic nodes.
@@ -216,6 +304,10 @@ Imagine an array of size 8 (indices 0–7). You want the sum from **2 to 6**.
         * **Node (7):** No overlap. Returns **0**.
 
 **Final Result:** `Sum(2-3) + Sum(4-5) + Val(6)`. You only had to touch 3 "summary" nodes instead of 5 individual elements.
+
+![Range sum dry run on 8 elements](img-rangesum-dryrun-8elem.svg)
+
+With `a = [3, 1, 2, 7, 2, 1, 2, 3]` the three surviving nodes are `Sum(2-3) = 9`, `Sum(4-5) = 3` and `Val(6) = 2`, so the answer is **14**.
 
 
 
@@ -318,6 +410,59 @@ class Solution {
         
     }
 ```
+
+### Java code for the "Sum of Query II" variant above (was missing; same logic as the C++)
+
+```java
+class Solution {
+    private void buildSegmentTree(int i, int l, int r, int[] segmentTree, int[] arr) {
+        if (l == r) {
+            segmentTree[i] = arr[l];
+            return;
+        }
+
+        int mid = l + (r - l) / 2;
+        buildSegmentTree(2 * i + 1, l, mid, segmentTree, arr);
+        buildSegmentTree(2 * i + 2, mid + 1, r, segmentTree, arr);
+        segmentTree[i] = segmentTree[2 * i + 1] + segmentTree[2 * i + 2];
+    }
+
+    private int querySegmentTree(int start, int end, int i, int l, int r, int[] segmentTree) {
+        if (l > end || r < start) {
+            return 0;
+        }
+
+        if (l >= start && r <= end) {
+            return segmentTree[i];
+        }
+
+        int mid = l + (r - l) / 2;
+        return querySegmentTree(start, end, 2 * i + 1, l,       mid, segmentTree) +
+               querySegmentTree(start, end, 2 * i + 2, mid + 1, r,   segmentTree);
+    }
+
+    public ArrayList<Integer> querySum(int n, int[] arr, int q, int[] queries) {
+        int[] segmentTree = new int[4 * n];
+
+        buildSegmentTree(0, 0, n - 1, segmentTree, arr);
+
+        ArrayList<Integer> result = new ArrayList<>();
+        for (int i = 0; i < 2 * q; i += 2) {
+            int start = queries[i] - 1;       // Input is in 1 based indexing
+            int end   = queries[i + 1] - 1;   // Input is in 1 based indexing
+
+            result.add(querySegmentTree(start, end, 0, 0, n - 1, segmentTree));
+        }
+
+        return result;
+    }
+}
+```
+
+**Complexity — the query-only variant:**
+
+* **Time — `O(N + Q log N)`.** One `O(N)` build, then `O(log N)` per query. Since this version never updates, a prefix-sum array would give `O(N + Q)` and beat it — the Segment Tree is written here only because it survives the moment updates enter the problem.
+* **Space — `O(4N) = O(N)`** for the tree, `O(log N)` recursion stack, `O(Q)` for the results.
 
 
 

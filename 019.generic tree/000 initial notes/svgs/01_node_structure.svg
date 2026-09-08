@@ -1,0 +1,22 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="520" height="320" font-family="monospace" font-size="14">
+  <rect width="520" height="320" fill="#1e1e2e" rx="10"/>
+  <text x="20" y="35" fill="#cba6f7" font-size="18" font-weight="bold">Generic Tree — Node Structure</text>
+  <rect x="20" y="60" width="260" height="120" fill="#313244" rx="8" stroke="#89b4fa" stroke-width="1.5"/>
+  <text x="35" y="85" fill="#89dceb" font-size="15" font-weight="bold">class Node {</text>
+  <text x="55" y="110" fill="#a6e3a1">int data;</text>
+  <text x="55" y="135" fill="#a6e3a1">ArrayList&lt;Node&gt; children</text>
+  <text x="75" y="155" fill="#a6e3a1">= new ArrayList&lt;&gt;();</text>
+  <text x="35" y="175" fill="#89dceb" font-size="15">}</text>
+  <line x1="285" y1="120" x2="340" y2="120" stroke="#f38ba8" stroke-width="2" marker-end="url(#arrow)"/>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f38ba8"/>
+    </marker>
+  </defs>
+  <rect x="345" y="95" width="155" height="55" fill="#45475a" rx="6" stroke="#fab387" stroke-width="1"/>
+  <text x="360" y="118" fill="#fab387" font-size="13">A generic tree</text>
+  <text x="360" y="138" fill="#fab387" font-size="13">node structure</text>
+  <rect x="20" y="200" width="480" height="40" fill="#313244" rx="6" stroke="#f9e2af" stroke-width="1"/>
+  <text x="35" y="225" fill="#f9e2af" font-size="13">// Don't forget: children list must always be initialized!</text>
+  <text x="20" y="280" fill="#cdd6f4" font-size="14">Used to represent a Family Tree and other hierarchical structures.</text>
+</svg>

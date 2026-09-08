@@ -1,0 +1,90 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="600" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Petya and Array &#8212; prefix sums + multiset <tspan fill="#9aa0a6" font-weight="normal">a = [5, -1, 3, 4, -1], t = 4 &#8594; answer 5</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- Derivation -->
+  <rect x="25" y="48" width="360" height="180" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">Turning the condition into a counting query</text>
+  <g font-family="monospace" font-size="13.5" fill="#d4d4d4">
+    <text x="42" y="98">We want a segment to be  &lt; t</text>
+    <text x="42" y="124">prefix[j] - prefix[i]  &lt;  t</text>
+    <text x="42" y="150">prefix[j] - t  &lt;  prefix[i]</text>
+    <text x="42" y="180" fill="#56c98d">prefix[i]  &gt;  prefix[j] - t</text>
+  </g>
+  <text x="42" y="208" fill="#9aa0a6" font-size="12">So for each j, count how many earlier prefixes</text>
+  <text x="42" y="222" fill="#9aa0a6" font-size="12">are strictly greater than prefix[j] - t.</text>
+
+  <!-- Multiset explanation -->
+  <rect x="400" y="48" width="375" height="180" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="415" y="70" fill="#f2c14e" font-size="13" font-weight="bold">Why a multiset</text>
+  <text x="415" y="94" fill="#d4d4d4" font-size="13">A <tspan font-weight="bold">multiset</tspan> is a set that <tspan fill="#56c98d">contains duplicates</tspan></text>
+  <text x="415" y="112" fill="#d4d4d4" font-size="13">and keeps them <tspan fill="#56c98d">in sorted order</tspan>.</text>
+  <text x="415" y="140" fill="#d4d4d4" font-size="13">Take <tspan font-family="monospace">upper_bound(prefix[j] - t)</tspan>. Because the</text>
+  <text x="415" y="158" fill="#d4d4d4" font-size="13">multiset is sorted, <tspan fill="#f2c14e">everything from that iterator</tspan></text>
+  <text x="415" y="176" fill="#d4d4d4" font-size="13"><tspan fill="#f2c14e">to the end</tspan> is &gt; prefix[j] - t.</text>
+  <text x="415" y="204" fill="#d4d4d4" font-family="monospace" font-size="12.5">count += distance(it, s.end())</text>
+  <text x="415" y="222" fill="#9aa0a6" font-size="12">it = first element &gt; prefix[j] - t &#183; s.end() = end of multiset</text>
+
+  <!-- Prefix table -->
+  <rect x="25" y="242" width="750" height="96" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="264" fill="#f2c14e" font-size="13" font-weight="bold">Prefix array for a = [5, -1, 3, 4, -1]</text>
+  <g font-family="monospace" font-size="12" fill="#9aa0a6" text-anchor="middle">
+    <text x="120" y="288">p[0]</text><text x="215" y="288">p[1]</text><text x="310" y="288">p[2]</text>
+    <text x="405" y="288">p[3]</text><text x="500" y="288">p[4]</text><text x="595" y="288">p[5]</text>
+  </g>
+  <g stroke="#5b9bd5" stroke-width="1.5" fill="#2b2b2b">
+    <rect x="85"  y="296" width="70" height="30"/><rect x="180" y="296" width="70" height="30"/>
+    <rect x="275" y="296" width="70" height="30"/><rect x="370" y="296" width="70" height="30"/>
+    <rect x="465" y="296" width="70" height="30"/><rect x="560" y="296" width="70" height="30"/>
+  </g>
+  <g font-family="monospace" font-size="14" fill="#d4d4d4" text-anchor="middle" font-weight="bold">
+    <text x="120" y="317">0</text><text x="215" y="317">5</text><text x="310" y="317">4</text>
+    <text x="405" y="317">7</text><text x="500" y="317">11</text><text x="595" y="317">10</text>
+  </g>
+  <text x="650" y="317" fill="#9aa0a6" font-size="12">p[0] = 0 is seeded first</text>
+
+  <!-- Trace table -->
+  <rect x="25" y="352" width="750" height="200" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="374" fill="#f2c14e" font-size="13" font-weight="bold">Walking j from 1 to 5</text>
+  <line x1="40" y1="384" x2="760" y2="384" stroke="#333333" stroke-width="1"/>
+
+  <g font-family="monospace" font-size="11.5" fill="#9aa0a6">
+    <text x="42"  y="402">j</text>
+    <text x="80"  y="402">p[j]</text>
+    <text x="140" y="402">p[j] - t</text>
+    <text x="235" y="402">multiset before</text>
+    <text x="410" y="402">elements &gt; p[j]-t</text>
+    <text x="560" y="402">added</text>
+    <text x="625" y="402">count</text>
+    <text x="690" y="402">segments</text>
+  </g>
+  <line x1="40" y1="410" x2="760" y2="410" stroke="#333333" stroke-width="1"/>
+
+  <g font-family="monospace" font-size="11.5" fill="#d4d4d4">
+    <text x="42"  y="430">1</text><text x="80" y="430">5</text><text x="140" y="430">1</text>
+    <text x="235" y="430">{0}</text><text x="410" y="430">none</text>
+    <text x="560" y="430">0</text><text x="625" y="430">0</text><text x="690" y="430">-</text>
+
+    <text x="42"  y="452">2</text><text x="80" y="452">4</text><text x="140" y="452">0</text>
+    <text x="235" y="452">{0, 5}</text><text x="410" y="452" fill="#56c98d">{5}</text>
+    <text x="560" y="452" fill="#56c98d">1</text><text x="625" y="452">1</text><text x="690" y="452" fill="#56c98d">[2,2]</text>
+
+    <text x="42"  y="474">3</text><text x="80" y="474">7</text><text x="140" y="474">3</text>
+    <text x="235" y="474">{0, 4, 5}</text><text x="410" y="474" fill="#56c98d">{4, 5}</text>
+    <text x="560" y="474" fill="#56c98d">2</text><text x="625" y="474">3</text><text x="690" y="474" fill="#56c98d">[2,3] [3,3]</text>
+
+    <text x="42"  y="496">4</text><text x="80" y="496">11</text><text x="140" y="496">7</text>
+    <text x="235" y="496">{0, 4, 5, 7}</text><text x="410" y="496">none</text>
+    <text x="560" y="496">0</text><text x="625" y="496">3</text><text x="690" y="496">-</text>
+
+    <text x="42"  y="518">5</text><text x="80" y="518">10</text><text x="140" y="518">6</text>
+    <text x="235" y="518">{0, 4, 5, 7, 11}</text><text x="410" y="518" fill="#56c98d">{7, 11}</text>
+    <text x="560" y="518" fill="#56c98d">2</text><text x="625" y="518">5</text><text x="690" y="518" fill="#56c98d">[4,5] [5,5]</text>
+  </g>
+  <line x1="40" y1="530" x2="760" y2="530" stroke="#333333" stroke-width="1"/>
+  <text x="42" y="546" fill="#56c98d" font-size="13" font-weight="bold">Total = 5 &#8212; matching the expected output</text>
+
+  <text x="25" y="574" fill="#9aa0a6" font-size="12">Each match at column j gives a segment ending at r = j, starting at l = i + 1 where p[i] was the matching prefix.</text>
+  <text x="25" y="592" fill="#9aa0a6" font-size="12">Note <tspan font-family="monospace">distance()</tspan> on a multiset is itself O(size), which is why this whole solution is O(n&#178;) rather than O(n log n).</text>
+</svg>

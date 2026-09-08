@@ -1,6 +1,105 @@
-# Notes 
 
-![alt text](image.png)
+
+## Q1. Range Minimum Queries
+
+Given an array `arr` of `n` integers, your task is to process queries of the following types:
+
+1. **update** the value at position `k` to `u`
+2. what is the **minimum value in range `[a, b]`**?
+
+Return an array containing answers for **type 2 queries** respectively.
+
+### Constraints
+
+* `1 <= n, queries.length <= 10^5`
+* `1 <= a <= b <= n`
+* `1 <= u <= n`
+* `1 <= arri , u <= 10^9`
+
+### Example
+
+**Input**
+
+```text
+n = 8 , arr = [3, 2, 4, 5, 1, 1, 5, 3]
+queries = [
+    [2, 1, 4],
+    [2, 5, 6],
+    [1, 2, 3],
+    [2, 1, 4]
+]
+```
+
+**Output**
+
+```text
+[2, 1, 3]
+```
+
+Reading the queries (they are **1-based**, which is why the code subtracts 1):
+
+```text
+[2, 1, 4]  →  type 2: min of arr[1..4] = min(3, 2, 4, 5) = 2
+[2, 5, 6]  →  type 2: min of arr[5..6] = min(1, 1)       = 1
+[1, 2, 3]  →  type 1: set position 2 to 3, so arr becomes
+                      [3, 3, 4, 5, 1, 1, 5, 3]
+[2, 1, 4]  →  type 2: min of arr[1..4] = min(3, 3, 4, 5) = 3
+```
+
+### Dry run
+
+![Range minimum query dry run](img-rmq-dryrun.svg)
+
+The min-tree for `arr = [3, 2, 4, 5, 1, 1, 5, 3]` — same shape as the sum tree, **parent = min(left, right)**:
+
+```text
+                        1  (0,7)
+                     /         \
+             2 (0,3)             1 (4,7)
+             /     \             /     \
+      2 (0,1)   4 (2,3)   1 (4,5)   3 (6,7)
+      /   \      /   \     /   \     /   \
+     3     2    4     5   1     1   5     3
+   (0,0)(1,1)(2,2)(3,3)(4,4)(5,5)(6,6)(7,7)
+```
+
+**Query `[2, 1, 4]`** — 1-based `[1,4]` becomes 0-based `(0,3)`:
+
+```text
+(0,7) vs (0,3)  → partial, explore both
+    (0,3) vs (0,3)  → FULL overlap → return 2
+    (4,7) vs (0,3)  → NO overlap   → return INT_MAX
+min(2, INT_MAX) = 2
+```
+
+**Query `[2, 5, 6]`** — 0-based `(4,5)`:
+
+```text
+(0,7) partial → (0,3) NO overlap → INT_MAX
+              → (4,7) partial
+                    (4,5) FULL overlap → return 1
+                    (6,7) NO overlap   → INT_MAX
+answer = 1
+```
+
+**Update `[1, 2, 3]`** — set position 2 (1-based) = index 1 to the value 3. Only the path `(0,7) → (0,3) → (0,1) → (1,1)` is touched:
+
+```text
+leaf (1,1):  2 → 3
+(0,1) = min(3, 3) = 3
+(0,3) = min(3, 4) = 3
+(0,7) = min(3, 1) = 1
+```
+
+**Query `[2, 1, 4]` again** — `(0,3)` now holds 3, so the answer is **3**.
+
+Final output: **`[2, 1, 3]`** — the update query itself produces no output.
+
+### The only two changes from a Range Sum tree
+
+* the merge becomes `segtree[i] = min(segtree[2i+1], segtree[2i+2])`;
+* the "no overlap" branch returns **`INT_MAX`** instead of `0`, because **`INT_MAX` is the identity for `min`** (`min(x, INT_MAX) = x`), exactly as `0` is the identity for `+`. Returning `0` here would be a silent bug — every query would come back as 0.
+
 
 
 cannot use fenwick tree here 
@@ -217,6 +316,100 @@ vector<int> solve(int n, vector<int>a, vector<vector<int>> queries){
     return res;
 }
 ```
+
+### Java code for Q1 (was missing; same logic as the C++ above)
+
+```java
+import java.util.*;
+
+class STree {
+    private int[] segtree;
+    private int n = 0;
+    private int sz = 0;
+
+    private void buildTree(int[] nums, int s, int e, int i) {
+
+        if (s == e) {
+            segtree[i] = nums[s];
+            return;
+        }
+
+        int mid = (s + e) / 2;
+        buildTree(nums, s, mid, 2 * i + 1);
+        buildTree(nums, mid + 1, e, 2 * i + 2);
+
+        segtree[i] = Math.min(segtree[2 * i + 1], segtree[2 * i + 2]);
+    }
+
+    private void updateTree(int idx, int val, int s, int e, int i) {
+
+        if (s == e) {
+            segtree[i] = val;
+            return;
+        }
+        int mid = (s + e) / 2;
+        if (idx <= mid) updateTree(idx, val, s, mid, 2 * i + 1);
+        else updateTree(idx, val, mid + 1, e, 2 * i + 2);
+
+        segtree[i] = Math.min(segtree[2 * i + 1], segtree[2 * i + 2]);
+    }
+
+    private int getMin(int l, int r, int s, int e, int i) {
+
+        if (r < s || e < l) return Integer.MAX_VALUE;  // see here returning INT_MAX
+
+        if (l <= s && e <= r) return segtree[i];
+
+        int mid = (s + e) / 2;
+
+        return Math.min(getMin(l, r, s, mid, 2 * i + 1),
+                        getMin(l, r, mid + 1, e, 2 * i + 2));
+    }
+
+    public STree(int[] nums) {
+        n = nums.length;
+        sz = 4 * n;
+        segtree = new int[sz];
+        buildTree(nums, 0, n - 1, 0);
+    }
+
+    public void update(int index, int val) {
+        updateTree(index, val, 0, n - 1, 0);
+    }
+
+    public int minRange(int left, int right) {
+        return getMin(left, right, 0, n - 1, 0);
+    }
+}
+
+class Solution {
+    public static List<Integer> solve(int n, int[] a, int[][] queries) {
+
+        STree st = new STree(a);
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < queries.length; i++) {
+            if (queries[i][0] == 1) {
+                int idx = queries[i][1] - 1;
+                int val = queries[i][2];
+                st.update(idx, val);
+            } else {
+                int l = queries[i][1] - 1;   // as in queries 1-based indexing used
+                int r = queries[i][2] - 1;
+                res.add(st.minRange(l, r));
+            }
+        }
+        return res;
+    }
+}
+```
+
+**Complexity — Q1 (Range Minimum Queries):**
+
+* **Build — Time `O(N)`, Space `O(4N) = O(N)`.** Every one of the roughly `2N` nodes is filled exactly once with a single `min` comparison. The recurrence `T(N) = 2T(N/2) + O(1)` resolves to `O(N)`; the leaves dominate, not the `log N` depth.
+* **Type 1 (update) — `O(log N)` time, `O(log N)` stack.** A single index is either entirely left or entirely right of `mid`, so exactly one root-to-leaf path is walked; each ancestor is then re-mined in `O(1)` while unwinding.
+* **Type 2 (min query) — `O(log N)` time, `O(log N)` stack.** At any level at most **2 nodes** partially overlap the query — a range is a line and a line has 2 ends — and every other node answers in `O(1)`. Two chains of depth `log N` gives `O(log N)`.
+* **Overall — `O(N + Q log N)` time, `O(N)` space.** With `N` and `Q` both up to `10^5` that is about `1.8 × 10^6` operations.
+* **Why the update is what forces a Segment Tree here.** A **Sparse Table** answers static RMQ in `O(1)` per query after `O(N log N)` preprocessing — strictly better than this — but it cannot handle updates at all, since a changed value invalidates every overlapping block. A **Fenwick Tree** is also out (see the reasoning below): `min` has no inverse, so the `Query(R) − Query(L−1)` trick it depends on simply does not exist. The Segment Tree is the only one of the three that gives `O(log N)` for **both** operations.
 
 
 
