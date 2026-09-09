@@ -1,4 +1,6 @@
-# Notes 
+## Question 1. XOR of all integers in an inclusive range
+
+
 
 ## Brute 
 
@@ -60,6 +62,18 @@ int main() {
     return 0;
 }
 
+```
+
+### Java
+
+```java
+class Solution {
+    public int findRangeXOR(int l,int r) {
+        int ans=0;
+        for(long i=l;i<=r;++i) ans^=(int)i;
+        return ans;
+    }
+}
 ```
 
 ## My sol
@@ -185,3 +199,27 @@ int main() {
     return 0;
 }
 ```
+
+### Java
+
+```java
+class Solution {
+    private int xorTillN(int n) {
+        if(n<0) return 0;
+        if(n%4==0) return n;
+        if(n%4==1) return 1;
+        if(n%4==2) return n+1;
+        return 0;
+    }
+    public int findRangeXOR(int l,int r) { return xorTillN(l-1)^xorTillN(r); }
+}
+```
+## Dry run and complexity reasons
+
+For nonnegative endpoints 0 <= L <= R, let prefix(n)=0 XOR 1 XOR ... XOR n and prefix(-1)=0. Then XOR(L..R)=prefix(R) XOR prefix(L-1), since every value below L occurs in both prefixes and cancels. A four-number block beginning at a multiple of four has XOR zero. The prefix cycle is n,1,n+1,0 for n modulo four equal to 0,1,2,3 respectively.
+
+
+
+**Brute complexity:** O(R-L+1) time, because every number is processed once; O(1) auxiliary space for the accumulator. The C++ loop as currently written assumes incrementing its endpoint does not overflow int; if R is INT_MAX, use a wider loop counter as in the Java companion.
+
+**Prefix-pattern complexity:** O(1) time and O(1) auxiliary space, because two remainder checks and one final XOR replace the range scan. The Java prefix helper explicitly handles n=-1 for L=0.

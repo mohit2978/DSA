@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" width="960" height="560">
+  <defs>
+    <linearGradient id="bgGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <filter id="shadow4" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="560" rx="16" fill="url(#bgGrad4)" stroke="#334155" stroke-width="2"/>
+
+  <!-- Title -->
+  <text x="480" y="40" text-anchor="middle" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="bold">
+    LeetCode 70: Climbing Stairs - Recurrence &amp; State Transitions
+  </text>
+  <text x="480" y="65" text-anchor="middle" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13">
+    Choice Diagram from Step n: Take 1 step to (n-1) or take 2 steps to (n-2)
+  </text>
+
+  <!-- Left: Staircase Visual -->
+  <g transform="translate(60, 100)" filter="url(#shadow4)">
+    <rect width="400" height="420" rx="12" fill="#111827" stroke="#374151"/>
+    <text x="25" y="32" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="15" font-weight="bold">
+      Physical Staircase &amp; Choices
+    </text>
+
+    <!-- Stairs steps -->
+    <!-- Step 0 (Ground) -->
+    <path d="M 40 370 L 110 370 L 110 300 L 180 300 L 180 230 L 250 230 L 250 160 L 320 160"
+          fill="none" stroke="#475569" stroke-width="4" stroke-linejoin="round"/>
+
+    <!-- Step fills -->
+    <polygon points="40,370 110,370 110,390 40,390" fill="#1e293b"/>
+    <polygon points="110,300 180,300 180,390 110,390" fill="#1e293b"/>
+    <polygon points="180,230 250,230 250,390 180,390" fill="#1e293b"/>
+    <polygon points="250,160 320,160 320,390 250,390" fill="#1e293b"/>
+
+    <!-- Step Labels -->
+    <text x="75" y="360" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="13" font-weight="bold">0</text>
+    <text x="145" y="290" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="13" font-weight="bold">1</text>
+    <text x="215" y="220" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="13" font-weight="bold">2</text>
+    <text x="285" y="150" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">3 (Top)</text>
+
+    <!-- Jump 1 step: from 3 to 2 -->
+    <path d="M 285 160 C 270 180, 240 185, 225 210" fill="none" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <text x="285" y="200" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold">1 step (n-1)</text>
+
+    <!-- Jump 2 steps: from 3 to 1 -->
+    <path d="M 270 160 C 220 180, 180 230, 155 280" fill="none" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#arrowAmber)"/>
+    <text x="175" y="250" fill="#f59e0b" font-family="monospace" font-size="12" font-weight="bold">2 steps (n-2)</text>
+
+    <!-- Base Case Notes -->
+    <text x="25" y="330" fill="#a7f3d0" font-family="monospace" font-size="12">&#8226; Step 0: 1 way (At top!)</text>
+    <text x="25" y="355" fill="#fca5a5" font-family="monospace" font-size="12">&#8226; Step &lt; 0: 0 ways (Overshot)</text>
+  </g>
+
+  <!-- Right: Faith & Recurrence Tree -->
+  <g transform="translate(480, 100)" filter="url(#shadow4)">
+    <rect width="420" height="420" rx="12" fill="#111827" stroke="#374151"/>
+    <text x="25" y="32" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="15" font-weight="bold">
+      Faith &amp; Recurrence Relation
+    </text>
+
+    <!-- Recurrence Equation Box -->
+    <g transform="translate(25, 50)">
+      <rect width="370" height="75" rx="8" fill="#1e293b" stroke="#0284c7"/>
+      <text x="15" y="28" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">
+        f(n) = f(n - 1) + f(n - 2)
+      </text>
+      <text x="15" y="55" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12">
+        Total ways = (ways after 1 step) + (ways after 2 steps)
+      </text>
+    </g>
+
+    <!-- Tree diagram for n = 3 -->
+    <g transform="translate(25, 145)">
+      <!-- Lines -->
+      <line x1="185" y1="20" x2="100" y2="70" stroke="#64748b" stroke-width="2"/>
+      <line x1="185" y1="20" x2="270" y2="70" stroke="#64748b" stroke-width="2"/>
+
+      <line x1="100" y1="85" x2="60" y2="135" stroke="#64748b" stroke-width="1.8"/>
+      <line x1="100" y1="85" x2="140" y2="135" stroke="#64748b" stroke-width="1.8"/>
+
+      <line x1="60" y1="150" x2="35" y2="195" stroke="#64748b" stroke-width="1.5"/>
+      <line x1="60" y1="150" x2="85" y2="195" stroke="#64748b" stroke-width="1.5"/>
+
+      <!-- Level 0 -->
+      <circle cx="185" cy="20" r="18" fill="#0284c7"/>
+      <text x="185" y="25" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold">f(3)</text>
+
+      <!-- Level 1 -->
+      <circle cx="100" cy="80" r="17" fill="#0369a1"/>
+      <text x="100" y="84" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold">f(2)</text>
+
+      <circle cx="270" cy="80" r="17" fill="#059669"/>
+      <text x="270" y="84" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold">f(1)</text>
+
+      <!-- Level 2 -->
+      <circle cx="60" cy="145" r="16" fill="#0369a1"/>
+      <text x="60" y="149" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold">f(1)</text>
+
+      <circle cx="140" cy="145" r="16" fill="#059669"/>
+      <text x="140" y="149" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold">f(0)</text>
+
+      <!-- Level 3 -->
+      <circle cx="35" cy="200" r="14" fill="#059669"/>
+      <text x="35" y="204" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="9" font-weight="bold">f(0)</text>
+
+      <circle cx="85" cy="200" r="14" fill="#dc2626"/>
+      <text x="85" y="204" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="9" font-weight="bold">f(-1)</text>
+    </g>
+
+    <!-- Tabulation Base Case Insight -->
+    <g transform="translate(25, 290)">
+      <rect width="370" height="110" rx="8" fill="#1e293b" stroke="#334155"/>
+      <text x="12" y="22" fill="#fbbf24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold">
+        TABULATION BASE CASE REQUIREMENT:
+      </text>
+      <text x="12" y="44" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">
+        &#8226; In recursion, <tspan font-family="monospace">f(-1) = 0</tspan> handled naturally.
+      </text>
+      <text x="12" y="64" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">
+        &#8226; In tabulation, <tspan font-family="monospace">dp[1] = dp[0] + dp[-1]</tspan> throws index out of bound!
+      </text>
+      <text x="12" y="84" fill="#34d399" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold">
+        &#8594; Explicitly initialize both dp[0] = 1 and dp[1] = 1.
+      </text>
+    </g>
+  </g>
+</svg>

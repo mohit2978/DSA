@@ -1,4 +1,4 @@
-# Power set 
+# Q1  Power set 
 
 This can be acheieved by recusrion but let us see this way too
 
@@ -141,6 +141,38 @@ Output:
 */
 ```
 
+### Java
+
+```java
+import java.util.*;
+class PowerSetExample {
+    static List<List<Integer>> powerSet(int[] nums) {
+        List<List<Integer>> ans=new ArrayList<>();
+        for(int val=0;val<(1<<nums.length);++val) {
+            List<Integer> subset=new ArrayList<>();
+            for(int i=0;i<nums.length;++i) if((val&(1<<i))!=0) subset.add(nums[i]);
+            ans.add(subset);
+        }
+        return ans;
+    }
+    public static void main(String[] args) {
+        List<List<Integer>> ans=powerSet(new int[]{1,2,3});
+        ans.sort((a,b)->{
+            int n=Math.min(a.size(),b.size());
+            for(int i=0;i<n;++i) {
+                int cmp=Integer.compare(a.get(i),b.get(i));
+                if(cmp!=0) return cmp;
+            }
+            return Integer.compare(a.size(),b.size());
+        });
+        for(List<Integer> subset:ans) {
+            for(int v:subset) System.out.print(v+" ");
+            System.out.println();
+        }
+    }
+}
+```
+
 # Bitwise Check: `if (val & (1 << i))`
 
 ### The Mechanics
@@ -181,6 +213,24 @@ If `val = 6` (Binary `110`):
 - **Resulting Subset:** `[B, C]`
 
 ### Java code
+
+### C++
+
+```cpp
+#include <vector>
+std::vector<std::vector<int>> powerSet(const std::vector<int>& nums) {
+    std::vector<std::vector<int>> res;
+    int limit=1<<nums.size();
+    for(int i=0;i<limit;++i) {
+        std::vector<int> subset;
+        for(int j=0;j<(int)nums.size();++j) if((i&(1<<j))!=0) subset.push_back(nums[j]);
+        res.push_back(subset);
+    }
+    return res;
+}
+```
+
+### Java
 
 ```java
 
@@ -239,6 +289,8 @@ j loop over n bits as for subset of n number we need n bits to represent number 
 if bit is 1 then add that number else not
 */
 ```
+## Question 2. Determine whether a subset reaches the target sum
+
 # Meet in the middle
 
 The Meet-in-the-Middle algorithm is a "Search Space Reduction" technique. It is essentially the "Divide and Conquer" of Brute Force.You use it when your search space is too big for a simple recursion ($O(2^n)$) but doesn't have the structure for Dynamic Programming.
@@ -390,6 +442,36 @@ int main() {
 }
 ```
 
+### Java
+
+```java
+import java.util.*;
+class MeetInTheMiddleExample {
+    static List<Long> generateSums(int[] arr) {
+        List<Long> sums=new ArrayList<>();
+        for(int mask=0;mask<(1<<arr.length);++mask) {
+            long sum=0;
+            for(int j=0;j<arr.length;++j) if((mask&(1<<j))!=0) sum+=arr[j];
+            sums.add(sum);
+        }
+        return sums;
+    }
+    static boolean meetInTheMiddle(int[] nums,long target) {
+        int mid=nums.length/2;
+        List<Long> left=generateSums(Arrays.copyOfRange(nums,0,mid));
+        List<Long> right=generateSums(Arrays.copyOfRange(nums,mid,nums.length));
+        Collections.sort(right);
+        for(long s:left) if(Collections.binarySearch(right,target-s)>=0) return true;
+        return false;
+    }
+    public static void main(String[] args) {
+        long target=50;
+        boolean found=meetInTheMiddle(new int[]{10,20,30,40},target);
+        System.out.println(found ? "Target "+target+" can be formed!" : "Target cannot be formed.");
+    }
+}
+```
+
 # Meet-in-the-Middle Workflow
 
 ### Step 1: Divide
@@ -434,3 +516,17 @@ For $N=40$, this is the difference between **centuries** of waiting and **0.5 se
 
 
 
+
+## Example and complexity clarifications
+
+Power-set generation includes the empty subset. In the printed C++ example it appears as a blank output line before the nonempty subsets. With the code's indexing rule, bit 0 selects nums[0]. Thus [1,2,3] uses mask 001 for [1], 010 for [2], and 100 for [3]. A list written with array-index order left-to-right may display those bits in reverse order; the numerical masks below use the usual most-significant-bit-first display.
+
+![All subsets: nums = [1, 2, 3]](svgs/power-set.svg)
+
+The loops take O(n*2^n) time because each of 2^n masks checks n positions. Storing all subsets takes O(n*2^n) space; the temporary subset uses O(n). Sorting the finished collection for display is additional work beyond generation. The int mask expressions require small input sizes and valid shifts (n<31 for these signed-int loops).
+
+For the meet-in-the-middle example [10,20,30,40] and target 50, split into [10,20] and [30,40]. Their subset sums are [0,10,20,30] and [0,30,40,70]. Searching complements finds 10+40=50 (and also 20+30=50).
+
+![Meet in the middle: target = 50](svgs/meet-middle.svg)
+
+For h=ceil(n/2), the shown bit-by-bit subset-sum generator takes O(h*2^h) time. Sorting and binary searching the sums also fit O(n*2^h). Space is O(2^h) for the two sum lists plus O(n) split arrays. Claims of O(2^h) generation alone require a different incremental subset-sum generator; the current nested loops have an h factor. Runtime examples in the existing prose are illustrative, not timing guarantees. Integer sums must fit in long long / long.

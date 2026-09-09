@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 620" width="980" height="620">
+  <defs>
+    <linearGradient id="bgGrad5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#091e36" />
+      <stop offset="100%" stop-color="#112d4e" />
+    </linearGradient>
+    <filter id="shadow5" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="620" rx="16" fill="url(#bgGrad5)" stroke="#1e3a8a" stroke-width="2"/>
+
+  <!-- Title -->
+  <text x="490" y="38" text-anchor="middle" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="bold">
+    LeetCode 746: Min Cost Climbing Stairs - Decision Tree &amp; Space Optimization
+  </text>
+  <text x="490" y="62" text-anchor="middle" fill="#93c5fd" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13">
+    Dry run for cost = [10, 15, 20] (Top floor is index N = 3)
+  </text>
+
+  <!-- Left: Decision Flow / Stair Diagram -->
+  <g transform="translate(50, 85)" filter="url(#shadow5)">
+    <rect width="420" height="400" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <text x="25" y="32" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="15" font-weight="bold">
+      Cost Transitions to Reach Index 3 (Top)
+    </text>
+
+    <!-- Visual stairs with cost -->
+    <!-- Step 0: 10 -->
+    <rect x="30" y="270" width="70" height="35" rx="6" fill="#1e3a8a" stroke="#3b82f6"/>
+    <text x="65" y="292" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="14" font-weight="bold">10</text>
+    <text x="65" y="325" text-anchor="middle" fill="#93c5fd" font-family="monospace" font-size="11">idx 0</text>
+
+    <!-- Step 1: 15 -->
+    <rect x="125" y="210" width="70" height="35" rx="6" fill="#1e3a8a" stroke="#3b82f6"/>
+    <text x="160" y="232" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="14" font-weight="bold">15</text>
+    <text x="160" y="265" text-anchor="middle" fill="#93c5fd" font-family="monospace" font-size="11">idx 1</text>
+
+    <!-- Step 2: 20 -->
+    <rect x="220" y="150" width="70" height="35" rx="6" fill="#1e3a8a" stroke="#3b82f6"/>
+    <text x="255" y="172" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="14" font-weight="bold">20</text>
+    <text x="255" y="205" text-anchor="middle" fill="#93c5fd" font-family="monospace" font-size="11">idx 2</text>
+
+    <!-- Step 3: Top Floor (Cost = 0) -->
+    <rect x="315" y="90" width="80" height="35" rx="6" fill="#065f46" stroke="#10b981" stroke-width="2"/>
+    <text x="355" y="112" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="13" font-weight="bold">Top (3)</text>
+    <text x="355" y="145" text-anchor="middle" fill="#34d399" font-family="monospace" font-size="11">cost = 0</text>
+
+    <!-- Arrows from 0 to 2 -->
+    <path d="M 65 270 C 65 200, 210 200, 220 175" fill="none" stroke="#60a5fa" stroke-width="2" marker-end="url(#arrowBlue)"/>
+    <!-- Arrow from 1 to 2 -->
+    <path d="M 160 210 C 170 180, 210 180, 220 170" fill="none" stroke="#60a5fa" stroke-width="2" marker-end="url(#arrowBlue)"/>
+    <!-- Arrows to Top Floor (3) -->
+    <path d="M 160 210 C 200 130, 280 110, 312 108" fill="none" stroke="#10b981" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+    <path d="M 255 150 C 270 125, 290 115, 312 110" fill="none" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+    <!-- Cost Calculations Text -->
+    <g transform="translate(25, 335)">
+      <rect width="370" height="50" rx="6" fill="#1e293b"/>
+      <text x="15" y="20" fill="#cbd5e1" font-family="monospace" font-size="11">To step 2: min(10, 15) = 10 (from idx 0)</text>
+      <text x="15" y="38" fill="#34d399" font-family="monospace" font-size="11" font-weight="bold">To top: min(10+20, 15) = min(30, 15) = 15</text>
+    </g>
+  </g>
+
+  <!-- Right: Pointer Shift Simulation Card -->
+  <g transform="translate(500, 85)" filter="url(#shadow5)">
+    <rect width="430" height="400" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <text x="25" y="32" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="15" font-weight="bold">
+      Optimized 2-Pointer Shift Simulation
+    </text>
+
+    <!-- Code Formula -->
+    <g transform="translate(20, 50)">
+      <rect width="390" height="50" rx="6" fill="#1e293b" stroke="#3b82f6"/>
+      <text x="12" y="22" fill="#93c5fd" font-family="monospace" font-size="11">
+        min_val = Math.min(n1, n2);
+      </text>
+      <text x="12" y="38" fill="#38bdf8" font-family="monospace" font-size="11">
+        res = min_val + ((n+2) &gt;= cost.length ? 0 : cost[n+2]);
+      </text>
+    </g>
+
+    <!-- Table of Iterations -->
+    <g transform="translate(20, 115)">
+      <!-- Header -->
+      <rect width="390" height="28" rx="4" fill="#1e293b"/>
+      <text x="20" y="19" fill="#94a3b8" font-family="monospace" font-size="11" font-weight="bold">n</text>
+      <text x="65" y="19" fill="#94a3b8" font-family="monospace" font-size="11" font-weight="bold">min_val</text>
+      <text x="150" y="19" fill="#94a3b8" font-family="monospace" font-size="11" font-weight="bold">res</text>
+      <text x="240" y="19" fill="#94a3b8" font-family="monospace" font-size="11" font-weight="bold">n1 (new)</text>
+      <text x="325" y="19" fill="#94a3b8" font-family="monospace" font-size="11" font-weight="bold">n2 (new)</text>
+
+      <!-- Row 0 -->
+      <g transform="translate(0, 34)">
+        <rect width="390" height="38" rx="4" fill="#111827"/>
+        <text x="20" y="24" fill="#38bdf8" font-family="monospace" font-size="12">0</text>
+        <text x="65" y="24" fill="#cbd5e1" font-family="monospace" font-size="12">min(10,15)=10</text>
+        <text x="150" y="24" fill="#cbd5e1" font-family="monospace" font-size="12">10+20=30</text>
+        <text x="240" y="24" fill="#93c5fd" font-family="monospace" font-size="12" font-weight="bold">15</text>
+        <text x="325" y="24" fill="#cbd5e1" font-family="monospace" font-size="12">30</text>
+      </g>
+
+      <!-- Row 1 -->
+      <g transform="translate(0, 78)">
+        <rect width="390" height="38" rx="4" fill="#111827"/>
+        <text x="20" y="24" fill="#38bdf8" font-family="monospace" font-size="12">1</text>
+        <text x="65" y="24" fill="#cbd5e1" font-family="monospace" font-size="12">min(15,30)=15</text>
+        <text x="150" y="24" fill="#cbd5e1" font-family="monospace" font-size="12">15+0=15</text>
+        <text x="240" y="24" fill="#93c5fd" font-family="monospace" font-size="12" font-weight="bold">30</text>
+        <text x="325" y="24" fill="#cbd5e1" font-family="monospace" font-size="12">15</text>
+      </g>
+
+      <!-- Row 2 -->
+      <g transform="translate(0, 122)">
+        <rect width="390" height="38" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+        <text x="20" y="24" fill="#34d399" font-family="monospace" font-size="12" font-weight="bold">2</text>
+        <text x="65" y="24" fill="#cbd5e1" font-family="monospace" font-size="12">min(30,15)=15</text>
+        <text x="150" y="24" fill="#cbd5e1" font-family="monospace" font-size="12">15+0=15</text>
+        <text x="240" y="24" fill="#34d399" font-family="monospace" font-size="13" font-weight="bold">15 (Ans)</text>
+        <text x="325" y="24" fill="#cbd5e1" font-family="monospace" font-size="12">15</text>
+      </g>
+    </g>
+
+    <!-- Pointer Explanation -->
+    <g transform="translate(20, 290)">
+      <rect width="390" height="75" rx="6" fill="#1e293b"/>
+      <text x="12" y="22" fill="#fbbf24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold">
+        LOOP TERMINATION INSIGHT:
+      </text>
+      <text x="12" y="42" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">
+        After N=3 iterations, cost array is exhausted and <tspan font-family="monospace" fill="#34d399">n1</tspan> receives
+      </text>
+      <text x="12" y="60" fill="#34d399" font-family="monospace" font-size="11" font-weight="bold">
+        the minimum cost to reach top floor = 15!
+      </text>
+    </g>
+  </g>
+
+  <!-- Bottom Observation Box -->
+  <g transform="translate(50, 500)">
+    <rect width="880" height="95" rx="8" fill="#111827" stroke="#334155"/>
+    <text x="20" y="26" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="bold">
+      CRITICAL DP TAKEAWAY &amp; REASONING:
+    </text>
+    <text x="20" y="48" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12">
+      &#8226; <tspan font-weight="bold">Offset (n + 2):</tspan> Because Base Cases handle index 0 and index 1 initially, future steps offset access by +2 into the cost array.
+    </text>
+    <text x="20" y="68" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12">
+      &#8226; <tspan font-weight="bold">Top Floor Reached:</tspan> When index exceeds cost bounds <tspan font-family="monospace">(n + 2 &#8805; cost.length)</tspan>, reaching the top floor incurs 0 additional cost.
+    </text>
+  </g>
+</svg>
