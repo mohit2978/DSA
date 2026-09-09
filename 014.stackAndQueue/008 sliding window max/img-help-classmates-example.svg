@@ -1,0 +1,49 @@
+<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="400" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Help Classmates <tspan fill="#9aa0a6" font-weight="normal">— it is actually Next Smaller Element to the right</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <rect x="25" y="48" width="750" height="150" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">N = 5, arr[] = {3, 8, 5, 2, 25}</text>
+
+  <g font-family="monospace" font-size="12" fill="#9aa0a6" text-anchor="middle">
+    <text x="120" y="96">roll 1</text><text x="240" y="96">roll 2</text><text x="360" y="96">roll 3</text>
+    <text x="480" y="96">roll 4</text><text x="600" y="96">roll 5</text>
+  </g>
+  <g stroke="#5b9bd5" stroke-width="2" fill="#2b2b2b">
+    <rect x="80"  y="106" width="80" height="38"/><rect x="200" y="106" width="80" height="38"/>
+    <rect x="320" y="106" width="80" height="38"/><rect x="440" y="106" width="80" height="38"/>
+    <rect x="560" y="106" width="80" height="38"/>
+  </g>
+  <g font-family="monospace" font-size="17" fill="#d4d4d4" text-anchor="middle" font-weight="bold">
+    <text x="120" y="132">3</text><text x="240" y="132">8</text><text x="360" y="132">5</text>
+    <text x="480" y="132">2</text><text x="600" y="132">25</text>
+  </g>
+
+  <g stroke="#56c98d" stroke-width="2" fill="none">
+    <path d="M 120 150 Q 300 190 470 148"/>
+    <path d="M 240 150 Q 300 176 350 148"/>
+    <path d="M 360 150 Q 420 176 470 148"/>
+  </g>
+  <text x="40" y="188" fill="#9aa0a6" font-size="12">Each arrow points to the FIRST later roll number whose marks are LOWER.</text>
+
+  <rect x="25" y="212" width="365" height="164" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="234" fill="#f2c14e" font-size="13" font-weight="bold">Output: 2 5 2 -1 -1</text>
+  <g font-family="monospace" font-size="12.5" fill="#d4d4d4">
+    <text x="42" y="260">3  &#8594; first lower after it is 2</text>
+    <text x="42" y="282">8  &#8594; first lower after it is 5</text>
+    <text x="42" y="304">5  &#8594; first lower after it is 2</text>
+    <text x="42" y="326" fill="#e06c75">2  &#8594; nothing lower after it &#8594; -1</text>
+    <text x="42" y="348" fill="#e06c75">25 &#8594; nothing after it at all &#8594; -1</text>
+  </g>
+
+  <rect x="405" y="212" width="370" height="164" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="420" y="234" fill="#f2c14e" font-size="13" font-weight="bold">Why a stack solves it in one pass</text>
+  <text x="420" y="258" fill="#d4d4d4" font-size="12.5">Walk left to right keeping a stack of indices whose</text>
+  <text x="420" y="276" fill="#d4d4d4" font-size="12.5">answer is still unknown. When the current value is</text>
+  <text x="420" y="294" fill="#d4d4d4" font-size="12.5"><tspan fill="#56c98d">smaller</tspan> than the value at the stack top, the current</text>
+  <text x="420" y="312" fill="#d4d4d4" font-size="12.5">element IS that index's answer, so record it and pop.</text>
+  <text x="420" y="338" fill="#9aa0a6" font-size="12">Whatever is still on the stack at the end never found</text>
+  <text x="420" y="354" fill="#9aa0a6" font-size="12">a smaller element, which is why the array is</text>
+  <text x="420" y="370" fill="#9aa0a6" font-size="12">pre-filled with -1.</text>
+</svg>

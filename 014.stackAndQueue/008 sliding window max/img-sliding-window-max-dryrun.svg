@@ -1,0 +1,86 @@
+<svg viewBox="0 0 800 660" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="660" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Sliding Window Maximum dry run <tspan fill="#9aa0a6" font-weight="normal">— arr = [4, 0, -1, 3, 5, 3, 1], k = 3</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- deque anatomy -->
+  <rect x="25" y="48" width="365" height="150" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The deque, and what each end does</text>
+  <rect x="120" y="92" width="190" height="34" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  <text x="215" y="114" fill="#9aa0a6" text-anchor="middle" font-family="monospace" font-size="13">dq</text>
+  <text x="110" y="114" fill="#56c98d" text-anchor="end" font-family="monospace" font-size="12">front</text>
+  <text x="320" y="114" fill="#e06c75" font-family="monospace" font-size="12">back</text>
+  <g font-family="monospace" font-size="11.5">
+    <text x="42" y="150" fill="#56c98d">push_front()   front()   pop_front()</text>
+    <text x="42" y="172" fill="#e06c75">push_back()    back()    pop_back()</text>
+  </g>
+  <text x="42" y="192" fill="#9aa0a6" font-size="11.5">The deque holds INDICES, not values.</text>
+
+  <!-- array -->
+  <rect x="405" y="48" width="370" height="150" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="420" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The array</text>
+  <g font-family="monospace" font-size="11.5" fill="#9aa0a6" text-anchor="middle">
+    <text x="447" y="94">0</text><text x="493" y="94">1</text><text x="539" y="94">2</text>
+    <text x="585" y="94">3</text><text x="631" y="94">4</text><text x="677" y="94">5</text><text x="723" y="94">6</text>
+  </g>
+  <g stroke="#5b9bd5" stroke-width="1.5" fill="#2b2b2b">
+    <rect x="426" y="102" width="42" height="32"/><rect x="472" y="102" width="42" height="32"/>
+    <rect x="518" y="102" width="42" height="32"/><rect x="564" y="102" width="42" height="32"/>
+    <rect x="610" y="102" width="42" height="32"/><rect x="656" y="102" width="42" height="32"/>
+    <rect x="702" y="102" width="42" height="32"/>
+  </g>
+  <g font-family="monospace" font-size="15" fill="#d4d4d4" text-anchor="middle" font-weight="bold">
+    <text x="447" y="124">4</text><text x="493" y="124">0</text><text x="539" y="124">-1</text>
+    <text x="585" y="124">3</text><text x="631" y="124">5</text><text x="677" y="124">3</text><text x="723" y="124">1</text>
+  </g>
+  <text x="420" y="158" fill="#9aa0a6" font-size="12">Answer is recorded once <tspan font-family="monospace" fill="#56c98d">i &gt;= k - 1</tspan>, i.e. from index 2 on.</text>
+  <text x="420" y="180" fill="#9aa0a6" font-size="12">Output length = n - k + 1 = 7 - 3 + 1 = 5.</text>
+
+  <!-- trace -->
+  <rect x="25" y="212" width="750" height="322" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="234" fill="#f2c14e" font-size="13" font-weight="bold">Step by step</text>
+  <line x1="40" y1="244" x2="760" y2="244" stroke="#333333" stroke-width="1"/>
+
+  <g font-family="monospace" font-size="12" fill="#d4d4d4">
+    <text x="42" y="266">i=0   nothing to expire, nothing smaller at back  &#8594; push 0</text>
+    <text x="500" y="266" fill="#5b9bd5">dq = [0]</text>
+
+    <text x="42" y="288">i=1   arr[0]=4 &gt; arr[1]=0, so back survives       &#8594; push 1</text>
+    <text x="500" y="288" fill="#5b9bd5">dq = [0, 1]</text>
+
+    <text x="42" y="310">i=2   arr[1]=0 &gt; arr[2]=-1, back survives         &#8594; push 2</text>
+    <text x="500" y="310" fill="#5b9bd5">dq = [0, 1, 2]</text>
+    <text x="60"  y="328" fill="#56c98d">i &gt;= k-1  (2 == 2)  &#8594; ans.push(arr[dq.front()]) = arr[0] = 4</text>
+    <text x="500" y="328" fill="#56c98d">ans = {4}</text>
+
+    <text x="42" y="356" fill="#f2c14e">i=3   dq.front()=0 &lt;= 3-3=0  &#8594; EXPIRED, pop_front</text>
+    <text x="500" y="356" fill="#5b9bd5">dq = [1, 2]</text>
+    <text x="60"  y="374" fill="#e06c75">arr[2]=-1 &lt;= arr[3]=3 &#8594; pop_back ; arr[1]=0 &lt;= 3 &#8594; pop_back</text>
+    <text x="500" y="374" fill="#5b9bd5">dq = [ ]</text>
+    <text x="60"  y="392">queue empty, so stop &#8594; push 3</text>
+    <text x="500" y="392" fill="#56c98d">ans = {4, 3}</text>
+
+    <text x="42" y="420">i=4   dq.front()=3 &lt;= 4-3=1 ? no</text>
+    <text x="60"  y="438" fill="#e06c75">arr[3]=3 &lt;= arr[4]=5 &#8594; pop_back, deque empty &#8594; push 4</text>
+    <text x="500" y="438" fill="#56c98d">ans = {4, 3, 5}</text>
+
+    <text x="42" y="466">i=5   dq.front()=4 &lt;= 5-3=2 ? no ; arr[4]=5 &lt;= arr[5]=3 ? no</text>
+    <text x="60"  y="484">&#8594; push 5</text>
+    <text x="500" y="484" fill="#56c98d">ans = {4, 3, 5, 5}</text>
+
+    <text x="42" y="512">i=6   dq.front()=4 &lt;= 6-3=3 ? no ; arr[5]=3 &lt;= arr[6]=1 ? no</text>
+    <text x="500" y="512" fill="#5b9bd5">dq = [4, 5, 6]</text>
+  </g>
+  <text x="60" y="530" fill="#56c98d" font-family="monospace" font-size="12">&#8594; push 6, ans.push(arr[4]) = 5</text>
+  <text x="500" y="530" fill="#56c98d" font-family="monospace" font-size="12">ans = {4, 3, 5, 5, 5}</text>
+
+  <!-- invariant -->
+  <rect x="25" y="548" width="750" height="98" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="570" fill="#f2c14e" font-size="13" font-weight="bold">The invariant &#8212; the deque is monotonically DECREASING from front to back</text>
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="42" y="596">dq = [4, 5, 6]   &#8594;   values 5, 3, 1</text>
+  </g>
+  <text x="330" y="596" fill="#56c98d" font-size="12.5" font-weight="bold">&#8594; the maximum always sits at the front</text>
+  <text x="40" y="620" fill="#d4d4d4" font-size="12.5">When any element enters the deque it <tspan fill="#e06c75" font-weight="bold">destroys every element having a value less than itself</tspan>, because those can never be the</text>
+  <text x="40" y="638" fill="#d4d4d4" font-size="12.5">maximum of any window that also contains the new, larger, and later element.</text>
+</svg>

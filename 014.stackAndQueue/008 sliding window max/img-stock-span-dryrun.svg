@@ -1,0 +1,78 @@
+<svg viewBox="0 0 800 620" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="620" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Stock Span dry run <tspan fill="#9aa0a6" font-weight="normal">— arr = [2, 5, 9, 3, 1, 12, 6, 8, 7], traversed RIGHT to LEFT</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- idea -->
+  <rect x="25" y="48" width="750" height="82" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The idea</text>
+  <text x="40" y="94" fill="#d4d4d4" font-size="13">Stock span is <tspan fill="#56c98d">next greater element on the LEFT</tspan>, asking <tspan fill="#56c98d">how far it is</tspan>. Since the answer lies to the left, we traverse <tspan fill="#f2c14e">right to left</tspan>.</text>
+  <text x="40" y="118" fill="#d4d4d4" font-size="13">When the current value at index <tspan font-family="monospace">i</tspan> is bigger than the value at the stack top, <tspan font-family="monospace">i</tspan> is that index's answer, so <tspan font-family="monospace" fill="#56c98d">res[stk.peek()] = stk.peek() - i</tspan> and pop.</text>
+
+  <!-- array -->
+  <rect x="25" y="144" width="750" height="94" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <g font-family="monospace" font-size="12" fill="#9aa0a6" text-anchor="middle">
+    <text x="90" y="170">0</text><text x="168" y="170">1</text><text x="246" y="170">2</text>
+    <text x="324" y="170">3</text><text x="402" y="170">4</text><text x="480" y="170">5</text>
+    <text x="558" y="170">6</text><text x="636" y="170">7</text><text x="714" y="170">8</text>
+  </g>
+  <g stroke="#5b9bd5" stroke-width="1.5" fill="#2b2b2b">
+    <rect x="55"  y="180" width="70" height="34"/><rect x="133" y="180" width="70" height="34"/>
+    <rect x="211" y="180" width="70" height="34"/><rect x="289" y="180" width="70" height="34"/>
+    <rect x="367" y="180" width="70" height="34"/><rect x="445" y="180" width="70" height="34"/>
+    <rect x="523" y="180" width="70" height="34"/><rect x="601" y="180" width="70" height="34"/>
+    <rect x="679" y="180" width="70" height="34"/>
+  </g>
+  <g font-family="monospace" font-size="16" fill="#d4d4d4" text-anchor="middle" font-weight="bold">
+    <text x="90" y="203">2</text><text x="168" y="203">5</text><text x="246" y="203">9</text>
+    <text x="324" y="203">3</text><text x="402" y="203">1</text><text x="480" y="203">12</text>
+    <text x="558" y="203">6</text><text x="636" y="203">8</text><text x="714" y="203">7</text>
+  </g>
+  <text x="40" y="232" fill="#9aa0a6" font-size="12">arr</text>
+
+  <!-- trace -->
+  <rect x="25" y="252" width="750" height="230" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="274" fill="#f2c14e" font-size="13" font-weight="bold">Walking i from 8 down to 0</text>
+  <line x1="40" y1="284" x2="760" y2="284" stroke="#333333" stroke-width="1"/>
+  <g font-family="monospace" font-size="12" fill="#d4d4d4">
+    <text x="42" y="304">i=8 (7)   first element, just push 8            stack [8]</text>
+    <text x="42" y="326" fill="#56c98d">i=7 (8)   8 &gt; arr[8]=7  &#8594; res[8] = 8 - 7 = 1, pop  push 7   stack [7]</text>
+    <text x="42" y="348">i=6 (6)   6 &lt; arr[7]=8  &#8594; just push 6            stack [6, 7]</text>
+    <text x="42" y="370" fill="#56c98d">i=5 (12)  12 &gt; arr[6]=6 &#8594; res[6] = 6 - 5 = 1, pop</text>
+    <text x="42" y="388" fill="#56c98d">          12 &gt; arr[7]=8 &#8594; res[7] = 7 - 5 = 2, pop  push 5   stack [5]</text>
+    <text x="42" y="410">i=4 (1)   1 &lt; 12        &#8594; just push 4            stack [4, 5]</text>
+    <text x="42" y="432" fill="#56c98d">i=3 (3)   3 &gt; arr[4]=1  &#8594; res[4] = 4 - 3 = 1, pop  push 3   stack [3, 5]</text>
+    <text x="42" y="454" fill="#56c98d">i=2 (9)   9 &gt; arr[3]=3  &#8594; res[3] = 3 - 2 = 1, pop  push 2   stack [2, 5]</text>
+    <text x="42" y="476">i=1 (5)   5 &lt; 9 &#8594; push 1 ; i=0 (2)  2 &lt; 5 &#8594; push 0   stack [0, 1, 2, 5]</text>
+  </g>
+
+  <!-- leftovers -->
+  <rect x="25" y="496" width="365" height="110" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="518" fill="#f2c14e" font-size="13" font-weight="bold">Draining the leftovers</text>
+  <text x="40" y="540" fill="#d4d4d4" font-size="12.5">Everything still on the stack has no greater</text>
+  <text x="40" y="556" fill="#d4d4d4" font-size="12.5">element to its left, so its span reaches the</text>
+  <text x="40" y="572" fill="#d4d4d4" font-size="12.5">start of the array:</text>
+  <text x="42" y="596" fill="#56c98d" font-family="monospace" font-size="12.5">res[stk.peek()] = stk.peek() + 1; pop</text>
+
+  <!-- result -->
+  <rect x="405" y="496" width="370" height="110" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="420" y="518" fill="#f2c14e" font-size="13" font-weight="bold">Final answer</text>
+  <g font-family="monospace" font-size="11.5" fill="#9aa0a6" text-anchor="middle">
+    <text x="443" y="540">0</text><text x="481" y="540">1</text><text x="519" y="540">2</text>
+    <text x="557" y="540">3</text><text x="595" y="540">4</text><text x="633" y="540">5</text>
+    <text x="671" y="540">6</text><text x="709" y="540">7</text><text x="747" y="540">8</text>
+  </g>
+  <g stroke="#56c98d" stroke-width="1.5" fill="#1f3a2a">
+    <rect x="425" y="548" width="36" height="28"/><rect x="463" y="548" width="36" height="28"/>
+    <rect x="501" y="548" width="36" height="28"/><rect x="539" y="548" width="36" height="28"/>
+    <rect x="577" y="548" width="36" height="28"/><rect x="615" y="548" width="36" height="28"/>
+    <rect x="653" y="548" width="36" height="28"/><rect x="691" y="548" width="36" height="28"/>
+    <rect x="729" y="548" width="36" height="28"/>
+  </g>
+  <g font-family="monospace" font-size="14" fill="#d4d4d4" text-anchor="middle" font-weight="bold">
+    <text x="443" y="568">1</text><text x="481" y="568">2</text><text x="519" y="568">3</text>
+    <text x="557" y="568">1</text><text x="595" y="568">1</text><text x="633" y="568">6</text>
+    <text x="671" y="568">1</text><text x="709" y="568">2</text><text x="747" y="568">1</text>
+  </g>
+  <text x="420" y="596" fill="#9aa0a6" font-size="12">res[0]=0+1, res[1]=1+1, res[2]=2+1, res[5]=5+1</text>
+</svg>

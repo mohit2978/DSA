@@ -1,0 +1,73 @@
+<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="520" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Next Greater / Next Smaller <tspan fill="#9aa0a6" font-weight="normal">— the two rules that decide direction and pop condition</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- Direction rule -->
+  <rect x="25" y="48" width="365" height="175" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">Rule 1 &#8212; which way to traverse</text>
+  <text x="40" y="96" fill="#d4d4d4" font-size="13">The stack stores <tspan fill="#56c98d" font-weight="bold">indices</tspan>, not values.</text>
+  <g font-family="monospace" font-size="13.5">
+    <text x="42" y="128" fill="#5b9bd5">to the LEFT</text>
+    <text x="185" y="128" fill="#d4d4d4">&#8594;  traverse RIGHT to LEFT</text>
+    <text x="42" y="156" fill="#5b9bd5">to the RIGHT</text>
+    <text x="185" y="156" fill="#d4d4d4">&#8594;  traverse LEFT to RIGHT</text>
+  </g>
+  <text x="40" y="188" fill="#9aa0a6" font-size="12">You always walk AWAY from the side you are looking</text>
+  <text x="40" y="204" fill="#9aa0a6" font-size="12">towards, so the answer is already on the stack.</text>
+
+  <!-- Pop rule -->
+  <rect x="405" y="48" width="370" height="175" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="420" y="70" fill="#f2c14e" font-size="13" font-weight="bold">Rule 2 &#8212; when to pop</text>
+  <g font-family="monospace" font-size="13.5">
+    <text x="422" y="102" fill="#56c98d">Next GREATER</text>
+    <text x="422" y="122" fill="#d4d4d4">&#8594; pop while the current element is BIGGER</text>
+    <text x="422" y="160" fill="#e06c75">Next SMALLER</text>
+    <text x="422" y="180" fill="#d4d4d4">&#8594; pop while the current element is SMALLER</text>
+  </g>
+  <text x="420" y="208" fill="#9aa0a6" font-size="12">Switching between the two is literally one comparison operator.</text>
+
+  <!-- worked bars -->
+  <rect x="25" y="237" width="750" height="180" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="259" fill="#f2c14e" font-size="13" font-weight="bold">Next greater element on the right &#8212; each bar labelled with its answer</text>
+
+  <g fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2">
+    <rect x="60"  y="330" width="26" height="45"/>
+    <rect x="105" y="310" width="26" height="65"/>
+    <rect x="150" y="325" width="26" height="50"/>
+    <rect x="195" y="272" width="26" height="103"/>
+    <rect x="240" y="345" width="26" height="30"/>
+    <rect x="285" y="315" width="26" height="60"/>
+    <rect x="330" y="295" width="26" height="80"/>
+    <rect x="375" y="318" width="26" height="57"/>
+    <rect x="420" y="335" width="26" height="40"/>
+    <rect x="465" y="308" width="26" height="67"/>
+    <rect x="510" y="330" width="26" height="45"/>
+    <rect x="555" y="262" width="26" height="113"/>
+    <rect x="600" y="312" width="26" height="63"/>
+  </g>
+  <line x1="50" y1="375" x2="700" y2="375" stroke="#e06c75" stroke-width="2"/>
+
+  <g fill="#d4d4d4" text-anchor="middle" font-size="12" font-family="monospace">
+    <text x="73"  y="324">a</text><text x="118" y="304">b</text><text x="163" y="319">c</text>
+    <text x="208" y="266">d</text><text x="253" y="339">e</text><text x="298" y="309">f</text>
+    <text x="343" y="289">g</text><text x="388" y="312">h</text><text x="433" y="329">i</text>
+    <text x="478" y="302">j</text><text x="523" y="324">k</text><text x="568" y="256">l</text>
+    <text x="613" y="306">m</text>
+  </g>
+  <g fill="#56c98d" text-anchor="middle" font-size="12" font-family="monospace" font-weight="bold">
+    <text x="73"  y="393">b</text><text x="118" y="393">d</text><text x="163" y="393">d</text>
+    <text x="208" y="393">&#8211;</text><text x="253" y="393">f</text><text x="298" y="393">g</text>
+    <text x="343" y="393">l</text><text x="388" y="393">j</text><text x="433" y="393">j</text>
+    <text x="478" y="393">l</text><text x="523" y="393">l</text><text x="568" y="393">&#8211;</text>
+    <text x="613" y="393">&#8211;</text>
+  </g>
+  <text x="640" y="393" fill="#9aa0a6" font-size="12">&#8592; next greater element</text>
+  <text x="40" y="411" fill="#9aa0a6" font-size="12">A dash means there is no greater element to the right, which the code stores as &#8722;1.</text>
+
+  <!-- Two approaches -->
+  <rect x="25" y="431" width="750" height="72" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="453" fill="#f2c14e" font-size="13" font-weight="bold">Two ways to write it</text>
+  <text x="40" y="475" fill="#d4d4d4" font-size="12.5"><tspan fill="#5b9bd5" font-weight="bold">Right to left:</tspan> pop from the stack until you find a bigger element (or the stack is empty, since we need a greater element), then push the current element.</text>
+  <text x="40" y="495" fill="#d4d4d4" font-size="12.5"><tspan fill="#56c98d" font-weight="bold">Left to right (index-based):</tspan> when the current element is bigger than the top, that current element IS the answer for the popped index, so fill it in and pop.</text>
+</svg>
