@@ -49,7 +49,7 @@ Bit indices start at 0 on the right. A bit at index k uses `1 << k`; a question 
 
 ![Binary representation and fixed-width shifts](svgs/representation-shifts.svg)
 
-## Question 1.1. Set, clear, toggle, and test a bit
+## Question 1. Set, clear, toggle, and test a bit
 
 Given an integer n and zero-based indices i, j, k, m, print n with bit i set, n with bit j cleared, n with bit k toggled, and whether bit m is set. Each operation starts from the original n. For 32-bit values the indices must be in [0,31].
 
@@ -83,7 +83,7 @@ static void bitOperations(int n, int i, int j, int k, int m) {
 
 **Complexity:** O(1) time and O(1) auxiliary space: each operation uses a fixed number of machine-word operations.
 
-## Question 1.2. Print the rightmost set-bit mask
+## Question 2. Print the rightmost set-bit mask
 
 Given n, isolate its lowest set bit and print the mask in binary. For n=57 (111001), the mask is 1. For n=76 (1001100), it is 100 (4). For zero, the mask is zero.
 
@@ -117,7 +117,7 @@ static String rightmostMaskBinary(int n) {
 
 **Complexity:** The mask calculation is O(1) time and space. Formatting its binary string takes O(w) time and O(w) output space for a w-bit word.
 
-## Question 1.3. Count set bits using Kernighan's algorithm
+## Question 3. Count set bits using Kernighan's algorithm
 
 A basic scan tests every bit and takes O(w). Kernighan's method visits only set bits. Subtract the rightmost set-bit mask from n and increment the count until n becomes zero. This is equivalent to n &= n-1. In 10010010010010010, the first mask is 10; after removing it, the next mask is 10000.
 
@@ -154,7 +154,7 @@ The two C++ `countSetBits(int)` definitions below are alternative implementation
 
 ![Existing demonstration: n = 12 and swap (5, 9)](svgs/existing-examples.svg)
 
-## Question 1.4. Deriving sum and XOR from AND and OR
+## Question 4. Deriving sum and XOR from AND and OR
 
 Given A AND B and A OR B, find A+B and A XOR B. Considering the four possibilities for each pair of bits gives:
 
