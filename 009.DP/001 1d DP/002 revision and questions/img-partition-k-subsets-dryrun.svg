@@ -1,0 +1,65 @@
+<svg viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="560" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Partition a set into k subsets <tspan fill="#9aa0a6" font-weight="normal">— {A, B, C, D, E} into 3 subsets = 25</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- recurrence -->
+  <rect x="25" y="48" width="750" height="126" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The recurrence &#8212; think of it as putting the nth person into teams</text>
+  <text x="40" y="94" fill="#d4d4d4" font-size="13">The nth element either <tspan fill="#56c98d" font-weight="bold">joins one of the k existing teams</tspan>, or <tspan fill="#5b9bd5" font-weight="bold">starts a brand new team</tspan>.</text>
+  <g font-family="monospace" font-size="13.5" fill="#d4d4d4">
+    <text x="42" y="124">joins an existing team &#8594; <tspan fill="#56c98d">k * noOfWays(n-1, k)</tspan>     because there are k teams to choose from</text>
+    <text x="42" y="150">starts a new team      &#8594; <tspan fill="#5b9bd5">noOfWays(n-1, k-1)</tspan>       one fewer team is left to fill</text>
+  </g>
+  <text x="40" y="168" fill="#9aa0a6" font-size="12">The state is (n, k): n elements still to place, k groups still open. That intermediate state is exactly what gets memoised.</text>
+
+  <!-- base cases -->
+  <rect x="25" y="188" width="365" height="120" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="210" fill="#f2c14e" font-size="13" font-weight="bold">Base cases</text>
+  <g font-family="monospace" font-size="13.5" fill="#d4d4d4">
+    <text x="42" y="240">if (k == 1)   return 1</text>
+    <text x="42" y="266">if (n == k)   return 1</text>
+  </g>
+  <text x="42" y="292" fill="#9aa0a6" font-size="12">k == 1: everything goes into one set. n == k: every element</text>
+  <text x="42" y="304" fill="#9aa0a6" font-size="12">sits alone, so exactly one arrangement.</text>
+
+  <rect x="405" y="188" width="370" height="120" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="420" y="210" fill="#f2c14e" font-size="13" font-weight="bold">Why n == k must be handled</text>
+  <text x="420" y="234" fill="#d4d4d4" font-size="12.5">If you do not handle the <tspan font-family="monospace">n == k</tspan> case then <tspan font-family="monospace" fill="#e06c75">n &lt; k</tspan> will</text>
+  <text x="420" y="252" fill="#d4d4d4" font-size="12.5">happen, and that case would then have to be handled instead.</text>
+  <text x="420" y="278" fill="#9aa0a6" font-size="12">With fewer elements than groups there is no valid partition at all,</text>
+  <text x="420" y="294" fill="#9aa0a6" font-size="12">so stopping at n == k keeps the recursion inside legal territory.</text>
+
+  <!-- tree -->
+  <rect x="25" y="322" width="750" height="230" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="344" fill="#f2c14e" font-size="13" font-weight="bold">Building the answer bottom-up</text>
+
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="42" y="374">{DE, 1} = 1</text>
+    <text x="190" y="374">k == 1, so return 1</text>
+    <text x="42" y="398">{DE, 2} = 1</text>
+    <text x="190" y="398">n == k, so return 1</text>
+
+    <text x="42" y="428" fill="#56c98d">{CDE, 2} = {DE, 1} + {DE, 2} * 2  =  1 + 2  =  3</text>
+    <text x="42" y="452">{CDE, 1} = 1</text>
+    <text x="190" y="452">k == 1</text>
+    <text x="42" y="476">{CDE, 3} = 1</text>
+    <text x="190" y="476">n == k</text>
+  </g>
+
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="420" y="374" fill="#56c98d">{BCDE, 2} = {CDE, 1} + {CDE, 2} * 2</text>
+    <text x="438" y="394">= 1 + 3 * 2  =  7</text>
+
+    <text x="420" y="424" fill="#56c98d">{BCDE, 3} = {CDE, 2} + {CDE, 3} * 3</text>
+    <text x="438" y="444">= 3 + 1 * 3  =  6</text>
+  </g>
+
+  <line x1="420" y1="462" x2="760" y2="462" stroke="#333333" stroke-width="1"/>
+  <text x="420" y="488" fill="#f2c14e" font-family="monospace" font-size="14" font-weight="bold">{ABCDE, 3} = {BCDE, 2} + {BCDE, 3} * 3</text>
+  <text x="438" y="512" fill="#56c98d" font-family="monospace" font-size="15" font-weight="bold">= 7 + 6 * 3  =  25</text>
+
+  <text x="40" y="512" fill="#9aa0a6" font-size="12">A creates a new team, or A</text>
+  <text x="40" y="528" fill="#9aa0a6" font-size="12">joins one of the 3 existing</text>
+  <text x="40" y="544" fill="#9aa0a6" font-size="12">teams &#8212; hence the &#215; 3.</text>
+</svg>

@@ -1,0 +1,74 @@
+<svg viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="560" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Decode Ways II &#8212; space-optimised dry run <tspan fill="#9aa0a6" font-weight="normal">s = "12*2*3"</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- dp array -->
+  <rect x="25" y="48" width="750" height="112" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The dp array we are reproducing with only two variables</text>
+  <g font-family="monospace" font-size="12" fill="#9aa0a6" text-anchor="middle">
+    <text x="105" y="96">0</text><text x="195" y="96">1</text><text x="285" y="96">2</text><text x="375" y="96">3</text>
+    <text x="465" y="96">4</text><text x="555" y="96">5</text><text x="645" y="96">6</text>
+  </g>
+  <rect x="70"  y="104" width="70" height="34" fill="#1f3a2a" stroke="#56c98d" stroke-width="2.5"/>
+  <g stroke="#5b9bd5" stroke-width="1.5" fill="#2b2b2b">
+    <rect x="160" y="104" width="70" height="34"/><rect x="250" y="104" width="70" height="34"/>
+    <rect x="340" y="104" width="70" height="34"/><rect x="430" y="104" width="70" height="34"/>
+    <rect x="520" y="104" width="70" height="34"/><rect x="610" y="104" width="70" height="34"/>
+  </g>
+  <g font-family="monospace" font-size="15" fill="#d4d4d4" text-anchor="middle" font-weight="bold">
+    <text x="105" y="127">452</text><text x="195" y="127">277</text><text x="285" y="127">175</text><text x="375" y="127">17</text>
+    <text x="465" y="127">11</text><text x="555" y="127">1</text><text x="645" y="127">1</text>
+  </g>
+  <text x="40" y="154" fill="#9aa0a6" font-size="12">Start from <tspan font-family="monospace">s.length() - 2</tspan>, because <tspan font-family="monospace">s.length() - 1</tspan> is already processed into the initial value of b.</text>
+
+  <!-- init -->
+  <rect x="25" y="174" width="365" height="122" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="196" fill="#f2c14e" font-size="13" font-weight="bold">Initial values</text>
+  <g font-family="monospace" font-size="13.5" fill="#d4d4d4">
+    <text x="42" y="224">a = 1</text>
+    <text x="42" y="248">b = 1</text>
+  </g>
+  <text x="140" y="224" fill="#9aa0a6" font-size="12">the empty-suffix cell</text>
+  <text x="140" y="248" fill="#9aa0a6" font-size="12">the last character, here 3, has one way</text>
+  <text x="40" y="276" fill="#e06c75" font-size="12">If the last char were <tspan font-family="monospace">*</tspan> then <tspan font-family="monospace">b = 9</tspan>; if it were <tspan font-family="monospace">'0'</tspan> then <tspan font-family="monospace">b = 0</tspan>.</text>
+
+  <!-- shift -->
+  <rect x="405" y="174" width="370" height="122" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="420" y="196" fill="#f2c14e" font-size="13" font-weight="bold">At the end of every iteration</text>
+  <g font-family="monospace" font-size="13.5" fill="#d4d4d4">
+    <text x="422" y="226">a = b;</text>
+    <text x="422" y="252">b = count;</text>
+  </g>
+  <text x="422" y="280" fill="#9aa0a6" font-size="12">and the value finally returned is <tspan font-family="monospace" fill="#56c98d">b</tspan>.</text>
+
+  <!-- trace -->
+  <rect x="25" y="310" width="750" height="240" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="332" fill="#f2c14e" font-size="13" font-weight="bold">Walking idx from 4 down to 0</text>
+  <line x1="40" y1="342" x2="760" y2="342" stroke="#333333" stroke-width="1"/>
+  <g font-family="monospace" font-size="12" fill="#d4d4d4">
+    <text x="42" y="364" fill="#f2c14e">idx = 4  ch = '*'</text>
+    <text x="60" y="382">* alone gives 9 ways      &#8594;  9 * b = 9 * 1 = 9</text>
+    <text x="60" y="400">next char is 3, so "*3" can be 13 or 23  &#8594;  2 * a = 2 * 1 = 2</text>
+    <text x="60" y="418" fill="#56c98d">count = 9 + 2 = 11        a = 1,  b = 11</text>
+
+    <text x="42" y="444" fill="#f2c14e">idx = 3  ch = '2'</text>
+    <text x="60" y="462">2 alone                   &#8594;  b = 11</text>
+    <text x="60" y="480">"2*" can take 6 values    &#8594;  6 * a = 6 * 1 = 6</text>
+    <text x="60" y="498" fill="#56c98d">count = 11 + 6 = 17       a = 11, b = 17</text>
+  </g>
+  <g font-family="monospace" font-size="12" fill="#d4d4d4">
+    <text x="420" y="364" fill="#f2c14e">idx = 2  ch = '*'</text>
+    <text x="438" y="382">* alone gives 9 values    &#8594;  9 * 17 = 153</text>
+    <text x="438" y="400">"*2" can take 2 values    &#8594;  2 * 11 = 22</text>
+    <text x="438" y="418" fill="#56c98d">count = 175               a = 17, b = 175</text>
+
+    <text x="420" y="444" fill="#f2c14e">idx = 1  ch = '2'</text>
+    <text x="438" y="462">2 alone &#8594; 175 ; "2*" &#8594; 6 * 17 = 102</text>
+    <text x="438" y="480" fill="#56c98d">count = 175 + 102 = 277   a = 175, b = 277</text>
+
+    <text x="420" y="506" fill="#f2c14e">idx = 0  ch = '1'</text>
+    <text x="438" y="524">1 alone &#8594; 277 ; "12" &lt;= 26 &#8594; 175</text>
+    <text x="438" y="542" fill="#56c98d">count = 452  &#8594;  this is the result</text>
+  </g>
+</svg>

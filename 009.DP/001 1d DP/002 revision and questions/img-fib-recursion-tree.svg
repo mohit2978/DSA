@@ -1,0 +1,75 @@
+<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="520" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">fib(5) recursion tree <tspan fill="#9aa0a6" font-weight="normal">— how to spot that DP applies</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- tree -->
+  <rect x="25" y="48" width="450" height="330" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The same subtree appears twice &#8212; that is the signal</text>
+
+  <g stroke="#5b7a8c" stroke-width="1.5">
+    <line x1="235" y1="108" x2="150" y2="150"/>
+    <line x1="255" y1="108" x2="345" y2="150"/>
+    <line x1="132" y1="170" x2="80"  y2="212"/>
+    <line x1="168" y1="170" x2="225" y2="212"/>
+    <line x1="62"  y1="232" x2="45"  y2="272"/>
+    <line x1="98"  y1="232" x2="122" y2="272"/>
+    <line x1="207" y1="232" x2="192" y2="272"/>
+    <line x1="243" y1="232" x2="268" y2="272"/>
+    <line x1="327" y1="170" x2="300" y2="212"/>
+    <line x1="363" y1="170" x2="395" y2="212"/>
+    <line x1="282" y1="232" x2="265" y2="272"/>
+    <line x1="318" y1="232" x2="340" y2="272"/>
+  </g>
+
+  <!-- highlight both fib(3) subtrees -->
+  <ellipse cx="150" cy="215" rx="115" ry="80" fill="#e06c75" fill-opacity="0.10" stroke="#e06c75" stroke-width="2" stroke-dasharray="6 4"/>
+  <ellipse cx="300" cy="215" rx="70" ry="80" fill="#e06c75" fill-opacity="0.10" stroke="#e06c75" stroke-width="2" stroke-dasharray="6 4"/>
+
+  <g fill="#d4d4d4" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold">
+    <text x="245" y="102">5</text>
+    <text x="140" y="164">4</text>
+    <text x="355" y="164">3</text>
+    <text x="70"  y="226">3</text>
+    <text x="235" y="226">2</text>
+    <text x="290" y="226">2</text>
+    <text x="405" y="226">1</text>
+    <text x="35"  y="286">2</text>
+    <text x="132" y="286">1</text>
+    <text x="182" y="286">1</text>
+    <text x="278" y="286">0</text>
+    <text x="255" y="286">1</text>
+    <text x="350" y="286">0</text>
+  </g>
+  <text x="40" y="322" fill="#e06c75" font-size="12.5">Both dashed regions are <tspan font-family="monospace" font-weight="bold">fib(3)</tspan> &#8212; identical arguments, identical tree, identical return value.</text>
+  <text x="40" y="344" fill="#9aa0a6" font-size="12">Every repeated call is wasted work, and there are exponentially many of them.</text>
+  <text x="40" y="366" fill="#56c98d" font-size="12.5" font-weight="bold">Must draw the tree diagram before going to DP.</text>
+
+  <!-- 3 conditions -->
+  <rect x="490" y="48" width="285" height="330" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="505" y="70" fill="#f2c14e" font-size="13" font-weight="bold">DP applies when all three hold</text>
+  <line x1="505" y1="80" x2="760" y2="80" stroke="#333333" stroke-width="1"/>
+  <g font-size="13" fill="#d4d4d4">
+    <text x="507" y="108"><tspan fill="#56c98d" font-weight="bold">1.</tspan>  the arguments are the same</text>
+    <text x="507" y="140"><tspan fill="#56c98d" font-weight="bold">2.</tspan>  the tree of the tree is the same</text>
+    <text x="507" y="172"><tspan fill="#56c98d" font-weight="bold">3.</tspan>  the return value is the same</text>
+  </g>
+  <text x="505" y="208" fill="#9aa0a6" font-size="12">Before applying DP, draw the tree diagram: if two states</text>
+  <text x="505" y="226" fill="#9aa0a6" font-size="12">have the same tree AND the same result, DP applies.</text>
+
+  <line x1="505" y1="248" x2="760" y2="248" stroke="#333333" stroke-width="1"/>
+  <text x="505" y="272" fill="#f2c14e" font-size="13" font-weight="bold">The complexity ladder</text>
+  <g font-family="monospace" font-size="12" fill="#d4d4d4">
+    <text x="507" y="298">fib_memo      TC O(n)   SC O(n)</text>
+    <text x="507" y="320">fib_tabu      TC O(n)   SC O(n)</text>
+    <text x="507" y="342" fill="#56c98d">fib_optimised TC O(n)   SC O(1)</text>
+  </g>
+  <text x="505" y="366" fill="#9aa0a6" font-size="12">Recursion can stack-overflow; if it does, do tabulation.</text>
+
+  <!-- TC formula -->
+  <rect x="25" y="392" width="750" height="106" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="414" fill="#f2c14e" font-size="13" font-weight="bold">How to compute the time complexity of a memoized solution</text>
+  <text x="42" y="440" fill="#56c98d" font-family="monospace" font-size="14" font-weight="bold">TC = (number of states) &#215; (TC of one state)</text>
+  <text x="40" y="466" fill="#d4d4d4" font-size="13">For <tspan font-family="monospace">fib_memo</tspan>: number of states = <tspan font-family="monospace">O(n)</tspan>, and each state does <tspan font-family="monospace">O(1)</tspan> work, so <tspan font-family="monospace" fill="#56c98d">O(n) &#215; O(1) = O(n)</tspan>.</text>
+  <text x="40" y="488" fill="#9aa0a6" font-size="12">Or do the tabulation and read the loop bounds off directly &#8212; usually easier.</text>
+</svg>

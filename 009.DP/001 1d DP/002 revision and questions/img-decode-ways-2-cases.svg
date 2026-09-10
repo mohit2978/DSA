@@ -1,0 +1,82 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="600" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Decode Ways II &#8212; the four cases created by <tspan font-family="monospace" fill="#f2c14e">*</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- single digit -->
+  <rect x="25" y="48" width="365" height="150" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">Single-digit cases (n = a real digit)</text>
+  <g font-family="monospace" font-size="13.5" fill="#d4d4d4">
+    <text x="42" y="100"><tspan fill="#f2c14e">*</tspan>   &#8594;  9 cases  (1 to 9)</text>
+    <text x="42" y="126">n   &#8594;  1 case</text>
+  </g>
+  <text x="40" y="156" fill="#9aa0a6" font-size="12.5">A <tspan font-family="monospace">*</tspan> can be replaced by 1, 2, 3 ... 9. Zero is excluded,</text>
+  <text x="40" y="174" fill="#9aa0a6" font-size="12.5">so a lone <tspan font-family="monospace">*</tspan> gives 9 ways.</text>
+  <text x="40" y="192" fill="#e06c75" font-size="12.5">If <tspan font-family="monospace">n == 0</tspan> then return 0 &#8212; a bare zero decodes to nothing.</text>
+
+  <!-- two digit -->
+  <rect x="405" y="48" width="370" height="150" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="420" y="70" fill="#f2c14e" font-size="13" font-weight="bold">Two-digit cases &#8212; there are 4 of them</text>
+  <g font-family="monospace" font-size="13.5" fill="#d4d4d4">
+    <text x="422" y="98">n <tspan fill="#f2c14e">*</tspan></text>
+    <text x="422" y="120"><tspan fill="#f2c14e">*</tspan> n</text>
+    <text x="422" y="142">n n</text>
+    <text x="422" y="164"><tspan fill="#f2c14e">*</tspan> <tspan fill="#f2c14e">*</tspan></text>
+  </g>
+  <text x="490" y="98"  fill="#9aa0a6" font-size="12">handle these two first</text>
+  <text x="490" y="142" fill="#9aa0a6" font-size="12">the plain case, already solved in Q3</text>
+  <text x="490" y="164" fill="#9aa0a6" font-size="12">the trickiest one</text>
+  <text x="420" y="190" fill="#9aa0a6" font-size="12">Together with the two single-digit cases that is 6 branches in total.</text>
+
+  <!-- n* -->
+  <rect x="25" y="212" width="365" height="170" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="234" fill="#56c98d" font-size="13" font-weight="bold">Case  n <tspan font-family="monospace" fill="#f2c14e">*</tspan></text>
+  <text x="40" y="258" fill="#d4d4d4" font-size="12.5">n can be 0 to 9 and <tspan font-family="monospace">*</tspan> can be 1 to 9, but n cannot be 0,</text>
+  <text x="40" y="276" fill="#d4d4d4" font-size="12.5">so put a check: <tspan font-family="monospace" fill="#e06c75">if n is 0, return 0</tspan>.</text>
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="42" y="306">n == 1   &#8594;  * can be 1 to 9   &#8594;  <tspan fill="#56c98d">9 ways</tspan></text>
+    <text x="42" y="330">n == 2   &#8594;  * can be 1 to 6   &#8594;  <tspan fill="#56c98d">6 ways</tspan></text>
+  </g>
+  <text x="40" y="360" fill="#9aa0a6" font-size="12">For n = 3 to 9 the two-digit number is already above 26,</text>
+  <text x="40" y="376" fill="#9aa0a6" font-size="12">so no two-digit branch exists at all.</text>
+
+  <!-- *n -->
+  <rect x="405" y="212" width="370" height="170" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="420" y="234" fill="#56c98d" font-size="13" font-weight="bold">Case  <tspan font-family="monospace" fill="#f2c14e">*</tspan> n</text>
+  <text x="420" y="258" fill="#d4d4d4" font-size="12.5"><tspan font-family="monospace">*</tspan> can be 1 to 9, so the number ranges over</text>
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="422" y="286">* = 1   &#8594;  n can be 0 to 9  &#8594;  10 to 19</text>
+    <text x="422" y="308">* = 2   &#8594;  n can be 0 to 6  &#8594;  20 to 26</text>
+  </g>
+  <text x="420" y="336" fill="#f2c14e" font-size="12.5" font-weight="bold">Turn it around and look at n instead:</text>
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="422" y="360">n = 0 to 6  &#8594;  * can be 1 or 2  &#8594;  <tspan fill="#56c98d">2 ways</tspan></text>
+    <text x="422" y="378">n = 7 to 9  &#8594;  * can be 1 only  &#8594;  <tspan fill="#56c98d">1 way</tspan></text>
+  </g>
+
+  <!-- ** -->
+  <rect x="25" y="396" width="365" height="190" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="418" fill="#56c98d" font-size="13" font-weight="bold">Case  <tspan font-family="monospace" fill="#f2c14e">* *</tspan></text>
+  <text x="40" y="442" fill="#d4d4d4" font-size="12.5">Now 0 cannot come, because a <tspan font-family="monospace">*</tspan> is never 0.</text>
+  <g font-family="monospace" font-size="13.5" fill="#d4d4d4">
+    <text x="42" y="474">first = 1   &#8594;  second 1 to 9   &#8594;  9 ways</text>
+    <text x="42" y="498">first = 2   &#8594;  second 1 to 6   &#8594;  6 ways</text>
+  </g>
+  <line x1="42" y1="512" x2="360" y2="512" stroke="#333333" stroke-width="1"/>
+  <text x="42" y="536" fill="#56c98d" font-family="monospace" font-size="15" font-weight="bold">total = 15 answers</text>
+  <text x="40" y="562" fill="#9aa0a6" font-size="12">A first digit of 3 or more would already exceed 26,</text>
+  <text x="40" y="578" fill="#9aa0a6" font-size="12">so only 1 and 2 contribute.</text>
+
+  <!-- modulo -->
+  <rect x="405" y="396" width="370" height="190" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="420" y="418" fill="#f2c14e" font-size="13" font-weight="bold">Modulo arithmetic you will need</text>
+  <text x="420" y="440" fill="#9aa0a6" font-size="12">The answer can be huge, so keep it inside int range with</text>
+  <text x="420" y="456" fill="#9aa0a6" font-size="12">mod = 10^9 + 7 &#8212; but let the helper return a <tspan font-family="monospace">long</tspan>.</text>
+  <g font-family="monospace" font-size="12" fill="#d4d4d4">
+    <text x="422" y="486">(a + b) % mod = (a%mod + b%mod) % mod</text>
+    <text x="422" y="512">(a - b) % mod = (a%mod - b%mod + mod) % mod</text>
+    <text x="422" y="538">(a * b) % mod = (a%mod * b%mod) % mod</text>
+  </g>
+  <text x="420" y="566" fill="#e06c75" font-size="12">Division has no such rule, so never take a modulus of a division.</text>
+  <text x="420" y="582" fill="#9aa0a6" font-size="12">Note Q3 says the answer fits in a 32-bit int, so no mod is needed there.</text>
+</svg>

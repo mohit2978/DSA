@@ -1,0 +1,62 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="500" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Decode Ways &#8212; the recursion <tspan fill="#9aa0a6" font-weight="normal">s = "226"</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- tree -->
+  <rect x="25" y="48" width="400" height="290" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">At each step take 1 character or 2 characters</text>
+
+  <g stroke="#5b7a8c" stroke-width="1.5">
+    <line x1="210" y1="272" x2="150" y2="222"/>
+    <line x1="230" y1="272" x2="300" y2="222"/>
+    <line x1="135" y1="202" x2="90"  y2="152"/>
+    <line x1="155" y1="202" x2="215" y2="152"/>
+    <line x1="80"  y1="132" x2="60"  y2="92"/>
+    <line x1="100" y1="132" x2="140" y2="92"/>
+  </g>
+
+  <g fill="#d4d4d4" text-anchor="middle" font-family="monospace" font-size="15" font-weight="bold">
+    <text x="220" y="292">226</text>
+    <text x="140" y="216">26</text>
+    <text x="315" y="216">6</text>
+    <text x="78"  y="146">6</text>
+    <text x="230" y="146">-</text>
+    <text x="50"  y="86">-</text>
+    <text x="150" y="86">-</text>
+  </g>
+  <g fill="#9aa0a6" text-anchor="middle" font-family="monospace" font-size="12">
+    <text x="160" y="252">2</text>
+    <text x="280" y="252">22</text>
+    <text x="98"  y="184">2</text>
+    <text x="205" y="184">26</text>
+    <text x="52"  y="118">6</text>
+  </g>
+
+  <text x="40" y="316" fill="#56c98d" font-size="12.5">Three root-to-leaf paths survive: (2 2 6), (2 26), (22 6) &#8212; the answer is 3.</text>
+  <text x="40" y="332" fill="#9aa0a6" font-size="12">26 maps to Z, which is why 26 is the upper limit.</text>
+
+  <!-- rule -->
+  <rect x="440" y="48" width="335" height="290" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="455" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The rule</text>
+  <text x="455" y="96" fill="#d4d4d4" font-size="13">Either select <tspan fill="#56c98d" font-weight="bold">1 character</tspan> or <tspan fill="#56c98d" font-weight="bold">2 characters</tspan> at a time.</text>
+  <text x="455" y="124" fill="#d4d4d4" font-size="13">If the 2-character number lies between</text>
+  <text x="455" y="146" fill="#f2c14e" font-family="monospace" font-size="15" font-weight="bold">1 and 26  (both included)</text>
+  <text x="455" y="168" fill="#d4d4d4" font-size="13">then it can be formed.</text>
+
+  <line x1="455" y1="192" x2="760" y2="192" stroke="#333333" stroke-width="1"/>
+  <text x="455" y="216" fill="#e06c75" font-size="13" font-weight="bold">The performance trap</text>
+  <text x="455" y="240" fill="#d4d4d4" font-size="12.5">If we use the <tspan font-family="monospace">substring</tspan> function it takes <tspan font-family="monospace" fill="#e06c75">O(n)</tspan> time,</text>
+  <text x="455" y="258" fill="#d4d4d4" font-size="12.5">so we must avoid that.</text>
+  <text x="455" y="284" fill="#9aa0a6" font-size="12.5">Instead of passing a substring, pass the <tspan fill="#56c98d">whole string</tspan></text>
+  <text x="455" y="302" fill="#9aa0a6" font-size="12.5">plus the <tspan fill="#56c98d">index</tspan> of the element we want to select.</text>
+  <text x="455" y="326" fill="#9aa0a6" font-size="12">Cutting a substring is the same as passing an index.</text>
+
+  <!-- leading zero -->
+  <rect x="25" y="352" width="750" height="130" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="374" fill="#f2c14e" font-size="13" font-weight="bold">Why a leading zero kills a branch</text>
+  <text x="40" y="398" fill="#d4d4d4" font-size="13">The grouping <tspan font-family="monospace">(1 11 06)</tspan> is invalid because <tspan font-family="monospace">"06"</tspan> cannot be mapped into <tspan font-family="monospace">F</tspan> &#8212; <tspan font-family="monospace">"6"</tspan> is different from <tspan font-family="monospace">"06"</tspan>.</text>
+  <text x="40" y="422" fill="#d4d4d4" font-size="13">So <tspan font-family="monospace">s = "06"</tspan> gives <tspan font-family="monospace" fill="#e06c75">0</tspan>, while <tspan font-family="monospace">s = "12"</tspan> gives <tspan font-family="monospace" fill="#56c98d">2</tspan> (AB or L) and <tspan font-family="monospace">s = "226"</tspan> gives <tspan font-family="monospace" fill="#56c98d">3</tspan> (BZ, VF, BBF).</text>
+  <text x="40" y="450" fill="#9aa0a6" font-size="12.5">In code this becomes a guard: if the character at <tspan font-family="monospace">idx</tspan> is <tspan font-family="monospace">'0'</tspan>, that whole state contributes nothing, so return 0.</text>
+  <text x="40" y="470" fill="#9aa0a6" font-size="12.5">The single-character branch is therefore only taken when <tspan font-family="monospace">n1 &gt; 0</tspan>.</text>
+</svg>

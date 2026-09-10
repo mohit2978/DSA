@@ -1,0 +1,57 @@
+<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="520" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Decode Ways &#8212; reading the dp array to find the optimisation <tspan fill="#9aa0a6" font-weight="normal">s = "123455"</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- dp array -->
+  <rect x="25" y="48" width="750" height="120" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The printed dp array for input "123455" &#8212; the answer is dp[0] = 3</text>
+  <g font-family="monospace" font-size="12" fill="#9aa0a6" text-anchor="middle">
+    <text x="105" y="96">0</text><text x="195" y="96">1</text><text x="285" y="96">2</text><text x="375" y="96">3</text>
+    <text x="465" y="96">4</text><text x="555" y="96">5</text><text x="645" y="96">6</text>
+  </g>
+  <rect x="70"  y="104" width="70" height="34" fill="#1f3a2a" stroke="#56c98d" stroke-width="2.5"/>
+  <g stroke="#5b9bd5" stroke-width="1.5" fill="#2b2b2b">
+    <rect x="160" y="104" width="70" height="34"/><rect x="250" y="104" width="70" height="34"/>
+    <rect x="340" y="104" width="70" height="34"/><rect x="430" y="104" width="70" height="34"/>
+    <rect x="520" y="104" width="70" height="34"/><rect x="610" y="104" width="70" height="34"/>
+  </g>
+  <g font-family="monospace" font-size="16" fill="#d4d4d4" text-anchor="middle" font-weight="bold">
+    <text x="105" y="127">3</text><text x="195" y="127">2</text><text x="285" y="127">1</text><text x="375" y="127">1</text>
+    <text x="465" y="127">1</text><text x="555" y="127">1</text><text x="645" y="127">1</text>
+  </g>
+  <text x="700" y="127" fill="#9aa0a6" font-size="12">&#8592; index 6 is the</text>
+  <text x="700" y="143" fill="#9aa0a6" font-size="12">&#160;&#160;&#160;empty-string base</text>
+  <text x="40" y="160" fill="#9aa0a6" font-size="12">Read right to left. Loop <tspan font-family="monospace">i</tspan> from <tspan font-family="monospace">s.length()</tspan> down to <tspan font-family="monospace">0</tspan>, because the answer at index i needs the results at i+1 and i+2.</text>
+
+  <!-- dependency -->
+  <rect x="25" y="182" width="750" height="180" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="204" fill="#f2c14e" font-size="13" font-weight="bold">Every cell depends on only two cells to its right</text>
+
+  <g font-family="monospace" font-size="14" fill="#d4d4d4">
+    <text x="42" y="234">at "5" (index 4)   the last "5" alone works, so add dp[i+1]</text>
+    <text x="42" y="256">                    "55" is &gt; 26, so no second branch</text>
+    <text x="42" y="286">at "4" (index 3)   "45" is &gt; 26, so only add dp[i+1]</text>
+    <text x="42" y="316">at "2" (index 1)   "23" &lt;= 26, so add dp[i+1]  AND  dp[i+2]</text>
+  </g>
+  <text x="40" y="346" fill="#56c98d" font-size="13" font-weight="bold">In short: the code only ever depends on dp[i+1] and dp[i+2].</text>
+
+  <!-- optimisation -->
+  <rect x="25" y="376" width="365" height="130" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="398" fill="#f2c14e" font-size="13" font-weight="bold">So we need only 2 variables, not the whole array</text>
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="42" y="426">a  =  dp[i + 1]</text>
+    <text x="42" y="448">b  =  dp[i + 2]</text>
+  </g>
+  <text x="40" y="476" fill="#9aa0a6" font-size="12">Initially <tspan font-family="monospace">a = 1</tspan> (the empty suffix has one decoding)</text>
+  <text x="40" y="494" fill="#9aa0a6" font-size="12">and <tspan font-family="monospace">b = 0</tspan>, because at the start there is no i+2 cell yet.</text>
+
+  <rect x="405" y="376" width="370" height="130" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="420" y="398" fill="#f2c14e" font-size="13" font-weight="bold">The shift at the end of each iteration</text>
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="422" y="426">count  =  the value for the current index</text>
+    <text x="422" y="450">b  =  a;       // i+1 becomes i+2</text>
+    <text x="422" y="472">a  =  count;   // current becomes i+1</text>
+  </g>
+  <text x="420" y="496" fill="#9aa0a6" font-size="12">Two pointers that depend on each other, exactly like Fibonacci.</text>
+</svg>
