@@ -1,0 +1,87 @@
+<svg viewBox="0 0 800 660" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="660" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Sliding Window Maximum &#8212; Deque approach <tspan fill="#9aa0a6" font-weight="normal">O(N), k = 4</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- deque anatomy -->
+  <rect x="25" y="48" width="365" height="150" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The Deque</text>
+  <ellipse cx="130" cy="112" rx="14" ry="24" fill="none" stroke="#e06c75" stroke-width="2"/>
+  <ellipse cx="290" cy="112" rx="14" ry="24" fill="none" stroke="#e06c75" stroke-width="2"/>
+  <line x1="130" y1="88"  x2="290" y2="88"  stroke="#e06c75" stroke-width="2"/>
+  <line x1="130" y1="136" x2="290" y2="136" stroke="#e06c75" stroke-width="2"/>
+  <text x="130" y="164" fill="#f2c14e" text-anchor="middle" font-size="12" font-weight="bold">Front</text>
+  <text x="290" y="164" fill="#f2c14e" text-anchor="middle" font-size="12" font-weight="bold">Back</text>
+  <text x="60"  y="112" fill="#e06c75" text-anchor="end" font-size="11">remove</text>
+  <text x="330" y="100" fill="#e06c75" font-size="11">remove</text>
+  <text x="330" y="128" fill="#56c98d" font-size="11">add</text>
+  <text x="40" y="186" fill="#9aa0a6" font-size="12">Add at the back, but remove from BOTH ends.</text>
+
+  <!-- rules -->
+  <rect x="405" y="48" width="370" height="150" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="420" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The two removal rules</text>
+  <text x="420" y="94" fill="#56c98d" font-size="12.5" font-weight="bold">1. From the FRONT</text>
+  <text x="420" y="112" fill="#d4d4d4" font-size="12.5">when the index falls out of the window.</text>
+  <text x="420" y="138" fill="#e06c75" font-size="12.5" font-weight="bold">2. From the BACK</text>
+  <text x="420" y="156" fill="#d4d4d4" font-size="12.5">when a bigger element arrives. In whatever window</text>
+  <text x="420" y="174" fill="#d4d4d4" font-size="12.5">the bigger element sits, the smaller one can never</text>
+  <text x="420" y="190" fill="#d4d4d4" font-size="12.5">be the maximum, so it is useless.</text>
+
+  <!-- array -->
+  <rect x="25" y="212" width="750" height="96" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="234" fill="#f2c14e" font-size="13" font-weight="bold">The array (indices below)</text>
+  <g stroke="#5b9bd5" stroke-width="1.5" fill="#2b2b2b">
+    <rect x="42"  y="244" width="45" height="30"/><rect x="88"  y="244" width="45" height="30"/>
+    <rect x="134" y="244" width="45" height="30"/><rect x="180" y="244" width="45" height="30"/>
+    <rect x="226" y="244" width="45" height="30"/><rect x="272" y="244" width="45" height="30"/>
+    <rect x="318" y="244" width="45" height="30"/><rect x="364" y="244" width="45" height="30"/>
+    <rect x="410" y="244" width="45" height="30"/><rect x="456" y="244" width="45" height="30"/>
+    <rect x="502" y="244" width="45" height="30"/><rect x="548" y="244" width="45" height="30"/>
+    <rect x="594" y="244" width="45" height="30"/><rect x="640" y="244" width="45" height="30"/>
+    <rect x="686" y="244" width="45" height="30"/><rect x="732" y="244" width="43" height="30"/>
+  </g>
+  <g font-family="monospace" font-size="14" fill="#d4d4d4" text-anchor="middle" font-weight="bold">
+    <text x="64"  y="265">4</text><text x="110" y="265">2</text><text x="156" y="265">3</text><text x="202" y="265">1</text>
+    <text x="248" y="265">5</text><text x="294" y="265">3</text><text x="340" y="265">4</text><text x="386" y="265">11</text>
+    <text x="432" y="265">10</text><text x="478" y="265">9</text><text x="524" y="265">6</text><text x="570" y="265">-1</text>
+    <text x="616" y="265">8</text><text x="662" y="265">3</text><text x="708" y="265">9</text><text x="753" y="265">2</text>
+  </g>
+  <g font-family="monospace" font-size="11" fill="#9aa0a6" text-anchor="middle">
+    <text x="64"  y="290">0</text><text x="110" y="290">1</text><text x="156" y="290">2</text><text x="202" y="290">3</text>
+    <text x="248" y="290">4</text><text x="294" y="290">5</text><text x="340" y="290">6</text><text x="386" y="290">7</text>
+    <text x="432" y="290">8</text><text x="478" y="290">9</text><text x="524" y="290">10</text><text x="570" y="290">11</text>
+    <text x="616" y="290">12</text><text x="662" y="290">13</text><text x="708" y="290">14</text><text x="753" y="290">15</text>
+  </g>
+
+  <!-- trace -->
+  <rect x="25" y="322" width="750" height="238" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="344" fill="#f2c14e" font-size="13" font-weight="bold">The deque of INDICES, step by step (back-removal rule shown)</text>
+  <line x1="40" y1="354" x2="760" y2="354" stroke="#333333" stroke-width="1"/>
+  <g font-family="monospace" font-size="12" fill="#d4d4d4">
+    <text x="42" y="374">at 0     dq = 0</text>
+    <text x="42" y="394">at 1     dq = 0, 1</text>
+    <text x="42" y="414" fill="#e06c75">at 2     arr[1] &lt; arr[2]  so remove 1 and push 2      dq = 0, 2</text>
+    <text x="42" y="434">at 3     dq = 0, 2, 3</text>
+    <text x="42" y="454" fill="#e06c75">at 4     5 is bigger than all of them, so 0, 2, 3 removed   dq = 4</text>
+    <text x="42" y="474">at 5     arr[4] = 5 &gt; arr[5] = 3  so just push      dq = 4, 5</text>
+    <text x="42" y="494" fill="#e06c75">at 6     arr[5] &lt; arr[6]  so pop 5 and push 6       dq = 4, 6</text>
+    <text x="42" y="514" fill="#e06c75">at 7     everything is smaller than arr[7] = 11, pop pop     dq = 7</text>
+    <text x="42" y="534">at 8, 9  dq = 7, 8, 9</text>
+  </g>
+  <g font-family="monospace" font-size="12" fill="#d4d4d4">
+    <text x="420" y="374">at 10, 11   dq = 7, 8, 9, 10, 11</text>
+    <text x="420" y="394" fill="#e06c75">at 12       arr[12] = 8 pops 11 and 10     dq = 7, 8, 9, 12</text>
+    <text x="420" y="414">at 13       dq = 7, 8, 9, 12, 13</text>
+    <text x="420" y="434" fill="#e06c75">at 14       arr[14] &gt; arr[13] so pop 13</text>
+    <text x="438" y="452" fill="#e06c75">arr[14] &gt; arr[12] so pop 12</text>
+    <text x="438" y="470" fill="#f2c14e">arr[14] == arr[9] so STOP    dq = 7, 8, 9, 14</text>
+    <text x="420" y="492">at 15       dq = 7, 8, 9, 14, 15</text>
+  </g>
+  <text x="420" y="520" fill="#9aa0a6" font-size="11.5">Note: the trace above concentrates on the back-removal rule.</text>
+  <text x="420" y="536" fill="#9aa0a6" font-size="11.5">The front-removal (index out of window) also fires each step.</text>
+
+  <rect x="25" y="574" width="750" height="70" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="596" fill="#f2c14e" font-size="13" font-weight="bold">The invariant</text>
+  <text x="40" y="620" fill="#d4d4d4" font-size="13">The deque stays <tspan fill="#56c98d" font-weight="bold">monotonically decreasing from front to back</tspan>, so the <tspan fill="#56c98d" font-weight="bold">maximum of the current window is always at the front</tspan>.</text>
+  <text x="40" y="638" fill="#9aa0a6" font-size="12">We keep smaller elements at the back on purpose: once the bigger ones expire, the next-largest is already sitting there waiting.</text>
+</svg>

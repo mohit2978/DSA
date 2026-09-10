@@ -1,0 +1,58 @@
+<svg viewBox="0 0 800 640" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="640" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">K-Concatenation Maximum Sum <tspan fill="#9aa0a6" font-weight="normal">— why the answer forms an Arithmetic Progression</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- three cases -->
+  <rect x="25" y="48" width="750" height="110" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The three cases</text>
+  <text x="40" y="94" fill="#d4d4d4" font-size="13"><tspan fill="#56c98d" font-weight="bold">Case I</tspan> &#8212; if all elements are positive, then <tspan font-family="monospace">whole array sum &#215; K</tspan> is the answer.</text>
+  <text x="40" y="116" fill="#d4d4d4" font-size="13"><tspan fill="#f2c14e" font-weight="bold">Case II</tspan> &#8212; the best subarray straddles a join: it is a suffix of one copy plus a prefix of the next, plus whole copies in between.</text>
+  <text x="40" y="138" fill="#d4d4d4" font-size="13"><tspan fill="#e06c75" font-weight="bold">Case III</tspan> &#8212; the array sum is negative, so adding more copies never helps; the answer stops growing.</text>
+
+  <!-- AP -->
+  <rect x="25" y="172" width="365" height="200" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="194" fill="#f2c14e" font-size="13" font-weight="bold">Case II worked out</text>
+  <text x="40" y="216" fill="#9aa0a6" font-family="monospace" font-size="12">arr = [-1, 0, 4, -1, -2, 1, 5, -2]</text>
+  <text x="40" y="234" fill="#9aa0a6" font-family="monospace" font-size="12">array sum = 4</text>
+  <line x1="40" y1="244" x2="375" y2="244" stroke="#333333" stroke-width="1"/>
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="42" y="266">K = 1     gSum = 7</text>
+    <text x="42" y="290">K = 2     gSum = 11</text>
+    <text x="42" y="314">K = 3     gSum = 15</text>
+    <text x="42" y="338">K = 4     gSum = 19</text>
+  </g>
+  <text x="42" y="362" fill="#56c98d" font-size="12.5" font-weight="bold">an AP with common difference 4 = array sum</text>
+
+  <!-- decomposition -->
+  <rect x="405" y="172" width="370" height="200" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="420" y="194" fill="#f2c14e" font-size="13" font-weight="bold">Why it is an AP</text>
+  <g font-family="monospace" font-size="12.5" fill="#d4d4d4">
+    <text x="422" y="220">K = 1     S</text>
+    <text x="422" y="244">K = 2     S1 + S2</text>
+    <text x="422" y="268">K = 3     S1 + x + S2</text>
+    <text x="422" y="292">K = 18    S1 + (K-2) x + S2</text>
+  </g>
+  <text x="420" y="320" fill="#9aa0a6" font-size="12">S1 = max SUFFIX sum (the tail of the first copy)</text>
+  <text x="420" y="338" fill="#9aa0a6" font-size="12">S2 = max PREFIX sum (the head of the last copy)</text>
+  <text x="420" y="356" fill="#9aa0a6" font-size="12">x  = the whole array sum, repeated (K-2) times</text>
+
+  <!-- getting x -->
+  <rect x="25" y="386" width="750" height="106" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="408" fill="#f2c14e" font-size="13" font-weight="bold">Two ways to get the pieces</text>
+  <text x="40" y="432" fill="#d4d4d4" font-size="13"><tspan fill="#56c98d">Way 1:</tspan> rewrite as <tspan font-family="monospace">(S1 + S2) + (K-2)&#183;x</tspan>. The first bracket is just the K = 2 answer, and <tspan font-family="monospace">x = (K=3 answer) &#8722; (K=2 answer)</tspan>.</text>
+  <text x="40" y="454" fill="#9aa0a6" font-size="12">That is valid only when the whole array can be the answer &#8212; run Kadane for K = 1, 2, 3 and extrapolate.</text>
+  <text x="40" y="478" fill="#d4d4d4" font-size="13"><tspan fill="#56c98d">Way 2:</tspan> <tspan font-family="monospace">x = sum of the whole array</tspan>, and compute S1 and S2 directly as the <tspan font-weight="bold">max suffix sum</tspan> and the <tspan font-weight="bold">max prefix sum</tspan> in one pass.</text>
+
+  <!-- case III -->
+  <rect x="25" y="506" width="750" height="118" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="528" fill="#f2c14e" font-size="13" font-weight="bold">Case III &#8212; when the array sum is negative</text>
+  <text x="40" y="552" fill="#9aa0a6" font-family="monospace" font-size="12">arr = [-10, -20, 1, 2, 3, 4, 5, -10, -20]     array sum = -45</text>
+  <g font-family="monospace" font-size="12.5" fill="#d4d4d4">
+    <text x="42" y="576">K = 1   gSum = 15</text>
+    <text x="250" y="576">K = 2   gSum = 15</text>
+    <text x="460" y="576" fill="#56c98d">the answer never grows</text>
+  </g>
+  <text x="40" y="600" fill="#d4d4d4" font-size="12.5">Whatever sits at the end and at the start is so negative that it is never worth crossing the join, so <tspan font-family="monospace" fill="#56c98d">sum = 15</tspan> every time.</text>
+  <text x="40" y="618" fill="#9aa0a6" font-size="12">That is why the code clamps <tspan font-family="monospace">arraySum = arraySum &lt; 0 ? 0 : arraySum</tspan> before multiplying by (K-2), and takes a max against the plain Kadane answer.</text>
+</svg>

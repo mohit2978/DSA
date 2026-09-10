@@ -1,0 +1,63 @@
+<svg viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="560" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Sliding Window Maximum &#8212; Priority Queue approach <tspan fill="#9aa0a6" font-weight="normal">nums = [1, 3, -1, -3, 5, 3, 6, 7], k = 3</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- idea -->
+  <rect x="25" y="48" width="750" height="96" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The idea</text>
+  <text x="40" y="94" fill="#d4d4d4" font-size="13">Use a Priority Queue of <tspan font-family="monospace" fill="#56c98d">{Element, Index}</tspan> ordered so the <tspan font-weight="bold">largest element comes out first</tspan> (a max-heap).</text>
+  <text x="40" y="116" fill="#d4d4d4" font-size="13">The max at the top is only usable if its index is still inside the window. Otherwise pop it and look again &#8212; this is <tspan fill="#f2c14e">lazy deletion</tspan>,</text>
+  <text x="40" y="136" fill="#d4d4d4" font-size="13">because a heap cannot remove an arbitrary element from the middle.</text>
+
+  <!-- array -->
+  <rect x="25" y="158" width="750" height="90" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <g font-family="monospace" font-size="11.5" fill="#9aa0a6" text-anchor="middle">
+    <text x="105" y="184">0</text><text x="195" y="184">1</text><text x="285" y="184">2</text><text x="375" y="184">3</text>
+    <text x="465" y="184">4</text><text x="555" y="184">5</text><text x="645" y="184">6</text><text x="735" y="184">7</text>
+  </g>
+  <g stroke="#5b9bd5" stroke-width="1.5" fill="#2b2b2b">
+    <rect x="70"  y="192" width="70" height="34"/><rect x="160" y="192" width="70" height="34"/>
+    <rect x="250" y="192" width="70" height="34"/><rect x="340" y="192" width="70" height="34"/>
+    <rect x="430" y="192" width="70" height="34"/><rect x="520" y="192" width="70" height="34"/>
+    <rect x="610" y="192" width="70" height="34"/><rect x="700" y="192" width="70" height="34"/>
+  </g>
+  <g font-family="monospace" font-size="16" fill="#d4d4d4" text-anchor="middle" font-weight="bold">
+    <text x="105" y="215">1</text><text x="195" y="215">3</text><text x="285" y="215">-1</text><text x="375" y="215">-3</text>
+    <text x="465" y="215">5</text><text x="555" y="215">3</text><text x="645" y="215">6</text><text x="735" y="215">7</text>
+  </g>
+  <text x="40" y="242" fill="#9aa0a6" font-size="12">Expected output: <tspan font-family="monospace" fill="#56c98d">[3, 3, 5, 5, 6, 7]</tspan></text>
+
+  <!-- trace -->
+  <rect x="25" y="262" width="440" height="200" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="284" fill="#f2c14e" font-size="13" font-weight="bold">Walking the first two windows</text>
+  <line x1="40" y1="294" x2="450" y2="294" stroke="#333333" stroke-width="1"/>
+  <g font-family="monospace" font-size="12" fill="#d4d4d4">
+    <text x="42" y="314">PQ at index 2:  (1,0) (3,1) (-1,2)</text>
+    <text x="42" y="336" fill="#56c98d">max element &#8594; (3,1)</text>
+    <text x="42" y="358">index must satisfy  1 &gt; idx - k</text>
+    <text x="60" y="378">1 &gt; 3 - 3 = 0   yes</text>
+    <text x="60" y="398" fill="#56c98d">so 3 IS part of the window</text>
+    <text x="42" y="424">now push (-3,3), index moves to 4</text>
+    <text x="42" y="446">PQ: (1,0) (-1,2) (-3,3) (3,1)</text>
+  </g>
+
+  <rect x="480" y="262" width="295" height="200" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="495" y="284" fill="#f2c14e" font-size="13" font-weight="bold">The next check</text>
+  <line x1="495" y1="294" x2="760" y2="294" stroke="#333333" stroke-width="1"/>
+  <g font-family="monospace" font-size="12" fill="#d4d4d4">
+    <text x="497" y="314" fill="#56c98d">max is (3,1)</text>
+    <text x="497" y="338">1 &gt;= idx - k</text>
+    <text x="497" y="358">1 &gt;= 4 - 3</text>
+    <text x="497" y="378">1 == 1</text>
+    <text x="497" y="400" fill="#56c98d">so this IS part of the window</text>
+  </g>
+  <text x="495" y="428" fill="#e06c75" font-size="12">If you eagerly deleted 3 from the PQ, the</text>
+  <text x="495" y="444" fill="#e06c75" font-size="12">window max would vanish &#8212; never do that.</text>
+
+  <!-- complexity -->
+  <rect x="25" y="476" width="750" height="72" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="498" fill="#f2c14e" font-size="13" font-weight="bold">Cost of this approach</text>
+  <text x="40" y="522" fill="#d4d4d4" font-size="13"><tspan font-family="monospace">TC &#8594; O(N log N)</tspan> and <tspan font-family="monospace">SC &#8594; O(N)</tspan>, because <tspan fill="#e06c75">we keep every element in the heap</tspan> and only discard stale ones from the top.</text>
+  <text x="40" y="542" fill="#9aa0a6" font-size="12">Now we need to optimise that <tspan font-family="monospace">N log N</tspan>. We want <tspan font-family="monospace" fill="#56c98d">TC = O(N log K)</tspan> with <tspan font-family="monospace" fill="#56c98d">SC = O(K)</tspan> &#8212; do not go through a PQ; a TreeMap (a balanced BST) can do that.</text>
+</svg>

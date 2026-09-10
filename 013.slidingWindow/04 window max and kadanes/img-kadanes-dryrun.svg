@@ -1,0 +1,66 @@
+<svg viewBox="0 0 800 730" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="730" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Kadane&#8217;s Algorithm <tspan fill="#9aa0a6" font-weight="normal">— maximum sum contiguous subarray</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- principle -->
+  <rect x="25" y="48" width="750" height="190" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The principle &#8212; two variables: gSum (global) and cSum (current)</text>
+  <text x="40" y="94" fill="#d4d4d4" font-size="13">Take <tspan font-family="monospace">4, 5, 4, 5, 2, -10</tspan>. The running sum reaches <tspan font-family="monospace" fill="#56c98d">20</tspan>, then <tspan font-family="monospace">-10</tspan> drops it to 10.</text>
+  <text x="40" y="116" fill="#d4d4d4" font-size="13">There is a <tspan fill="#f2c14e">possibility</tspan> that a <tspan font-family="monospace">1000</tspan> comes after the <tspan font-family="monospace">-10</tspan> and makes the sum bigger,</text>
+  <text x="40" y="136" fill="#d4d4d4" font-size="13">so including a negative element can still pay off.</text>
+  <text x="40" y="158" fill="#e06c75" font-size="13">But if <tspan font-family="monospace">-1000</tspan> comes instead, then however large a number arrives afterwards,</text>
+  <text x="40" y="178" fill="#e06c75" font-size="13">it will build its own better subarray rather than drag the negative along.</text>
+  <text x="40" y="200" fill="#56c98d" font-size="13" font-weight="bold">So: the moment the running sum goes negative, throw it away and start fresh &#8212;</text>
+  <text x="40" y="220" fill="#56c98d" font-size="13" font-weight="bold">a negative prefix can only hurt whatever follows.</text>
+
+  <!-- simple kadane trace -->
+  <rect x="25" y="252" width="365" height="270" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="274" fill="#f2c14e" font-size="13" font-weight="bold">Simple Kadane (answer 0 if all negative)</text>
+  <text x="40" y="296" fill="#9aa0a6" font-family="monospace" font-size="12">arr = [-2, -3, 4, -1, -2, 1, 5, -3]</text>
+  <text x="40" y="314" fill="#9aa0a6" font-family="monospace" font-size="12">gSum = 0, cSum = 0 initially</text>
+  <line x1="40" y1="324" x2="375" y2="324" stroke="#333333" stroke-width="1"/>
+  <g font-family="monospace" font-size="12" fill="#d4d4d4">
+    <text x="42" y="344" fill="#e06c75">i=0  cSum = -2 &lt; 0  so cSum = 0</text>
+    <text x="42" y="364" fill="#e06c75">i=1  cSum = -3 &lt; 0  so cSum = 0</text>
+    <text x="42" y="384" fill="#56c98d">i=2  cSum = 4  &gt; 0  gSum = 4</text>
+    <text x="42" y="404">i=3  cSum = 3       gSum = 4</text>
+    <text x="42" y="424">i=4  cSum = 1       gSum = 4</text>
+    <text x="42" y="444">i=5  cSum = 2       gSum = 4</text>
+    <text x="42" y="464" fill="#56c98d">i=6  cSum = 7       gSum = 7</text>
+    <text x="42" y="484">i=7  cSum = 4       gSum = 7</text>
+  </g>
+  <text x="42" y="508" fill="#56c98d" font-size="12.5" font-weight="bold">answer 7 &#8212; the subarray [4, -1, -2, 1, 5]</text>
+
+  <!-- generic kadane trace -->
+  <rect x="405" y="252" width="370" height="270" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="420" y="274" fill="#f2c14e" font-size="13" font-weight="bold">Generic Kadane (answer -1 for [-1,-7,-8,-9])</text>
+  <text x="420" y="296" fill="#9aa0a6" font-family="monospace" font-size="12">arr = [-2, -3, 4, 1, -2, -5, 6, 7]</text>
+  <text x="420" y="314" fill="#9aa0a6" font-family="monospace" font-size="12">gSum = -1e9, cSum = 0 initially</text>
+  <line x1="420" y1="324" x2="760" y2="324" stroke="#333333" stroke-width="1"/>
+  <g font-family="monospace" font-size="12" fill="#d4d4d4">
+    <text x="422" y="344">at 0  cSum = -2                 gSum = -2</text>
+    <text x="422" y="364">at 1  cSum = max(-3, -5) = -3   gSum = -2</text>
+    <text x="422" y="384" fill="#56c98d">at 2  cSum = max(4, 1)   = 4    gSum = 4</text>
+    <text x="422" y="404" fill="#56c98d">at 3  cSum = max(1, 5)   = 5    gSum = 5</text>
+    <text x="422" y="424" fill="#56c98d">at 4  cSum = max(-2, 3)  = 3    gSum = 5</text>
+    <text x="422" y="444">at 5  cSum = max(-5, -2) = -2   gSum = 5</text>
+    <text x="422" y="464" fill="#56c98d">at 6  cSum = max(6, 4)   = 6    gSum = 6</text>
+    <text x="422" y="484" fill="#56c98d">at 7  cSum = max(7, 13)  = 13   gSum = 13</text>
+  </g>
+  <text x="422" y="508" fill="#56c98d" font-size="12.5" font-weight="bold">answer 13 &#8212; the subarray [6, 7]</text>
+
+  <!-- variants -->
+  <rect x="25" y="538" width="750" height="170" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="560" fill="#f2c14e" font-size="13" font-weight="bold">The two versions differ only in what an all-negative array should return</text>
+  <g font-family="monospace" font-size="12.5" fill="#d4d4d4">
+    <text x="42" y="586">[-1, -2, -3, -4, -5]  with  gSum = 0, and reset cSum to 0 when cSum &lt;= 0</text>
+    <text x="640" y="586" fill="#56c98d">answer 0</text>
+    <text x="42" y="608">[-1, -2, -3, -4, -5]  with  gSum = -1e9, cSum = max(ele, cSum + ele)</text>
+    <text x="640" y="608" fill="#56c98d">answer -1</text>
+  </g>
+  <text x="40" y="632" fill="#9aa0a6" font-size="12">The first says the empty subarray is allowed (sum 0). The second forces a non-empty subarray,</text>
+  <text x="40" y="650" fill="#9aa0a6" font-size="12">so the largest single element wins.</text>
+  <text x="40" y="672" fill="#9aa0a6" font-size="12">Also note <tspan font-family="monospace">if (cSum &lt;= 0)</tspan> and <tspan font-family="monospace">if (cSum &lt; 0)</tspan> behave identically here,</text>
+  <text x="40" y="690" fill="#9aa0a6" font-size="12">since setting an already-zero cSum back to 0 changes nothing.</text>
+</svg>
