@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: 700; font-size: 19px; fill: #f8fafc; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 13px; fill: #94a3b8; }
+      .phase-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: 600; font-size: 14px; }
+      .desc-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 12px; fill: #cbd5e1; }
+      .code-inline { font-family: 'Consolas', 'Courier New', monospace; font-size: 11px; }
+      .axis-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 11px; fill: #64748b; font-weight: 500; }
+      .bar-label { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #ffffff; }
+    </style>
+
+    <linearGradient id="grad-before" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+    <linearGradient id="grad-new" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ea580c" />
+      <stop offset="100%" stop-color="#f97316" />
+    </linearGradient>
+    <linearGradient id="grad-overlap" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#fbbf24" />
+    </linearGradient>
+    <linearGradient id="grad-merged3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#34d399" />
+    </linearGradient>
+    <linearGradient id="grad-after" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#818cf8" />
+    </linearGradient>
+
+    <filter id="shadow3" x="-5%" y="-10%" width="110%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="620" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="2" />
+
+  <!-- Header -->
+  <g transform="translate(30, 20)">
+    <rect x="0" y="0" width="34" height="34" rx="8" fill="#059669" fill-opacity="0.2" stroke="#34d399" stroke-width="1.5" />
+    <text x="17" y="23" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="16" fill="#34d399">3</text>
+    <text x="46" y="20" class="title">Q3: Insert Interval — The 3-Phase Linear Scan</text>
+    <text x="46" y="38" class="subtitle">Example: intervals = [[1, 2], [3, 5], [6, 7], [8, 10], [12, 16]], newInterval = [4, 8]</text>
+  </g>
+
+  <!-- Global Timeline Axis (Scale: 1 unit = 28px, range 0 to 16, x: 440 to 888) -->
+  <!-- 0:440, 1:468, 2:496, 3:524, 4:552, 5:580, 6:608, 7:636, 8:664, 10:720, 12:776, 16:888 -->
+  <g transform="translate(0, 75)">
+    <text x="40" y="15" font-family="sans-serif" font-size="12" font-weight="bold" fill="#94a3b8">ALGORITHM 3-PHASE LOGIC</text>
+    <text x="440" y="15" font-family="sans-serif" font-size="12" font-weight="bold" fill="#94a3b8">TIMELINE &amp; INTERVAL STATE</text>
+
+    <!-- Axis line -->
+    <line x1="440" y1="30" x2="890" y2="30" stroke="#334155" stroke-width="2" />
+
+    <!-- Grid lines -->
+    <line x1="468" y1="30" x2="468" y2="475" stroke="#334155" stroke-width="1" stroke-dasharray="3,3" />
+    <line x1="496" y1="30" x2="496" y2="475" stroke="#334155" stroke-width="1" stroke-dasharray="3,3" />
+    <line x1="524" y1="30" x2="524" y2="475" stroke="#334155" stroke-width="1" stroke-dasharray="3,3" />
+    <line x1="552" y1="30" x2="552" y2="475" stroke="#334155" stroke-width="1" stroke-dasharray="3,3" />
+    <line x1="664" y1="30" x2="664" y2="475" stroke="#334155" stroke-width="1" stroke-dasharray="3,3" />
+    <line x1="720" y1="30" x2="720" y2="475" stroke="#334155" stroke-width="1" stroke-dasharray="3,3" />
+    <line x1="776" y1="30" x2="776" y2="475" stroke="#334155" stroke-width="1" stroke-dasharray="3,3" />
+    <line x1="888" y1="30" x2="888" y2="475" stroke="#334155" stroke-width="1" stroke-dasharray="3,3" />
+
+    <!-- Ticks & numbers -->
+    <text x="468" y="44" text-anchor="middle" class="axis-text">1</text>
+    <text x="496" y="44" text-anchor="middle" class="axis-text">2</text>
+    <text x="524" y="44" text-anchor="middle" class="axis-text">3</text>
+    <text x="552" y="44" text-anchor="middle" class="axis-text">4</text>
+    <text x="664" y="44" text-anchor="middle" class="axis-text">8</text>
+    <text x="720" y="44" text-anchor="middle" class="axis-text">10</text>
+    <text x="776" y="44" text-anchor="middle" class="axis-text">12</text>
+    <text x="888" y="44" text-anchor="middle" class="axis-text">16</text>
+  </g>
+
+  <!-- ==================== PHASE 1 ==================== -->
+  <g transform="translate(30, 130)">
+    <rect x="0" y="0" width="900" height="90" rx="8" fill="#1e293b" fill-opacity="0.6" stroke="#334155" stroke-width="1" />
+    <line x1="380" y1="0" x2="380" y2="90" stroke="#334155" stroke-dasharray="4,4" />
+
+    <!-- Left Column -->
+    <text x="20" y="24" class="phase-title" fill="#38bdf8">Phase 1: Intervals Strictly Before newInterval</text>
+    <rect x="20" y="34" width="280" height="20" rx="10" fill="#0369a1" fill-opacity="0.25" stroke="#0284c7" stroke-width="1" />
+    <text x="30" y="48" class="code-inline" fill="#7dd3fc">Condition: intervals[i][1] &lt; newInterval[0]</text>
+    <text x="20" y="74" class="desc-text">• <tspan class="code-inline" fill="#bae6fd">[1, 2]</tspan> ends at 2 &lt; 4. Zero overlap possible!</text>
+    <text x="20" y="86" class="desc-text">• Directly push <tspan class="code-inline" fill="#bae6fd">[1, 2]</tspan> to result.</text>
+
+    <!-- Right Column: Visual Bars -->
+    <!-- [1, 2]: x(1)-30 = 438, width = 28 -->
+    <rect x="438" y="30" width="28" height="30" rx="5" fill="url(#grad-before)" filter="url(#shadow3)" />
+    <text x="452" y="49" text-anchor="middle" class="bar-label">[1, 2]</text>
+    <text x="452" y="74" text-anchor="middle" font-size="10" fill="#38bdf8" font-family="sans-serif">Added to res</text>
+
+    <!-- Reference newInterval [4, 8] shown faintly above -->
+    <rect x="522" y="10" width="112" height="16" rx="4" fill="none" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="3,3" />
+    <text x="578" y="22" text-anchor="middle" font-size="9" fill="#fb923c" font-family="sans-serif">newInterval [4, 8]</text>
+  </g>
+
+  <!-- ==================== PHASE 2 ==================== -->
+  <g transform="translate(30, 230)">
+    <rect x="0" y="0" width="900" height="135" rx="8" fill="#1e293b" fill-opacity="0.6" stroke="#334155" stroke-width="1" />
+    <line x1="380" y1="0" x2="380" y2="135" stroke="#334155" stroke-dasharray="4,4" />
+
+    <!-- Left Column -->
+    <text x="20" y="24" class="phase-title" fill="#34d399">Phase 2: Overlapping Intervals &amp; Merge</text>
+    <rect x="20" y="34" width="280" height="20" rx="10" fill="#065f46" fill-opacity="0.3" stroke="#10b981" stroke-width="1" />
+    <text x="30" y="48" class="code-inline" fill="#6ee7b7">Condition: intervals[i][0] ≤ newInterval[1]</text>
+
+    <text x="20" y="74" class="desc-text">• Overlaps with <tspan class="code-inline" fill="#fde047">[3, 5]</tspan>, <tspan class="code-inline" fill="#fde047">[6, 7]</tspan>, and <tspan class="code-inline" fill="#fde047">[8, 10]</tspan>.</text>
+    <text x="20" y="92" class="desc-text">• Expand start: <tspan class="code-inline">newStart = min(4, 3) = 3</tspan>.</text>
+    <text x="20" y="110" class="desc-text">• Expand end: <tspan class="code-inline">newEnd = max(8, 10) = 10</tspan>.</text>
+    <text x="20" y="128" class="desc-text">• Push merged interval <tspan class="code-inline" fill="#a7f3d0" font-weight="bold">[3, 10]</tspan> to result.</text>
+
+    <!-- Right Column: Visual Bars -->
+    <!-- Overlapping segments shown in amber -->
+    <rect x="494" y="15" width="56" height="18" rx="4" fill="url(#grad-overlap)" opacity="0.8" />
+    <text x="522" y="28" text-anchor="middle" font-size="10" font-weight="bold" fill="#0f172a">[3, 5]</text>
+
+    <rect x="578" y="15" width="28" height="18" rx="4" fill="url(#grad-overlap)" opacity="0.8" />
+    <text x="592" y="28" text-anchor="middle" font-size="10" font-weight="bold" fill="#0f172a">[6, 7]</text>
+
+    <rect x="634" y="15" width="56" height="18" rx="4" fill="url(#grad-overlap)" opacity="0.8" />
+    <text x="662" y="28" text-anchor="middle" font-size="10" font-weight="bold" fill="#0f172a">[8, 10]</text>
+
+    <!-- Merged Result [3, 10]: x(3)-30 = 494, width = x(10)-x(3) = 720-524 = 196 -->
+    <rect x="494" y="55" width="196" height="34" rx="6" fill="url(#grad-merged3)" filter="url(#shadow3)" />
+    <text x="592" y="76" text-anchor="middle" class="bar-label" font-size="13">Merged Result: [3, 10]</text>
+    <text x="592" y="105" text-anchor="middle" font-size="10" fill="#a7f3d0" font-family="sans-serif">Spans from min(start)=3 to max(end)=10</text>
+  </g>
+
+  <!-- ==================== PHASE 3 ==================== -->
+  <g transform="translate(30, 375)">
+    <rect x="0" y="0" width="900" height="95" rx="8" fill="#1e293b" fill-opacity="0.6" stroke="#334155" stroke-width="1" />
+    <line x1="380" y1="0" x2="380" y2="95" stroke="#334155" stroke-dasharray="4,4" />
+
+    <!-- Left Column -->
+    <text x="20" y="24" class="phase-title" fill="#818cf8">Phase 3: Intervals Strictly After newInterval</text>
+    <text x="20" y="50" class="desc-text">• Loop over all remaining intervals (<tspan class="code-inline">while i &lt; n</tspan>).</text>
+    <text x="20" y="70" class="desc-text">• Since array is sorted, they start after 10. No more overlaps!</text>
+    <text x="20" y="88" class="desc-text">• Directly push <tspan class="code-inline" fill="#c7d2fe">[12, 16]</tspan> to result.</text>
+
+    <!-- Right Column: Visual Bars -->
+    <!-- [12, 16]: x(12)-30 = 746, width = x(16)-x(12) = 888-776 = 112 -->
+    <rect x="746" y="32" width="112" height="30" rx="5" fill="url(#grad-after)" filter="url(#shadow3)" />
+    <text x="802" y="51" text-anchor="middle" class="bar-label">[12, 16]</text>
+    <text x="802" y="76" text-anchor="middle" font-size="10" fill="#818cf8" font-family="sans-serif">Added to res</text>
+  </g>
+
+  <!-- ==================== FINAL OUTPUT SUMMARY ==================== -->
+  <g transform="translate(30, 480)">
+    <rect x="0" y="0" width="900" height="120" rx="8" fill="#0f766e" fill-opacity="0.12" stroke="#14b8a6" stroke-width="1.5" />
+    <text x="20" y="24" class="phase-title" fill="#2dd4bf">✨ Final Non-Overlapping Result: [[1, 2], [3, 10], [12, 16]]</text>
+    <text x="20" y="48" class="desc-text">1. <tspan font-weight="600" fill="#f1f5f9">Optimal O(N) Single Pass:</tspan> Because the input is already sorted by start time, we never need to re-sort! We just do one forward scan.</text>
+    <text x="20" y="70" class="desc-text">2. <tspan font-weight="600" fill="#f1f5f9">O(1) Auxiliary Space:</tspan> Beyond the output list, only a single pointer <tspan class="code-inline">i</tspan> is used.</text>
+    <text x="20" y="92" class="desc-text">3. <tspan font-weight="600" fill="#f1f5f9">Handles Empty Input:</tspan> If intervals is empty, Phase 1 and 2 skip, and <tspan class="code-inline">[newInterval]</tspan> is cleanly returned.</text>
+  </g>
+</svg>

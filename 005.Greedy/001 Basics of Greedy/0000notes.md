@@ -1,5 +1,3 @@
-# Notes
-
 ### Sorting is the "Backbone" of 90% of Greedy Problems.
 
 Greedy algorithms work by making the **best local choice** at every step. Sorting is the tool that lines up these "best choices" right in front of you.

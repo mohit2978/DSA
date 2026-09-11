@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" width="100%" height="100%">
+  <defs>
+    <style>
+      .hdr-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight: 800; font-size: 19px; fill: #f8fafc; }
+      .hdr-sub { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; fill: #94a3b8; }
+      .panel-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight: 700; font-size: 15px; }
+      .body-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; fill: #cbd5e1; }
+      .code-font { font-family: 'Consolas', 'Courier New', monospace; font-size: 11px; }
+      .bar-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 600; fill: #ffffff; }
+    </style>
+
+    <linearGradient id="g-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+    <linearGradient id="g-green" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#34d399" />
+    </linearGradient>
+    <linearGradient id="g-red" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#b91c1c" />
+      <stop offset="100%" stop-color="#ef4444" />
+    </linearGradient>
+
+    <filter id="f-shadow" x="-5%" y="-10%" width="110%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="560" rx="14" fill="#0f172a" stroke="#1e293b" stroke-width="2" />
+
+  <!-- Header -->
+  <g transform="translate(30, 22)">
+    <text x="0" y="22" class="hdr-title">✈️ The Airport Gate Analogy: Arrival Order vs Departure Order</text>
+    <text x="0" y="42" class="hdr-sub">Every interval has two edges. Choosing which edge to prioritize determines the entire algorithm.</text>
+  </g>
+
+  <!-- ==================== LEFT PANEL: SORT BY START ==================== -->
+  <g transform="translate(30, 85)">
+    <rect x="0" y="0" width="445" height="445" rx="10" fill="#1e293b" stroke="#0284c7" stroke-width="1.5" filter="url(#f-shadow)" />
+    
+    <!-- Header banner -->
+    <rect x="0" y="0" width="445" height="42" rx="10" fill="#0284c7" />
+    <rect x="0" y="32" width="445" height="10" fill="#0284c7" />
+    <text x="20" y="26" class="panel-title" fill="#ffffff">🛬 SORT BY START (Arrival Order)</text>
+
+    <g transform="translate(20, 56)">
+      <text x="0" y="16" font-size="12" font-weight="700" fill="#38bdf8" font-family="sans-serif">CORE QUESTION:</text>
+      <text x="120" y="16" class="body-text" font-weight="600" fill="#f8fafc">"Who enters the gate next?"</text>
+
+      <text x="0" y="38" class="body-text">• We process intervals in chronological order of appearance.</text>
+      <text x="0" y="56" class="body-text">• We know exactly what is <tspan fill="#38bdf8" font-weight="600">already occupying the space</tspan> when a new interval arrives.</text>
+
+      <!-- Mini Timeline Diagram -->
+      <g transform="translate(0, 75)">
+        <rect x="0" y="0" width="405" height="110" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" />
+        <text x="15" y="22" font-size="11" font-weight="700" fill="#94a3b8" font-family="sans-serif">TIMELINE SWEEP: LEFT → RIGHT</text>
+
+        <!-- Interval A: [1, 5] -->
+        <rect x="25" y="35" width="160" height="24" rx="4" fill="url(#g-blue)" />
+        <text x="105" y="51" text-anchor="middle" class="bar-text">Interval A: [1, 5]</text>
+
+        <!-- Interval B: [3, 8] -->
+        <rect x="90" y="68" width="160" height="24" rx="4" fill="url(#g-blue)" fill-opacity="0.85" />
+        <text x="170" y="84" text-anchor="middle" class="bar-text">Interval B: [3, 8]</text>
+
+        <!-- Overlap Bracket -->
+        <line x1="90" y1="35" x2="90" y2="92" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3,3" />
+        <text x="95" y="30" font-size="10" fill="#f59e0b" font-weight="bold" font-family="sans-serif">Collision at t=3!</text>
+      </g>
+
+      <text x="0" y="212" font-size="12" font-weight="700" fill="#38bdf8" font-family="sans-serif">WHEN TO USE:</text>
+      <text x="0" y="232" class="body-text">1. <tspan font-weight="600" fill="#f1f5f9">Merging Overlaps:</tspan> Start is locked; expand right bound.</text>
+      <text x="0" y="250" class="body-text">2. <tspan font-weight="600" fill="#f1f5f9">Meeting Rooms:</tspan> Check if any room freed before arrival.</text>
+      <text x="0" y="268" class="body-text">3. <tspan font-weight="600" fill="#f1f5f9">Conflict Detection:</tspan> Check if <tspan class="code-font" fill="#7dd3fc">curr.start &lt; prev.end</tspan>.</text>
+
+      <rect x="0" y="295" width="405" height="65" rx="6" fill="#0369a1" fill-opacity="0.2" stroke="#0284c7" stroke-width="1" />
+      <text x="12" y="318" font-size="11" font-weight="700" fill="#38bdf8" font-family="sans-serif">💡 KEY TAKEAWAY:</text>
+      <text x="12" y="336" class="body-text">Use START whenever you need to detect, combine, or allocate resources for overlapping events.</text>
+    </g>
+  </g>
+
+  <!-- ==================== RIGHT PANEL: SORT BY END ==================== -->
+  <g transform="translate(505, 85)">
+    <rect x="0" y="0" width="445" height="445" rx="10" fill="#1e293b" stroke="#059669" stroke-width="1.5" filter="url(#f-shadow)" />
+    
+    <!-- Header banner -->
+    <rect x="0" y="0" width="445" height="42" rx="10" fill="#059669" />
+    <rect x="0" y="32" width="445" height="10" fill="#059669" />
+    <text x="20" y="26" class="panel-title" fill="#ffffff">🛫 SORT BY END (Departure Order)</text>
+
+    <g transform="translate(20, 56)">
+      <text x="0" y="16" font-size="12" font-weight="700" fill="#34d399" font-family="sans-serif">CORE QUESTION:</text>
+      <text x="120" y="16" class="body-text" font-weight="600" fill="#f8fafc">"Who vacates the gate soonest?"</text>
+
+      <text x="0" y="38" class="body-text">• We prioritize whoever finishes and gets out of the way first.</text>
+      <text x="0" y="56" class="body-text">• Leaves the <tspan fill="#34d399" font-weight="600">maximum remaining timeline free</tspan> for future choices.</text>
+
+      <!-- Mini Timeline Diagram -->
+      <g transform="translate(0, 75)">
+        <rect x="0" y="0" width="405" height="110" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" />
+        <text x="15" y="22" font-size="11" font-weight="700" fill="#94a3b8" font-family="sans-serif">GREEDY CHOICE: VACATE EARLIEST</text>
+
+        <!-- Long Interval: [1, 100] (bad choice) -->
+        <rect x="25" y="35" width="220" height="20" rx="4" fill="url(#g-red)" opacity="0.6" />
+        <text x="135" y="49" text-anchor="middle" font-size="10" fill="#ffffff">Bad: [1, 100] (Hogs resource forever)</text>
+
+        <!-- Good Interval 1: [2, 3] -->
+        <rect x="35" y="65" width="40" height="24" rx="4" fill="url(#g-green)" />
+        <text x="55" y="81" text-anchor="middle" class="bar-text">[2, 3]</text>
+
+        <!-- Good Interval 2: [4, 6] -->
+        <rect x="90" y="65" width="55" height="24" rx="4" fill="url(#g-green)" />
+        <text x="117" y="81" text-anchor="middle" class="bar-text">[4, 6]</text>
+
+        <!-- Good Interval 3: [7, 10] -->
+        <rect x="160" y="65" width="70" height="24" rx="4" fill="url(#g-green)" />
+        <text x="195" y="81" text-anchor="middle" class="bar-text">[7, 10]</text>
+
+        <!-- Available room indicator -->
+        <text x="245" y="81" font-size="10" fill="#34d399" font-weight="bold" font-family="sans-serif">3 intervals kept!</text>
+      </g>
+
+      <text x="0" y="212" font-size="12" font-weight="700" fill="#34d399" font-family="sans-serif">WHEN TO USE:</text>
+      <text x="0" y="232" class="body-text">1. <tspan font-weight="600" fill="#f1f5f9">Activity Selection:</tspan> Fit as many events as possible.</text>
+      <text x="0" y="250" class="body-text">2. <tspan font-weight="600" fill="#f1f5f9">Non-Overlapping Intervals:</tspan> Minimize total removals.</text>
+      <text x="0" y="268" class="body-text">3. <tspan font-weight="600" fill="#f1f5f9">Minimum Arrows:</tspan> Greedy strike point at earliest finish.</text>
+
+      <rect x="0" y="295" width="405" height="65" rx="6" fill="#059669" fill-opacity="0.2" stroke="#059669" stroke-width="1" />
+      <text x="12" y="318" font-size="11" font-weight="700" fill="#34d399" font-family="sans-serif">💡 KEY TAKEAWAY:</text>
+      <text x="12" y="336" class="body-text">Use END whenever your goal is to pack the maximum number of items or make minimum removals.</text>
+    </g>
+  </g>
+</svg>

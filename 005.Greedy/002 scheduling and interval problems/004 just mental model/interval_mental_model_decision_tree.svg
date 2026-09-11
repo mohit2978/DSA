@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 620" width="100%" height="100%">
+  <defs>
+    <style>
+      .hdr-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight: 800; font-size: 20px; fill: #f8fafc; }
+      .hdr-sub { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; fill: #94a3b8; }
+      .card-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight: 700; font-size: 14px; }
+      .card-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; fill: #cbd5e1; }
+      .card-code { font-family: 'Consolas', 'Courier New', monospace; font-size: 11px; }
+      .tag-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 10px; font-weight: 700; }
+    </style>
+
+    <linearGradient id="grad-root" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="grad-c1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0369a1" />
+    </linearGradient>
+    <linearGradient id="grad-c2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#5b21b6" />
+    </linearGradient>
+    <linearGradient id="grad-c3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="grad-c4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+
+    <filter id="card-shadow" x="-5%" y="-10%" width="110%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.5" />
+    </filter>
+    <marker id="m-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="620" rx="14" fill="#0f172a" stroke="#1e293b" stroke-width="2" />
+
+  <!-- Header -->
+  <g transform="translate(30, 24)">
+    <text x="0" y="22" class="hdr-title">⚡ The Master Interval Decision Tree</text>
+    <text x="0" y="42" class="hdr-sub">Identify the core objective → Pick the sort key → Implementation follows automatically.</text>
+  </g>
+
+  <!-- Root Node: Problem Input -->
+  <g transform="translate(370, 85)">
+    <rect x="0" y="0" width="240" height="46" rx="23" fill="url(#grad-root)" filter="url(#card-shadow)" />
+    <text x="120" y="28" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="14" fill="#ffffff">🎯 What is the Goal?</text>
+  </g>
+
+  <!-- Connecting Lines from Root to 4 Branches -->
+  <path d="M 430 131 L 430 165 L 135 165 L 135 185" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#m-arrow)" />
+  <path d="M 465 131 L 465 185" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#m-arrow)" />
+  <path d="M 515 131 L 515 185" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#m-arrow)" />
+  <path d="M 550 131 L 550 165 L 845 165 L 845 185" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#m-arrow)" />
+
+  <!-- ==================== CARD 1: COMBINE ==================== -->
+  <g transform="translate(25, 190)">
+    <rect x="0" y="0" width="220" height="340" rx="10" fill="#1e293b" stroke="#0284c7" stroke-width="1.5" filter="url(#card-shadow)" />
+    <!-- Header banner -->
+    <rect x="0" y="0" width="220" height="42" rx="10" fill="url(#grad-c1)" />
+    <rect x="0" y="32" width="220" height="10" fill="url(#grad-c1)" />
+    <text x="110" y="26" text-anchor="middle" class="card-title" fill="#ffffff">1. COMBINE / MERGE</text>
+
+    <!-- Content -->
+    <g transform="translate(14, 56)">
+      <!-- Sort Badge -->
+      <rect x="0" y="0" width="105" height="20" rx="10" fill="#0369a1" fill-opacity="0.4" stroke="#38bdf8" stroke-width="1" />
+      <text x="52" y="14" text-anchor="middle" class="tag-text" fill="#38bdf8">SORT BY START</text>
+
+      <text x="0" y="38" font-size="11" font-weight="700" fill="#94a3b8" font-family="sans-serif">KEY TRIGGER WORDS:</text>
+      <text x="0" y="54" class="card-body">"merge overlapping"</text>
+      <text x="0" y="70" class="card-body">"find employee free time"</text>
+
+      <line x1="0" y1="82" x2="192" y2="82" stroke="#334155" />
+
+      <text x="0" y="98" font-size="11" font-weight="700" fill="#94a3b8" font-family="sans-serif">CORE MECHANISM:</text>
+      <text x="0" y="116" class="card-body">• Sweep left-to-right.</text>
+      <text x="0" y="132" class="card-body">• If <tspan class="card-code" fill="#7dd3fc">curr.s ≤ last.e</tspan>:</text>
+      <text x="12" y="148" class="card-code" fill="#38bdf8">last.e = max(last.e, curr.e)</text>
+      <text x="0" y="166" class="card-body">• Else: push &amp; start new.</text>
+
+      <line x1="0" y1="180" x2="192" y2="180" stroke="#334155" />
+
+      <text x="0" y="196" font-size="11" font-weight="700" fill="#94a3b8" font-family="sans-serif">BENCHMARK PROBLEMS:</text>
+      <text x="0" y="214" class="card-body" fill="#38bdf8">LC 56: Merge Intervals</text>
+      <text x="0" y="230" class="card-body" fill="#38bdf8">LC 759: Employee Free Time</text>
+      <text x="0" y="246" class="card-body" fill="#38bdf8">LC 252: Meeting Rooms I</text>
+    </g>
+  </g>
+
+  <!-- ==================== CARD 2: COUNT ==================== -->
+  <g transform="translate(260, 190)">
+    <rect x="0" y="0" width="220" height="340" rx="10" fill="#1e293b" stroke="#7c3aed" stroke-width="1.5" filter="url(#card-shadow)" />
+    <rect x="0" y="0" width="220" height="42" rx="10" fill="url(#grad-c2)" />
+    <rect x="0" y="32" width="220" height="10" fill="url(#grad-c2)" />
+    <text x="110" y="26" text-anchor="middle" class="card-title" fill="#ffffff">2. COUNT PEAKS / ROOMS</text>
+
+    <g transform="translate(14, 56)">
+      <rect x="0" y="0" width="105" height="20" rx="10" fill="#5b21b6" fill-opacity="0.4" stroke="#c084fc" stroke-width="1" />
+      <text x="52" y="14" text-anchor="middle" class="tag-text" fill="#c084fc">SORT BY START</text>
+
+      <text x="0" y="38" font-size="11" font-weight="700" fill="#94a3b8" font-family="sans-serif">KEY TRIGGER WORDS:</text>
+      <text x="0" y="54" class="card-body">"minimum rooms/platforms"</text>
+      <text x="0" y="70" class="card-body">"max simultaneous events"</text>
+
+      <line x1="0" y1="82" x2="192" y2="82" stroke="#334155" />
+
+      <text x="0" y="98" font-size="11" font-weight="700" fill="#94a3b8" font-family="sans-serif">CORE MECHANISM:</text>
+      <text x="0" y="116" class="card-body">• <tspan fill="#f5d0fe" font-weight="600">Min-Heap</tspan> of active end times.</text>
+      <text x="0" y="132" class="card-body">• If <tspan class="card-code" fill="#f5d0fe">curr.s ≥ heap.top</tspan>:</text>
+      <text x="12" y="148" class="card-code" fill="#c084fc">heap.poll() (room freed)</text>
+      <text x="0" y="166" class="card-body">• Heap size = max rooms.</text>
+
+      <line x1="0" y1="180" x2="192" y2="180" stroke="#334155" />
+
+      <text x="0" y="196" font-size="11" font-weight="700" fill="#94a3b8" font-family="sans-serif">BENCHMARK PROBLEMS:</text>
+      <text x="0" y="214" class="card-body" fill="#c084fc">LC 253: Meeting Rooms II</text>
+      <text x="0" y="230" class="card-body" fill="#c084fc">LC 1094: Car Pooling</text>
+      <text x="0" y="246" class="card-body" fill="#c084fc">Railway Platforms (GFG)</text>
+    </g>
+  </g>
+
+  <!-- ==================== CARD 3: REMOVE / SELECT ==================== -->
+  <g transform="translate(495, 190)">
+    <rect x="0" y="0" width="220" height="340" rx="10" fill="#1e293b" stroke="#059669" stroke-width="1.5" filter="url(#card-shadow)" />
+    <rect x="0" y="0" width="220" height="42" rx="10" fill="url(#grad-c3)" />
+    <rect x="0" y="32" width="220" height="10" fill="url(#grad-c3)" />
+    <text x="110" y="26" text-anchor="middle" class="card-title" fill="#ffffff">3. SELECT / REMOVE</text>
+
+    <g transform="translate(14, 56)">
+      <rect x="0" y="0" width="95" height="20" rx="10" fill="#065f46" fill-opacity="0.4" stroke="#34d399" stroke-width="1" />
+      <text x="47" y="14" text-anchor="middle" class="tag-text" fill="#34d399">SORT BY END</text>
+
+      <text x="0" y="38" font-size="11" font-weight="700" fill="#94a3b8" font-family="sans-serif">KEY TRIGGER WORDS:</text>
+      <text x="0" y="54" class="card-body">"minimum removals"</text>
+      <text x="0" y="70" class="card-body">"max non-overlapping keep"</text>
+
+      <line x1="0" y1="82" x2="192" y2="82" stroke="#334155" />
+
+      <text x="0" y="98" font-size="11" font-weight="700" fill="#94a3b8" font-family="sans-serif">CORE MECHANISM:</text>
+      <text x="0" y="116" class="card-body">• Greedy Activity Selection.</text>
+      <text x="0" y="132" class="card-body">• Keep interval finishing earliest</text>
+      <text x="12" y="148" class="card-body">(frees future room soonest).</text>
+      <text x="0" y="166" class="card-body">• Result: <tspan class="card-code" fill="#6ee7b7">N - kept_count</tspan>.</text>
+
+      <line x1="0" y1="180" x2="192" y2="180" stroke="#334155" />
+
+      <text x="0" y="196" font-size="11" font-weight="700" fill="#94a3b8" font-family="sans-serif">BENCHMARK PROBLEMS:</text>
+      <text x="0" y="214" class="card-body" fill="#34d399">LC 435: Non-overlapping</text>
+      <text x="0" y="230" class="card-body" fill="#34d399">LC 452: Burst Balloons</text>
+      <text x="0" y="246" class="card-body" fill="#34d399">LC 646: Max Chain Length</text>
+    </g>
+  </g>
+
+  <!-- ==================== CARD 4: INSERT ==================== -->
+  <g transform="translate(730, 190)">
+    <rect x="0" y="0" width="220" height="340" rx="10" fill="#1e293b" stroke="#d97706" stroke-width="1.5" filter="url(#card-shadow)" />
+    <rect x="0" y="0" width="220" height="42" rx="10" fill="url(#grad-c4)" />
+    <rect x="0" y="32" width="220" height="10" fill="url(#grad-c4)" />
+    <text x="110" y="26" text-anchor="middle" class="card-title" fill="#ffffff">4. INSERT INTERVAL</text>
+
+    <g transform="translate(14, 56)">
+      <rect x="0" y="0" width="100" height="20" rx="10" fill="#92400e" fill-opacity="0.4" stroke="#fbbf24" stroke-width="1" />
+      <text x="50" y="14" text-anchor="middle" class="tag-text" fill="#fbbf24">NO SORT NEEDED!</text>
+
+      <text x="0" y="38" font-size="11" font-weight="700" fill="#94a3b8" font-family="sans-serif">KEY TRIGGER WORDS:</text>
+      <text x="0" y="54" class="card-body">"insert new interval"</text>
+      <text x="0" y="70" class="card-body">"already sorted input"</text>
+
+      <line x1="0" y1="82" x2="192" y2="82" stroke="#334155" />
+
+      <text x="0" y="98" font-size="11" font-weight="700" fill="#94a3b8" font-family="sans-serif">CORE MECHANISM:</text>
+      <text x="0" y="116" class="card-body">• 3-Phase single pass:</text>
+      <text x="12" y="132" class="card-body">1. Before: <tspan class="card-code" fill="#fde68a">curr.e &lt; new.s</tspan></text>
+      <text x="12" y="148" class="card-body">2. Overlap: merge <tspan class="card-code" fill="#fde68a">min/max</tspan></text>
+      <text x="12" y="164" class="card-body">3. After: add remaining</text>
+
+      <line x1="0" y1="180" x2="192" y2="180" stroke="#334155" />
+
+      <text x="0" y="196" font-size="11" font-weight="700" fill="#94a3b8" font-family="sans-serif">BENCHMARK PROBLEMS:</text>
+      <text x="0" y="214" class="card-body" fill="#fbbf24">LC 57: Insert Interval</text>
+      <text x="0" y="230" class="card-body" fill="#fbbf24">Add Range / Disjoint Set</text>
+      <text x="0" y="246" class="card-body" fill="#fbbf24">O(N) time, O(1) space</text>
+    </g>
+  </g>
+
+  <!-- Bottom Golden Rule Bar -->
+  <g transform="translate(25, 550)">
+    <rect x="0" y="0" width="925" height="50" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="25" y="30" font-family="sans-serif" font-weight="700" font-size="13" fill="#38bdf8">💡 The 10-Second Golden Rule:</text>
+    <text x="240" y="30" class="card-body">If you are <tspan font-weight="700" fill="#f1f5f9">COMBINING / COUNTING</tspan> collisions → Sort by <tspan font-weight="700" fill="#38bdf8">START</tspan>. If you are <tspan font-weight="700" fill="#f1f5f9">SELECTING / ELIMINATING</tspan> overlaps → Sort by <tspan font-weight="700" fill="#34d399">END</tspan>.</text>
+  </g>
+</svg>
