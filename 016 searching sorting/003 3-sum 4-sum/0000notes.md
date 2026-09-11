@@ -2,7 +2,11 @@
 
 ## 3-sum 
 
-![alt text](image.png)
+3-sum just `nums[i]+nums[j]+nums[k]=0`
+
+so its just 2-sum of `nums[i]+nums[j]=-nums[k]`
+
+
 
 ```cpp
 
@@ -50,7 +54,7 @@ Space Complexity:O(1) excluding the output array, as only a constant amount of e
 
 ## 4-sum using 3-sum
 
-![alt text](image-1.png)
+just `nums[i]+nums[j]+nums[k]+nums[l]=target`
 
 ```cpp
 

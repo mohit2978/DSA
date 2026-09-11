@@ -1,0 +1,50 @@
+<svg viewBox="0 0 800 540" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="540" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">4Sum II &#8212; collapse 4 arrays into 2 <tspan fill="#9aa0a6" font-weight="normal">nums1=[1,2] nums2=[-2,-1] nums3=[-1,2] nums4=[0,2]</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- the idea -->
+  <rect x="25" y="48" width="750" height="96" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The idea</text>
+  <text x="40" y="94" fill="#d4d4d4" font-size="13">Here we can <tspan fill="#e06c75" font-weight="bold">not sort and not merge</tspan>, because a tuple must take exactly one element from each of the four arrays.</text>
+  <text x="40" y="116" fill="#d4d4d4" font-size="13">So build <tspan font-family="monospace" fill="#56c98d">arr1</tspan> = every sum of nums1 &#215; nums2, and <tspan font-family="monospace" fill="#56c98d">arr2</tspan> = every sum of nums3 &#215; nums4, then run plain Two Sum Count on those two.</text>
+  <text x="40" y="136" fill="#9aa0a6" font-size="12">Both new arrays have length <tspan font-family="monospace">n &#215; n</tspan>, and two nested for-loops generate them.</text>
+
+  <!-- arr1 -->
+  <rect x="25" y="158" width="365" height="158" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="180" fill="#f2c14e" font-size="13" font-weight="bold">arr1 = all combinations of nums1 and nums2</text>
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="42" y="206">nums1 = {1, 2}    nums2 = {-2, -1}</text>
+    <text x="42" y="234">arr1 = { (1-2), (1-1), (2-2), (2-1) }</text>
+    <text x="42" y="262" fill="#56c98d">     = { -1,  0,  0,  1 }</text>
+  </g>
+  <text x="40" y="292" fill="#9aa0a6" font-size="12">Frequency map of arr1:</text>
+  <text x="42" y="308" fill="#d4d4d4" font-family="monospace" font-size="13">{ -1 : 1,   0 : 2,   1 : 1 }</text>
+
+  <!-- arr2 -->
+  <rect x="405" y="158" width="370" height="158" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="420" y="180" fill="#f2c14e" font-size="13" font-weight="bold">arr2 = all combinations of nums3 and nums4</text>
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="422" y="206">nums3 = {-1, 2}   nums4 = {0, 2}</text>
+    <text x="422" y="234">arr2 = { (-1+0), (-1+2), (2+0), (2+2) }</text>
+    <text x="422" y="262" fill="#56c98d">     = { -1,  1,  2,  4 }</text>
+  </g>
+  <text x="420" y="292" fill="#9aa0a6" font-size="12">Now just count, for each element of arr2, how many</text>
+  <text x="420" y="308" fill="#9aa0a6" font-size="12">elements of arr1 equal <tspan font-family="monospace">0 - element</tspan>.</text>
+
+  <!-- trace -->
+  <rect x="25" y="330" width="750" height="130" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="352" fill="#f2c14e" font-size="13" font-weight="bold">Counting with target = 0</text>
+  <line x1="40" y1="362" x2="760" y2="362" stroke="#333333" stroke-width="1"/>
+  <g font-family="monospace" font-size="13" fill="#d4d4d4">
+    <text x="42" y="384" fill="#56c98d">ele = -1   need  0 - (-1) =  1   map has 1 &#8594; count += 1   count = 1</text>
+    <text x="42" y="406" fill="#56c98d">ele =  1   need  0 - 1    = -1   map has 1 &#8594; count += 1   count = 2</text>
+    <text x="42" y="428" fill="#e06c75">ele =  2   need -2              not in map                count = 2</text>
+    <text x="42" y="450" fill="#e06c75">ele =  4   need -4              not in map                count = 2</text>
+  </g>
+
+  <!-- result -->
+  <rect x="25" y="474" width="750" height="52" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="498" fill="#56c98d" font-size="14" font-weight="bold">Answer = 2, matching the two tuples (0,0,0,1) and (1,1,0,0) in the problem statement.</text>
+  <text x="40" y="518" fill="#9aa0a6" font-size="12">The map stores a <tspan font-weight="bold">count</tspan>, not an index, because the same sum can be produced by several different pairs and every one of them counts.</text>
+</svg>

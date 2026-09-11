@@ -7,6 +7,10 @@ Follow up: Can you sort the linked list in $O(N \log N)$ time and $O(1)$ memory 
 ### Visual Dry Run & Intuition
 ![Merge Sort Linked List](./svg_01_merge_sort_ll.svg)
 
+see in while loop we tell till when loop should run but not when it should stop
+
+if we put `while(l1!=null || l2!=null)` instead of `while(l1!=nullptr && l2!=nullptr)` the code will run infinitely as it means loop till you have any left ,but with `&&` it means loop till both of condition is satisfied or loop till we have node in both the list
+
 ### Mergesort lists (C++ Implementation)
 
 ```cpp

@@ -1,0 +1,50 @@
+<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="520" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">The k-Sum reduction <tspan fill="#9aa0a6" font-weight="normal">— every k-Sum collapses into a (k-1)-Sum</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- ladder -->
+  <rect x="25" y="48" width="440" height="230" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">Fix one element, subtract it from the target</text>
+
+  <g font-family="monospace" font-size="14" fill="#d4d4d4">
+    <text x="42" y="102">3Sum   a + b + c = target</text>
+    <text x="60" y="126" fill="#56c98d">a + b = target - c</text>
+    <text x="180" y="126" fill="#9aa0a6" font-size="12">for every c, search 2Sum(a, b, target - c)</text>
+
+    <text x="42" y="170">4Sum   a + b + c + d = target</text>
+    <text x="60" y="194" fill="#56c98d">a + b + c = target - d</text>
+    <text x="220" y="194" fill="#9aa0a6" font-size="12">so 3Sum solves it</text>
+
+    <text x="42" y="238">kSum   fix arr[i], then call kSum(k - 1, target - arr[i])</text>
+  </g>
+  <text x="42" y="264" fill="#9aa0a6" font-size="12">The recursion bottoms out at <tspan font-family="monospace" fill="#56c98d">k == 2</tspan>, which is the two-pointer scan.</text>
+
+  <!-- complexity -->
+  <rect x="480" y="48" width="295" height="230" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="495" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The resulting complexities</text>
+  <line x1="495" y1="80" x2="760" y2="80" stroke="#333333" stroke-width="1"/>
+  <g font-family="monospace" font-size="14" fill="#d4d4d4">
+    <text x="497" y="106">Two Sum    &#8594;  O(n)</text>
+    <text x="497" y="136">Three Sum  &#8594;  O(n&#178;)</text>
+    <text x="497" y="166">Four Sum   &#8594;  O(n&#179;)</text>
+    <text x="497" y="200" fill="#56c98d">K Sum      &#8594;  O(n^(k-1))</text>
+  </g>
+  <text x="495" y="230" fill="#9aa0a6" font-size="12">Each extra level adds one outer loop over</text>
+  <text x="495" y="246" fill="#9aa0a6" font-size="12">the array, so the exponent grows by 1.</text>
+  <text x="495" y="268" fill="#9aa0a6" font-size="12">The initial sort is O(n log n), which is dominated.</text>
+
+  <!-- brute vs -->
+  <rect x="25" y="292" width="750" height="106" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="314" fill="#f2c14e" font-size="13" font-weight="bold">How we got from brute force to this</text>
+  <text x="40" y="338" fill="#d4d4d4" font-size="12.5"><tspan fill="#e06c75">Brute force:</tspan> search every pair &#8594; <tspan font-family="monospace">O(n&#178;)</tspan>.</text>
+  <text x="40" y="358" fill="#d4d4d4" font-size="12.5"><tspan fill="#f2c14e">Another approach:</tspan> for every <tspan font-family="monospace">a[i]</tspan>, binary-search for <tspan font-family="monospace">(target - a[i])</tspan> &#8594; <tspan font-family="monospace">O(n log n)</tspan>.</text>
+  <text x="40" y="378" fill="#d4d4d4" font-size="12.5"><tspan fill="#56c98d">Best:</tspan> if the array is already sorted, the two-pointer scan is <tspan font-family="monospace">O(n)</tspan>. And if we have to sort it ourselves, the total is <tspan font-family="monospace">O(n log n)</tspan>.</text>
+
+  <!-- overflow -->
+  <rect x="25" y="412" width="750" height="96" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="434" fill="#e06c75" font-size="13" font-weight="bold">The overflow trap in 4Sum</text>
+  <text x="40" y="458" fill="#d4d4d4" font-size="12.5">Suppose <tspan font-family="monospace">a = [10^9, 10^9, 10^9, 10^9]</tspan> and the target is <tspan font-family="monospace">-10^9</tspan>. Then <tspan font-family="monospace">target - a[i]</tspan> becomes <tspan font-family="monospace">-10^9 - 10^9 = -2 x 10^9</tspan>,</text>
+  <text x="40" y="478" fill="#d4d4d4" font-size="12.5">which is already outside the 32-bit <tspan font-family="monospace">int</tspan> range. <tspan fill="#56c98d" font-weight="bold">So cast to long here</tspan> &#8212; that is why the 4Sum code passes a <tspan font-family="monospace">long target</tspan>.</text>
+  <text x="40" y="500" fill="#9aa0a6" font-size="12">Constraints that trigger it: <tspan font-family="monospace">-10^9 &lt;= nums[i] &lt;= 10^9</tspan> and <tspan font-family="monospace">-10^9 &lt;= target &lt;= 10^9</tspan>.</text>
+</svg>

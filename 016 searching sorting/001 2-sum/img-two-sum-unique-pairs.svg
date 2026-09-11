@@ -1,0 +1,73 @@
+<svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="480" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">All UNIQUE pairs that make the target <tspan fill="#9aa0a6" font-weight="normal">sorted array, target = 5</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- array -->
+  <rect x="25" y="48" width="750" height="130" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="70" fill="#f2c14e" font-size="13" font-weight="bold">The array has many duplicates</text>
+
+  <g stroke="#5b9bd5" stroke-width="1.5" fill="#2b2b2b">
+    <rect x="42"  y="84" width="28" height="30"/><rect x="71"  y="84" width="28" height="30"/>
+    <rect x="100" y="84" width="28" height="30"/><rect x="129" y="84" width="28" height="30"/>
+    <rect x="158" y="84" width="28" height="30"/>
+  </g>
+  <g stroke="#4a4a4a" stroke-width="1.5" fill="#2b2b2b">
+    <rect x="187" y="84" width="28" height="30"/><rect x="216" y="84" width="28" height="30"/>
+    <rect x="245" y="84" width="28" height="30"/>
+    <rect x="274" y="84" width="28" height="30"/><rect x="303" y="84" width="28" height="30"/>
+    <rect x="332" y="84" width="28" height="30"/><rect x="361" y="84" width="28" height="30"/>
+    <rect x="390" y="84" width="28" height="30"/><rect x="419" y="84" width="28" height="30"/>
+    <rect x="448" y="84" width="28" height="30"/><rect x="477" y="84" width="28" height="30"/>
+    <rect x="506" y="84" width="28" height="30"/>
+    <rect x="535" y="84" width="28" height="30"/><rect x="564" y="84" width="28" height="30"/>
+    <rect x="593" y="84" width="28" height="30"/><rect x="622" y="84" width="28" height="30"/>
+  </g>
+  <g stroke="#5b9bd5" stroke-width="1.5" fill="#2b2b2b">
+    <rect x="651" y="84" width="28" height="30"/><rect x="680" y="84" width="28" height="30"/>
+    <rect x="709" y="84" width="28" height="30"/><rect x="738" y="84" width="28" height="30"/>
+  </g>
+  <g font-family="monospace" font-size="12" fill="#d4d4d4" text-anchor="middle" font-weight="bold">
+    <text x="56"  y="105">-1</text><text x="85"  y="105">-1</text><text x="114" y="105">-1</text>
+    <text x="143" y="105">-1</text><text x="172" y="105">-1</text>
+    <text x="201" y="105">1</text><text x="230" y="105">1</text><text x="259" y="105">1</text>
+    <text x="288" y="105">2</text><text x="317" y="105">2</text><text x="346" y="105">2</text><text x="375" y="105">2</text>
+    <text x="404" y="105">3</text><text x="433" y="105">3</text><text x="462" y="105">3</text>
+    <text x="491" y="105">3</text><text x="520" y="105">3</text>
+    <text x="549" y="105">4</text><text x="578" y="105">4</text>
+    <text x="607" y="105">5</text><text x="636" y="105">5</text>
+    <text x="665" y="105">6</text><text x="694" y="105">6</text><text x="723" y="105">6</text><text x="752" y="105">6</text>
+  </g>
+  <text x="56"  y="134" fill="#56c98d" text-anchor="middle" font-size="13" font-weight="bold">&#8593; si</text>
+  <text x="752" y="134" fill="#e06c75" text-anchor="middle" font-size="13" font-weight="bold">&#8593; ei</text>
+  <text x="40" y="158" fill="#56c98d" font-family="monospace" font-size="14" font-weight="bold">-1 + 6 == 5   found a pair</text>
+  <text x="40" y="174" fill="#9aa0a6" font-size="12">Now doing <tspan font-family="monospace">si++</tspan> and <tspan font-family="monospace">ei--</tspan> lands on the same values again, which would produce the same pair a second time.</text>
+
+  <!-- rule -->
+  <rect x="25" y="190" width="365" height="150" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="212" fill="#f2c14e" font-size="13" font-weight="bold">The duplicate-skipping rule</text>
+  <text x="40" y="236" fill="#d4d4d4" font-size="13">After recording a pair, keep doing <tspan font-family="monospace">si++</tspan> and <tspan font-family="monospace">ei--</tspan></text>
+  <text x="40" y="254" fill="#d4d4d4" font-size="13">until a <tspan fill="#56c98d" font-weight="bold">unique element</tspan> is reached.</text>
+  <g font-family="monospace" font-size="12" fill="#d4d4d4">
+    <text x="42" y="284">while (si &lt; ei &amp;&amp; arr[si] == arr[si - 1])</text>
+    <text x="60" y="302">si++;</text>
+    <text x="42" y="322">while (si &lt; ei &amp;&amp; arr[ei] == arr[ei + 1])</text>
+  </g>
+  <text x="60" y="336" fill="#d4d4d4" font-family="monospace" font-size="12">ei--;</text>
+
+  <!-- why guard -->
+  <rect x="405" y="190" width="370" height="150" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="420" y="212" fill="#f2c14e" font-size="13" font-weight="bold">Why the si++ and ei-- come BEFORE the while loops</text>
+  <text x="420" y="238" fill="#d4d4d4" font-size="12.5">They are done first so that <tspan font-family="monospace" fill="#56c98d">arr[si - 1]</tspan> and <tspan font-family="monospace" fill="#56c98d">arr[ei + 1]</tspan></text>
+  <text x="420" y="256" fill="#d4d4d4" font-size="12.5">refer to the element we just consumed.</text>
+  <text x="420" y="284" fill="#e06c75" font-size="12.5">The <tspan font-family="monospace">si &lt; ei</tspan> guard inside each while is essential &#8212;</text>
+  <text x="420" y="302" fill="#e06c75" font-size="12.5">without it <tspan font-family="monospace">si++</tspan> could run past <tspan font-family="monospace">ei</tspan> and read out of bounds.</text>
+  <text x="420" y="328" fill="#9aa0a6" font-size="12">Everything else is the plain two-pointer scan from the previous question.</text>
+
+  <!-- result -->
+  <rect x="25" y="352" width="750" height="110" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="374" fill="#f2c14e" font-size="13" font-weight="bold">The output</text>
+  <text x="42" y="402" fill="#56c98d" font-family="monospace" font-size="16" font-weight="bold">{ (-1, 6),  (2, 3) }</text>
+  <text x="40" y="428" fill="#d4d4d4" font-size="13">We need <tspan font-weight="bold">all pairs that make up the target</tspan>, but each distinct pair only once.</text>
+  <text x="40" y="452" fill="#9aa0a6" font-size="12">Constraints for this variant: <tspan font-family="monospace">arr.length &lt;= 10^5</tspan> and <tspan font-family="monospace">-10^3 &lt;= arr[i] &lt;= 10^3</tspan>.</text>
+</svg>
