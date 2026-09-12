@@ -1,0 +1,49 @@
+<svg viewBox="0 0 800 460" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="460" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Count Complete Tree Nodes &#8212; root = [1,2,3,4,5,6]</text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <g stroke="#5b9bd5" stroke-width="2">
+    <line x1="230" y1="70" x2="130" y2="150"/>
+    <line x1="230" y1="70" x2="330" y2="150"/>
+    <line x1="130" y1="150" x2="80"  y2="230"/>
+    <line x1="130" y1="150" x2="180" y2="230"/>
+    <line x1="330" y1="150" x2="280" y2="230"/>
+  </g>
+  <g stroke="#56c98d" stroke-width="2.5" stroke-dasharray="5 4">
+    <line x1="230" y1="70" x2="130" y2="150"/>
+    <line x1="130" y1="150" x2="80" y2="230"/>
+  </g>
+  <g stroke="#e06c75" stroke-width="2.5" stroke-dasharray="5 4">
+    <line x1="230" y1="70" x2="330" y2="150"/>
+  </g>
+
+  <g>
+    <circle cx="230" cy="60" r="18" fill="#3a331f" stroke="#f2c14e" stroke-width="2.5"/>
+    <circle cx="130" cy="150" r="18" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="330" cy="150" r="18" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="80"  cy="230" r="18" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="180" cy="230" r="18" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="280" cy="230" r="18" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  </g>
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="14">
+    <text x="230" y="65">1</text>
+    <text x="130" y="155">2</text>
+    <text x="330" y="155">3</text>
+    <text x="80"  y="235">4</text>
+    <text x="180" y="235">5</text>
+    <text x="280" y="235">6</text>
+  </g>
+  <text x="60" y="270" fill="#56c98d" font-size="12">leftHeight(1) = 3</text>
+  <text x="480" y="90" fill="#e06c75" font-size="12">rightHeight(1) = 2 &#8594; not equal, recurse</text>
+
+  <rect x="25" y="300" width="750" height="150" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="324" fill="#f2c14e" font-size="13.5" font-weight="bold">Recursion trace</text>
+  <g font-family="monospace" font-size="12.5" fill="#d4d4d4">
+    <text x="40" y="348">countNodes(1): lh=3, rh=2 &#8594; not equal &#8594; 1 + countNodes(2) + countNodes(3)</text>
+    <text x="40" y="370">countNodes(2): lh=2, rh=2 &#8594; equal!  &#8594; 2^2 - 1 = 3   (perfect subtree, no further recursion)</text>
+    <text x="40" y="392">countNodes(3): lh=2, rh=1 &#8594; not equal &#8594; 1 + countNodes(6) + countNodes(null)</text>
+    <text x="40" y="414">countNodes(6): lh=1, rh=1 &#8594; equal!  &#8594; 2^1 - 1 = 1</text>
+    <text x="40" y="436" fill="#56c98d" font-weight="bold">countNodes(3) = 1 + 1 + 0 = 2   countNodes(1) = 1 + 3 + 2 = 6 &#8592; matches expected output</text>
+  </g>
+</svg>

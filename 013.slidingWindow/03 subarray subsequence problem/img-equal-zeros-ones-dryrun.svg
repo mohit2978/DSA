@@ -1,0 +1,37 @@
+<svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="480" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Subarrays with equal 1s and 0s &#8212; treat 0 as &#8722;1 <tspan fill="#9aa0a6" font-weight="normal">A = [1,0,0,1,0,1,1]</tspan></text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <text x="40" y="60" fill="#d4d4d4" font-size="13">Just counting cumulative 0s and 1s only finds subarrays that START at index 0 &#8212; it misses e.g. (3,4) = [1,0].</text>
+  <text x="40" y="80" fill="#d4d4d4" font-size="13">The fix: replace every 0 with <tspan fill="#e06c75" font-weight="bold">&#8722;1</tspan>. Now "equal 0s and 1s" becomes "sum of this stretch is 0" &#8212; exactly Subarray Sum Equals K, with k = 0.</text>
+
+  <!-- transformed array -->
+  <rect x="25" y="96" width="750" height="70" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <g font-family="monospace" font-size="12" fill="#9aa0a6" text-anchor="middle">
+    <text x="80"  y="118">0</text><text x="185" y="118">1</text><text x="290" y="118">2</text><text x="395" y="118">3</text>
+    <text x="500" y="118">4</text><text x="605" y="118">5</text><text x="710" y="118">6</text>
+  </g>
+  <g font-family="monospace" font-size="16" fill="#d4d4d4" text-anchor="middle" font-weight="bold">
+    <text x="80"  y="146">1</text><text x="185" y="146">-1</text><text x="290" y="146">-1</text><text x="395" y="146">1</text>
+    <text x="500" y="146">-1</text><text x="605" y="146">1</text><text x="710" y="146">1</text>
+  </g>
+
+  <!-- trace -->
+  <rect x="25" y="176" width="750" height="270" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="198" fill="#f2c14e" font-size="13" font-weight="bold">Running sum, and "if sum==0 cnt++" plus map lookup on sum itself (k=0):</text>
+  <line x1="40" y1="208" x2="760" y2="208" stroke="#333333" stroke-width="1"/>
+
+  <g font-family="monospace" font-size="12.5" fill="#d4d4d4">
+    <text x="42" y="230">i=0  sum=1                                map={1:1}                     cnt=0</text>
+    <text x="42" y="252" fill="#56c98d">i=1  sum=0   &#8594; sum==0, cnt++            map={1:1, 0:1}                cnt=1</text>
+    <text x="42" y="274">i=2  sum=-1                               map={1:1, 0:1, -1:1}          cnt=1</text>
+    <text x="42" y="296" fill="#f2c14e">i=3  sum=0   &#8594; cnt++, then +mp[0]=1     map={1:1, 0:2, -1:1}          cnt=3</text>
+    <text x="42" y="318" fill="#e06c75">i=4  sum=-1  &#8594; found mp[-1]=1           map={1:1, 0:2, -1:2}          cnt=4</text>
+    <text x="42" y="340" fill="#5b9bd5">i=5  sum=0   &#8594; cnt++, then +mp[0]=2     map={1:1, 0:3, -1:2}          cnt=7</text>
+    <text x="42" y="362" fill="#5b9bd5">i=6  sum=1   &#8594; found mp[1]=1            map={1:2, 0:3, -1:2}          cnt=8</text>
+  </g>
+  <line x1="40" y1="378" x2="760" y2="378" stroke="#333333" stroke-width="1"/>
+  <text x="42" y="400" fill="#56c98d" font-size="14" font-weight="bold">Final answer: cnt = 8 &#8212; matches the 8 index-pairs given in the problem.</text>
+  <text x="42" y="424" fill="#9aa0a6" font-size="12">Note (3,4) = [1,0] is captured at i=4 (sum returns to a value seen once before), even though it never starts at index 0.</text>
+</svg>

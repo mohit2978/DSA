@@ -1,0 +1,23 @@
+<svg viewBox="0 0 570 440" xmlns="http://www.w3.org/2000/svg" font-family="Consolas,Menlo,monospace">
+<rect x="0" y="0" width="570" height="440" fill="none"/>
+<line x1="145" y1="85" x2="75" y2="175" stroke="#555" stroke-width="1.5"/>
+<line x1="145" y1="85" x2="425" y2="175" stroke="#555" stroke-width="1.5"/>
+<line x1="425" y1="175" x2="285" y2="265" stroke="#555" stroke-width="1.5"/>
+<line x1="285" y1="265" x2="215" y2="355" stroke="#555" stroke-width="1.5"/>
+<line x1="285" y1="265" x2="355" y2="355" stroke="#555" stroke-width="1.5"/>
+<line x1="425" y1="175" x2="495" y2="265" stroke="#555" stroke-width="1.5"/>
+<circle cx="145" cy="85" r="20" fill="#eef4ff" stroke="#3b5bdb" stroke-width="2"/>
+<text x="145" y="90" font-size="16" fill="#1a1a2e" text-anchor="middle" font-weight="600">4</text>
+<circle cx="75" cy="175" r="20" fill="#4263eb" stroke="#1c3faa" stroke-width="2"/>
+<text x="75" y="180" font-size="16" fill="#1a1a2e" text-anchor="middle" font-weight="600">5</text>
+<circle cx="425" cy="175" r="20" fill="#eef4ff" stroke="#3b5bdb" stroke-width="2"/>
+<text x="425" y="180" font-size="16" fill="#1a1a2e" text-anchor="middle" font-weight="600">2</text>
+<circle cx="285" cy="265" r="20" fill="#eef4ff" stroke="#3b5bdb" stroke-width="2"/>
+<text x="285" y="270" font-size="16" fill="#1a1a2e" text-anchor="middle" font-weight="600">3</text>
+<circle cx="215" cy="355" r="20" fill="#4263eb" stroke="#1c3faa" stroke-width="2"/>
+<text x="215" y="360" font-size="16" fill="#1a1a2e" text-anchor="middle" font-weight="600">6</text>
+<circle cx="355" cy="355" r="20" fill="#2f9e44" stroke="#1c7a31" stroke-width="2"/>
+<text x="355" y="360" font-size="16" fill="#1a1a2e" text-anchor="middle" font-weight="600">7</text>
+<circle cx="495" cy="265" r="20" fill="#2f9e44" stroke="#1c7a31" stroke-width="2"/>
+<text x="495" y="270" font-size="16" fill="#1a1a2e" text-anchor="middle" font-weight="600">1</text>
+</svg>

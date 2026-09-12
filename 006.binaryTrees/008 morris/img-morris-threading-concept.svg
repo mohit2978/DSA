@@ -1,0 +1,65 @@
+<svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">
+  <rect x="0" y="0" width="800" height="480" fill="#1e1e1e"/>
+  <text x="25" y="28" fill="#e0e0e0" font-size="15" font-weight="bold">Morris threading &#8212; every predecessor's thread points up to the node it belongs to</text>
+  <line x1="25" y1="38" x2="775" y2="38" stroke="#333333" stroke-width="1"/>
+
+  <!-- tree edges -->
+  <g stroke="#5b9bd5" stroke-width="2">
+    <line x1="400" y1="75" x2="220" y2="150"/>
+    <line x1="400" y1="75" x2="580" y2="150"/>
+    <line x1="220" y1="150" x2="120" y2="230"/>
+    <line x1="220" y1="150" x2="320" y2="230"/>
+    <line x1="580" y1="150" x2="480" y2="230"/>
+    <line x1="580" y1="150" x2="680" y2="230"/>
+    <line x1="320" y1="230" x2="270" y2="310"/>
+    <line x1="320" y1="230" x2="370" y2="310"/>
+    <line x1="480" y1="230" x2="430" y2="310"/>
+    <line x1="480" y1="230" x2="530" y2="310"/>
+  </g>
+
+  <!-- threads -->
+  <g stroke="#56c98d" stroke-width="2.5" fill="none">
+    <path d="M120,230 Q100,180 210,155" marker-end="url(#arrow)"/>
+    <path d="M270,310 Q250,270 310,235" marker-end="url(#arrow)"/>
+    <path d="M370,310 Q330,150 395,80" marker-end="url(#arrow)"/>
+    <path d="M430,310 Q460,270 475,235" marker-end="url(#arrow)"/>
+    <path d="M530,310 Q590,180 585,155" marker-end="url(#arrow)"/>
+  </g>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#56c98d"/>
+    </marker>
+  </defs>
+
+  <!-- nodes -->
+  <g>
+    <circle cx="400" cy="65" r="20" fill="#2b2b2b" stroke="#f2c14e" stroke-width="2.5"/>
+    <circle cx="220" cy="150" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="580" cy="150" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="120" cy="230" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="320" cy="230" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="480" cy="230" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="680" cy="230" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="270" cy="310" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="370" cy="310" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="430" cy="310" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+    <circle cx="530" cy="310" r="20" fill="#2b2b2b" stroke="#5b9bd5" stroke-width="2"/>
+  </g>
+  <g fill="#f0f0f0" text-anchor="middle" font-weight="bold" font-size="15">
+    <text x="400" y="71">a</text>
+    <text x="220" y="156">b</text>
+    <text x="580" y="156">c</text>
+    <text x="120" y="236">d</text>
+    <text x="320" y="236">e</text>
+    <text x="480" y="236">h</text>
+    <text x="680" y="236">i</text>
+    <text x="270" y="316">f</text>
+    <text x="370" y="316">g</text>
+    <text x="430" y="316">j</text>
+    <text x="530" y="316">k</text>
+  </g>
+
+  <rect x="25" y="400" width="750" height="65" fill="#252525" stroke="#3a3a3a" stroke-width="1" rx="6"/>
+  <text x="40" y="422" fill="#d4d4d4" font-size="12.5"><tspan fill="#56c98d" font-weight="bold">Green arrows</tspan> = predecessor threads: d&#8594;b, f&#8594;e, j&#8594;h thread to their immediate parent (rightmost-of-left-subtree case).</text>
+  <text x="40" y="444" fill="#d4d4d4" font-size="12.5">g&#8594;a and k&#8594;c thread all the way past one level, because g/k are the rightmost node of a's / c's <tspan font-style="italic">entire</tspan> left subtree, not just of e's / h's.</text>
+</svg>
